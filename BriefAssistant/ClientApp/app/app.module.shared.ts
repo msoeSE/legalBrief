@@ -5,28 +5,28 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './components/app/app.component';
-import { NavMenuComponent } from './components/navmenu/navmenu.component';
-import { HomeComponent } from './components/home/home.component';
-import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
-import { CounterComponent } from './components/counter/counter.component';
+import { FormComponent } from './components/form/form.component';
+import { FinalComponent } from './components/final/final.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
+import { ExampleComponent } from './components/example/example.component';
 
 @NgModule({
     declarations: [
         AppComponent,
-        NavMenuComponent,
-        CounterComponent,
-        FetchDataComponent,
-        HomeComponent
+        FormComponent,
+        FinalComponent,
+        WelcomeComponent,
+        ExampleComponent
     ],
     imports: [
         CommonModule,
         HttpModule,
         FormsModule,
         RouterModule.forRoot([
-            { path: '', redirectTo: 'home', pathMatch: 'full' },
-            { path: 'home', component: HomeComponent },
-            { path: 'counter', component: CounterComponent },
-            { path: 'fetch-data', component: FetchDataComponent },
+            { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+            { path: 'final', component: FinalComponent },
+            { path: 'form', component: FormComponent },
+            { path: 'example', component: ExampleComponent },
             { path: '**', redirectTo: 'home' }
         ])
     ]
