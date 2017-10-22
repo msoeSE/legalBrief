@@ -1,29 +1,24 @@
 import { Component } from '@angular/core';
-import { NgForm } from '@angular/common';
-import { bootstrap } from '@angular/platform/browser';
-import { Http, Headers, HTTP_PROVIDERS } from '@angular/http';
+import { NgForm } from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { HttpModule, URLSearchParams ,Http} from '@angular/http';
+import { BrowserModule } from '@angular/platform-browser';
 
-@Component({
-    selector: 'form',
-    templateUrl: './form.component.html',
-    viewProviders: [HTTP_PROVIDERS],
-    styleUrls: ['./form.component.css']
-})
 interface BriefInfo {
-    Appellant: Appellant;
-    IssuesPresented: string;
-    OralArgumentStatement: string;
-    PublicationStatement: string;
-    CaseFactsStatement : string;
-    Argument: string;
-    AppendexDocuments:string
+    appellant: Appellant;
+    issuesPresented: string;
+    oralArgumentStatement: string;
+    publicationStatement: string;
+    caseFactsStatement : string;
+    argument: string;
+    appendexDocuments:string
 }
 
 interface Appellant {
-    FirstName: string;
-    LastName: string;
-    Email: string;
-    Phone: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
 
 }
 enum State {
@@ -160,31 +155,54 @@ enum Role {
     Defendent
 }
 interface CircuitCourtCase {
-    County: County;
-    CaseNumber: string;
-    Role: Role;
-    JudgeFirstName: string;
-    JudgeLastName: string;
-    OpponentFirstName: string;
-    OpponentLastName: string;
+    county: County;
+    caseNumber: string;
+    role: Role;
+    judgeFirstName: string;
+    judgeLastName: string;
+    opponentFirstName: string;
+    opponentLastName: string;
 
 
 
 }
 interface Address {
-    public Street: string;
-    public Street2: string;
-    public City: string;
-    public State: State;
-    public Zip: string;
+    Street: string;
+    Street2: string;
+    City: string;
+    State: State;
+    Zip: string;
 
 }
+@NgModule({
+    imports: [
+        BrowserModule,
+        HttpModule
+    ]
 
+})
+@Component({
+    selector: 'form',
+    template: './form.component.html',
+   // viewProviders: [HttpModule],
+    styles: ['./form.component.css']
+})
 export class FormComponent {
-    private controllerURL: string = "/API/formData";
-    sendData(IssuesPresented: string) {
+    constructor(private http: Http) { } 
+    sendData(info: BriefInfo ) {
         let params = new URLSearchParams();
-        params.set((""))
+        var sendobj = JSON.stringify(info);
+        params.set("BriefInfo", sendobj);
+
+        return this.http.post('/api', params).subscribe(
+            data => {
+                alert('ok');
+            },
+            error => {
+                console.log(JSON.stringify(error.json()))
+            }
+        )
+
 
     }
     

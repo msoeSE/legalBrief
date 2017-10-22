@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'example',
-    templateUrl: './example.component.html',
-    styleUrls: ['./example.component.css']
+    template: ""+require("./example.component.html"),
+    styles: ['./example.component.css']
 })
 export class ExampleComponent {
 }
