@@ -23,13 +23,16 @@ import { ExampleComponent } from './components/example/example.component';
         HttpModule,
         FormsModule,
         RouterModule.forRoot([
-            { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+            { path: 'welcome', component: WelcomeComponent},
+            { path: '', redirectTo: '/welcome', pathMatch: 'full' },
             { path: 'final', component: FinalComponent },
-            { path: 'form', component: FormComponent },
+            { path: 'dataform', component: FormComponent },
             { path: 'example', component: ExampleComponent },
-            { path: '**', redirectTo: 'home' }
+            { path: '**', redirectTo: 'welcome' }
         ])
-    ]
+    ],
+    exports: [RouterModule]
+
 })
 export class AppModuleShared {
 }

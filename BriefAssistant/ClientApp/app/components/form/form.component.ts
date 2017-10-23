@@ -182,10 +182,10 @@ interface Address {
 
 })
 @Component({
-    selector: 'form',
-    template: './form.component.html',
+    selector: 'dataForm',
+    templateUrl: './form.component.html',
    // viewProviders: [HttpModule],
-    styles: ['./form.component.css']
+    styleUrls: ['./form.component.css']
 })
 export class FormComponent {
     constructor(private http: Http) { } 
