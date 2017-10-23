@@ -1,6 +1,12 @@
-@media (max-width: 767px) {
-    /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */
-    .body-content {
-        padding-top: 50px;
-    }
+#formHeader {
+    padding-top: 10px;
+}
+
+.dropdowns {
+    height: 34px;
+}
+
+.outerDiv {
+    padding-left: 20px;
+    padding-top: 20px;
 }
