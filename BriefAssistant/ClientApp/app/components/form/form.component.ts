@@ -236,18 +236,41 @@ export class FormComponent {
 
     }
     constructor(private http: Http, private router: Router) { } 
-    onSubmitTemplateBased(form:NgForm) {
+    onSubmitTemplateBased(form: NgForm) {
+        let params = new URLSearchParams();
         console.log(form.value);
         console.log(this.appellant);
         console.log(this.address);
         console.log(this.briefInfo);
         console.log(this.circuitCourtCase);
+        var appJSON = JSON.stringify(this.appellant);
+        console.log(appJSON);
+        var addrJSON = JSON.stringify(this.address);
+        var briefJSON = JSON.stringify(this.briefInfo); 
+        var caseJSON = JSON.stringify(this.circuitCourtCase); 
+        params.append("BriefInfo", briefJSON);
+        params.append("Appellant", appJSON);
+        params.append("Address", addrJSON);
+        params.append("CircuitCourtCase", caseJSON);
+        
+
+        this.http.post('/api/GetMeSomeServerData', params).subscribe(
+            data => {
+                alert('ok');
+            },
+            error => {
+                console.log(JSON.stringify(error.json()))
+            }
+        )
         this.router.navigateByUrl('/final');
+        
+        
     }
     sendData(info: BriefInfo ) {
         let params = new URLSearchParams();
         var sendobj = JSON.stringify(info);
-        params.set("BriefInfo", sendobj);
+        params.append("BriefInfo", sendobj);
+        params.append("Appellant", sendobj);
 
         return this.http.post('/api', params).subscribe(
             data => {
