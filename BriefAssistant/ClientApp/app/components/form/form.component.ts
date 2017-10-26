@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgModule } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { HttpModule, URLSearchParams ,Http} from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -21,7 +23,7 @@ interface Appellant {
     phone: string;
 
 }
-enum State {
+export enum State {
     AK,
     AL,
     AR,
@@ -167,11 +169,11 @@ interface CircuitCourtCase {
 
 }
 interface Address {
-    Street: string;
-    Street2: string;
-    City: string;
-    State: State;
-    Zip: string;
+    street: string;
+    street2: string;
+    city: string;
+    state: State;
+    zip: string;
 
 }
 @NgModule({
@@ -188,7 +190,34 @@ interface Address {
     styleUrls: ['./form.component.css']
 })
 export class FormComponent {
-    constructor(private http: Http) { } 
+    formInfo: BriefInfo;
+    appellant: Appellant;
+    address: Address;
+    ngOnInit() {
+        //initialize form
+        this.appellant = {
+            firstName: "",
+            lastName: "",
+            email:"",
+            phone: ""
+
+        }
+        this.address= {
+            street: "",
+            street2:"",
+            city:"",
+            state: State.WI,
+            zip:"",
+
+        }
+    }
+    constructor(private http: Http, private router: Router) { } 
+    onSubmitTemplateBased(form:NgForm) {
+        console.log(form.value);
+        console.log(this.appellant.firstName);
+        console.log(this.address.state);
+        this.router.navigateByUrl('/final');
+    }
     sendData(info: BriefInfo ) {
         let params = new URLSearchParams();
         var sendobj = JSON.stringify(info);
