@@ -11,8 +11,16 @@ namespace BriefAssistant.Controllers
     {
         public IActionResult Index()
         {
+
             return View();
         }
+        [HttpPost]
+        public IActionResult GetMeSomeServerData(Object info)
+        {
+            System.Diagnostics.Debug.WriteLine(info);       
+            return null;
+        }
+
 
         public IActionResult Error()
         {
