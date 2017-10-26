@@ -172,8 +172,8 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="caseNumber" class="col-form-label" aria-describedby="caseNumberHelp">Case Number</label>
-            <input type="text" class="form-control" id="caseNumber" placeholder="00-XX-000" required>
+            <label for="caseNumber" class="col-form-label"  aria-describedby="caseNumberHelp">Case Number</label>
+            <input type="text" class="form-control" [(ngModel)]="circuitCourtCase.caseNumber" name="caseNumber" placeholder="00-XX-000" required>
             <small id="caseNumberHelp" class="form-text text-muted">
                 Your case numbers appears on the front page of the
                 final decision or order you are appealing
@@ -182,53 +182,53 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="judgeFname" class="col-form-label">Judge First Name</label>
-                <input type="text" class="form-control" id="judgeFname" placeholder="First Name" required>
+                <input type="text" class="form-control" [(ngModel)]="circuitCourtCase.judgeFirstName" name="judgeFirstname" placeholder="First Name" required>
             </div>
             <div class="form-group col-md-6">
                 <label for="judgeLname" class="col-form-label">Judge Last Name</label>
-                <input type="text" class="form-control" id="judgeLname" placeholder="Last Name" required>
+                <input type="text" class="form-control" [(ngModel)]="circuitCourtCase.judgeLastName" name="judgeLastname" placeholder="Last Name" required>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="opponentFname" class="col-form-label">Opponent First Name</label>
-                <input type="text" class="form-control" id="opponentFname" placeholder="First Name" required>
+                <input type="text" class="form-control" [(ngModel)]="circuitCourtCase.opponentFirstName" name="opponentFirstName" placeholder="First Name" required>
             </div>
             <div class="form-group col-md-6">
                 <label for="opponentLname" class="col-form-label">Oppponent Last Name</label>
-                <input type="text" class="form-control" id="opponentLname" placeholder="Last Name" required>
+                <input type="text" class="form-control" [(ngModel)]="circuitCourtCase.opponentLastName" name="opponentLastName" placeholder="Last Name" required>
             </div>
         </div>
         <fieldset class="form-group">
             <legend class="col-form-legend">In this case I was the</legend>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" type="radio" name="caseRole" value="Plaintiff-Appellant">Plaintiff-Appellant
+                    <input class="form-check-input" type="radio"  [(ngModel)]="circuitCourtCase.role" name="role" value="Plaintiff-Appellant">Plaintiff-Appellant
                 </label>
             </div>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" type="radio" name="caseRole" value="Plaintiff-Respondent">Plaintiff-Respondent
+                    <input class="form-check-input" type="radio"  [(ngModel)]="circuitCourtCase.role" name="role" value="Plaintiff-Respondent">Plaintiff-Respondent
                 </label>
             </div>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" type="radio" name="caseRole" value="Defendant-Appellant">Defendant-Appellant
+                    <input class="form-check-input" type="radio"  [(ngModel)]="circuitCourtCase.role" name="role" value="Defendant-Appellant">Defendant-Appellant
                 </label>
             </div>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" type="radio" name="caseRole" value="Defendent-Respondent">Defendent-Respondent
+                    <input class="form-check-input" type="radio" [(ngModel)]="circuitCourtCase.role" name="role" value="Defendent-Respondent">Defendent-Respondent
                 </label>
             </div>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" type="radio" name="caseRole" value="Plaintiff">Plaintiff
+                    <input class="form-check-input" type="radio"  [(ngModel)]="circuitCourtCase.role" name="role" value="Plaintiff">Plaintiff
                 </label>
             </div>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" type="radio" name="caseRole" value="Defendant">Defendant
+                    <input class="form-check-input"  type="radio"   [(ngModel)]="circuitCourtCase.role" name="role" value="Defendant">Defendant
                 </label>
             </div>
         </fieldset>
@@ -238,7 +238,7 @@
                 What are your
                 issues presented?
             </label>
-            <textarea class="form-control" id="issuesPresented" rows="8" required></textarea>
+            <textarea class="form-control" [(ngModel)]="briefInfo.issuesPresented" name="issuesPresented" rows="8" required></textarea>
             <small class="form-text text-muted" id="issuesPresentedHelp">
                 This section briefly describes the question(s)
                 that you want the Court of Appeals to decide. Usually, each Issue Presented will identify a mistake that
@@ -253,7 +253,7 @@
                 What is your statement
                 on oral argument?
             </label>
-            <textarea class="form-control" id="oralArgument" rows="8" required></textarea>
+            <textarea class="form-control" [(ngModel)]="briefInfo.oralArgumentStatement" name="oralArgumentStatement" rows="8" required></textarea>
             <small class="form-text text-muted" id="oralArgumentHelp">
                 The Statement on Oral Argument section explains
                 whether the Court of Appeals should hold a hearing where you and your opponent are allowed to speak.
@@ -273,7 +273,7 @@
                 What is your statement on
                 publication?
             </label>
-            <textarea class="form-control" id="publication" rows="8" required></textarea>
+            <textarea class="form-control" [(ngModel)]="briefInfo.publicationStatement" name="publicationStatement" rows="8" required></textarea>
             <small class="form-text text-muted" id="publicationHelp">
                 The Statement on Publication section states whether
                 you think the Court of Appeals should publish the decision in your case by printing it in a book that
@@ -292,7 +292,7 @@
                 What is your statement
                 of case and facts?
             </label>
-            <textarea class="form-control" id="caseAndFacts" rows="8" required></textarea>
+            <textarea class="form-control" [(ngModel)]="briefInfo.caseFactsStatement" name="caseFactsStatement" rows="8" required></textarea>
             <small class="form-text text-muted" id="caseAndFactsHelp">
                 The Statement of Case and Fact section describes the nature of the case and provides a short overview of
                 what happened at the circuit court level. It also presents the <b>relevant</b> facts—i.e only those
@@ -309,7 +309,7 @@
         </div>
         <div class="form-group">
             <label for="argument" class="col-form-label" aria-describedby="argumentHelp">What is your argument?</label>
-            <textarea class="form-control" id="argument" rows="8" required></textarea>
+            <textarea class="form-control" [(ngModel)]="briefInfo.argument" name="argument" rows="8" required></textarea>
             <small class="form-text text-muted" id="argumentHelp">
                 The Argument section should present each of the reasons you think the circuit court decided your case
                 incorrectly. You may have one reason or several reasons. You should list each reason as a one-sentence
@@ -328,7 +328,7 @@
                 What is your
                 argument?
             </label>
-            <textarea class="form-control" id="conclusion" rows="8" required></textarea>
+            <textarea class="form-control" [(ngModel)]="briefInfo.conclusion" name="conclusion" rows="8" required></textarea>
             <small class="form-text text-muted" id="conclusionHelp">
                 This section should be very short. It should simply tell the Court of Appeals what you want it to do.
                 For example, you might want the Court of Appeals to reverse the entire circuit court decision or only
@@ -344,7 +344,7 @@
                 Please list the documents that
                 you will include in the Appendix to your brief. List one document per line
             </label>
-            <textarea class="form-control" id="appendix" rows="8" required></textarea>
+            <textarea class="form-control" [(ngModel)]="briefInfo.appendexDocuments" name="appendexDocuments"rows="8" required></textarea>
             <small class="form-text text-muted" id="appendixHelp">
                 An Appendix is a set of documents that are essential to understanding the issues you have raised on
                 appeal. Your Appendix must include a copy of the circuit court decision(s) that you are appealing. If

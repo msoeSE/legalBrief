@@ -13,6 +13,7 @@ interface BriefInfo {
     publicationStatement: string;
     caseFactsStatement : string;
     argument: string;
+    conclusion: string;
     appendexDocuments:string
 }
 
@@ -190,11 +191,13 @@ interface Address {
     styleUrls: ['./form.component.css']
 })
 export class FormComponent {
-    formInfo: BriefInfo;
+    briefInfo: BriefInfo;
     appellant: Appellant;
     address: Address;
+    circuitCourtCase: CircuitCourtCase;
     ngOnInit() {
         //initialize form
+
         this.appellant = {
             firstName: "",
             lastName: "",
@@ -210,12 +213,35 @@ export class FormComponent {
             zip:"",
 
         }
+        this.circuitCourtCase = {
+            county: County.Milwaukee,
+            caseNumber:'',
+            role: Role.Defendent,
+            judgeFirstName:'',
+            judgeLastName: '',
+            opponentFirstName:'',
+            opponentLastName:''
+        }
+        this.briefInfo = {
+            appellant: this.appellant,
+            issuesPresented: "",
+            oralArgumentStatement: "",
+            publicationStatement: "",
+            caseFactsStatement: "",
+            argument: "",
+            conclusion:"",
+            appendexDocuments: ""
+
+        }
+
     }
     constructor(private http: Http, private router: Router) { } 
     onSubmitTemplateBased(form:NgForm) {
         console.log(form.value);
-        console.log(this.appellant.firstName);
-        console.log(this.address.state);
+        console.log(this.appellant);
+        console.log(this.address);
+        console.log(this.briefInfo);
+        console.log(this.circuitCourtCase);
         this.router.navigateByUrl('/final');
     }
     sendData(info: BriefInfo ) {
