@@ -247,7 +247,7 @@ export class FormComponent {
         params.append("BriefInfo", briefJSON);
 
 
-        this.http.post('/api/POST', params).subscribe(
+        this.http.post('/api/brief', params).subscribe(
             data => {
                 alert('ok');
             },
