@@ -22,6 +22,8 @@
 
   <ItemGroup>
     <None Include="wwwroot\files\sampleBrief.docx" />
+    <None Include="wwwroot\images\AppellatePracticeLogo.png" />
+    <None Include="wwwroot\images\wordDoc.png" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
