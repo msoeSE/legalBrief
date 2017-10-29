@@ -18,8 +18,8 @@ interface BriefInfo {
 }
 
 interface Appellant {
-    firstName: string;
-    lastName: string;
+    Name: string;
+
     email: string;
     phone: string;
 
@@ -163,8 +163,8 @@ interface CircuitCourtCase {
     role: Role;
     judgeFirstName: string;
     judgeLastName: string;
-    opponentFirstName: string;
-    opponentLastName: string;
+    opponentName: string;
+
 
 
 
@@ -199,8 +199,7 @@ export class FormComponent {
         //initialize form
 
         this.appellant = {
-            firstName: "",
-            lastName: "",
+            Name: "",
             email:"",
             phone: ""
 
@@ -219,8 +218,7 @@ export class FormComponent {
             role: Role.Defendent,
             judgeFirstName:'',
             judgeLastName: '',
-            opponentFirstName:'',
-            opponentLastName:''
+            opponentName:'',
         }
         this.briefInfo = {
             appellant: this.appellant,
