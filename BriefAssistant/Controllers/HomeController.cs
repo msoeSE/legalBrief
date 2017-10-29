@@ -14,14 +14,7 @@ namespace BriefAssistant.Controllers
 
             return View();
         }
-        [HttpPost]
-        public IActionResult GetMeSomeServerData(Object info)
-        {
-            System.Diagnostics.Debug.WriteLine(info);       
-            return null;
-        }
-
-
+       
         public IActionResult Error()
         {
             ViewData["RequestId"] = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
