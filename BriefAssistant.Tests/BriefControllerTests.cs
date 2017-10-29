@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using BriefAssistant.Controllers;
 using BriefAssistant.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
