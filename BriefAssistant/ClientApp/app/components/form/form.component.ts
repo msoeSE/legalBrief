@@ -254,7 +254,7 @@ export class FormComponent {
         params.append("CircuitCourtCase", caseJSON);
         
 
-        this.http.post('/api/GetMeSomeServerData', params).subscribe(
+        this.http.post('/api/POST', params).subscribe(
             data => {
                 alert('ok');
             },
