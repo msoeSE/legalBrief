@@ -7,11 +7,10 @@ namespace BriefAssistant
     public class SendEmail
     {
         private SmtpClient client;
-        private string password;
 
         public SendEmail()
         {
-            password = System.IO.File.ReadAllText("password.txt");
+            var password = System.IO.File.ReadAllText("password.txt");
 
             client = new SmtpClient("smtp.gmail.com", 587)
             {
@@ -39,7 +38,7 @@ namespace BriefAssistant
             MailMessage mailMessage = new MailMessage();
             mailMessage.From = new MailAddress("legalbriefassistant@gmail.com");
             mailMessage.To.Add(userEmail); //To be filled in with the users email.
-            mailMessage.Body = "Attached is your legal brief draft.";
+            mailMessage.Body = "Thank you for using the Legal Brief Assistant. Attached is a copy of your Legal Brief Draft.";
             mailMessage.Subject = "Your Legal Brief Draft";
             mailMessage.Attachments.Add(document);
             client.Send(mailMessage);
