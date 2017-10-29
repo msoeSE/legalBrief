@@ -89,7 +89,7 @@
     <h1>Case Information</h1>
     <div class="form-group">
         <label for="caseCounty" class="col-form-label">County</label>
-        <select class="form-control dropdowns" id="caseCounty">
+        <select class="form-control dropdowns" [(ngModel)]="circuitCourtCase.county" id="county" name="county">
             <option value="Adams">Adams</option>
             <option value="Ashland">Ashland</option>
             <option value="Barron">Barron</option>
@@ -107,13 +107,13 @@
             <option value="Door">Door</option>
             <option value="Douglas">Douglas</option>
             <option value="Dunn">Dunn</option>
-            <option value="EauClaire">Eau Claire</option>
+            <option value="Eau Claire">Eau Claire</option>
             <option value="Florence">Florence</option>
-            <option value="FondDuLac">Fond du Lac</option>
+            <option value="Fond du Lac">Fond du Lac</option>
             <option value="Forest">Forest</option>
             <option value="Grant">Grant</option>
             <option value="Green">Green</option>
-            <option value="GreenLake">Green Lake</option>
+            <option value="Green Lake">Green Lake</option>
             <option value="Iowa">Iowa</option>
             <option value="Iron">Iron</option>
             <option value="Jackson">Jackson</option>
@@ -121,7 +121,7 @@
             <option value="Juneau">Juneau</option>
             <option value="Kenosha">Kenosha</option>
             <option value="Kewaunee">Kewaunee</option>
-            <option value="LaCrosse">La Crosse</option>
+            <option value="La Crosse">La Crosse</option>
             <option value="Lafayette">Lafayette</option>
             <option value="Langlade">Langlade</option>
             <option value="Lincoln">Lincoln</option>
@@ -149,7 +149,7 @@
             <option value="Sawyer">Sawyer</option>
             <option value="Shawano">Shawano</option>
             <option value="Sheboygan">Sheboygan</option>
-            <option value="StCroix">St Croix</option>
+            <option value="St Croix">St Croix</option>
             <option value="Taylor">Taylor</option>
             <option value="Trempealeau">Trempealeau</option>
             <option value="Vernon">Vernon</option>
@@ -165,7 +165,7 @@
         </select>
     </div>
     <div class="form-group">
-        <label for="caseNumber" class="col-form-label"  aria-describedby="caseNumberHelp">Case Number</label>
+        <label for="caseNumber" class="col-form-label" aria-describedby="caseNumberHelp">Case Number</label>
         <input type="text" id="caseNumber" class="form-control" [(ngModel)]="circuitCourtCase.caseNumber" name="caseNumber" placeholder="00-XX-000" required>
         <small id="caseNumberHelp" class="form-text text-muted">
             Your case numbers appears on the front page of the final decision or order you are appealing. Example: "No. 01-CV-471."
@@ -188,30 +188,6 @@
     <div class="form-row">
         <fieldset>
             <legend>In your circuit court case, were you the plaintiff, defendant, petitioner or respondent?</legend>
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" type="radio" [(ngModel)]="circuitCourtCase.role" name="role" value="Plaintiff-Appellant">
-                    Plaintiff-Appellant
-                </label>
-            </div>
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" type="radio" [(ngModel)]="circuitCourtCase.role" name="role" value="Plaintiff-Respondent">
-                    Plaintiff-Respondent
-                </label>
-            </div>
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" type="radio" [(ngModel)]="circuitCourtCase.role" name="role" value="Defendant-Appellant">
-                    Defendant-Appellant
-                </label>
-            </div>
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" type="radio" [(ngModel)]="circuitCourtCase.role" name="role" value="Defendent-Respondent">
-                    Defendent-Respondent
-                </label>
-            </div>
             <div class="form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" type="radio" [(ngModel)]="circuitCourtCase.role" name="role" value="Plaintiff">
