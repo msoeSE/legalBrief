@@ -4,11 +4,11 @@ using System.Net.Mime;
 
 namespace BriefAssistant
 {
-    public class SendEmail
+    public class EmailService
     {
         private SmtpClient client;
 
-        public SendEmail()
+        public EmailService()
         {
             var password = System.IO.File.ReadAllText("password.txt");
 
@@ -25,7 +25,7 @@ namespace BriefAssistant
         /// </summary>
         /// <param name="userEmail">The address of the email being sent</param>
         /// <param name="filePath">The path for the legal brief draft</param>
-        public void SendUserEmail(string userEmail, string filePath)
+        public void SendEmail(string userEmail, string filePath)
         {
             // Create  the file attachment for this e-mail message.
             Attachment document = new Attachment(filePath, MediaTypeNames.Application.Octet);
