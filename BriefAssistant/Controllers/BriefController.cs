@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
@@ -13,7 +14,7 @@ namespace BriefAssistant.Controllers
     [Route("api/[controller]")]
     public class BriefController : Controller
     {
-        private const string TeplatePath = "TODO";
+        private const string TeplatePath = "./briefTemplate.docx";
         [HttpPost]
         public IActionResult Post([FromBody]BriefInfo value)
         {
@@ -22,14 +23,20 @@ namespace BriefAssistant.Controllers
                 return BadRequest(ModelState);
             }
 
-            var dataStream = new MemoryStream();
-            var serializer = new DataContractSerializer(typeof(BriefInfo));
-            using (var writer = XmlDictionaryWriter.CreateTextWriter(dataStream, Encoding.UTF8))
+            XElement data;
+            using (var dataStream = new MemoryStream())
             {
-                serializer.WriteObject(writer, value);
+                var serializer = new DataContractSerializer(typeof(BriefInfo));
+                using (var writer = XmlDictionaryWriter.CreateTextWriter(dataStream, Encoding.UTF8, false))
+                {
+                    serializer.WriteObject(writer, value);
+                }
+
+                Trace.Write(Encoding.UTF8.GetString(dataStream.ToArray()));
+
+                data = XElement.Load(dataStream);
             }
 
-            var data = XElement.Load(dataStream);
             var templateDoc = new WmlDocument(TeplatePath);
             var assembledDoc = DocumentAssembler.AssembleDocument(templateDoc, data, out bool isTemplateError);
             var briefId = Guid.NewGuid().ToString("N");
