@@ -79,7 +79,7 @@ export enum State {
 	WY
 }
 
-enum County {
+export enum County {
 	Adams,
 	Ashland,
 	Barron,
@@ -154,8 +154,8 @@ enum County {
 	Wood
 }
 
-enum Role {
-	Plantiff,
+export enum Role {
+	Plaintiff,
 	Defendent
 }
 
@@ -239,6 +239,8 @@ export class FormComponent {
 	onSubmitTemplateBased(form: NgForm) {
 		var body = JSON.stringify(this.briefInfo);
 		let headers = new Headers({ 'Content-Type': 'application/json' });
+
+		console.log(body);
 
 		this.http.post("/api/brief", body, {headers: headers}).subscribe(
 			data => {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BriefAssistant.Models
 {
-    [DataContract]
+    [DataContract(Namespace = "")]
     public enum County
     {
         [EnumMember]
@@ -156,23 +156,22 @@ namespace BriefAssistant.Models
         Wood
     }
 
-    [DataContract]
+    [DataContract(Namespace = "")]
     public enum Role
     {
         [EnumMember]
-        Plantiff,
+        Plaintiff,
         [EnumMember]
         Defendent
     }
 
-    [DataContract]
-    public class CircutCourtCase
+    [DataContract(Namespace = "")]
+    public class CircuitCourtCase
     {
         [Required]
         [DataMember]
         public County County { get; set; }
         [Required]
-        [RegularExpression(@"\A\d{4}[ \-]?[A-Za-z]{2}[ \-]?\d{6}")]
         [DataMember]
         public string CaseNumber { get; set; }
         [Required]

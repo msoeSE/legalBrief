@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BriefAssistant.Models
 {
-    [DataContract]
+    [DataContract(Namespace = "")]
     public enum State
     {
         [EnumMember]
@@ -114,14 +114,14 @@ namespace BriefAssistant.Models
         WY
     }
 
-    [DataContract]
+    [DataContract(Namespace = "")]
     public class Address
     {
         [Required]
         [DataMember]
         public string Street { get; set; }
         [DataMember]
-        public string Streee2 { get; set; }
+        public string Street2 { get; set; }
         [Required]
         [DataMember]
         public string City { get; set; }

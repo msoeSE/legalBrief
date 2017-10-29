@@ -33,7 +33,7 @@ namespace BriefAssistant.Tests
                     Phone = "123-456-7890"
                 },
 
-                CircutCourtCase = new CircutCourtCase
+                CircuitCourtCase = new CircuitCourtCase
                 {
                     CaseNumber = "2017AP0001",
                     County = County.Milwaukee,
@@ -44,7 +44,7 @@ namespace BriefAssistant.Tests
                 }
             };
 
-            var result = controller.Post(request);
+            var result = controller.GenerateDocument(request);
             Assert.IsType<CreatedResult>(result);
         }
     }

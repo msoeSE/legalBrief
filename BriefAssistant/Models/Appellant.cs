@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace BriefAssistant.Models
 {
-    [DataContract]
+    [DataContract(Namespace = "")]
     public class Appellant
     {
         [Required]

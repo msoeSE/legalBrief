@@ -7,32 +7,30 @@ using System.Threading.Tasks;
 
 namespace BriefAssistant.Models
 {
-    [DataContract]
+    [DataContract(Namespace = "")]
     public class BriefInfo
     {
-        
+        [DataMember]
+        public AppellateCase AppellateCase { get; set; }
         [Required]
         [DataMember]
         public Appellant Appellant { get; set; }
         [Required]
         [DataMember]
-        public CircutCourtCase CircutCourtCase { get; set; }
-        [Required]
+        public CircuitCourtCase CircuitCourtCase { get; set; }
         [DataMember]
         public string IssuesPresented { get; set; }
-        [Required]
         [DataMember]
         public string OralArgumentStatement { get; set; }
         [Required]
         [DataMember]
         public string PublicationStatement { get; set; }
-        [Required]
         [DataMember]
         public string CaseFactsStatement { get; set; }
-        [Required]
         [DataMember]
         public string Argument { get; set; }
-        [Required]
+        [DataMember]
+        public string Conclusion { get; set; }
         [DataMember]
         public string AppendexDocuments { get; set; }
     }
