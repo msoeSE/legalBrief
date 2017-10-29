@@ -1,363 +1,359 @@
-<div class="container">
-    <form #f="ngForm" (ngSubmit)="onSubmitTemplateBased(f)" >
-        <h1 id="formHeader">Your Information</h1>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="firstName" class="col-form-label">First Name</label>
-                <input type="text" class="form-control" [(ngModel)]="appellant.firstName" name="firstName" placeholder="John" required>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="lastName" class="col-form-label">Last Name</label>
-                <input type="text" class="form-control" [(ngModel)]="appellant.lastName" name="lastName" placeholder="Doe" required autocomplete="on">
-            </div>
+<form #f="ngForm" (ngSubmit)="onSubmitTemplateBased(f)">
+    <h1 id="formHeader">Your Information</h1>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="firstName" class="col-form-label">First Name</label>
+            <input type="text" class="form-control" [(ngModel)]="appellant.firstName" name="firstName" placeholder="John" required>
         </div>
-        <div class="form-group">
-            <label for="street" class="col-form-label">Address</label>
-            <input type="text" class="form-control" [(ngModel)]="address.street" name="street" placeholder="1234 Main St." required autocomplete="on">
+        <div class="form-group col-md-6">
+            <label for="lastName" class="col-form-label">Last Name</label>
+            <input type="text" class="form-control" [(ngModel)]="appellant.lastName" name="lastName" placeholder="Doe" required autocomplete="on">
         </div>
-        <div class="form-group">
-            <label for="street2" class="col-form-label">Address Line 2</label>
-            <input type="text" class="form-control" [(ngModel)]="address.street2" name="street2" placeholder="Apartment, studio, or floor" autocomplete="on">
+    </div>
+    <div class="form-group">
+        <label for="street" class="col-form-label">Address</label>
+        <input type="text" class="form-control" [(ngModel)]="address.street" name="street" placeholder="1234 Main St." required autocomplete="on">
+    </div>
+    <div class="form-group">
+        <label for="street2" class="col-form-label">Address Line 2</label>
+        <input type="text" class="form-control" [(ngModel)]="address.street2" name="street2" placeholder="Apartment, studio, or floor" autocomplete="on">
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="city" class="col-form-label">City</label>
+            <input type="text" class="form-control" [(ngModel)]="address.city" name="city" placeholder="City" required autocomplete="on">
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="city" class="col-form-label">City</label>
-                <input type="text" class="form-control" [(ngModel)]="address.city" name="city" placeholder="City" required autocomplete="on">
-            </div>
-            <div class="form-group col-md-4">
-                <label for="state" class="col-form-label">State</label>
-                <select id="state" [(ngModel)]="address.state" name="state" class="form-control dropdowns">
-                    <option value="AL">Alabama</option>
-                    <option value="AK">Alaska</option>
-                    <option value="AZ">Arizona</option>
-                    <option value="AR">Arkansas</option>
-                    <option value="CA">California</option>
-                    <option value="CO">Colorado</option>
-                    <option value="CT">Connecticut</option>
-                    <option value="DE">Delaware</option>
-                    <option value="DC">District Of Columbia</option>
-                    <option value="FL">Florida</option>
-                    <option value="GA">Georgia</option>
-                    <option value="HI">Hawaii</option>
-                    <option value="ID">Idaho</option>
-                    <option value="IL">Illinois</option>
-                    <option value="IN">Indiana</option>
-                    <option value="IA">Iowa</option>
-                    <option value="KS">Kansas</option>
-                    <option value="KY">Kentucky</option>
-                    <option value="LA">Louisiana</option>
-                    <option value="ME">Maine</option>
-                    <option value="MD">Maryland</option>
-                    <option value="MA">Massachusetts</option>
-                    <option value="MI">Michigan</option>
-                    <option value="MN">Minnesota</option>
-                    <option value="MS">Mississippi</option>
-                    <option value="MO">Missouri</option>
-                    <option value="MT">Montana</option>
-                    <option value="NE">Nebraska</option>
-                    <option value="NV">Nevada</option>
-                    <option value="NH">New Hampshire</option>
-                    <option value="NJ">New Jersey</option>
-                    <option value="NM">New Mexico</option>
-                    <option value="NY">New York</option>
-                    <option value="NC">North Carolina</option>
-                    <option value="ND">North Dakota</option>
-                    <option value="OH">Ohio</option>
-                    <option value="OK">Oklahoma</option>
-                    <option value="OR">Oregon</option>
-                    <option value="PA">Pennsylvania</option>
-                    <option value="RI">Rhode Island</option>
-                    <option value="SC">South Carolina</option>
-                    <option value="SD">South Dakota</option>
-                    <option value="TN">Tennessee</option>
-                    <option value="TX">Texas</option>
-                    <option value="UT">Utah</option>
-                    <option value="VT">Vermont</option>
-                    <option value="VA">Virginia</option>
-                    <option value="WA">Washington</option>
-                    <option value="WV">West Virginia</option>
-                    <option value="WI" selected>Wisconsin</option>
-                    <option value="WY">Wyoming</option>
-                </select>
-            </div>
-            <div class="form-group col-md-2">
-                <label for="zip" class="col-form-label">Zip</label>
-                <input type="number" class="form-control" [(ngModel)]="address.zip" name="zip" placeholder="12345" required autocomplete="on">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="phone" class="col-form-label">Phone</label>
-            <input type="tel" class="form-control" [(ngModel)]="appellant.phone" name="phone" placeholder="(123) 456-7890" required autocomplete="on">
-        </div>
-        <div class="form-group">
-            <label for="email" class="col-form-label">Email</label>
-            <input type="email" class="form-control" [(ngModel)]="appellant.email" name="email" placeholder="johndoe@example.com" required autocomplete="on">
-        </div>
-        <h1>Case Information</h1>
-        <div class="form-group">
-            <label for="caseCounty" class="col-form-label">County</label>
-            <select class="form-control dropdowns" id="caseCounty">
-                <option value="Adams">Adams</option>
-                <option value="Ashland">Ashland</option>
-                <option value="Barron">Barron</option>
-                <option value="Bayfield">Bayfield</option>
-                <option value="Brown">Brown</option>
-                <option value="Buffalo">Buffalo</option>
-                <option value="Burnett">Burnett</option>
-                <option value="Calumet">Calumet</option>
-                <option value="Chippewa">Chippewa</option>
-                <option value="Clark">Clark</option>
-                <option value="Columbia">Columbia</option>
-                <option value="Crawford">Crawford</option>
-                <option value="Dane">Dane</option>
-                <option value="Dodge">Dodge</option>
-                <option value="Door">Door</option>
-                <option value="Douglas">Douglas</option>
-                <option value="Dunn">Dunn</option>
-                <option value="Eau Claire">Eau Claire</option>
-                <option value="Florence">Florence</option>
-                <option value="Fond du Lac">Fond du Lac</option>
-                <option value="Forest">Forest</option>
-                <option value="Grant">Grant</option>
-                <option value="Green">Green</option>
-                <option value="Green Lake">Green Lake</option>
-                <option value="Iowa">Iowa</option>
-                <option value="Iron">Iron</option>
-                <option value="Jackson">Jackson</option>
-                <option value="Jefferson">Jefferson</option>
-                <option value="Juneau">Juneau</option>
-                <option value="Kenosha">Kenosha</option>
-                <option value="Kewaunee">Kewaunee</option>
-                <option value="La Crosse">La Crosse</option>
-                <option value="Lafayette">Lafayette</option>
-                <option value="Langlade">Langlade</option>
-                <option value="Lincoln">Lincoln</option>
-                <option value="Manitowoc">Manitowoc</option>
-                <option value="Marathon">Marathon</option>
-                <option value="Marinette">Marinette</option>
-                <option value="Marquette">Marquette</option>
-                <option value="Menominee">Menominee</option>
-                <option value="Milwaukee">Milwaukee</option>
-                <option value="Monroe">Monroe</option>
-                <option value="Oconto">Oconto</option>
-                <option value="Oneida">Oneida</option>
-                <option value="Outagamie">Outagamie</option>
-                <option value="Ozaukee">Ozaukee</option>
-                <option value="Pepin">Pepin</option>
-                <option value="Pierce">Pierce</option>
-                <option value="Polk">Polk</option>
-                <option value="Portage">Portage</option>
-                <option value="Price">Price</option>
-                <option value="Racine">Racine</option>
-                <option value="Richland">Richland</option>
-                <option value="Rock">Rock</option>
-                <option value="Rusk">Rusk</option>
-                <option value="Sauk">Sauk</option>
-                <option value="Sawyer">Sawyer</option>
-                <option value="Shawano">Shawano</option>
-                <option value="Sheboygan">Sheboygan</option>
-                <option value="St Croix">St Croix</option>
-                <option value="Taylor">Taylor</option>
-                <option value="Trempealeau">Trempealeau</option>
-                <option value="Vernon">Vernon</option>
-                <option value="Vilas">Vilas</option>
-                <option value="Walworth">Walworth</option>
-                <option value="Washburn">Washburn</option>
-                <option value="Washington">Washington</option>
-                <option value="Waukesha">Waukesha</option>
-                <option value="Waupaca">Waupaca</option>
-                <option value="Waushara">Waushara</option>
-                <option value="Winnebago">Winnebago</option>
-                <option value="Wood">Wood</option>
+        <div class="form-group col-md-4">
+            <label for="state" class="col-form-label">State</label>
+            <select id="state" [(ngModel)]="address.state" name="state" class="form-control dropdowns">
+                <option value="AL">Alabama</option>
+                <option value="AK">Alaska</option>
+                <option value="AZ">Arizona</option>
+                <option value="AR">Arkansas</option>
+                <option value="CA">California</option>
+                <option value="CO">Colorado</option>
+                <option value="CT">Connecticut</option>
+                <option value="DE">Delaware</option>
+                <option value="DC">District Of Columbia</option>
+                <option value="FL">Florida</option>
+                <option value="GA">Georgia</option>
+                <option value="HI">Hawaii</option>
+                <option value="ID">Idaho</option>
+                <option value="IL">Illinois</option>
+                <option value="IN">Indiana</option>
+                <option value="IA">Iowa</option>
+                <option value="KS">Kansas</option>
+                <option value="KY">Kentucky</option>
+                <option value="LA">Louisiana</option>
+                <option value="ME">Maine</option>
+                <option value="MD">Maryland</option>
+                <option value="MA">Massachusetts</option>
+                <option value="MI">Michigan</option>
+                <option value="MN">Minnesota</option>
+                <option value="MS">Mississippi</option>
+                <option value="MO">Missouri</option>
+                <option value="MT">Montana</option>
+                <option value="NE">Nebraska</option>
+                <option value="NV">Nevada</option>
+                <option value="NH">New Hampshire</option>
+                <option value="NJ">New Jersey</option>
+                <option value="NM">New Mexico</option>
+                <option value="NY">New York</option>
+                <option value="NC">North Carolina</option>
+                <option value="ND">North Dakota</option>
+                <option value="OH">Ohio</option>
+                <option value="OK">Oklahoma</option>
+                <option value="OR">Oregon</option>
+                <option value="PA">Pennsylvania</option>
+                <option value="RI">Rhode Island</option>
+                <option value="SC">South Carolina</option>
+                <option value="SD">South Dakota</option>
+                <option value="TN">Tennessee</option>
+                <option value="TX">Texas</option>
+                <option value="UT">Utah</option>
+                <option value="VT">Vermont</option>
+                <option value="VA">Virginia</option>
+                <option value="WA">Washington</option>
+                <option value="WV">West Virginia</option>
+                <option value="WI" selected>Wisconsin</option>
+                <option value="WY">Wyoming</option>
             </select>
         </div>
-        <div class="form-group">
-            <label for="caseNumber" class="col-form-label"  aria-describedby="caseNumberHelp">Case Number</label>
-            <input type="text" class="form-control" [(ngModel)]="circuitCourtCase.caseNumber" name="caseNumber" placeholder="00-XX-000" required>
-            <small id="caseNumberHelp" class="form-text text-muted">
-                Your case numbers appears on the front page of the
-                final decision or order you are appealing
-            </small>
+        <div class="form-group col-md-2">
+            <label for="zip" class="col-form-label">Zip</label>
+            <input type="number" class="form-control" [(ngModel)]="address.zip" name="zip" placeholder="12345" required autocomplete="on">
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="judgeFname" class="col-form-label">Judge First Name</label>
-                <input type="text" class="form-control" [(ngModel)]="circuitCourtCase.judgeFirstName" name="judgeFirstname" placeholder="First Name" required>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="judgeLname" class="col-form-label">Judge Last Name</label>
-                <input type="text" class="form-control" [(ngModel)]="circuitCourtCase.judgeLastName" name="judgeLastname" placeholder="Last Name" required>
-            </div>
+    </div>
+    <div class="form-group">
+        <label for="phone" class="col-form-label">Phone</label>
+        <input type="tel" class="form-control" [(ngModel)]="appellant.phone" name="phone" placeholder="(123) 456-7890" required autocomplete="on">
+    </div>
+    <div class="form-group">
+        <label for="email" class="col-form-label">Email</label>
+        <input type="email" class="form-control" [(ngModel)]="appellant.email" name="email" placeholder="johndoe@example.com" required autocomplete="on">
+    </div>
+    <h1>Case Information</h1>
+    <div class="form-group">
+        <label for="caseCounty" class="col-form-label">County</label>
+        <select class="form-control dropdowns" id="caseCounty">
+            <option value="Adams">Adams</option>
+            <option value="Ashland">Ashland</option>
+            <option value="Barron">Barron</option>
+            <option value="Bayfield">Bayfield</option>
+            <option value="Brown">Brown</option>
+            <option value="Buffalo">Buffalo</option>
+            <option value="Burnett">Burnett</option>
+            <option value="Calumet">Calumet</option>
+            <option value="Chippewa">Chippewa</option>
+            <option value="Clark">Clark</option>
+            <option value="Columbia">Columbia</option>
+            <option value="Crawford">Crawford</option>
+            <option value="Dane">Dane</option>
+            <option value="Dodge">Dodge</option>
+            <option value="Door">Door</option>
+            <option value="Douglas">Douglas</option>
+            <option value="Dunn">Dunn</option>
+            <option value="Eau Claire">Eau Claire</option>
+            <option value="Florence">Florence</option>
+            <option value="Fond du Lac">Fond du Lac</option>
+            <option value="Forest">Forest</option>
+            <option value="Grant">Grant</option>
+            <option value="Green">Green</option>
+            <option value="Green Lake">Green Lake</option>
+            <option value="Iowa">Iowa</option>
+            <option value="Iron">Iron</option>
+            <option value="Jackson">Jackson</option>
+            <option value="Jefferson">Jefferson</option>
+            <option value="Juneau">Juneau</option>
+            <option value="Kenosha">Kenosha</option>
+            <option value="Kewaunee">Kewaunee</option>
+            <option value="La Crosse">La Crosse</option>
+            <option value="Lafayette">Lafayette</option>
+            <option value="Langlade">Langlade</option>
+            <option value="Lincoln">Lincoln</option>
+            <option value="Manitowoc">Manitowoc</option>
+            <option value="Marathon">Marathon</option>
+            <option value="Marinette">Marinette</option>
+            <option value="Marquette">Marquette</option>
+            <option value="Menominee">Menominee</option>
+            <option value="Milwaukee">Milwaukee</option>
+            <option value="Monroe">Monroe</option>
+            <option value="Oconto">Oconto</option>
+            <option value="Oneida">Oneida</option>
+            <option value="Outagamie">Outagamie</option>
+            <option value="Ozaukee">Ozaukee</option>
+            <option value="Pepin">Pepin</option>
+            <option value="Pierce">Pierce</option>
+            <option value="Polk">Polk</option>
+            <option value="Portage">Portage</option>
+            <option value="Price">Price</option>
+            <option value="Racine">Racine</option>
+            <option value="Richland">Richland</option>
+            <option value="Rock">Rock</option>
+            <option value="Rusk">Rusk</option>
+            <option value="Sauk">Sauk</option>
+            <option value="Sawyer">Sawyer</option>
+            <option value="Shawano">Shawano</option>
+            <option value="Sheboygan">Sheboygan</option>
+            <option value="St Croix">St Croix</option>
+            <option value="Taylor">Taylor</option>
+            <option value="Trempealeau">Trempealeau</option>
+            <option value="Vernon">Vernon</option>
+            <option value="Vilas">Vilas</option>
+            <option value="Walworth">Walworth</option>
+            <option value="Washburn">Washburn</option>
+            <option value="Washington">Washington</option>
+            <option value="Waukesha">Waukesha</option>
+            <option value="Waupaca">Waupaca</option>
+            <option value="Waushara">Waushara</option>
+            <option value="Winnebago">Winnebago</option>
+            <option value="Wood">Wood</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="caseNumber" class="col-form-label" aria-describedby="caseNumberHelp">Case Number</label>
+        <input type="text" class="form-control" [(ngModel)]="circuitCourtCase.caseNumber" name="caseNumber" placeholder="00-XX-000" required>
+        <small id="caseNumberHelp" class="form-text text-muted">
+            Your case numbers appears on the front page of the final decision or order you are appealing. Example: "No. 01-CV-471."
+        </small>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="judgeFname" class="col-form-label">Judge First Name</label>
+            <input type="text" class="form-control" [(ngModel)]="circuitCourtCase.judgeFirstName" name="judgeFirstname" placeholder="First Name" required>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="opponentFname" class="col-form-label">Opponent First Name</label>
-                <input type="text" class="form-control" [(ngModel)]="circuitCourtCase.opponentFirstName" name="opponentFirstName" placeholder="First Name" required>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="opponentLname" class="col-form-label">Oppponent Last Name</label>
-                <input type="text" class="form-control" [(ngModel)]="circuitCourtCase.opponentLastName" name="opponentLastName" placeholder="Last Name" required>
-            </div>
+        <div class="form-group col-md-6">
+            <label for="judgeLname" class="col-form-label">Judge Last Name</label>
+            <input type="text" class="form-control" [(ngModel)]="circuitCourtCase.judgeLastName" name="judgeLastname" placeholder="Last Name" required>
         </div>
-        <fieldset class="form-group">
-            <legend class="col-form-legend">In this case I was the</legend>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="opponentFname" class="col-form-label">Opponent First Name</label>
+            <input type="text" class="form-control" [(ngModel)]="circuitCourtCase.opponentFirstName" name="opponentFirstName" placeholder="First Name" required>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="opponentLname" class="col-form-label">Oppponent Last Name</label>
+            <input type="text" class="form-control" [(ngModel)]="circuitCourtCase.opponentLastName" name="opponentLastName" placeholder="Last Name" required>
+        </div>
+    </div>
+    <div class="form-row">
+        <fieldset>
+            <legend>In your circuit court case, were you the plaintiff, defendant, petitioner or respondent?</legend>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" type="radio"  [(ngModel)]="circuitCourtCase.role" name="role" value="Plaintiff-Appellant">Plaintiff-Appellant
+                    <input class="form-check-input" type="radio" [(ngModel)]="circuitCourtCase.role" name="role" value="Plaintiff-Appellant">
+                    Plaintiff-Appellant
                 </label>
             </div>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" type="radio"  [(ngModel)]="circuitCourtCase.role" name="role" value="Plaintiff-Respondent">Plaintiff-Respondent
+                    <input class="form-check-input" type="radio" [(ngModel)]="circuitCourtCase.role" name="role" value="Plaintiff-Respondent">
+                    Plaintiff-Respondent
                 </label>
             </div>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" type="radio"  [(ngModel)]="circuitCourtCase.role" name="role" value="Defendant-Appellant">Defendant-Appellant
+                    <input class="form-check-input" type="radio" [(ngModel)]="circuitCourtCase.role" name="role" value="Defendant-Appellant">
+                    Defendant-Appellant
                 </label>
             </div>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" type="radio" [(ngModel)]="circuitCourtCase.role" name="role" value="Defendent-Respondent">Defendent-Respondent
+                    <input class="form-check-input" type="radio" [(ngModel)]="circuitCourtCase.role" name="role" value="Defendent-Respondent">
+                    Defendent-Respondent
                 </label>
             </div>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" type="radio"  [(ngModel)]="circuitCourtCase.role" name="role" value="Plaintiff">Plaintiff
+                    <input class="form-check-input" type="radio" [(ngModel)]="circuitCourtCase.role" name="role" value="Plaintiff">
+                    Plaintiff
                 </label>
             </div>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input"  type="radio"   [(ngModel)]="circuitCourtCase.role" name="role" value="Defendant">Defendant
+                    <input class="form-check-input" type="radio" [(ngModel)]="circuitCourtCase.role" name="role" value="Defendant">
+                    Defendant
                 </label>
             </div>
         </fieldset>
-        <h1>Brief Information</h1>
-        <div class="form-group">
-            <label for="issuesPresented" class="col-form-label" aria-describedby="issuesPresentedHelp">
-                What are your
-                issues presented?
-            </label>
-            <textarea class="form-control" [(ngModel)]="briefInfo.issuesPresented" name="issuesPresented" rows="8" required></textarea>
-            <small class="form-text text-muted" id="issuesPresentedHelp">
-                This section briefly describes the question(s)
-                that you want the Court of Appeals to decide. Usually, each Issue Presented will identify a mistake that
-                the circuit court made in your case. The Issues section is required by <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/1/b" target="_blank">
-                    Wis. Stat.
-                    §809.19(1)(b)
-                </a>.
-            </small>
-        </div>
-        <div class="form-group">
-            <label for="oralArgument" class="col-form-label" aria-describedby="oralArgumentHelp">
-                What is your statement
-                on oral argument?
-            </label>
-            <textarea class="form-control" [(ngModel)]="briefInfo.oralArgumentStatement" name="oralArgumentStatement" rows="8" required></textarea>
-            <small class="form-text text-muted" id="oralArgumentHelp">
-                The Statement on Oral Argument section explains
-                whether the Court of Appeals should hold a hearing where you and your opponent are allowed to speak.
-                Usually, the Court of Appeals does not hold oral argument. Instead, it decides an appeal after reading
-                the parties’ briefs. The factors that the Court of Appeals considers in deciding whether to hold oral
-                argument appear in <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/22" target="_blank">
-                    Wis. Stat.
-                    §809.22
-                </a>. The statement on Oral Argument section is required by <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/1/c" target="_blank">
-                    Wis. Stats.
-                    §809.19(1)(c)
-                </a>.
-            </small>
-        </div>
-        <div class="form-group">
-            <label for="publication" class="col-form-label" aria-describedby="publicationHelp">
-                What is your statement on
-                publication?
-            </label>
-            <textarea class="form-control" [(ngModel)]="briefInfo.publicationStatement" name="publicationStatement" rows="8" required></textarea>
-            <small class="form-text text-muted" id="publicationHelp">
-                The Statement on Publication section states whether
-                you think the Court of Appeals should publish the decision in your case by printing it in a book that
-                contains important decisions. The factors that the Court of Appeals considers in deciding whether to
-                publish its decision appear in <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/23" target="_blank">
-                    Wis.
-                    Stat. §809.23
-                </a>. The Statement on Publication section is required by <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/1/c" target="_blank">
-                    Wis. Stats.
-                    §809.19(1)(c)
-                </a>.
-            </small>
-        </div>
-        <div class="form-group">
-            <label for="caseAndFacts" class="col-form-label" aria-describedby="caseAndFactsHelp">
-                What is your statement
-                of case and facts?
-            </label>
-            <textarea class="form-control" [(ngModel)]="briefInfo.caseFactsStatement" name="caseFactsStatement" rows="8" required></textarea>
-            <small class="form-text text-muted" id="caseAndFactsHelp">
-                The Statement of Case and Fact section describes the nature of the case and provides a short overview of
-                what happened at the circuit court level. It also presents the <b>relevant</b> facts—i.e only those
-                facts needed to understand and decide your arguments. Write your Statement of Case and Facts in
-                chronological order. You may only refer to facts that were previously presented as evidence to the
-                circuit court; you may not present new evidence in your brief.
-                Each statement of fact must be followed by a citation to the Record on Appeal. For example, “R.35:26” is
-                a citation to Item No. 35 at page 26 in the Record on Appeal. The Statement of Case and Facts section is
-                required by <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/1/d" target="_blank">
-                    Wis. Stats.
-                    §809.19(1)(d)
-                </a>.
-            </small>
-        </div>
-        <div class="form-group">
-            <label for="argument" class="col-form-label" aria-describedby="argumentHelp">What is your argument?</label>
-            <textarea class="form-control" [(ngModel)]="briefInfo.argument" name="argument" rows="8" required></textarea>
-            <small class="form-text text-muted" id="argumentHelp">
-                The Argument section should present each of the reasons you think the circuit court decided your case
-                incorrectly. You may have one reason or several reasons. You should list each reason as a one-sentence
-                “argument heading” followed by several paragraphs explaining why you should win on that point.
-                Your Argument should refer to case law, statutes, constitutional provisions, and/or other regulations
-                that support your point. The Brief Assistant will direct you to websites where you can find these legal
-                resources. Your argument should be brief and clear. It should incorporate facts presented in the
-                Statement of Case and Facts. The Argument section is required by <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/1/d" target="_blank">
-                    Wis. Stats.
-                    §809.19(1)(d)
-                </a>.
-            </small>
-        </div>
-        <div class="form-group">
-            <label for="conclusion" class="col-form-label" aria-describedby="conclusionHelp">
-                What is your
-                argument?
-            </label>
-            <textarea class="form-control" [(ngModel)]="briefInfo.conclusion" name="conclusion" rows="8" required></textarea>
-            <small class="form-text text-muted" id="conclusionHelp">
-                This section should be very short. It should simply tell the Court of Appeals what you want it to do.
-                For example, you might want the Court of Appeals to reverse the entire circuit court decision or only
-                part of it. You might want the Court of Appeals to send your case back to the circuit court for a
-                hearing or a new trial. Be specific. The Conclusion section is required by <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/1/e" target="_blank">
-                    Wis. Stats.
-                    §809.19(1)(e)
-                </a>.
-            </small>
-        </div>
-        <div class="form-group">
-            <label for="appendix" class="col-form-label" aria-describedby="appendixHelp">
-                Please list the documents that
-                you will include in the Appendix to your brief. List one document per line
-            </label>
-            <textarea class="form-control" [(ngModel)]="briefInfo.appendexDocuments" name="appendexDocuments"rows="8" required></textarea>
-            <small class="form-text text-muted" id="appendixHelp">
-                An Appendix is a set of documents that are essential to understanding the issues you have raised on
-                appeal. Your Appendix must include a copy of the circuit court decision(s) that you are appealing. If
-                the circuit court explained its decision orally, then your Appendix must also include a copy of the
-                transcript showing the decision. Your Appendix may include additional documents relevant to your appeal,
-                but those documents must be part of the Record on Appeal--that is, documents that were first presented
-                to the circuit court. The Appendix is required by <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/2" target="_blank">
-                    Wis. Stats.
-                    §809.19(2)
-                </a>.
-            </small>
-        </div>
-        <button class="btn btn-primary" routerLink="/example" routerLinkActive="active">Back to Example</button>
-        <button class="btn btn-primary" type="submit"  [disabled]="!f.valid" >Generate Brief</button>
-    </form>
-</div>
+    </div>
+    <h1>Brief Information</h1>
+    <div class="form-group">
+        <label for="issuesPresented" class="col-form-label" aria-describedby="issuesPresentedHelp">
+            What are your issues presented?
+        </label>
+        <textarea class="form-control" [(ngModel)]="briefInfo.issuesPresented" name="issuesPresented" rows="8" required></textarea>
+        <small class="form-text text-muted" id="issuesPresentedHelp">
+            This section briefly describes the question(s)
+            that you want the Court of Appeals to decide. Usually, each Issue Presented will identify a mistake that
+            the circuit court made in your case. The Issues section is required by
+            <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/1/b" target="_blank">
+                Wis. Stat. &sect;809.19(1)(b)
+            </a>.
+        </small>
+    </div>
+    <div class="form-group">
+        <label for="oralArgument" class="col-form-label" aria-describedby="oralArgumentHelp">
+            What is your statement on oral argument?
+        </label>
+        <textarea class="form-control" [(ngModel)]="briefInfo.oralArgumentStatement" name="oralArgumentStatement" rows="8" required></textarea>
+        <small class="form-text text-muted" id="oralArgumentHelp">
+            The Statement on Oral Argument section explains
+            whether the Court of Appeals should hold a hearing where you and your opponent are allowed to speak.
+            Usually, the Court of Appeals does not hold oral argument. Instead, it decides an appeal after reading
+            the parties' briefs. The factors that the Court of Appeals considers in deciding whether to hold oral
+            argument appear in <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/22" target="_blank">
+                Wis. Stat. &sect;809.22
+            </a>.
+            The statement on Oral Argument section is required by <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/1/c" target="_blank">
+                Wis. Stat. &sect;809.19(1)(c)
+            </a>.
+        </small>
+    </div>
+    <div class="form-group">
+        <label for="publication" class="col-form-label" aria-describedby="publicationHelp">
+            What is your statement on publication?
+        </label>
+        <textarea class="form-control" [(ngModel)]="briefInfo.publicationStatement" name="publicationStatement" rows="8" required></textarea>
+        <small class="form-text text-muted" id="publicationHelp">
+            The Statement on Publication section states whether
+            you think the Court of Appeals should publish the decision in your case by printing it in a book that
+            contains important decisions. The factors that the Court of Appeals considers in deciding whether to
+            publish its decision appear in <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/23" target="_blank">
+                Wis. Stat. &sect;809.23
+            </a>.
+            The Statement on Publication section is required by <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/1/c" target="_blank">
+                Wis. Stat.&sect;809.19(1)(c)
+            </a>.
+        </small>
+    </div>
+    <div class="form-group">
+        <label for="caseAndFacts" class="col-form-label" aria-describedby="caseAndFactsHelp">
+            What is your statement of case and facts?
+        </label>
+        <textarea class="form-control" [(ngModel)]="briefInfo.caseFactsStatement" name="caseFactsStatement" rows="8" required></textarea>
+        <small class="form-text text-muted" id="caseAndFactsHelp">
+            The Statement of Case and Fact section describes the nature of the case and provides a short overview of
+            what happened at the circuit court level. It also presents the <b>relevant</b> facts - i.e only those
+            facts needed to understand and decide your arguments. Write your Statement of Case and Facts in
+            chronological order. You may only refer to facts that were previously presented as evidence to the
+            circuit court; you may not present new evidence in your brief.
+            Each statement of fact must be followed by a citation to the Record on Appeal. For example, "R.35:26" is
+            a citation to Item No. 35 at page 26 in the Record on Appeal. The Statement of Case and Facts section is
+            required by
+            <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/1/d" target="_blank">
+                Wis. Stat.&sect;809.19(1)(d)
+            </a>.
+        </small>
+    </div>
+    <div class="form-group">
+        <label for="argument" class="col-form-label" aria-describedby="argumentHelp">
+            What is your argument?
+        </label>
+        <textarea class="form-control" [(ngModel)]="briefInfo.argument" name="argument" rows="8" required></textarea>
+        <small class="form-text text-muted" id="argumentHelp">
+            The Argument section should present each of the reasons you think the circuit court decided your case
+            incorrectly. You may have one reason or several reasons. You should list each reason as a one-sentence
+            "argument heading" followed by several paragraphs explaining why you should win on that point.
+            Your Argument should refer to case law, statutes, constitutional provisions, and/or other regulations
+            that support your point. The Brief Assistant will direct you to websites where you can find these legal
+            resources. Your argument should be brief and clear. It should incorporate facts presented in the
+            Statement of Case and Facts. The Argument section is required by <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/1/d" target="_blank">
+                Wis. Stat. &sect;809.19(1)(d)
+            </a>.
+        </small>
+    </div>
+    <div class="form-group">
+        <label for="conclusion" class="col-form-label" aria-describedby="conclusionHelp">
+            What is your conclusion?
+        </label>
+        <textarea class="form-control" [(ngModel)]="briefInfo.conclusion" name="conclusion" rows="8" required></textarea>
+        <small class="form-text text-muted" id="conclusionHelp">
+            This section should be very short. It should simply tell the Court of Appeals what you want it to do.
+            For example, you might want the Court of Appeals to reverse the entire circuit court decision or only
+            part of it. You might want the Court of Appeals to send your case back to the circuit court for a
+            hearing or a new trial. Be specific. The Conclusion section is required by <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/1/e" target="_blank">
+                Wis. Stat. &sect;809.19(1)(e)
+            </a>.
+        </small>
+    </div>
+    <div class="form-group">
+        <label for="appendix" class="col-form-label" aria-describedby="appendixHelp">
+            Please list the documents that you will include in the Appendix to your brief. List one document per line
+        </label>
+        <textarea class="form-control" [(ngModel)]="briefInfo.appendexDocuments" name="appendexDocuments" rows="8" required></textarea>
+        <small class="form-text text-muted" id="appendixHelp">
+            An Appendix is a set of documents that are essential to understanding the issues you have raised on
+            appeal. Your Appendix must include a copy of the circuit court decision(s) that you are appealing. If
+            the circuit court explained its decision orally, then your Appendix must also include a copy of the
+            transcript showing the decision. Your Appendix may include additional documents relevant to your appeal,
+            but those documents must be part of the Record on Appeal--that is, documents that were first presented
+            to the circuit court. The Appendix is required by <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/2" target="_blank">
+                Wis. Stat. &sect;809.19(2)
+            </a>.
+        </small>
+    </div>
+    <button class="btn btn-primary" routerLink="/example" routerLinkActive="active">Back to Example</button>
+    <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Generate Brief</button>
+</form>

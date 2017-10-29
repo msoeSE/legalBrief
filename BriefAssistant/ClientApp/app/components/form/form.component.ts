@@ -14,11 +14,13 @@ interface BriefInfo {
     caseFactsStatement : string;
     argument: string;
     conclusion: string;
-    appendexDocuments:string
+    appendexDocuments: string;
+    circuitCourtCase: CircuitCourtCase
 }
 
 interface Appellant {
-    Name: string;
+    name: string;
+    address: Address
 
     email: string;
     phone: string;
@@ -197,21 +199,23 @@ export class FormComponent {
     circuitCourtCase: CircuitCourtCase;
     ngOnInit() {
         //initialize form
+        this.address = {
+            street: "",
+            street2: "",
+            city: "",
+            state: State.WI,
+            zip: "",
+
+        }
 
         this.appellant = {
-            Name: "",
+            name: "",
+            address: this.address,
             email:"",
             phone: ""
 
         }
-        this.address= {
-            street: "",
-            street2:"",
-            city:"",
-            state: State.WI,
-            zip:"",
-
-        }
+        
         this.circuitCourtCase = {
             county: County.Milwaukee,
             caseNumber:'',
@@ -228,7 +232,8 @@ export class FormComponent {
             caseFactsStatement: "",
             argument: "",
             conclusion:"",
-            appendexDocuments: ""
+            appendexDocuments: "",
+            circuitCourtCase: this.circuitCourtCase
 
         }
 
@@ -236,21 +241,11 @@ export class FormComponent {
     constructor(private http: Http, private router: Router) { } 
     onSubmitTemplateBased(form: NgForm) {
         let params = new URLSearchParams();
-        console.log(form.value);
-        console.log(this.appellant);
-        console.log(this.address);
-        console.log(this.briefInfo);
-        console.log(this.circuitCourtCase);
-        var appJSON = JSON.stringify(this.appellant);
-        console.log(appJSON);
-        var addrJSON = JSON.stringify(this.address);
+
+
         var briefJSON = JSON.stringify(this.briefInfo); 
-        var caseJSON = JSON.stringify(this.circuitCourtCase); 
         params.append("BriefInfo", briefJSON);
-        params.append("Appellant", appJSON);
-        params.append("Address", addrJSON);
-        params.append("CircuitCourtCase", caseJSON);
-        
+
 
         this.http.post('/api/POST', params).subscribe(
             data => {
@@ -264,23 +259,7 @@ export class FormComponent {
         
         
     }
-    sendData(info: BriefInfo ) {
-        let params = new URLSearchParams();
-        var sendobj = JSON.stringify(info);
-        params.append("BriefInfo", sendobj);
-        params.append("Appellant", sendobj);
-
-        return this.http.post('/api', params).subscribe(
-            data => {
-                alert('ok');
-            },
-            error => {
-                console.log(JSON.stringify(error.json()))
-            }
-        )
-
-
-    }
+   
     
 
 
