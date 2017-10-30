@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
@@ -16,11 +15,14 @@ namespace BriefAssistant.Controllers
     [Route("api/[controller]")]
     public class BriefController : Controller
     {
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private const string DocxMimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+        private readonly IHostingEnvironment _env;
 
-        public BriefController(IHostingEnvironment hostingEnvironment)
+        //TODO: JACOB ADD READONLY VARIABLE WITH EMAIL SERVICE HERE
+
+        public BriefController(IHostingEnvironment env)
         {
-            _hostingEnvironment = hostingEnvironment;
+            _env = env;
         }
 
         [HttpPost]
@@ -47,20 +49,19 @@ namespace BriefAssistant.Controllers
 
                 dataStream.Position = 0;
                 data = XElement.Load(dataStream);
-                Trace.WriteLine(data);
             }
 
-            var templateDoc = new WmlDocument(Path.Combine(_hostingEnvironment.ContentRootPath, "briefTemplate.docx"));
+            var templateDoc = new WmlDocument(_env.ContentRootFileProvider.GetFileInfo("briefTemplate.docx").PhysicalPath);
             var assembledDoc = DocumentAssembler.AssembleDocument(templateDoc, data, out bool isTemplateError);
-            var briefId = Guid.NewGuid().ToString("N");
-            assembledDoc.SaveAs(Path.Combine(_hostingEnvironment.ContentRootPath, $"briefs/{briefId}.docx"));
+            var id = Guid.NewGuid().ToString("N");
+            assembledDoc.SaveAs(Path.Combine(_env.ContentRootPath, $"briefs/{id}.docx"));
 
             var result = new BriefGenerationResult
             {
-                Id = briefId
+                Id = id
             };
 
-            return Created($"briefs/{briefId}.docx", result);
+            return Created($"briefs/download/{id}.docx", result);
         }
 
         private District GetDistrictFromCounty(County county)
@@ -149,19 +150,29 @@ namespace BriefAssistant.Controllers
         }
 
         [HttpGet("download/{id}")]
-        public IActionResult Download(string id)
+        public IActionResult DownloadBrief(string id)
         {
-            var briefPath = Path.Combine(_hostingEnvironment.ContentRootPath, $"briefs/{id}.docx");
+            var briefFileInfo = _env.ContentRootFileProvider.GetFileInfo($"briefs/{id}.docx");
+            if (briefFileInfo.Exists && !briefFileInfo.IsDirectory)
+            {
+                return PhysicalFile(briefFileInfo.PhysicalPath, DocxMimeType, "brief.docx");
+            }
+
+            return NotFound();
+        }
+
+        [HttpPost("email/{id}")]
+        public IActionResult EmailBrief(string id, [FromBody] EmailRequest emailRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                BadRequest(ModelState.ValidationState);
+            }
+
+            var briefPath = Path.Combine(_env.ContentRootPath, $"briefs/{id}.docx");
             if (System.IO.File.Exists(briefPath))
             {
-                try
-                {
-                    return PhysicalFile(briefPath, "application/octet-stream");
-                }
-                catch (ArgumentException)
-                {
-                    return BadRequest();
-                }
+                //TODO: JACOB ADD METHOD FOR EMAIL HERE
             }
 
             return NotFound();

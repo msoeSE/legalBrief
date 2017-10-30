@@ -28,7 +28,6 @@ import { ExampleComponent } from './components/example/example.component';
             { path: 'final', component: FinalComponent },
             { path: 'dataform', component: FormComponent },
             { path: 'example', component: ExampleComponent },
-            { path: '**', redirectTo: 'welcome' }
         ])
     ],
     exports: [RouterModule]
