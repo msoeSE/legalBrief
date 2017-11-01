@@ -9,7 +9,6 @@ import { FormComponent } from './components/form/form.component';
 import { FinalComponent } from './components/final/final.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { ExampleComponent } from './components/example/example.component';
-import { DataService } from "./components/data.service";
 
 @NgModule({
     declarations: [
@@ -18,9 +17,6 @@ import { DataService } from "./components/data.service";
         FinalComponent,
         WelcomeComponent,
         ExampleComponent
-    ],
-    providers: [
-        DataService
     ],
     imports: [
         CommonModule,
