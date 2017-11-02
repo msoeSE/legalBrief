@@ -39,7 +39,7 @@
 	Marinette = "Marinette",
 	Marquette = "Marquette",
 	Menominee = "Menominee",
-	Milwaukee = "Milaukee",
+	Milwaukee = "Milwaukee",
 	Monroe = "Monroe",
 	Oconto = "Oconto",
 	Oneida = "Oneida",
