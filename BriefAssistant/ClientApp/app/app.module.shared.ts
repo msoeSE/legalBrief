@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './components/app/app.component';
@@ -20,15 +19,13 @@ import { ExampleComponent } from './components/example/example.component';
     ],
     imports: [
         CommonModule,
-        HttpModule,
         FormsModule,
         RouterModule.forRoot([
             { path: 'welcome', component: WelcomeComponent},
             { path: '', redirectTo: '/welcome', pathMatch: 'full' },
-            { path: 'final', component: FinalComponent },
+            { path: 'final/:id', component: FinalComponent },
             { path: 'dataform', component: FormComponent },
             { path: 'example', component: ExampleComponent },
-            { path: '**', redirectTo: 'welcome' }
         ])
     ],
     exports: [RouterModule]

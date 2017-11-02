@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="OpenXmlPowerTools" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,9 +22,30 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\app\models\Address.ts" />
+    <None Remove="ClientApp\app\models\Appellant.ts" />
+    <None Remove="ClientApp\app\models\BriefInfo.ts" />
+    <None Remove="ClientApp\app\models\County.ts" />
+    <None Remove="ClientApp\app\models\Role.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\files\sampleBrief.docx" />
     <None Include="wwwroot\images\AppellatePracticeLogo.png" />
     <None Include="wwwroot\images\wordDoc.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="briefs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\app\models\Address.ts" />
+    <TypeScriptCompile Include="ClientApp\app\models\Appellant.ts" />
+    <TypeScriptCompile Include="ClientApp\app\models\BriefInfo.ts" />
+    <TypeScriptCompile Include="ClientApp\app\models\CircuitCourtCase.ts" />
+    <TypeScriptCompile Include="ClientApp\app\models\County.ts" />
+    <TypeScriptCompile Include="ClientApp\app\models\Role.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
