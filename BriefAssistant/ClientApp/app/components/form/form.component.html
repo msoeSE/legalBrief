@@ -20,7 +20,7 @@
         <div class="form-group col-md-4">
             <label for="state" class="col-form-label">State</label>
             <select id="state" [(ngModel)]="model.appellant.address.state" name="state" class="form-control">
-                <option *ngFor="let k of stateKeys" [value]="k" [label]="states[k]"></option>
+                <option *ngFor="let k of stateKeys" [value]="k">{{states[k]}}</option>
             </select>
         </div>
         <div class="form-group col-md-2">
@@ -40,7 +40,7 @@
     <div class="form-group">
         <label for="caseCounty" class="col-form-label">County</label>
         <select class="form-control" [(ngModel)]="model.circuitCourtCase.county" id="county" name="county">
-            <option *ngFor="let k of countyKeys" [value]="k" [label]="counties[k]"></option>
+            <option *ngFor="let k of countyKeys" [value]="k">{{counties[k]}}</option>
         </select>
     </div>
     <div class="form-group">
