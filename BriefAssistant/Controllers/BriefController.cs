@@ -18,7 +18,7 @@ namespace BriefAssistant.Controllers
         private const string DocxMimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
         private readonly IHostingEnvironment _env;
 
-        //TODO: JACOB ADD READONLY VARIABLE WITH EMAIL SERVICE HERE
+        private readonly EmailService emailService = new EmailService();
 
         public BriefController(IHostingEnvironment env)
         {
@@ -174,7 +174,7 @@ namespace BriefAssistant.Controllers
             var briefPath = Path.Combine(_env.ContentRootPath, $"briefs/{id}.docx");
             if (System.IO.File.Exists(briefPath))
             {
-                //TODO: JACOB ADD METHOD FOR EMAIL HERE
+                emailService.SendEmail(emailRequest.Email, briefPath);
             }
 
             return NotFound();
