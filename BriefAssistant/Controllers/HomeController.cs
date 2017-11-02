@@ -11,9 +11,10 @@ namespace BriefAssistant.Controllers
     {
         public IActionResult Index()
         {
+
             return View();
         }
-
+       
         public IActionResult Error()
         {
             ViewData["RequestId"] = Activity.Current?.Id ?? HttpContext.TraceIdentifier;

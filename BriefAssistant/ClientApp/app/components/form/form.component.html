@@ -1,0 +1,195 @@
+<form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <h1>Your Information</h1>
+    <div class="form-group">
+        <label for="name" class="col-form-label">Name</label>
+        <input type="text" id="name" class="form-control" [(ngModel)]="model.appellant.name" name="name" placeholder="John Doe" required>
+    </div>
+    <div class="form-group">
+        <label for="street" class="col-form-label">Address</label>
+        <input type="text" id="street" class="form-control" [(ngModel)]="model.appellant.address.street" name="street" placeholder="1234 Main St." required autocomplete="on">
+    </div>
+    <div class="form-group">
+        <label for="street2" class="col-form-label">Address Line 2</label>
+        <input type="text" id="street2" class="form-control" [(ngModel)]="model.appellant.address.street2" name="street2" placeholder="Apartment, studio, or floor" autocomplete="on">
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="city" class="col-form-label">City</label>
+            <input type="text" id="city" class="form-control" [(ngModel)]="model.appellant.address.city" name="city" placeholder="City" required autocomplete="on">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="state" class="col-form-label">State</label>
+            <select id="state" [(ngModel)]="model.appellant.address.state" name="state" class="form-control">
+                <option *ngFor="let k of stateKeys" [value]="k">{{states[k]}}</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="zip" class="col-form-label">Zip</label>
+            <input type="text" id="zip" class="form-control" [(ngModel)]="model.appellant.address.zip" name="zip" placeholder="12345" required autocomplete="on">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="phone" class="col-form-label">Phone</label>
+        <input type="tel" id="phone" class="form-control" [(ngModel)]="model.appellant.phone" name="phone" placeholder="(123) 456-7890" required autocomplete="on">
+    </div>
+    <div class="form-group">
+        <label for="email" class="col-form-label">Email</label>
+        <input type="email" id="email" class="form-control" [(ngModel)]="model.appellant.email" name="email" placeholder="johndoe@example.com" required autocomplete="on">
+    </div>
+    <h1>Case Information</h1>
+    <div class="form-group">
+        <label for="caseCounty" class="col-form-label">County</label>
+        <select class="form-control" [(ngModel)]="model.circuitCourtCase.county" id="county" name="county">
+            <option *ngFor="let k of countyKeys" [value]="k">{{counties[k]}}</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="caseNumber" class="col-form-label" aria-describedby="caseNumberHelp">Case Number</label>
+        <input type="text" id="caseNumber" class="form-control" [(ngModel)]="model.circuitCourtCase.caseNumber" name="caseNumber" placeholder="00-XX-000" required>
+        <small id="caseNumberHelp" class="form-text text-muted">
+            Your case numbers appears on the front page of the final decision or order you are appealing. Example: "No. 01-CV-471."
+        </small>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="judgeFname" class="col-form-label">Judge First Name</label>
+            <input type="text" id="judgeFname" class="form-control" [(ngModel)]="model.circuitCourtCase.judgeFirstName" name="judgeFirstname" placeholder="First Name" required>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="judgeLname" class="col-form-label">Judge Last Name</label>
+            <input type="text" id="judgeLname" class="form-control" [(ngModel)]="model.circuitCourtCase.judgeLastName" name="judgeLastname" placeholder="Last Name" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="opponentName" class="col-form-label">Opponent Name</label>
+        <input type="text" id="opponentName" class="form-control" [(ngModel)]="model.circuitCourtCase.opponentName" name="opponentName" placeholder="Opponent Name" required>
+    </div>
+    <div class="form-row">
+        <fieldset>
+            <legend>In your circuit court case, were you the plaintiff or defendant?</legend>
+            <div class="form-check" *ngFor="let k of roleKeys">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="radio" [(ngModel)]="model.circuitCourtCase.role" name="role" [value]="k">
+                {{roles[k]}}</label>
+            </div>
+        </fieldset>
+    </div>
+    <h1>Brief Information</h1>
+    <div class="form-group">
+        <label for="issuesPresented" class="col-form-label" aria-describedby="issuesPresentedHelp">
+            What are your issues presented?
+        </label>
+        <textarea id="issuesPresented" class="form-control" [(ngModel)]="model.issuesPresented" name="issuesPresented" rows="8" required></textarea>
+        <small class="form-text text-muted" id="issuesPresentedHelp">
+            This section briefly describes the question(s)
+            that you want the Court of Appeals to decide. Usually, each Issue Presented will identify a mistake that
+            the circuit court made in your case. The Issues section is required by
+            <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/1/b" target="_blank">
+                Wis. Stat. &sect;809.19(1)(b)
+            </a>.
+        </small>
+    </div>
+    <div class="form-group">
+        <label for="oralArgument" class="col-form-label" aria-describedby="oralArgumentHelp">
+            What is your statement on oral argument?
+        </label>
+        <textarea id="oralArgument" class="form-control" [(ngModel)]="model.oralArgumentStatement" name="oralArgumentStatement" rows="8" required></textarea>
+        <small class="form-text text-muted" id="oralArgumentHelp">
+            The Statement on Oral Argument section explains
+            whether the Court of Appeals should hold a hearing where you and your opponent are allowed to speak.
+            Usually, the Court of Appeals does not hold oral argument. Instead, it decides an appeal after reading
+            the parties' briefs. The factors that the Court of Appeals considers in deciding whether to hold oral
+            argument appear in <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/22" target="_blank">
+                Wis. Stat. &sect;809.22
+            </a>.
+            The statement on Oral Argument section is required by <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/1/c" target="_blank">
+                Wis. Stat. &sect;809.19(1)(c)
+            </a>.
+        </small>
+    </div>
+    <div class="form-group">
+        <label for="publication" class="col-form-label" aria-describedby="publicationHelp">
+            What is your statement on publication?
+        </label>
+        <textarea id="publication" class="form-control" [(ngModel)]="model.publicationStatement" name="publicationStatement" rows="8" required></textarea>
+        <small class="form-text text-muted" id="publicationHelp">
+            The Statement on Publication section states whether
+            you think the Court of Appeals should publish the decision in your case by printing it in a book that
+            contains important decisions. The factors that the Court of Appeals considers in deciding whether to
+            publish its decision appear in <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/23" target="_blank">
+                Wis. Stat. &sect;809.23
+            </a>.
+            The Statement on Publication section is required by <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/1/c" target="_blank">
+                Wis. Stat.&sect;809.19(1)(c)
+            </a>.
+        </small>
+    </div>
+    <div class="form-group">
+        <label for="caseAndFacts" class="col-form-label" aria-describedby="caseAndFactsHelp">
+            What is your statement of case and facts?
+        </label>
+        <textarea id="caseAndFacts" class="form-control" [(ngModel)]="model.caseFactsStatement" name="caseFactsStatement" rows="8" required></textarea>
+        <small class="form-text text-muted" id="caseAndFactsHelp">
+            The Statement of Case and Fact section describes the nature of the case and provides a short overview of
+            what happened at the circuit court level. It also presents the <b>relevant</b> facts - i.e only those
+            facts needed to understand and decide your arguments. Write your Statement of Case and Facts in
+            chronological order. You may only refer to facts that were previously presented as evidence to the
+            circuit court; you may not present new evidence in your brief.
+            Each statement of fact must be followed by a citation to the Record on Appeal. For example, "R.35:26" is
+            a citation to Item No. 35 at page 26 in the Record on Appeal. The Statement of Case and Facts section is
+            required by
+            <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/1/d" target="_blank">
+                Wis. Stat.&sect;809.19(1)(d)
+            </a>.
+        </small>
+    </div>
+    <div class="form-group">
+        <label for="argument" class="col-form-label" aria-describedby="argumentHelp">
+            What is your argument?
+        </label>
+        <textarea id="argument" class="form-control" [(ngModel)]="model.argument" name="argument" rows="8" required></textarea>
+        <small class="form-text text-muted" id="argumentHelp">
+            The Argument section should present each of the reasons you think the circuit court decided your case
+            incorrectly. You may have one reason or several reasons. You should list each reason as a one-sentence
+            "argument heading" followed by several paragraphs explaining why you should win on that point.
+            Your Argument should refer to case law, statutes, constitutional provisions, and/or other regulations
+            that support your point. The Brief Assistant will direct you to websites where you can find these legal
+            resources. Your argument should be brief and clear. It should incorporate facts presented in the
+            Statement of Case and Facts. The Argument section is required by <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/1/d" target="_blank">
+                Wis. Stat. &sect;809.19(1)(d)
+            </a>.
+        </small>
+    </div>
+    <div class="form-group">
+        <label for="conclusion" class="col-form-label" aria-describedby="conclusionHelp">
+            What is your conclusion?
+        </label>
+        <textarea id="conclusion" class="form-control" [(ngModel)]="model.conclusion" name="conclusion" rows="8" required></textarea>
+        <small class="form-text text-muted" id="conclusionHelp">
+            This section should be very short. It should simply tell the Court of Appeals what you want it to do.
+            For example, you might want the Court of Appeals to reverse the entire circuit court decision or only
+            part of it. You might want the Court of Appeals to send your case back to the circuit court for a
+            hearing or a new trial. Be specific. The Conclusion section is required by <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/1/e" target="_blank">
+                Wis. Stat. &sect;809.19(1)(e)
+            </a>.
+        </small>
+    </div>
+    <div class="form-group">
+        <label for="appendix" class="col-form-label" aria-describedby="appendixHelp">
+            Please list the documents that you will include in the Appendix to your brief. List one document per line
+        </label>
+        <textarea class="form-control" [(ngModel)]="model.appendexDocuments" name="appendexDocuments" rows="8" required></textarea>
+        <small class="form-text text-muted" id="appendixHelp">
+            An Appendix is a set of documents that are essential to understanding the issues you have raised on
+            appeal. Your Appendix must include a copy of the circuit court decision(s) that you are appealing. If
+            the circuit court explained its decision orally, then your Appendix must also include a copy of the
+            transcript showing the decision. Your Appendix may include additional documents relevant to your appeal,
+            but those documents must be part of the Record on Appeal--that is, documents that were first presented
+            to the circuit court. The Appendix is required by <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/2" target="_blank">
+                Wis. Stat. &sect;809.19(2)
+            </a>.
+        </small>
+    </div>
+    <button class="btn btn-primary" routerLink="/example" routerLinkActive="active">Back to Example</button>
+    <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Generate Brief</button>
+</form>
