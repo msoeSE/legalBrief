@@ -7,6 +7,12 @@
     <p>
         <a class="btn btn-success" href="/api/brief/download/{{id}}" download>Download</a>
     </p>
+    <form class="form-inline" #emailForm="ngForm" (ngSubmit)="onSubmit(emailForm)">
+        <div class="form-group">
+            <input type="email" id="email-send" class="form-control" [(ngModel)]="model.email" name="email" placeholder="johndoe@example.com">
+            <button class="btn btn-success" type="submit">Email</button>
+        </div>
+    </form>
 </div>
 <div>
     <p>
