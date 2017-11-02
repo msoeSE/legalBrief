@@ -1,3 +1,3 @@
-﻿export interface Email {
+﻿export class Email {
 	email: string;
 }

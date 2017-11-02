@@ -17,13 +17,15 @@ export class FinalComponent {
 		private route: ActivatedRoute
 	){}
 
-    private model: Email;
+    private model: Email = new Email();
 
     onSubmit(form: NgForm) {
         var body = JSON.stringify(this.model);
         let headers = new Headers({ 'Content-Type': 'application/json' });
 
-        this.http.post("/api/brief", body, { headers: headers });
+        this.http.post("/api/brief/email/" + this.id, body, { headers: headers }).subscribe(data => {
+            alert("Email Sent!");
+        });
     };
 
 	ngOnInit() {
