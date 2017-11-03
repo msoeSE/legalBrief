@@ -54,6 +54,9 @@
         <div class="form-group col-md-6">
             <label for="judgeFname" class="col-form-label">Judge First Name</label>
             <input type="text" id="judgeFname" class="form-control" [(ngModel)]="model.circuitCourtCase.judgeFirstName" name="judgeFirstname" placeholder="First Name" required>
+            <small id="judgeHelp" class="form-text text-muted">
+                The name of the judge is listed at the end of the decision, order, or judgment that you are appealing.
+            </small>
         </div>
         <div class="form-group col-md-6">
             <label for="judgeLname" class="col-form-label">Judge Last Name</label>
@@ -66,7 +69,7 @@
     </div>
     <div class="form-row">
         <fieldset>
-            <legend>In your circuit court case, were you the plaintiff or defendant?</legend>
+            <legend>In my circuit court case, I was the:</legend>
             <div class="form-check" *ngFor="let k of roleKeys">
                 <label class="form-check-label">
                     <input class="form-check-input" type="radio" [(ngModel)]="model.circuitCourtCase.role" name="role" [value]="k">
@@ -77,7 +80,7 @@
     <h1>Brief Information</h1>
     <div class="form-group">
         <label for="issuesPresented" class="col-form-label" aria-describedby="issuesPresentedHelp">
-            What are your issues presented?
+            What are your Issues Presented?
         </label>
         <textarea id="issuesPresented" class="form-control" [(ngModel)]="model.issuesPresented" name="issuesPresented" rows="8" required></textarea>
         <small class="form-text text-muted" id="issuesPresentedHelp">
@@ -91,7 +94,7 @@
     </div>
     <div class="form-group">
         <label for="oralArgument" class="col-form-label" aria-describedby="oralArgumentHelp">
-            What is your statement on oral argument?
+            What is your Statement on Oral Argument?
         </label>
         <textarea id="oralArgument" class="form-control" [(ngModel)]="model.oralArgumentStatement" name="oralArgumentStatement" rows="8" required></textarea>
         <small class="form-text text-muted" id="oralArgumentHelp">
@@ -109,7 +112,7 @@
     </div>
     <div class="form-group">
         <label for="publication" class="col-form-label" aria-describedby="publicationHelp">
-            What is your statement on publication?
+            What is your Statement on Publication?
         </label>
         <textarea id="publication" class="form-control" [(ngModel)]="model.publicationStatement" name="publicationStatement" rows="8" required></textarea>
         <small class="form-text text-muted" id="publicationHelp">
@@ -126,7 +129,7 @@
     </div>
     <div class="form-group">
         <label for="caseAndFacts" class="col-form-label" aria-describedby="caseAndFactsHelp">
-            What is your statement of case and facts?
+            What is your Statement of Case and Facts?
         </label>
         <textarea id="caseAndFacts" class="form-control" [(ngModel)]="model.caseFactsStatement" name="caseFactsStatement" rows="8" required></textarea>
         <small class="form-text text-muted" id="caseAndFactsHelp">
@@ -145,7 +148,7 @@
     </div>
     <div class="form-group">
         <label for="argument" class="col-form-label" aria-describedby="argumentHelp">
-            What is your argument?
+            What is your Argument?
         </label>
         <textarea id="argument" class="form-control" [(ngModel)]="model.argument" name="argument" rows="8" required></textarea>
         <small class="form-text text-muted" id="argumentHelp">
@@ -162,7 +165,7 @@
     </div>
     <div class="form-group">
         <label for="conclusion" class="col-form-label" aria-describedby="conclusionHelp">
-            What is your conclusion?
+            What is your Conclusion?
         </label>
         <textarea id="conclusion" class="form-control" [(ngModel)]="model.conclusion" name="conclusion" rows="8" required></textarea>
         <small class="form-text text-muted" id="conclusionHelp">
@@ -178,7 +181,7 @@
         <label for="appendix" class="col-form-label" aria-describedby="appendixHelp">
             Please list the documents that you will include in the Appendix to your brief. List one document per line
         </label>
-        <textarea class="form-control" [(ngModel)]="model.appendexDocuments" name="appendexDocuments" rows="8" required></textarea>
+        <textarea id="appendix" class="form-control" [(ngModel)]="model.appendexDocuments" name="appendexDocuments" rows="8" required></textarea>
         <small class="form-text text-muted" id="appendixHelp">
             An Appendix is a set of documents that are essential to understanding the issues you have raised on
             appeal. Your Appendix must include a copy of the circuit court decision(s) that you are appealing. If
