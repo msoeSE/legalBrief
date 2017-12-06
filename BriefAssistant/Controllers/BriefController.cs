@@ -5,7 +5,9 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
+using BriefAssistant.Extensions;
 using BriefAssistant.Models;
+using BriefAssistant.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using OpenXmlPowerTools;
@@ -17,12 +19,12 @@ namespace BriefAssistant.Controllers
     {
         private const string DocxMimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
         private readonly IHostingEnvironment _env;
+        private readonly IEmailSender _emailSender;
 
-        private readonly EmailService emailService = new EmailService();
-
-        public BriefController(IHostingEnvironment env)
+        public BriefController(IHostingEnvironment env, IEmailSender emailSender)
         {
             _env = env;
+            _emailSender = emailSender;
         }
 
         [HttpPost]
@@ -164,20 +166,21 @@ namespace BriefAssistant.Controllers
         }
 
         [HttpPost("email/{id}")]
-        public IActionResult EmailBrief(string id, [FromBody] EmailRequest emailRequest)
+        public IActionResult EmailBrief(string id, [FromBody] EmailRequest request)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                BadRequest(ModelState.ValidationState);
+                var briefPath = Path.Combine(_env.ContentRootPath, $"briefs/{id}.docx");
+                if (System.IO.File.Exists(briefPath))
+                {
+                    _emailSender.SendBriefAsync(request.Email, briefPath);
+                    return NoContent();
+                }
+
+                return NotFound();
             }
 
-            var briefPath = Path.Combine(_env.ContentRootPath, $"briefs/{id}.docx");
-            if (System.IO.File.Exists(briefPath))
-            {
-                emailService.SendEmail(emailRequest.Email, briefPath);
-            }
-
-            return NotFound();
+            return BadRequest();
         }
     }
 }
