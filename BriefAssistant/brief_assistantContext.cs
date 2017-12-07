@@ -27,6 +27,19 @@ namespace BriefAssistant
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.HasSequence("brief_info_initial_brief_id_seq", schema: "brief")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("case_info_case_id_seq", schema: "brief")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("user_info_user_id_seq", schema: "brief")
+                .HasMin(1)
+                .HasMax(2147483647);
+
             modelBuilder.Entity<Address>(entity =>
             {
                 entity.HasKey(e => e.UserId);
@@ -153,17 +166,6 @@ namespace BriefAssistant
 
             });
 
-            modelBuilder.HasSequence("brief_info_initial_brief_id_seq")
-                .HasMin(1)
-                .HasMax(2147483647);
-
-            modelBuilder.HasSequence("case_info_case_id_seq")
-                .HasMin(1)
-                .HasMax(2147483647);
-
-            modelBuilder.HasSequence("user_info_user_id_seq")
-                .HasMin(1)
-                .HasMax(2147483647);
         }
     }
 }
