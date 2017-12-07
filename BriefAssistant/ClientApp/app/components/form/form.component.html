@@ -41,7 +41,7 @@
         <div class="form-group col-md-4">
             <label for="state" class="col-form-label">State</label>
             <select id="state" [(ngModel)]="model.appellant.address.state" #state="ngModel" name="state" class="form-control" required>
-                <option *ngFor="let k of stateKeys" [value]="states[k]">{{states[k]}}</option>
+                <option *ngFor="let k of stateKeys" [value]="k">{{states[k]}}</option>
             </select>
             <div *ngIf="state.invalid && (state.dirty || state.touched)" class="alert alert-danger">
                 <div *ngIf="state.errors">
