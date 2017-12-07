@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
@@ -10,9 +11,12 @@ namespace BriefAssistant.Models
     [DataContract(Namespace = "")]
     public class BriefInfo
     {
+        public int InitialBriefId { get; set; }
+        public int CaseId { get; set; }
         [DataMember]
         public string Date { get; set; }
         [DataMember]
+        [NotMapped]
         public AppellateCase AppellateCase { get; set; }
         [Required]
         [DataMember]

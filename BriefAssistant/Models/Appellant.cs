@@ -6,6 +6,9 @@ namespace BriefAssistant.Models
     [DataContract(Namespace = "")]
     public class Appellant
     {
+        public int UserId { get; set; }
+        public int Password { get; set; }
+        public CircuitCourtCase CircuitCourtCase { get; set; }
         [Required]
         [DataMember]
         public string Name  { get; set; }

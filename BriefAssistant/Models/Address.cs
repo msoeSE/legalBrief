@@ -117,6 +117,7 @@ namespace BriefAssistant.Models
     [DataContract(Namespace = "")]
     public class Address
     {
+        public int UserId { get; set; }
         [Required]
         [DataMember]
         public string Street { get; set; }
@@ -133,5 +134,6 @@ namespace BriefAssistant.Models
         [RegularExpression(@"\A\d{5}(?:[ \-]\d{4})?")]
         [DataMember]
         public string Zip { get; set; }
+        public virtual Appellant Appellant { get; set; }
     }
 }

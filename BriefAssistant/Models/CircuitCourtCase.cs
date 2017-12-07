@@ -168,6 +168,8 @@ namespace BriefAssistant.Models
     [DataContract(Namespace = "")]
     public class CircuitCourtCase
     {
+        public int CaseId { get; set; }
+        public int UserId { get; set; }
         [Required]
         [DataMember]
         public County County { get; set; }
@@ -186,5 +188,8 @@ namespace BriefAssistant.Models
         [Required]
         [DataMember]
         public string OpponentName { get; set; }
+
+        public Appellant Appellant { get; set; }
+        public BriefInfo BriefInfo { get; set; }
     }
 }
