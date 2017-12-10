@@ -23,7 +23,7 @@ namespace BriefAssistant
         {
             services.AddMvc();
             services.AddSingleton<IHostingEnvironment>(Environment);
-            services.AddEntityFrameworkNpgsql().AddDbContext<brief_assistantContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("Database_Connection")));
+            services.AddEntityFrameworkNpgsql().AddDbContext<Brief_assistantContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("Database_Connection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -5,11 +5,11 @@ using BriefAssistant.Models;
 
 namespace BriefAssistant
 {
-    public partial class brief_assistantContext : DbContext
+    public partial class Brief_assistantContext : DbContext
     {
-        public brief_assistantContext(DbContextOptions<brief_assistantContext> options) : base(options) { }
+        public Brief_assistantContext(DbContextOptions<Brief_assistantContext> options) : base(options) { }
         public virtual DbSet<BriefInfo> BriefInfo { get; set; }
-        public virtual DbSet<CircuitCourtCase> CircuitCourtCase { get; set; }
+        public virtual DbSet<CircuitCourtCase> CaseInfo { get; set; }
         public virtual DbSet<Appellant> UserInfo { get; set; }
         public virtual DbSet<Address> Address { get; set; }
 
@@ -100,6 +100,12 @@ namespace BriefAssistant
                     .HasForeignKey<BriefInfo>(d => d.CaseId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("constraint_fkey");
+
+                entity.HasOne(d =>  d.Appellant)
+                    .WithOne(p => p.BriefInfo)
+                    .HasForeignKey<BriefInfo>(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("constraint_fkey_user");
             });
 
             modelBuilder.Entity<CircuitCourtCase>(entity =>

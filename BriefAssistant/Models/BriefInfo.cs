@@ -13,12 +13,14 @@ namespace BriefAssistant.Models
     {
         public int InitialBriefId { get; set; }
         public int CaseId { get; set; }
+        public int UserId { get; set; }
         [DataMember]
         public string Date { get; set; }
         [DataMember]
         [NotMapped]
         public AppellateCase AppellateCase { get; set; }
         [Required]
+        [NotMapped]
         [DataMember]
         public Appellant Appellant { get; set; }
         [Required]

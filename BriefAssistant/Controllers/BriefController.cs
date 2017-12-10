@@ -179,5 +179,10 @@ namespace BriefAssistant.Controllers
 
             return NotFound();
         }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
     }
 }
