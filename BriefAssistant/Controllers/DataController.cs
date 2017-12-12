@@ -5,8 +5,11 @@ using System.Threading.Tasks;
 using BriefAssistant.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using System.Runtime.Serialization;
 using Microsoft.AspNetCore.Mvc;
-
+using System.IO;
+using System.Runtime.Serialization.Json;
+using System.Text;
 
 namespace BriefAssistant.Controllers
 {
@@ -122,7 +125,7 @@ namespace BriefAssistant.Controllers
         }
 
        
-        [HttpGet("retrieve")]
+        [HttpPost("retrieve")]
         public IActionResult RetrieveInfo([FromBody]String email)
         {
 
@@ -179,7 +182,15 @@ namespace BriefAssistant.Controllers
                 PublicationStatement = brief.PublicationStatement
             };
 
-            return View(info);
+            MemoryStream ms = new MemoryStream();
+
+            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(BriefInfo));
+            ser.WriteObject(ms, info);
+            byte[] json = ms.ToArray();
+            ms.Close();
+            return Ok(Encoding.UTF8.GetString(json, 0, json.Length));
+
+
         }
         public IActionResult Index()
         {
