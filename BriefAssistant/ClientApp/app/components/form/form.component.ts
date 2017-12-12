@@ -38,11 +38,11 @@ export class FormComponent {
 		var body = JSON.stringify(this.model);
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 
-		this.http.post("/api/brief", body, { headers: headers })
-			.map(res => res.json())
-			.subscribe((data: BriefGenerationResult) => {
-					this.router.navigate(["/final", data.id]);
-				}
-			);	
+	    this.http.post("/api/brief", body, { headers: headers })
+	        .map(res => res.json())
+	        .subscribe((data: BriefGenerationResult) => {
+	                this.router.navigate(["/final", data.id]);
+	            }
+	        );
 	}
 }

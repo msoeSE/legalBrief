@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 namespace BriefAssistant.Models
 {
+    [DataContract(Namespace = "")]
     public class RegistrationRequest
     {
         [Required]

@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 namespace BriefAssistant.Models
 {
+    [DataContract(Namespace = "")]
     public class LoginRequest
     {
         [Required]
@@ -12,6 +14,6 @@ namespace BriefAssistant.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        public bool RemeberMe { get; set; }
+        public bool RememberMe { get; set; }
     }
 }

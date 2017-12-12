@@ -8,6 +8,8 @@ import { FormComponent } from './components/form/form.component';
 import { FinalComponent } from './components/final/final.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { ExampleComponent } from './components/example/example.component';
+import { LoginRegisterComponent } from "./components/loginRegister/loginRegister.component";
+import { AccountPageComponent } from "./components/accountPage/accountPage.component";
 
 @NgModule({
     declarations: [
@@ -15,17 +17,21 @@ import { ExampleComponent } from './components/example/example.component';
         FormComponent,
         FinalComponent,
         WelcomeComponent,
-        ExampleComponent
+        ExampleComponent,
+        LoginRegisterComponent,
+        AccountPageComponent
     ],
     imports: [
         CommonModule,
         FormsModule,
         RouterModule.forRoot([
-            { path: 'welcome', component: WelcomeComponent},
+            { path: 'welcome', component: WelcomeComponent },
             { path: '', redirectTo: '/welcome', pathMatch: 'full' },
             { path: 'final/:id', component: FinalComponent },
             { path: 'dataform', component: FormComponent },
             { path: 'example', component: ExampleComponent },
+            { path: 'loginRegister', component: LoginRegisterComponent },
+            { path: 'accountPage', component: AccountPageComponent }
         ])
     ],
     exports: [RouterModule]

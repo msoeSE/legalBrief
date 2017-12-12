@@ -86,7 +86,7 @@ namespace BriefAssistant.Controllers
             if (ModelState.IsValid)
             {
                 var result =
-                    await _signInManager.PasswordSignInAsync(request.Email, request.Password, request.RemeberMe, false);
+                    await _signInManager.PasswordSignInAsync(request.Email, request.Password, request.RememberMe, false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
