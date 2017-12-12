@@ -32,17 +32,31 @@ export class FormComponent {
 	constructor(
 		private readonly http: Http,
 		private readonly router: Router
-	) { }
+    ) { }
+    save(form: NgForm) {
+        var body = JSON.stringify(this.model);
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        this.http.post("/api/data/save", body, { headers: headers })
+            .map(res => res.json())
+            .subscribe(data => {
+                alert("create Sent!");
+            });
 
-	onSubmit(form: NgForm) {
-		var body = JSON.stringify(this.model);
-		let headers = new Headers({ 'Content-Type': 'application/json' });
 
-		this.http.post("/api/brief", body, { headers: headers })
-			.map(res => res.json())
-			.subscribe((data: BriefGenerationResult) => {
-					this.router.navigate(["/final", data.id]);
-				}
-			);	
-	}
+    }
+
+
+    generateBrief(form: NgForm) {
+        var body = JSON.stringify(this.model);
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+		
+        this.http.post("/api/brief", body, { headers: headers })
+            .map(res => res.json())
+            .subscribe((data: BriefGenerationResult) => {
+                this.save(form);
+                this.router.navigate(["/final", data.id]);
+            });	
+        
+    }
+
 }

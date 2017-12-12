@@ -1,39 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
 namespace BriefAssistant.Models
 {
-    [DataContract(Namespace = "")]
-    public class BriefInfo
+    public class DbbriefInfo
     {
-        [DataMember]
-        public string Date { get; set; }
-        [DataMember]
-        public AppellateCase AppellateCase { get; set; }
-        [Required]
-        [DataMember]
-        public Appellant Appellant { get; set; }
-        [Required]
-        [DataMember]
-        public CircuitCourtCase CircuitCourtCase { get; set; }
-        [DataMember]
+        public int InitialBriefId { get; set; }
+        public int CaseId { get; set; }
+        public int UserId { get; set; }
+        public DbCaseInfo CaseInfo { get; set; }
+        public DbUserInfo UserInfo { get; set; }
         public string IssuesPresented { get; set; }
-        [DataMember]
         public string OralArgumentStatement { get; set; }
-        [Required]
-        [DataMember]
         public string PublicationStatement { get; set; }
-        [DataMember]
         public string CaseFactsStatement { get; set; }
-        [DataMember]
         public string Argument { get; set; }
-        [DataMember]
         public string Conclusion { get; set; }
-        [DataMember]
         public string AppendexDocuments { get; set; }
     }
 }
