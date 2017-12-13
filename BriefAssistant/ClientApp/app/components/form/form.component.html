@@ -52,7 +52,7 @@
     </div>
     <div class="row">
         <div class="form-group col-md-6">
-            <label for="judgeFname" class="col-form-label">Judge First Name</label>
+            <label for="judgeFname" class="col-form-label" aria-describedby="judgeHelp">Judge First Name</label>
             <input type="text" id="judgeFname" class="form-control" [(ngModel)]="model.circuitCourtCase.judgeFirstName" name="judgeFirstname" placeholder="First Name" required>
             <small id="judgeHelp" class="form-text text-muted">
                 The name of the judge is listed at the end of the decision, order, or judgment that you are appealing.
