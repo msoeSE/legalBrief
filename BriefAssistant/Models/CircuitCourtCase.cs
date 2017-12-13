@@ -190,7 +190,6 @@ namespace BriefAssistant.Models
         [Required]
         [DataMember]
         public string OpponentName { get; set; }
-        [Required]
         [DataMember]
         public Role OpponentRole { get; set; }
     }
