@@ -128,67 +128,73 @@ namespace BriefAssistant.Controllers
         [HttpPost("retrieve")]
         public IActionResult RetrieveInfo([FromBody]String email)
         {
-
-            var user = _context.UserInfo
-                              .Where(b => b.Email == email)
-                              .FirstOrDefault();
-
-            var caseInfo = _context.CaseInfo
-                              .Where(b => b.UserId == user.UserId)
-                              .FirstOrDefault();
-
-      
-            
-            var brief = _context.BriefInfo
-                  .Where(b => b.UserId == user.UserId)
-                  .FirstOrDefault();
-            Address address = new Address
+            if (_context.UserInfo.Any(o => o.Email == email))
             {
-                City= user.City,
-                State = user.State,
-                Street = user.Street,
-                Street2 = user.Street2,
-                Zip = user.Zip
 
-            };
-            Appellant appellant = new Appellant
-            {
-                Address = address,
-                Phone = user.Phone,
-                Name = user.Name,
-                Email = user.Email,
-                
-            };
-            CircuitCourtCase circuitCourtCase = new CircuitCourtCase
-            {
-                CaseNumber = caseInfo.CaseNumber,
-                County = caseInfo.County,
-                JudgeFirstName = caseInfo.JudgeFirstName,
-                JudgeLastName = caseInfo.JudgeLastName,
-                OpponentName = caseInfo.OpponentName,
-                Role = caseInfo.Role,
-                
-            };
-            BriefInfo info = new BriefInfo
-            {
-                Appellant = appellant,
-                CircuitCourtCase = circuitCourtCase,
-                AppendexDocuments = brief.AppendexDocuments,
-                Argument = brief.Argument,
-                CaseFactsStatement = brief.CaseFactsStatement,
-                Conclusion = brief.Conclusion,
-                IssuesPresented = brief.IssuesPresented,
-                OralArgumentStatement = brief.OralArgumentStatement,
-                PublicationStatement = brief.PublicationStatement
-            };
+                var user = _context.UserInfo
+                                  .Where(b => b.Email == email)
+                                  .FirstOrDefault();
 
-            MemoryStream ms = new MemoryStream();
+                var caseInfo = _context.CaseInfo
+                                  .Where(b => b.UserId == user.UserId)
+                                  .FirstOrDefault();
 
-            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(BriefInfo));
-            ser.WriteObject(ms, info);
-            byte[] json = ms.ToArray();
-            ms.Close();
-            return Ok(Encoding.UTF8.GetString(json, 0, json.Length));
+
+
+                var brief = _context.BriefInfo
+                      .Where(b => b.UserId == user.UserId)
+                      .FirstOrDefault();
+                Address address = new Address
+                {
+                    City = user.City,
+                    State = user.State,
+                    Street = user.Street,
+                    Street2 = user.Street2,
+                    Zip = user.Zip
+
+                };
+                Appellant appellant = new Appellant
+                {
+                    Address = address,
+                    Phone = user.Phone,
+                    Name = user.Name,
+                    Email = user.Email,
+
+                };
+                CircuitCourtCase circuitCourtCase = new CircuitCourtCase
+                {
+                    CaseNumber = caseInfo.CaseNumber,
+                    County = caseInfo.County,
+                    JudgeFirstName = caseInfo.JudgeFirstName,
+                    JudgeLastName = caseInfo.JudgeLastName,
+                    OpponentName = caseInfo.OpponentName,
+                    Role = caseInfo.Role,
+
+                };
+                BriefInfo info = new BriefInfo
+                {
+                    Appellant = appellant,
+                    CircuitCourtCase = circuitCourtCase,
+                    AppendexDocuments = brief.AppendexDocuments,
+                    Argument = brief.Argument,
+                    CaseFactsStatement = brief.CaseFactsStatement,
+                    Conclusion = brief.Conclusion,
+                    IssuesPresented = brief.IssuesPresented,
+                    OralArgumentStatement = brief.OralArgumentStatement,
+                    PublicationStatement = brief.PublicationStatement
+                };
+
+                MemoryStream ms = new MemoryStream();
+
+                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(BriefInfo));
+                ser.WriteObject(ms, info);
+                byte[] json = ms.ToArray();
+                ms.Close();
+                return Ok(Encoding.UTF8.GetString(json, 0, json.Length));
+            }
+            else {
+                return NotFound();
+            }
 
 
         }

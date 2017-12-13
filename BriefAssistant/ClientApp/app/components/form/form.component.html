@@ -62,7 +62,7 @@
     </div>
     <div class="form-group">
         <label for="opponentName" class="col-form-label">Opponent Name</label>
-        <input type="text" id="opponentName" class="form-control" [(ngModel)]="model.circuitCourtCase.opponentName" name="opponentName" placeholder="Opponent Name" required>
+        <input type="text" id="opponentName" class="form-control" [(ngModel)]="model.circuitCourtCase.opponentName" name="opponentName" placeholder="Opponent Name" [value]="model.circuitCourtCase.opponentName" required>
     </div>
     <div class="form-row">
         <fieldset>
@@ -191,6 +191,6 @@
         </small>
     </div>
     <button class="btn btn-primary" routerLink="/example" routerLinkActive="active">Back to Example</button>
-    <button class="btn btn-primary" (click)="save(f)" [disabled]="!f.valid">Save And Finish Later</button>
+    <button class="btn btn-primary" (click)="save(f)">Save And Finish Later</button>
     <button class="btn btn-primary" (click)="generateBrief(f)" [disabled]="!f.valid">Generate Brief</button>
 </form>

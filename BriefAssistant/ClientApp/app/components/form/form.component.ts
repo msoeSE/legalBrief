@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { NgForm } from "@angular/forms";
-import { NgModule } from "@angular/core";
+import { NgModule, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 
 import { BrowserModule } from "@angular/platform-browser";
@@ -19,7 +19,7 @@ import 'rxjs/add/operator/map';
 	templateUrl: "./form.component.html"
 })
 
-export class FormComponent {
+export class FormComponent implements OnInit {
 	private states = State;
 	private stateKeys = Object.keys(State);
 	private counties = County;
@@ -33,13 +33,58 @@ export class FormComponent {
 		private readonly http: Http,
 		private readonly router: Router
     ) { }
+    ngOnInit() {
+        this.retrieve();
+        
+    }
     save(form: NgForm) {
         var body = JSON.stringify(this.model);
         let headers = new Headers({ 'Content-Type': 'application/json' });
         this.http.post("/api/data/save", body, { headers: headers })
             .map(res => res.json())
-            .subscribe(data => {
+            .subscribe(data => {               
                 alert("create Sent!");
+            });
+
+
+    }
+    retrieve() {
+        var body = JSON.stringify({ Email: "kungm@msoe.edu" });
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        this.http.post("/api/data/retrieve", body, { headers: headers })
+            .map(res => res.json())
+            .subscribe(data => {
+                this.model.appellant.address.city = String(data.Appellant.Address.City);
+                this.model.appellant.address.state = State[data.Appellant.Address.State as keyof typeof State];
+
+                this.model.appellant.address.street = String(data.Appellant.Address.Street);
+
+                this.model.appellant.address.street2 = String(data.Appellant.Address.Street2);
+                this.model.appellant.address.zip = String(data.Appellant.Address.Zip);
+                this.model.appellant.email = String(data.Appellant.Email);
+                this.model.appellant.name = String(data.Appellant.Name);
+                this.model.appellant.phone = String(data.Appellant.Phone);
+                alert(data.Appellant.Address.State);
+
+                this.model.appendexDocuments = String(data.AppendexDocuments);
+                this.model.argument = String(data.Argument);
+                this.model.caseFactsStatement = String(data.CaseFactsStatement);
+                this.model.circuitCourtCase.caseNumber = String(data.CircuitCourtCase.CaseNumber);
+                this.model.circuitCourtCase.county = County[data.CircuitCourtCase.County as keyof typeof County];
+
+                this.model.circuitCourtCase.judgeFirstName = String( data.CircuitCourtCase.JudgeFirstName);
+
+                this.model.circuitCourtCase.judgeLastName = String(data.CircuitCourtCase.JudgeLastName);
+                this.model.circuitCourtCase.role = Role[data.CircuitCourtCase.Role as keyof typeof Role];
+
+                this.model.circuitCourtCase.opponentName = String( data.CircuitCourtCase.OpponentName);
+
+
+
+                this.model.conclusion = String(data.Conclusion);
+                this.model.issuesPresented = String(data.IssuesPresented);
+                this.model.oralArgumentStatement = String(data.OralArgumentStatement);
+                this.model.publicationStatement = String(data.PublicationStatement);
             });
 
 
