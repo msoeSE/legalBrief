@@ -34,6 +34,6 @@ namespace BriefAssistant.Models
         [DataMember]
         public string Conclusion { get; set; }
         [DataMember]
-        public string AppendexDocuments { get; set; }
+        public string AppendixDocuments { get; set; }
     }
 }
