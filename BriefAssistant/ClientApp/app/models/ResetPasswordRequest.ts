@@ -1,13 +1,16 @@
 ﻿import { Email } from "./Email";
 
-export class LoginRequest {
+export class ResetPasswordRequest {
+
     email: string;
     password: string;
-    rememberMe: boolean;
+    confirmPassword: string;
+    code: string;
 
     constructor() {
         this.email = "";
         this.password = "";
-        this.rememberMe = false;
+        this.confirmPassword = "";
+        this.code = "";
     }
 }

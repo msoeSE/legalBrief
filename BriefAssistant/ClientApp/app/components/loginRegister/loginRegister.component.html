@@ -3,36 +3,39 @@
         <label class="col-form-label">Login:</label>
     </div>
     <div class="form-group form-inline">
-        <input class="form-control" id="loginEmail" type="text" [(ngModel)]="loginModel.email" placeholder="Email" required/>
+        <input class="form-control" id="loginEmail" type="email" [(ngModel)]="loginModel.email" name="loginEmail" placeholder="Email" required/>
         <small class="text-muted">This will be used to log in after the account is created.</small>
     </div>
     <div class="form-group form-inline">
-        <input class="form-control" id="loginPassword" type="password" [(ngModel)]="loginModel.password" placeholder="Password" required/>
+        <input class="form-control col-xs-4" id="loginPassword" type="password" [(ngModel)]="loginModel.password" name="loginPassword" placeholder="Password" required/>
         <input class="checkbox" type="checkbox" onchange="document.getElementById('loginPassword').type = this.checked ? 'text' : 'password'"/> Show Password
     </div>
     <div class="form-group form-inline">
-        <input class="checkbox" type="checkbox" id="rememberMeCheck" [(ngModel)]="loginModel.rememberMe"/>
+        <input class="checkbox" type="checkbox" id="rememberMeCheck" [(ngModel)]="loginModel.rememberMe" name="rememberMe"/>
         <label for="rememberMeCheck">Remember Me</label>
     </div>
     <div class="form-group">
-        <button type="submit" [disabled]="!loginForm.valid">Login</button>
+        <button class="btn btn-primary" type="submit" [disabled]="!loginForm.valid">Login</button>
     </div>
+    <button class="btn btn-primary" routerLink="/forgotPassword">Forgot your password?</button>
 </form>
 <hr/>
 <form #registerForm="ngForm" (ngSubmit)="onRegisterSubmit(registerForm)">
+    <div class="col-xs-4">
     <div class="form-group">
         <label class="col-form-label">Don't have an account? Register for free</label>
     </div>
     <div class="form-group">
-        <input class="form-control" id="registrationEmail" type="text" [(ngModel)]="registerModel.email" placeholder="Email" required/>
+        <input class="form-control" id="registrationEmail" type="email" [(ngModel)]="registerModel.email" name="registrationEmail" placeholder="Email" required/>
     </div>
     <div class="form-group">
-        <input class="form-control" id="registrationPassword" type="text" [(ngModel)]="registerModel.password" placeholder="Password" required/>
+        <input class="form-control" id="registrationPassword" type="text" [(ngModel)]="registerModel.password" name="password" placeholder="Password" required/>
     </div>
     <div class="form-group">
         <input class="form-control" id="registrationPasswordCheck" type="text" placeholder="Confirm Password" required/>
     </div>
     <div class="form-group">
-        <button type="submit" [disabled]="!registerForm.valid">Sign Up</button>
+        <button class="btn btn-primary" type="submit" [disabled]="!registerForm.valid">Sign Up</button>
+    </div>
     </div>
 </form>

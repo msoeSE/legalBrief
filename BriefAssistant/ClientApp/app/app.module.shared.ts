@@ -10,6 +10,8 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { ExampleComponent } from './components/example/example.component';
 import { LoginRegisterComponent } from "./components/loginRegister/loginRegister.component";
 import { AccountPageComponent } from "./components/accountPage/accountPage.component";
+import { ForgotPasswordComponent } from "./components/forgotPassword/forgotPassword.component";
+import { ResetPasswordComponent } from "./components/resetPassword/resetPassword.component";
 
 @NgModule({
     declarations: [
@@ -19,7 +21,9 @@ import { AccountPageComponent } from "./components/accountPage/accountPage.compo
         WelcomeComponent,
         ExampleComponent,
         LoginRegisterComponent,
-        AccountPageComponent
+        AccountPageComponent,
+        ForgotPasswordComponent,
+        ResetPasswordComponent
     ],
     imports: [
         CommonModule,
@@ -31,7 +35,9 @@ import { AccountPageComponent } from "./components/accountPage/accountPage.compo
             { path: 'dataform', component: FormComponent },
             { path: 'example', component: ExampleComponent },
             { path: 'loginRegister', component: LoginRegisterComponent },
-            { path: 'accountPage', component: AccountPageComponent }
+            { path: 'accountPage', component: AccountPageComponent },
+            { path: 'forgotPassword', component: ForgotPasswordComponent },
+            { path: 'resetPassword', component: ResetPasswordComponent }
         ])
     ],
     exports: [RouterModule]

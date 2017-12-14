@@ -1,3 +1,7 @@
 ﻿export class Email {
-	email: string;
+    email: string;
+
+    constructor() {
+        this.email = "";
+    }
 }

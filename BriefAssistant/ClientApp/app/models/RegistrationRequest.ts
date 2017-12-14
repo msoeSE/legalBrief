@@ -1,11 +1,11 @@
 ﻿import {Email} from "./Email";
 
 export class RegistrationRequest {
-    email: Email;
+    email: string;
     password: string;
 
     constructor() {
-        this.email = new Email();
+        this.email = "";
         this.password = "";
     }
 }

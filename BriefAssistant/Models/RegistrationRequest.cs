@@ -8,8 +8,10 @@ namespace BriefAssistant.Models
     {
         [Required]
         [EmailAddress]
+        [DataMember]
         public string Email { get; set; }
         [Required]
+        [DataMember]
         public string Password { get; set; }
     }
 }

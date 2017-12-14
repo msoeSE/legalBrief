@@ -29,9 +29,8 @@ namespace BriefAssistant.Controllers
             _logger = logger;
         }
 
-        [HttpPost]
+        [HttpPost("Register")]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register([FromBody] RegistrationRequest model)
         {
             if (ModelState.IsValid)
@@ -80,7 +79,6 @@ namespace BriefAssistant.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             if (ModelState.IsValid)
@@ -130,7 +128,6 @@ namespace BriefAssistant.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
         {
             if (ModelState.IsValid)
@@ -156,7 +153,6 @@ namespace BriefAssistant.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
