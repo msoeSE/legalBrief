@@ -280,9 +280,9 @@
         <label for="appendix" class="col-form-label" aria-describedby="appendixHelp">
             Please list the documents that you will include in the Appendix to your brief. List one document per line
         </label>
-        <textarea id="appendix" class="form-control" [(ngModel)]="model.appendexDocuments" #appendexDocuments="ngModel" name="appendexDocuments" rows="8" required></textarea>
-        <div *ngIf="appendexDocuments.invalid && (appendexDocuments.dirty || appendexDocuments.touched)" class="alert alert-danger" id="appendixDocuments-errors">
-            <div *ngIf="appendexDocuments.errors.required">
+        <textarea id="appendix" class="form-control" [(ngModel)]="model.appendixDocuments" #appendixDocuments="ngModel" name="appendixDocuments" rows="8" required></textarea>
+        <div *ngIf="appendixDocuments.invalid && (appendixDocuments.dirty || appendixDocuments.touched)" class="alert alert-danger" id="appendixDocuments-errors">
+            <div *ngIf="appendixDocuments.errors.required">
                 Appendix documents are required.
             </div>
         </div>
