@@ -104,7 +104,7 @@ namespace BriefAssistant.Controllers
 
         [HttpPost("ForgotPassword")]
         [AllowAnonymous]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword([FromBody]EmailRequest request)
         {
             if (ModelState.IsValid)

@@ -1,4 +1,4 @@
-﻿export class ResetPasswordRequest {
+export class ResetPasswordRequest {
 
     email: string;
     password: string;
