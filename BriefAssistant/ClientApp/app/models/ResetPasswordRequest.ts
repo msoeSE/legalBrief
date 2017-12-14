@@ -1,5 +1,3 @@
-﻿import { Email } from "./Email";
-
 export class ResetPasswordRequest {
 
     email: string;
