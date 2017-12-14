@@ -40,6 +40,8 @@ namespace BriefAssistant.Controllers
 
             value.Date = DateTime.Now.ToShortDateString();
 
+            value.CircuitCourtCase.OpponentRole = GetOpponentRole(value.CircuitCourtCase.Role);
+
             XElement data;
             using (var dataStream = new MemoryStream())
             {
@@ -64,6 +66,23 @@ namespace BriefAssistant.Controllers
             };
 
             return Created($"briefs/download/{id}.docx", result);
+        }
+
+        private Role GetOpponentRole(Role role)
+        {
+            switch (role)
+            {
+                case Role.Plaintiff:
+                    return Role.Defendent;
+                case Role.Defendent:
+                case Role.Petitioner:
+                    return Role.Respondent;
+                case Role.Respondent:
+                    return Role.Petitioner;
+                default:
+                    throw new InvalidEnumArgumentException(nameof(role), (int)role, typeof(Role));
+            }
+            
         }
 
         private District GetDistrictFromCounty(County county)

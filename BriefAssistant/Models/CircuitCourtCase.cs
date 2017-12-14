@@ -162,7 +162,11 @@ namespace BriefAssistant.Models
         [EnumMember]
         Plaintiff,
         [EnumMember]
-        Defendent
+        Defendent,
+        [EnumMember]
+        Respondent,
+        [EnumMember]
+        Petitioner
     }
 
     [DataContract(Namespace = "")]
@@ -186,5 +190,7 @@ namespace BriefAssistant.Models
         [Required]
         [DataMember]
         public string OpponentName { get; set; }
+        [DataMember]
+        public Role OpponentRole { get; set; }
     }
 }

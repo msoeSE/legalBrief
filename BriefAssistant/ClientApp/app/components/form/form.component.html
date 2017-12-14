@@ -106,13 +106,16 @@
     </div>
     <div class="row">
         <div class="form-group col-md-6">
-            <label for="judgeFname" class="col-form-label">Judge First Name</label>
+          <label for="judgeFname" class="col-form-label" aria-describedby="judgeHelp">Judge First Name</label>
             <input type="text" id="judgeFname" class="form-control" [(ngModel)]="model.circuitCourtCase.judgeFirstName" #judgeFirstName="ngModel" name="judgeFirstname" placeholder="First Name" required>
             <div *ngIf="judgeFirstName.invalid && (judgeFirstName.dirty || judgeFirstName.touched)" class="alert alert-danger" id="judgeFname-errors">
                 <div *ngIf="judgeFirstName.errors.required">
                     Name is required.
                 </div>
             </div>
+          <small id="judgeHelp" class="form-text text-muted">
+                The name of the judge is listed at the end of the decision, order, or judgment that you are appealing.
+          </small>
         </div>
         <div class="form-group col-md-6">
             <label for="judgeLname" class="col-form-label">Judge Last Name</label>
@@ -135,7 +138,7 @@
     </div>
     <div class="form-row">
         <fieldset>
-            <legend>In your circuit court case, were you the plaintiff or defendant?</legend>
+            <legend>In my circuit court case, I was the:</legend>
             <div class="form-check" *ngFor="let k of roleKeys">
                 <label class="form-check-label">
                     <input class="form-check-input" type="radio" [(ngModel)]="model.circuitCourtCase.role" name="role" [value]="k">
@@ -146,7 +149,7 @@
     <h1>Brief Information</h1>
     <div class="form-group">
         <label for="issuesPresented" class="col-form-label" aria-describedby="issuesPresentedHelp">
-            What are your issues presented?
+            What are your Issues Presented?
         </label>
         <textarea id="issuesPresented" class="form-control" [(ngModel)]="model.issuesPresented" #issuesPresented="ngModel" name="issuesPresented" rows="8" required></textarea>
         <div *ngIf="issuesPresented.invalid && (issuesPresented.dirty || issuesPresented.touched)" class="alert alert-danger" id="issuesPresented-errors">
@@ -165,7 +168,7 @@
     </div>
     <div class="form-group">
         <label for="oralArgument" class="col-form-label" aria-describedby="oralArgumentHelp">
-            What is your statement on oral argument?
+            What is your Statement on Oral Argument?
         </label>
         <textarea id="oralArgument" class="form-control" [(ngModel)]="model.oralArgumentStatement" #oralArgumentStatement="ngModel" name="oralArgumentStatement" rows="8" required></textarea>
         <div *ngIf="oralArgumentStatement.invalid && (oralArgumentStatement.dirty || oralArgumentStatement.touched)" class="alert alert-danger" id="oralArgumentStatement-errors">
@@ -188,7 +191,7 @@
     </div>
     <div class="form-group">
         <label for="publication" class="col-form-label" aria-describedby="publicationHelp">
-            What is your statement on publication?
+            What is your Statement on Publication?
         </label>
         <textarea id="publication" class="form-control" [(ngModel)]="model.publicationStatement" #publicationStatement="ngModel" name="publicationStatement" rows="8" required></textarea>
         <div *ngIf="publicationStatement.invalid && (publicationStatement.dirty || publicationStatement.touched)" class="alert alert-danger" id="publicationStatement-errors">
@@ -210,7 +213,7 @@
     </div>
     <div class="form-group">
         <label for="caseAndFacts" class="col-form-label" aria-describedby="caseAndFactsHelp">
-            What is your statement of case and facts?
+            What is your Statement of Case and Facts?
         </label>
         <textarea id="caseAndFacts" class="form-control" [(ngModel)]="model.caseFactsStatement" #caseFactsStatement="ngModel" name="caseFactsStatement" rows="8" required></textarea>
         <div *ngIf="caseFactsStatement.invalid && (caseFactsStatement.dirty || caseFactsStatement.touched)" class="alert alert-danger" id="caseFactsStatement-errors">
@@ -234,7 +237,7 @@
     </div>
     <div class="form-group">
         <label for="argument" class="col-form-label" aria-describedby="argumentHelp">
-            What is your argument?
+            What is your Argument?
         </label>
         <textarea id="argument" class="form-control" [(ngModel)]="model.argument" #argument="ngModel" name="argument" rows="8" required></textarea>
         <div *ngIf="argument.invalid && (argument.dirty || argument.touched)" class="alert alert-danger" id="argument-errors">
@@ -256,7 +259,7 @@
     </div>
     <div class="form-group">
         <label for="conclusion" class="col-form-label" aria-describedby="conclusionHelp">
-            What is your conclusion?
+            What is your Conclusion?
         </label>
         <textarea id="conclusion" class="form-control" [(ngModel)]="model.conclusion" #conclusion="ngModel" name="conclusion" rows="8" required></textarea>
         <div *ngIf="conclusion.invalid && (conclusion.dirty || conclusion.touched)" class="alert alert-danger" id="conclusion-errors">
@@ -277,7 +280,7 @@
         <label for="appendix" class="col-form-label" aria-describedby="appendixHelp">
             Please list the documents that you will include in the Appendix to your brief. List one document per line
         </label>
-        <textarea class="form-control" [(ngModel)]="model.appendexDocuments" #appendexDocuments="ngModel" name="appendexDocuments" rows="8" required></textarea>
+        <textarea id="appendix" class="form-control" [(ngModel)]="model.appendexDocuments" #appendexDocuments="ngModel" name="appendexDocuments" rows="8" required></textarea>
         <div *ngIf="appendexDocuments.invalid && (appendexDocuments.dirty || appendexDocuments.touched)" class="alert alert-danger" id="appendixDocuments-errors">
             <div *ngIf="appendexDocuments.errors.required">
                 Appendix documents are required.
