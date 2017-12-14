@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NgForm } from "@angular/forms";
 import { Http, Headers } from '@angular/http';
 
-import { Email } from "../../models/Email";
+import { EmailRequest } from "../../models/EmailRequest";
 
 @Component({
     selector: 'final',
@@ -17,7 +17,7 @@ export class FinalComponent {
 		private route: ActivatedRoute
 	){}
 
-    private model: Email = new Email();
+    private model = new EmailRequest();
 
     onSubmit(form: NgForm) {
         var body = JSON.stringify(this.model);

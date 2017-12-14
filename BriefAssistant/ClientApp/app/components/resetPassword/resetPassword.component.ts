@@ -16,6 +16,13 @@ export class ResetPasswordComponent {
     ) {}
 
     onSubmit(form: NgForm) {
-        
+        var body = JSON.stringify(this.model);
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+
+        this.http.post("/api/account/resetPassword", body, { headers: headers })
+            .map(res => res.json())
+            .subscribe(data => {
+                console.log(data);
+            });
     }
 }

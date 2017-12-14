@@ -1,4 +1,4 @@
-﻿export class Email {
+﻿export class EmailRequest {
     email: string;
 
     constructor() {

@@ -1,6 +1,4 @@
-﻿import {Email} from "./Email";
-
-export class RegistrationRequest {
+﻿export class RegistrationRequest {
     email: string;
     password: string;
 

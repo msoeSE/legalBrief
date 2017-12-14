@@ -1,6 +1,4 @@
-﻿import { Email } from "./Email";
-
-export class LoginRequest {
+﻿export class LoginRequest {
     email: string;
     password: string;
     rememberMe: boolean;

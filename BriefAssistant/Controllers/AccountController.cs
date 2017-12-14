@@ -50,7 +50,7 @@ namespace BriefAssistant.Controllers
                 AddErrors(result);
             }
 
-            return BadRequest(ModelState); //TODO
+            return BadRequest(ModelState);
         }
 
         [HttpGet]
@@ -77,7 +77,7 @@ namespace BriefAssistant.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpPost]
+        [HttpPost("Login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
@@ -102,10 +102,10 @@ namespace BriefAssistant.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpPost]
+        [HttpPost("ForgotPassword")]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ForgotPassword(EmailRequest request)
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword([FromBody]EmailRequest request)
         {
             if (ModelState.IsValid)
             {
@@ -126,9 +126,9 @@ namespace BriefAssistant.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpPost]
+        [HttpPost("ResetPassword")]
         [AllowAnonymous]
-        public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
+        public async Task<IActionResult> ResetPassword([FromBody]ResetPasswordRequest request)
         {
             if (ModelState.IsValid)
             {
@@ -152,7 +152,7 @@ namespace BriefAssistant.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpPost]
+        [HttpPost("Logout")]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
