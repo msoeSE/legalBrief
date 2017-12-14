@@ -50,7 +50,7 @@ namespace BriefAssistant.Controllers
                 AddErrors(result);
             }
 
-            return BadRequest(ModelState); //TODO
+            return BadRequest(ModelState);
         }
 
         [HttpGet]
