@@ -128,6 +128,7 @@ namespace BriefAssistant.Controllers
         [HttpPost("retrieve")]
         public IActionResult RetrieveInfo([FromBody]String email)
         {
+            email = "kungm@msoe.edu";
             if (_context.UserInfo.Any(o => o.Email == email))
             {
 
@@ -184,13 +185,8 @@ namespace BriefAssistant.Controllers
                     PublicationStatement = brief.PublicationStatement
                 };
 
-                MemoryStream ms = new MemoryStream();
+                return Json(info);
 
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(BriefInfo));
-                ser.WriteObject(ms, info);
-                byte[] json = ms.ToArray();
-                ms.Close();
-                return Ok(Encoding.UTF8.GetString(json, 0, json.Length));
             }
             else {
                 return NotFound();

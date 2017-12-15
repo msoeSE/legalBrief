@@ -2,11 +2,8 @@ import { Component } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { NgModule, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-
 import { BrowserModule } from "@angular/platform-browser";
 import { Http, Headers } from '@angular/http';
-
-
 import { BriefInfo } from "../../models/BriefInfo";
 import { State } from "../../models/State";
 import { County } from "../../models/County";
@@ -26,13 +23,13 @@ export class FormComponent implements OnInit {
 	private countyKeys = Object.keys(County);
 	private roles = Role;
 	private roleKeys = Object.keys(Role);
-	private model = new BriefInfo();
-
+    private model = new BriefInfo();
 
 	constructor(
 		private readonly http: Http,
 		private readonly router: Router
     ) { }
+
     ngOnInit() {
         this.retrieve();
         
@@ -42,59 +39,34 @@ export class FormComponent implements OnInit {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         this.http.post("/api/data/save", body, { headers: headers })
             .map(res => res.json())
-            .subscribe(data => {               
+            .subscribe(data => {
                 alert("create Sent!");
             });
-
-
     }
+ 
     retrieve() {
         var body = JSON.stringify({ Email: "kungm@msoe.edu" });
         let headers = new Headers({ 'Content-Type': 'application/json' });
         this.http.post("/api/data/retrieve", body, { headers: headers })
             .map(res => res.json())
-            .subscribe(data => {
-                this.model.appellant.address.city = String(data.Appellant.Address.City);
-                this.model.appellant.address.state = State[data.Appellant.Address.State as keyof typeof State];
-
-                this.model.appellant.address.street = String(data.Appellant.Address.Street);
-
-                this.model.appellant.address.street2 = String(data.Appellant.Address.Street2);
-                this.model.appellant.address.zip = String(data.Appellant.Address.Zip);
-                this.model.appellant.email = String(data.Appellant.Email);
-                this.model.appellant.name = String(data.Appellant.Name);
-                this.model.appellant.phone = String(data.Appellant.Phone);
-                alert(data.Appellant.Address.State);
-
-                this.model.appendexDocuments = String(data.AppendexDocuments);
-                this.model.argument = String(data.Argument);
-                this.model.caseFactsStatement = String(data.CaseFactsStatement);
-                this.model.circuitCourtCase.caseNumber = String(data.CircuitCourtCase.CaseNumber);
-                this.model.circuitCourtCase.county = County[data.CircuitCourtCase.County as keyof typeof County];
-
-                this.model.circuitCourtCase.judgeFirstName = String( data.CircuitCourtCase.JudgeFirstName);
-
-                this.model.circuitCourtCase.judgeLastName = String(data.CircuitCourtCase.JudgeLastName);
-                this.model.circuitCourtCase.role = Role[data.CircuitCourtCase.Role as keyof typeof Role];
-
-                this.model.circuitCourtCase.opponentName = String( data.CircuitCourtCase.OpponentName);
-
-
-
-                this.model.conclusion = String(data.Conclusion);
-                this.model.issuesPresented = String(data.IssuesPresented);
-                this.model.oralArgumentStatement = String(data.OralArgumentStatement);
-                this.model.publicationStatement = String(data.PublicationStatement);
+            .subscribe((data: BriefInfo) => {
+                this.model = data;
+                var countyVal: County = (<any>County)[this.countyKeys[parseInt(data.circuitCourtCase.county.toString())]];
+                alert(data.circuitCourtCase.county);
+                this.model.circuitCourtCase.county = countyVal;
+                var stateVal: State = (<any>State)[this.stateKeys[parseInt(data.appellant.address.state.toString())]];
+                this.model.appellant.address.state = stateVal;
+                alert(State[stateVal]);                              
+                this.model.appellant.address.state = (<any>State)[this.stateKeys[data.Appellant.Address.State]];
             });
-
-
     }
-
+    updateCounty(county: County) {
+        this.model.circuitCourtCase.county = county;
+    }
 
     generateBrief(form: NgForm) {
         var body = JSON.stringify(this.model);
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-		
+        let headers = new Headers({ 'Content-Type': 'application/json' });		
         this.http.post("/api/brief", body, { headers: headers })
             .map(res => res.json())
             .subscribe((data: BriefGenerationResult) => {
