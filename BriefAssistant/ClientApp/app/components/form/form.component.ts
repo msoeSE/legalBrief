@@ -51,13 +51,7 @@ export class FormComponent implements OnInit {
             .map(res => res.json())
             .subscribe((data: BriefInfo) => {
                 this.model = data;
-                var countyVal: County = (<any>County)[this.countyKeys[parseInt(data.circuitCourtCase.county.toString())]];
-                alert(data.circuitCourtCase.county);
-                this.model.circuitCourtCase.county = countyVal;
-                var stateVal: State = (<any>State)[this.stateKeys[parseInt(data.appellant.address.state.toString())]];
-                this.model.appellant.address.state = stateVal;
-                alert(State[stateVal]);                              
-                this.model.appellant.address.state = (<any>State)[this.stateKeys[data.Appellant.Address.State]];
+
             });
     }
     updateCounty(county: County) {
