@@ -20,6 +20,9 @@ namespace BriefAssistant.Models
         [Required]
         [DataMember]
         public CircuitCourtCase CircuitCourtCase { get; set; }
+        [Required]
+        [DataMember]
+        public string AppellateCourtCaseNumber { get; set; }
         [DataMember]
         public string IssuesPresented { get; set; }
         [DataMember]

@@ -2,7 +2,8 @@
 import { CircuitCourtCase } from "./CircuitCourtCase";
 
 export class BriefInfo {
-	circuitCourtCase: CircuitCourtCase;
+    circuitCourtCase: CircuitCourtCase;
+    appellateCourtCaseNumber: string;
 	appendixDocuments: string;
 	conclusion: string;
 	caseFactsStatement: string;
@@ -13,7 +14,8 @@ export class BriefInfo {
 	appellant: Appellant;
 
 	constructor() {
-		this.circuitCourtCase = new CircuitCourtCase();
+        this.circuitCourtCase = new CircuitCourtCase();
+        this.appellateCourtCaseNumber = "";
 		this.appendixDocuments = "";
 		this.conclusion = "";
 		this.caseFactsStatement = "";
