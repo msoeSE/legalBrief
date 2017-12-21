@@ -126,14 +126,14 @@ namespace BriefAssistant.Controllers
 
        
         [HttpPost("retrieve")]
-        public IActionResult RetrieveInfo([FromBody]String email)
+        public IActionResult RetrieveInfo([FromBody]EmailRequest email)
         {
-            email = "kungm@msoe.edu";
-            if (_context.UserInfo.Any(o => o.Email == email))
+            email.Email = "123@msoe.edu";
+            if (_context.UserInfo.Any(o => o.Email == email.Email))
             {
 
                 var user = _context.UserInfo
-                                  .Where(b => b.Email == email)
+                                  .Where(b => b.Email == email.Email)
                                   .FirstOrDefault();
 
                 var caseInfo = _context.CaseInfo
