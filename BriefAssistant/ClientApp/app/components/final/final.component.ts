@@ -17,7 +17,7 @@ export class FinalComponent {
 		private route: ActivatedRoute
 	){}
 
-    private model: Email = new EmailRequest();
+    private model = new EmailRequest();
 
     onSubmit(form: NgForm) {
         var body = JSON.stringify(this.model);

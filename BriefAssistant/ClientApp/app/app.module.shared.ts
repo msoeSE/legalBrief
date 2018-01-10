@@ -12,6 +12,7 @@ import { LoginRegisterComponent } from "./components/loginRegister/loginRegister
 import { AccountPageComponent } from "./components/accountPage/accountPage.component";
 import { ForgotPasswordComponent } from "./components/forgotPassword/forgotPassword.component";
 import { ResetPasswordComponent } from "./components/resetPassword/resetPassword.component";
+import { PasswordValidator } from "./passwordValidator.directive";
 
 @NgModule({
     declarations: [
@@ -23,7 +24,8 @@ import { ResetPasswordComponent } from "./components/resetPassword/resetPassword
         LoginRegisterComponent,
         AccountPageComponent,
         ForgotPasswordComponent,
-        ResetPasswordComponent
+        ResetPasswordComponent,
+        PasswordValidator
     ],
     imports: [
         CommonModule,
