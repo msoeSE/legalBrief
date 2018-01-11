@@ -7,9 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System.Runtime.Serialization;
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
-using System.Runtime.Serialization.Json;
-using System.Text;
+using Microsoft.AspNetCore.Identity;
 
 namespace BriefAssistant.Controllers
 {
@@ -18,15 +16,22 @@ namespace BriefAssistant.Controllers
     public class DataController : Controller
     {
         private readonly Brief_assistantContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public DataController(Brief_assistantContext context)
+        public DataController(Brief_assistantContext context, UserManager<ApplicationUser> userManager)
         {
             _context=context;
+            _userManager = userManager;
         }
 
+        
+        public String Id { get; set; }
+
         [HttpPost("save")]
-        public IActionResult SaveRecordforUser([FromBody]BriefInfo briefInfo)
+        public async Task<IActionResult> SaveRecordforUser([FromBody]BriefInfo briefInfo)
         {
+            var user = await _userManager.GetUserAsync(User);
+            var UserId = user.Id;
 
             if (_context.UserInfo.Any(o => o.Email == briefInfo.Appellant.Email))
             {
@@ -35,7 +40,6 @@ namespace BriefAssistant.Controllers
                     .FirstOrDefault();
 
                 userInfo.Email = briefInfo.Appellant.Email;
-                userInfo.Name = briefInfo.Appellant.Name;
 
                 userInfo.Phone = briefInfo.Appellant.Phone;
                 userInfo.State = briefInfo.Appellant.Address.State;
@@ -70,9 +74,8 @@ namespace BriefAssistant.Controllers
                 _context.SaveChanges();
             }
             else {
-                DbUserInfo user = new DbUserInfo
+                ApplicationUser user = new ApplicationUser
                 {
-                    Email = briefInfo.Appellant.Email,
                     Name = briefInfo.Appellant.Name,
                     Phone = briefInfo.Appellant.Phone,
                     State = briefInfo.Appellant.Address.State,
@@ -84,7 +87,7 @@ namespace BriefAssistant.Controllers
 
                 _context.UserInfo.Add(user);
                 _context.SaveChanges();
-                var userId = user.UserId;
+                var userId = user.Id;
 
 
                 DbCaseInfo circuitCourtCase = new DbCaseInfo
@@ -125,15 +128,12 @@ namespace BriefAssistant.Controllers
         }
 
        
-        [HttpPost("retrieve")]
-        public IActionResult RetrieveInfo([FromBody]EmailRequest email)
+        [HttpGet("retrieve")]
+        public IActionResult RetrieveInfo()
         {
-            email.Email = "123@msoe.edu";
-            if (_context.UserInfo.Any(o => o.Email == email.Email))
-            {
-
+            
                 var user = _context.UserInfo
-                                  .Where(b => b.Email == email.Email)
+                                  .Where(b => b.Id == this.Id)
                                   .FirstOrDefault();
 
                 var caseInfo = _context.CaseInfo
@@ -187,11 +187,7 @@ namespace BriefAssistant.Controllers
 
                 return Json(info);
 
-            }
-            else {
-                return NotFound();
-            }
-
+            
 
         }
         public IActionResult Index()
