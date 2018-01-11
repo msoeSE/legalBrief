@@ -42,7 +42,7 @@ export class PasswordValidator implements Validator {
         if (check && controlValue !== check.value && this.isReverse) {
             check.setErrors({
                 validateEqual: false
-            })
+            });
         }
         return null;
     }

@@ -20,14 +20,12 @@
         expect(browser.isElementPresent(by.id('registrationPassword-errors'))).toEqual(true);
     });
 
-    // TEST FOR SPECIFIC PASSWORD FORMAT
-    //
-    //it('should display error with invalid registration password', function () {
-    //    var inputField = element(by.name('registrationPassword'));
-    //    inputField.sendKeys('password');
-    //    element(by.name('registrationEmail')).click();
-    //    expect(browser.isElementPresent(by.id('registrationPassword-errors'))).toEqual(true);
-    //});
+    it('should display error with invalid registration password', function () {
+        var inputField = element(by.name('registrationPassword'));
+        inputField.sendKeys('password');
+        element(by.name('registrationEmail')).click();
+        expect(browser.isElementPresent(by.id('registrationPassword-errors'))).toEqual(true);
+    });
 
     it('should display error with no confirm password', function () {
         var inputField = element(by.name('registrationPasswordCheck'));
