@@ -128,7 +128,7 @@ namespace BriefAssistant.Models
         Shawano,
         [EnumMember]
         Sheboygan,
-        [EnumMember(Value="St. Croix")]
+        [EnumMember(Value = "St. Croix")]
         StCroix,
         [EnumMember]
         Taylor,
@@ -177,7 +177,7 @@ namespace BriefAssistant.Models
         public County County { get; set; }
         [Required]
         [DataMember]
-        public string CaseNumber { get; set; }
+        public string CircuitCourtCaseNumber { get; set; }
         [Required]
         [DataMember]
         public Role Role { get; set; }

@@ -8,7 +8,7 @@ namespace BriefAssistant.Models
     {
         [Required]
         [DataMember]
-        public string Name  { get; set; }
+        public string Name { get; set; }
         [Required]
         [DataMember]
         public Address Address { get; set; }

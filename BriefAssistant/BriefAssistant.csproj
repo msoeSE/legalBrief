@@ -45,7 +45,6 @@
 
   <ItemGroup>
     <Folder Include="briefs\" />
-    <Folder Include="Filters\" />
   </ItemGroup>
 
   <ItemGroup>

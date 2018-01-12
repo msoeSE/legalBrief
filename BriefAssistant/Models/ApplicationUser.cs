@@ -8,5 +8,7 @@ namespace BriefAssistant.Models
 {
     public class ApplicationUser : IdentityUser
     {
+        public ICollection<Brief> BriefRecord { get; set; }
+
     }
 }

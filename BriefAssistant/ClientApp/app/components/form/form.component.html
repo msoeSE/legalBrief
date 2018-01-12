@@ -1,4 +1,4 @@
-<form #f="ngForm" (ngSubmit)="onSubmit(f)">
+<form #f="ngForm" >
     <h1>Your Information</h1>
     <div class="form-group">
         <label for="name" class="col-form-label">Name</label>
@@ -82,7 +82,7 @@
     </div>
     <h1>Case Information</h1>
     <div class="form-group">
-        <label for="caseCounty" class="col-form-label">County</label>
+        <label for="county" class="col-form-label">County</label>
         <select class="form-control" id="county" [(ngModel)]="model.circuitCourtCase.county" #county="ngModel" name="county" required>
             <option *ngFor="let k of countyKeys" [value]="counties[k]">{{counties[k]}}</option>
         </select>
@@ -298,5 +298,6 @@
         </small>
     </div>
     <button class="btn btn-primary" routerLink="/example" routerLinkActive="active">Back to Example</button>
-    <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Generate Brief</button>
+    <button class="btn btn-primary" (click)="save(f)">Save And Finish Later</button>
+    <button class="btn btn-primary" (click)="generateBrief(f)" [disabled]="!f.valid">Generate Brief</button>
 </form>

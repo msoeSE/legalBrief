@@ -201,5 +201,10 @@ namespace BriefAssistant.Controllers
 
             return BadRequest();
         }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
     }
 }
