@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BriefAssistant.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using System.Runtime.Serialization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 
@@ -33,7 +30,7 @@ namespace BriefAssistant.Controllers
             var currentuser = await _userManager.GetUserAsync(User);
             var userId = currentuser.Id;
             ICollection<Brief> briefs = currentuser.BriefRecord;
-            //check if the brief already exist, if yes, update the tables, if not, create the tables
+            //check if the brief already exist, if yes, update the tables, if not, insert records to the tables
             if (briefs.Any(i =>i.Name == briefInfo.BriefName))
             {
                 Brief brief = briefs.FirstOrDefault(i => i.Name == briefInfo.BriefName);
@@ -131,10 +128,12 @@ namespace BriefAssistant.Controllers
         }
 
         [HttpPost("retrieve")]
+        //briefName is the  brief selected to edit by the user 
         public async Task<IActionResult> RetrieveInfo([FromBody]String briefName)
         {
             var currentuser = await _userManager.GetUserAsync(User);
             var userId = currentuser.Id;
+
             ICollection<Brief> briefs = currentuser.BriefRecord;
 
             Brief brief = briefs.FirstOrDefault(i => i.Name == briefName);

@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using BriefAssistant.Models;
 
 namespace BriefAssistant
@@ -13,9 +12,6 @@ namespace BriefAssistant
         public virtual DbSet<DbUserInfo> UserInfo { get; set; }
         public virtual DbSet<Brief> Brief { get; set; }
 
-
-
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -24,8 +20,6 @@ namespace BriefAssistant
                 optionsBuilder.UseNpgsql(@"Host=localhost;Database=brief_assistant;Username=postgres;Password=");
             }
         }
-
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
