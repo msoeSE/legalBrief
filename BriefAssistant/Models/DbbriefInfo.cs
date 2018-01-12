@@ -10,17 +10,15 @@ namespace BriefAssistant.Models
 {
     public class DbbriefInfo
     {
-        public int InitialBriefId { get; set; }
-        public int CaseId { get; set; }
-        public int UserId { get; set; }
-        public DbCaseInfo CaseInfo { get; set; }
-        public DbUserInfo UserInfo { get; set; }
+        public int InitialBriefInfoId { get; set; }
+        public Brief Brief { get; set; }
         public string IssuesPresented { get; set; }
         public string OralArgumentStatement { get; set; }
         public string PublicationStatement { get; set; }
         public string CaseFactsStatement { get; set; }
+        public string AppellateCourtCaseNumber { get; set; }
         public string Argument { get; set; }
         public string Conclusion { get; set; }
-        public string AppendexDocuments { get; set; }
+        public string AppendixDocuments { get; set; }
     }
 }

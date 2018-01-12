@@ -7,9 +7,8 @@ namespace BriefAssistant.Models
 {
     public class DbUserInfo
     {
-        public int UserId { get; set; }
-        public DbCaseInfo CaseInfo { get; set; }
-        public DbbriefInfo BriefInfo { get; set; }
+        public int UserInfoId { get; set; }
+        public Brief Brief { get; set; }
         public string Name { get; set; }
         public string Street { get; set; }
         public string Street2 { get; set; }

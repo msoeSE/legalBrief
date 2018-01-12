@@ -11,6 +11,9 @@ namespace BriefAssistant
         public virtual DbSet<DbbriefInfo> BriefInfo { get; set; }
         public virtual DbSet<DbCaseInfo> CaseInfo { get; set; }
         public virtual DbSet<DbUserInfo> UserInfo { get; set; }
+        public virtual DbSet<Brief> Brief { get; set; }
+
+
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -42,29 +45,22 @@ namespace BriefAssistant
             
             modelBuilder.Entity<DbbriefInfo>(entity =>
             {
-                entity.HasKey(e => e.InitialBriefId);
+                entity.HasKey(e => e.InitialBriefInfoId);
 
                 entity.ToTable("brief_info", "brief");
 
-                entity.HasIndex(e => e.CaseId)
-                    .HasName("constraint_brief_ukey")
-                    .IsUnique();
-                entity.HasIndex(e => e.UserId)
-                    .HasName("constraint_brief_user_ukey")
-                    .IsUnique();
 
-                entity.Property(e => e.InitialBriefId)
+                entity.Property(e => e.InitialBriefInfoId)
                     .HasColumnName("initial_brief_id")
                     .HasDefaultValueSql("nextval('brief.brief_info_initial_brief_id_seq'::regclass)");
 
-                entity.Property(e => e.AppendexDocuments).HasColumnName("appendex_documents");
+                entity.Property(e => e.AppendixDocuments).HasColumnName("appendix_documents");
+
+                entity.Property(e => e.AppellateCourtCaseNumber).HasColumnName("appellate_court_case_number");
 
                 entity.Property(e => e.Argument).HasColumnName("argument");
 
                 entity.Property(e => e.CaseFactsStatement).HasColumnName("case_facts_statement");
-
-                entity.Property(e => e.CaseId).HasColumnName("case_id");
-                entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.Property(e => e.Conclusion).HasColumnName("conclusion");
 
@@ -74,17 +70,6 @@ namespace BriefAssistant
 
                 entity.Property(e => e.PublicationStatement).HasColumnName("publication_statement");
 
-                entity.HasOne(d => d.CaseInfo)
-                    .WithOne(p => p.BriefInfo)
-                    .HasForeignKey<DbbriefInfo>(d => d.CaseId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("constraint_fkey");
-
-                entity.HasOne(d =>  d.UserInfo)
-                    .WithOne(p => p.BriefInfo)
-                    .HasForeignKey<DbbriefInfo>(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("constraint_fkey_user");
             });
 
             modelBuilder.Entity<DbCaseInfo>(entity =>
@@ -92,10 +77,6 @@ namespace BriefAssistant
                 entity.HasKey(e => e.CaseId);
 
                 entity.ToTable("case_info", "brief");
-
-                entity.HasIndex(e => e.UserId)
-                    .HasName("constraint_ukey")
-                    .IsUnique();
 
                 entity.Property(e => e.CaseId)
                     .HasColumnName("case_id")
@@ -113,18 +94,11 @@ namespace BriefAssistant
 
                 entity.Property(e => e.Role).HasColumnName("role");
 
-                entity.Property(e => e.UserId).HasColumnName("user_id");
-
-                entity.HasOne(d => d.UserInfo)
-                    .WithOne(p => p.CaseInfo)
-                    .HasForeignKey<DbCaseInfo>(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("constraint_fkey");
             });
 
             modelBuilder.Entity<DbUserInfo>(entity =>
             {
-                entity.HasKey(e => e.UserId);
+                entity.HasKey(e => e.UserInfoId);
 
                 entity.ToTable("user_info", "brief");
 
@@ -132,9 +106,9 @@ namespace BriefAssistant
                     .HasName("user_info_email_key")
                     .IsUnique();
 
-                entity.Property(e => e.UserId)
-                    .HasColumnName("user_id")
-                    .HasDefaultValueSql("nextval('brief.user_info_user_id_seq'::regclass)");
+                entity.Property(e => e.UserInfoId)
+                    .HasColumnName("userinfo_id")
+                    .HasDefaultValueSql("nextval('brief.user_info_userinfo_id_seq'::regclass)");
 
                 entity.Property(e => e.Email)
                     .IsRequired()
@@ -142,8 +116,7 @@ namespace BriefAssistant
 
                 entity.Property(e => e.Name)
                     .HasDefaultValue("")
-                    .HasColumnName("name");
-                                entity.Property(e => e.Street).HasColumnName("street");
+                     .HasColumnName("name");
 
                 entity.Property(e => e.Street2).HasColumnName("street2");
 
@@ -152,13 +125,53 @@ namespace BriefAssistant
                 entity.Property(e => e.State).HasColumnName("state");
 
                 entity.Property(e => e.City).HasColumnName("city");
-
-
+            
                 entity.Property(e => e.Phone).HasColumnName("phone");
-
 
             });
 
+            modelBuilder.Entity<Brief>(entity =>
+            {
+                entity.HasKey(e => e.BriefId);
+
+                entity.ToTable("brief", "brief");
+
+
+                entity.HasIndex(e => e.BriefId)
+                    .HasName("constraint_brief_ukey")
+                    .IsUnique();
+
+                entity.Property(e => e.BriefId)
+                    .HasColumnName("brief_id")
+                    .HasDefaultValueSql("nextval('brief.brief_brief_id_seq'::regclass)");
+
+                entity.Property(e => e.UserInfoId)
+                    .HasColumnName("user_id");
+
+                entity.Property(e => e.InitialBriefInfoId)
+                    .HasColumnName("initial_brief_id");
+
+                entity.Property(e => e.CaseId)
+                    .HasColumnName("case_id");
+
+                entity.Property(e => e.Name).HasColumnName("Name");
+
+                entity.HasOne(d => d.UserInfo)
+                    .WithOne()
+                    .HasForeignKey<Brief>(d => d.UserInfoId);
+
+                entity.HasOne(d => d.BriefInfo)
+                    .WithOne()
+                    .HasForeignKey<Brief>(d => d.InitialBriefInfoId);
+
+                entity.HasOne(d => d.CaseInfo)
+                    .WithOne(b => b.Brief)
+                    .HasForeignKey<Brief>(d => d.CaseId);
+
+                entity.HasOne(d => d.User)
+                    .WithMany(b => b.BriefRecord)
+                    .HasForeignKey(d => d.Id);
+            });
         }
     }
 }

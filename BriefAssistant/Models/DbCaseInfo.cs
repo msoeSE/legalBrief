@@ -12,14 +12,13 @@ namespace BriefAssistant.Models
     public class DbCaseInfo
     {
         public int CaseId { get; set; }
-        public int UserId { get; set; }
+        public Brief Brief { get; set; }
         public County County { get; set; }
         public string CaseNumber { get; set; }
         public Role Role { get; set; }
         public string JudgeFirstName { get; set; }
         public string JudgeLastName { get; set; }
         public string OpponentName { get; set; }
-        public DbUserInfo UserInfo { get; set; }
-        public DbbriefInfo BriefInfo { get; set; }
+
     }
 }

@@ -162,7 +162,11 @@ namespace BriefAssistant.Models
         [EnumMember]
         Plaintiff,
         [EnumMember]
-        Defendent
+        Defendent,
+        [EnumMember]
+        Respondent,
+        [EnumMember]
+        Petitioner
     }
 
     [DataContract(Namespace = "")]
@@ -173,7 +177,7 @@ namespace BriefAssistant.Models
         public County County { get; set; }
         [Required]
         [DataMember]
-        public string CaseNumber { get; set; }
+        public string CircuitCourtCaseNumber { get; set; }
         [Required]
         [DataMember]
         public Role Role { get; set; }
@@ -186,5 +190,7 @@ namespace BriefAssistant.Models
         [Required]
         [DataMember]
         public string OpponentName { get; set; }
+        [DataMember]
+        public Role OpponentRole { get; set; }
     }
 }
