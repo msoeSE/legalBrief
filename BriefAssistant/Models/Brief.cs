@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BriefAssistant.Models
 {
@@ -14,8 +15,11 @@ namespace BriefAssistant.Models
         public int CaseId { get; set; }
         public int UserInfoId { get; set; }
         public int InitialBriefInfoId { get; set; }
+        [ForeignKey("InitialBriefInfoId")]
         public DbbriefInfo BriefInfo { get; set; }
+        [ForeignKey("UserInfoId")]
         public DbUserInfo UserInfo { get; set; }
+        [ForeignKey("CaseId")]
         public DbCaseInfo CaseInfo { get; set; }
     }
 }

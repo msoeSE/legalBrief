@@ -62,6 +62,7 @@ namespace BriefAssistant.Controllers
                 brief.BriefInfo.OralArgumentStatement = briefInfo.OralArgumentStatement;
                 brief.BriefInfo.PublicationStatement = briefInfo.PublicationStatement;
                 _context.SaveChanges();
+
             }
             else {
                 DbUserInfo user = new DbUserInfo
@@ -77,7 +78,7 @@ namespace BriefAssistant.Controllers
 
                 _context.UserInfo.Add(user);
                 _context.SaveChanges();
-
+                var userInfoId = user.UserInfoId;
 
                 DbCaseInfo circuitCourtCase = new DbCaseInfo
                 {
@@ -109,12 +110,15 @@ namespace BriefAssistant.Controllers
                 };
                 _context.BriefInfo.Add(dbbriefInfo);
                 _context.SaveChanges();
+                var briefInfoId = dbbriefInfo.InitialBriefInfoId;
+
+
                 Brief brief = new Brief
                 {
                     Name = briefInfo.BriefName,
-                    BriefInfo = dbbriefInfo,
-                    CaseInfo = circuitCourtCase,
-                    UserInfo = user
+                    CaseId = caseId,
+                    UserInfoId = userInfoId,
+                    InitialBriefInfoId = briefInfoId
 
                     
                 };

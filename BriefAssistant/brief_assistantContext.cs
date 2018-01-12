@@ -32,11 +32,14 @@ namespace BriefAssistant
                 .HasMin(1)
                 .HasMax(2147483647);
 
-            modelBuilder.HasSequence("user_info_user_id_seq", schema: "brief")
+            modelBuilder.HasSequence("user_info_userinfo_id_seq", schema: "brief")
                 .HasMin(1)
                 .HasMax(2147483647);
 
-            
+            modelBuilder.HasSequence("brief_brief_id_seq", schema: "brief")
+               .HasMin(1)
+               .HasMax(2147483647);
+
             modelBuilder.Entity<DbbriefInfo>(entity =>
             {
                 entity.HasKey(e => e.InitialBriefInfoId);
@@ -130,11 +133,6 @@ namespace BriefAssistant
 
                 entity.ToTable("brief", "brief");
 
-
-                entity.HasIndex(e => e.BriefId)
-                    .HasName("constraint_brief_ukey")
-                    .IsUnique();
-
                 entity.Property(e => e.BriefId)
                     .HasColumnName("brief_id")
                     .HasDefaultValueSql("nextval('brief.brief_brief_id_seq'::regclass)");
@@ -149,18 +147,6 @@ namespace BriefAssistant
                     .HasColumnName("case_id");
 
                 entity.Property(e => e.Name).HasColumnName("Name");
-
-                entity.HasOne(d => d.UserInfo)
-                    .WithOne()
-                    .HasForeignKey<Brief>(d => d.UserInfoId);
-
-                entity.HasOne(d => d.BriefInfo)
-                    .WithOne()
-                    .HasForeignKey<Brief>(d => d.InitialBriefInfoId);
-
-                entity.HasOne(d => d.CaseInfo)
-                    .WithOne(b => b.Brief)
-                    .HasForeignKey<Brief>(d => d.CaseId);
 
                 entity.HasOne(d => d.User)
                     .WithMany(b => b.BriefRecord)
