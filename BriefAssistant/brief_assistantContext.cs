@@ -11,6 +11,7 @@ namespace BriefAssistant
         public virtual DbSet<DbCaseInfo> CaseInfo { get; set; }
         public virtual DbSet<DbUserInfo> UserInfo { get; set; }
         public virtual DbSet<Brief> Brief { get; set; }
+        public virtual DbSet<ApplicationUser> User { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -39,6 +40,10 @@ namespace BriefAssistant
             modelBuilder.HasSequence("brief_brief_id_seq", schema: "brief")
                .HasMin(1)
                .HasMax(2147483647);
+            modelBuilder.Entity<ApplicationUser>(entity =>
+            {
+                entity.ToTable("user", "brief");
+            });
 
             modelBuilder.Entity<DbbriefInfo>(entity =>
             {
