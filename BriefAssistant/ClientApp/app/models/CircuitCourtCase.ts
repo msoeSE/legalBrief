@@ -8,7 +8,6 @@ export class CircuitCourtCase {
 	role: Role;
 	caseNumber: string;
     county?: County;
-    opponentRole: Role;
 
 	constructor() {
 		this.opponentName = "";
@@ -16,6 +15,5 @@ export class CircuitCourtCase {
 		this.judgeFirstName = "";
 		this.role = Role.Plaintiff;
         this.caseNumber = "";
-	    this.opponentRole = Role.Defendent;
 	}
 }

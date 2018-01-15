@@ -40,7 +40,7 @@ namespace BriefAssistant.Controllers
 
             value.Date = DateTime.Now.ToShortDateString();
 
-            value.CircuitCourtCase.OpponentRole = GetOpponentRole(value.CircuitCourtCase.Role);
+            value = SetTopAndBottomNamesAndRoles(value, value.Appellant.Name, value.CircuitCourtCase.Role, value.CircuitCourtCase.OpponentName);
 
             XElement data;
             using (var dataStream = new MemoryStream())
@@ -68,21 +68,46 @@ namespace BriefAssistant.Controllers
             return Created($"briefs/download/{id}.docx", result);
         }
 
-        private Role GetOpponentRole(Role role)
+        /// <summary>
+        /// This method determines what order the appellant and opponent name and roles appear on the brief
+        /// </summary>
+        /// <param name="value">The BriefInfo object that is used to create the brief</param>
+        /// <param name="name">The name of the appellant</param>
+        /// <param name="role">The role of the appellant</param>
+        /// <param name="opponentName">The name of the opponent</param>
+        /// <returns></returns>
+        private BriefInfo SetTopAndBottomNamesAndRoles(BriefInfo value, string name, Role role, string opponentName)
         {
             switch (role)
             {
                 case Role.Plaintiff:
-                    return Role.Defendent;
-                case Role.Defendent:
+                    value.TopName = name;
+                    value.BottomName = opponentName;
+                    value.TopRole = "Plaintiff-Appellant";
+                    value.BottomRole = "Defendant-Respondent";
+                    break;
                 case Role.Petitioner:
-                    return Role.Respondent;
+                    value.TopName = name;
+                    value.BottomName = opponentName;
+                    value.TopRole = "Petitioner-Appellant";
+                    value.BottomRole = "Respondent-Respondent";
+                    break;
+                case Role.Defendent:
+                    value.TopName = opponentName;
+                    value.BottomName = name;
+                    value.TopRole = "Plaintiff-Respondent";
+                    value.BottomRole = "Defendant-Appellant";
+                    break;
                 case Role.Respondent:
-                    return Role.Petitioner;
+                    value.TopName = opponentName;
+                    value.BottomName = name;
+                    value.TopRole = "Petitioner-Respondant";
+                    value.BottomRole = "Respondant-Appellant";
+                    break;
                 default:
                     throw new InvalidEnumArgumentException(nameof(role), (int)role, typeof(Role));
             }
-            
+            return value;
         }
 
         private District GetDistrictFromCounty(County county)
