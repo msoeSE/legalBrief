@@ -11,10 +11,6 @@ export class BriefInfo {
     publicationStatement: string;
     issuesPresented: string;
     appellant: Appellant;
-    topName: string;
-    bottomName: string;
-    topRole: string;
-    bottomRole: string;
 
     constructor() {
         this.circuitCourtCase = new CircuitCourtCase();
@@ -26,9 +22,5 @@ export class BriefInfo {
         this.publicationStatement = "";
         this.issuesPresented = "";
         this.appellant = new Appellant();
-        this.topName = "";
-        this.bottomName = "";
-        this.topRole = "";
-        this.bottomRole = "";
     }
 }
