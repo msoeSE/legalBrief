@@ -93,29 +93,29 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="caseNumber" class="col-form-label" aria-describedby="caseNumberHelp">Case Number</label>
-        <input type="text" id="caseNumber" class="form-control" [(ngModel)]="model.circuitCourtCase.caseNumber" #caseNumber="ngModel" name="caseNumber" pattern="^\d{4}\w{2}\d{1,}$" placeholder="0000XX0000" required>
-        <div *ngIf="caseNumber.invalid && (caseNumber.dirty || caseNumber.touched)" class="alert alert-danger" id="caseNumber-errors">
-            <div *ngIf="caseNumber.errors">
-                The pattern for the case number is year (Ex: 2017), two court letters (Ex: CV), and then case number (Ex: 1234)
+        <label for="circuitCourtCaseNumber" class="col-form-label" aria-describedby="circuitCourtCaseNumberHelp">Circuit Court Case Number</label>
+        <input type="text" id="circuitCourtCaseNumber" class="form-control" [(ngModel)]="model.circuitCourtCase.circuitCourtCaseNumber" #circuitCourtCaseNumber="ngModel" name="circuitCourtCaseNumber" pattern="^\d{4}\w{2}\d{1,}$" placeholder="0000XX0000" required>
+        <div *ngIf="circuitCourtCaseNumber.invalid && (circuitCourtCaseNumber.dirty || circuitCourtCaseNumber.touched)" class="alert alert-danger" id="circuitCourtCaseNumber-errors">
+            <div *ngIf="circuitCourtCaseNumber.errors">
+                The pattern for the circuit court case number is year (Ex: 2017), two court letters (Ex: CV), and then case number (Ex: 1234)
             </div>
         </div>
-        <small id="caseNumberHelp" class="form-text text-muted">
-            Your case numbers appears on the front page of the final decision or order you are appealing. Example: "No. 2017CV471."
+        <small id="circuitCourtCaseNumberHelp" class="form-text text-muted">
+            You will find your circuit court case number on the document called Notice of Appeal and Circuit Court Record that you received from the court of appeals. Example: "No. 2017CV471."
         </small>
     </div>
     <div class="row">
         <div class="form-group col-md-6">
-          <label for="judgeFname" class="col-form-label" aria-describedby="judgeHelp">Judge First Name</label>
+            <label for="judgeFname" class="col-form-label" aria-describedby="judgeHelp">Judge First Name</label>
             <input type="text" id="judgeFname" class="form-control" [(ngModel)]="model.circuitCourtCase.judgeFirstName" #judgeFirstName="ngModel" name="judgeFirstname" placeholder="First Name" required>
             <div *ngIf="judgeFirstName.invalid && (judgeFirstName.dirty || judgeFirstName.touched)" class="alert alert-danger" id="judgeFname-errors">
                 <div *ngIf="judgeFirstName.errors.required">
                     Name is required.
                 </div>
             </div>
-          <small id="judgeHelp" class="form-text text-muted">
+            <small id="judgeHelp" class="form-text text-muted">
                 The name of the judge is listed at the end of the decision, order, or judgment that you are appealing.
-          </small>
+            </small>
         </div>
         <div class="form-group col-md-6">
             <label for="judgeLname" class="col-form-label">Judge Last Name</label>
@@ -142,9 +142,22 @@
             <div class="form-check" *ngFor="let k of roleKeys">
                 <label class="form-check-label">
                     <input class="form-check-input" type="radio" [(ngModel)]="model.circuitCourtCase.role" name="role" [value]="k">
-                {{roles[k]}}</label>
+                    {{roles[k]}}
+                </label>
             </div>
         </fieldset>
+    </div>
+    <div class="form-group" style="padding-top:10px;">
+        <label for="appellateCourtCaseNumber" class="col-form-label" aria-describedby="appellateCourtCaseNumberHelp">Appellate Court Case Number</label>
+        <input type="text" id="caseNumber" class="form-control" [(ngModel)]="model.appellateCourtCaseNumber" #appellateCourtCaseNumber="ngModel" name="appellateCourtCaseNumber" pattern="^\d{4}\w{2}\d{1,}$" placeholder="0000XX0000" required>
+        <div *ngIf="appellateCourtCaseNumber.invalid && (appellateCourtCaseNumber.dirty || appellateCourtCaseNumber.touched)" class="alert alert-danger" id="appellateCourtCaseNumber-errors">
+            <div *ngIf="appellateCourtCaseNumber.errors">
+                The pattern for the appellate court case number is year (Ex: 2017), two court letters (Ex: AP), and then case number (Ex: 1234)
+            </div>
+        </div>
+        <small id="appellateCourtCaseNumberHelp" class="form-text text-muted">
+            You will find your appeal number on the document called Notice of Appeal and Circuit Court Record that you received from the court of appeals. Example: "No. 2017AP471."
+        </small>
     </div>
     <h1>Brief Information</h1>
     <div class="form-group">
@@ -278,7 +291,7 @@
     </div>
     <div class="form-group">
         <label for="appendix" class="col-form-label" aria-describedby="appendixHelp">
-            Please list the documents that you will include in the Appendix to your brief. List one document per line.<br /> 
+            Please list the documents that you will include in the Appendix to your brief. List one document per line.<br />
             NOTE: The page numbers for each of the documents will NOT be included in the Appendix.
         </label>
         <textarea id="appendix" class="form-control" [(ngModel)]="model.appendixDocuments" #appendixDocuments="ngModel" name="appendixDocuments" rows="8" required></textarea>

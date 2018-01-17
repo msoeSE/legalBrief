@@ -11,8 +11,6 @@ namespace BriefAssistant.Models
     public class BriefInfo
     {
         [DataMember]
-        public string Date { get; set; }
-        [DataMember]
         public AppellateCase AppellateCase { get; set; }
         [Required]
         [DataMember]
@@ -20,6 +18,9 @@ namespace BriefAssistant.Models
         [Required]
         [DataMember]
         public CircuitCourtCase CircuitCourtCase { get; set; }
+        [Required]
+        [DataMember]
+        public string AppellateCourtCaseNumber { get; set; }
         [DataMember]
         public string IssuesPresented { get; set; }
         [DataMember]

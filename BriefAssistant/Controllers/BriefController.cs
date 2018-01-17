@@ -38,8 +38,6 @@ namespace BriefAssistant.Controllers
                 District = GetDistrictFromCounty(value.CircuitCourtCase.County)
             };
 
-            value.Date = DateTime.Now.ToShortDateString();
-
             value.CircuitCourtCase.OpponentRole = GetOpponentRole(value.CircuitCourtCase.Role);
 
             XElement data;
