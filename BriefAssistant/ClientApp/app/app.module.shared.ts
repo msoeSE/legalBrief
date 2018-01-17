@@ -8,6 +8,7 @@ import { FormComponent } from './components/form/form.component';
 import { FinalComponent } from './components/final/final.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { ExampleComponent } from './components/example/example.component';
+import { ListOfBriefsComponent } from './components/listofbriefs/listofbriefs.component';
 
 @NgModule({
     declarations: [
@@ -15,7 +16,8 @@ import { ExampleComponent } from './components/example/example.component';
         FormComponent,
         FinalComponent,
         WelcomeComponent,
-        ExampleComponent
+        ExampleComponent,
+        ListOfBriefsComponent
     ],
     imports: [
         CommonModule,
@@ -24,8 +26,10 @@ import { ExampleComponent } from './components/example/example.component';
             { path: 'welcome', component: WelcomeComponent},
             { path: '', redirectTo: '/welcome', pathMatch: 'full' },
             { path: 'final/:id', component: FinalComponent },
+            { path: 'dataform/:id', component: FormComponent },
             { path: 'dataform', component: FormComponent },
             { path: 'example', component: ExampleComponent },
+            { path: 'briefs', component: ListOfBriefsComponent },
         ])
     ],
     exports: [RouterModule]

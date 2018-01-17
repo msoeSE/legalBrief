@@ -1,0 +1,25 @@
+<button class="btn btn-primary" routerLink="/welcome" routerLinkActive="active">Create an Initial brief</button>
+<div>
+    <br>
+    <h2>Briefs you have created:</h2>
+    <table class="table">
+        <tr>
+            <th>#</th>
+            <th>Brief Name</th>
+            <th></th>
+
+        </tr>
+        <tr *ngFor="let brief of briefs; let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{brief.name}}</td>
+            <td>
+                <div>
+                    <button (click)="edit(brief.id)">Edit</button>
+                </div>
+            </td>
+
+        </tr>
+    </table>`
+</div>
+
+

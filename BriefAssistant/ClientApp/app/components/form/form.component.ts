@@ -1,10 +1,10 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { NgModule } from "@angular/core";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 
 import { BrowserModule } from "@angular/platform-browser";
-import { Http, Headers } from '@angular/http';
+import { Http, Headers, URLSearchParams, RequestOptions } from '@angular/http';
 
 
 import { BriefInfo } from "../../models/BriefInfo";
@@ -19,7 +19,7 @@ import 'rxjs/add/operator/map';
 	templateUrl: "./form.component.html"
 })
 
-export class FormComponent {
+export class FormComponent implements OnInit{
 	private states = State;
 	private stateKeys = Object.keys(State);
 	private counties = County;
@@ -31,9 +31,27 @@ export class FormComponent {
 
 	constructor(
 		private readonly http: Http,
-		private readonly router: Router
+        private readonly router: Router,
+        private route: ActivatedRoute
 	) { }
 
+    ngOnInit() {
+        var paramId = this.route.snapshot.paramMap.get("id");
+
+        if (paramId) {
+            this.retrieve(paramId);
+        }
+    }
+    retrieve(id: string) {
+        let myParams = new URLSearchParams();
+        myParams.append('id', id);
+        let options = new RequestOptions({ params: myParams });
+        this.http.get("/api/briefs/", options)
+            .map(res => res.json())
+            .subscribe((data: BriefInfo) => {
+                this.model = data;
+            });
+    }
 	onSubmit(form: NgForm) {
 		var body = JSON.stringify(this.model);
 		let headers = new Headers({ 'Content-Type': 'application/json' });
