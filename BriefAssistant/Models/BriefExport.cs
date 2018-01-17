@@ -43,7 +43,7 @@ namespace BriefAssistant.Models
         /// <param name="info">The information of the brief retrieved from the user on the form</param>
         public BriefExport(BriefInfo info)
         {
-            AppellateCase = info.AppellateCase;
+            AppellateCase = info.AppellateCase ?? new AppellateCase();
             Appellant = info.Appellant;
             CircuitCourtCase = info.CircuitCourtCase;
             AppellateCourtCaseNumber = info.AppellateCourtCaseNumber;
