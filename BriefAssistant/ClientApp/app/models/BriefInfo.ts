@@ -2,6 +2,7 @@
 import { CircuitCourtCase } from "./CircuitCourtCase";
 
 export class BriefInfo {
+    id: string;
 	circuitCourtCase: CircuitCourtCase;
 	appendixDocuments: string;
 	conclusion: string;

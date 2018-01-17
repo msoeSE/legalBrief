@@ -43,10 +43,8 @@ export class FormComponent implements OnInit{
         }
     }
     retrieve(id: string) {
-        let myParams = new URLSearchParams();
-        myParams.append('id', id);
-        let options = new RequestOptions({ params: myParams });
-        this.http.get("/api/briefs/", options)
+
+        this.http.get("/api/briefs/"+id)
             .map(res => res.json())
             .subscribe((data: BriefInfo) => {
                 this.model = data;

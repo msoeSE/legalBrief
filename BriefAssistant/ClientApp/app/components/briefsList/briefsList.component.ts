@@ -1,15 +1,15 @@
 ﻿import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Http, Headers } from '@angular/http';
-import { Brief} from "../../models/Brief";
+import { IBriefList } from "../../models/IBriefList";
 
 @Component({
     selector: "briefs",
-    templateUrl: "./listofbriefs.component.html"
+    templateUrl: "./briefsList.component.html"
 })
 
-export class ListOfBriefsComponent implements OnInit {
-    private briefs : Brief[];
+export class briefsListComponent implements OnInit {
+    private briefs : IBriefList;
 
     constructor(
         private readonly http: Http,
@@ -17,11 +17,10 @@ export class ListOfBriefsComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        let headers = new Headers({ 'Content-Type': 'application/json' });
 
-        this.http.get("/api/briefs/",  { headers: headers })
+        this.http.get("/api/briefs/")
             .map(res => res.json())
-            .subscribe((data: Brief[]) => {
+            .subscribe((data: IBriefList) => {
                 this.briefs = data;
             }
             );

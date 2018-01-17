@@ -8,7 +8,7 @@ import { FormComponent } from './components/form/form.component';
 import { FinalComponent } from './components/final/final.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { ExampleComponent } from './components/example/example.component';
-import { ListOfBriefsComponent } from './components/listofbriefs/listofbriefs.component';
+import { briefsListComponent } from './components/briefsList/briefsList.component';
 
 @NgModule({
     declarations: [
@@ -17,7 +17,7 @@ import { ListOfBriefsComponent } from './components/listofbriefs/listofbriefs.co
         FinalComponent,
         WelcomeComponent,
         ExampleComponent,
-        ListOfBriefsComponent
+        briefsListComponent
     ],
     imports: [
         CommonModule,
@@ -29,7 +29,7 @@ import { ListOfBriefsComponent } from './components/listofbriefs/listofbriefs.co
             { path: 'dataform/:id', component: FormComponent },
             { path: 'dataform', component: FormComponent },
             { path: 'example', component: ExampleComponent },
-            { path: 'briefs', component: ListOfBriefsComponent },
+            { path: 'briefs', component: briefsListComponent },
         ])
     ],
     exports: [RouterModule]
