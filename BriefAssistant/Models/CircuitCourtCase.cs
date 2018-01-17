@@ -177,7 +177,7 @@ namespace BriefAssistant.Models
         public County County { get; set; }
         [Required]
         [DataMember]
-        public string CircuitCourtCaseNumber { get; set; }
+        public string CaseNumber { get; set; }
         [Required]
         [DataMember]
         public Role Role { get; set; }

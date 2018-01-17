@@ -31,12 +31,12 @@ export class FormComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.retrieve();
-        
+		this.retrieve();
+
     }
     save(form: NgForm) {
-        var body = JSON.stringify(this.model);
-        let headers = new Headers({ 'Content-Type': 'application/json' });
+        const body = JSON.stringify(this.model);
+        const headers = new Headers({ 'Content-Type': 'application/json' });
         this.http.post("/api/data/save", body, { headers: headers })
             .map(res => res.json())
             .subscribe(data => {
@@ -44,30 +44,27 @@ export class FormComponent implements OnInit {
             });
     }
  
-    retrieve() {
-        var body = JSON.stringify({ Email: "kungm@msoe.edu" });
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        this.http.post("/api/data/retrieve", body, { headers: headers })
+	retrieve(id: string) {
+        let headers = new Headers({ 'Accept': 'application/json' });
+        this.http.get("/api/briefs/", { headers: headers })
             .map(res => res.json())
             .subscribe((data: BriefInfo) => {
                 this.model = data;
-
             });
-    }
+	}
+
     updateCounty(county: County) {
         this.model.circuitCourtCase.county = county;
     }
 
-    generateBrief(form: NgForm) {
-        var body = JSON.stringify(this.model);
-        let headers = new Headers({ 'Content-Type': 'application/json' });		
-        this.http.post("/api/brief", body, { headers: headers })
-            .map(res => res.json())
-            .subscribe((data: BriefGenerationResult) => {
-                this.save(form);
-                this.router.navigate(["/final", data.id]);
-            });	
-        
-    }
-
+	generateBrief(form: NgForm) {
+		var body = JSON.stringify(this.model);
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		this.http.post("/api/brief", body, { headers: headers })
+			.map(res => res.json())
+			.subscribe((data: BriefGenerationResult) => {
+				this.save(form);
+				this.router.navigate(["/final", data.id]);
+			});
+	}
 }

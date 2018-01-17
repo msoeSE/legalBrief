@@ -10,15 +10,16 @@ namespace BriefAssistant.Models
     [DataContract(Namespace = "")]
     public class BriefInfo
     {
+        public Guid Id { get; set; }
         [DataMember]
-        public String BriefName { get; set; }
+        public String Name { get; set; }
         [DataMember]
         public string Date { get; set; }
         [DataMember]
         public AppellateCase AppellateCase { get; set; }
         [Required]
         [DataMember]
-        public Appellant Appellant { get; set; }
+        public ContactInfo ContactInfo { get; set; }
         [Required]
         [DataMember]
         public CircuitCourtCase CircuitCourtCase { get; set; }

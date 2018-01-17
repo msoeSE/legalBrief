@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using BriefAssistant.Controllers;
+using BriefAssistant.Data;
 using BriefAssistant.Models;
 using BriefAssistant.Services;
 using Microsoft.AspNetCore.Http;

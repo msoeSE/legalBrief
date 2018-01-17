@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BriefAssistant.Data;
 using BriefAssistant.Extensions;
 using BriefAssistant.Models;
 using BriefAssistant.Services;

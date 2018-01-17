@@ -22,7 +22,7 @@ namespace BriefAssistant.Tests
                 var controller = new DataController(context);
                 controller.SaveRecordforUser(new BriefInfo
                 {
-                    Appellant = new Appellant()
+                    ContactInfo = new ContactInfo()
                     {
                         Address = new Address
                         {
@@ -73,7 +73,7 @@ namespace BriefAssistant.Tests
                 var controller = new DataController(context);
                 controller.SaveRecordforUser(new BriefInfo
                 {
-                    Appellant = new Appellant()
+                    ContactInfo = new ContactInfo()
                     {
                         Address = new Address
                         {
@@ -114,7 +114,7 @@ namespace BriefAssistant.Tests
                 var controller = new DataController(context);
                 controller.SaveRecordforUser(new BriefInfo
                 {
-                    Appellant = new Appellant()
+                    ContactInfo = new ContactInfo()
                     {
                         Address = new Address
                         {

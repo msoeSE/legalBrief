@@ -1,34 +1,145 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using AutoMapper;
+using BriefAssistant.Authorization;
+using BriefAssistant.Data;
 using BriefAssistant.Extensions;
 using BriefAssistant.Models;
 using BriefAssistant.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OpenXmlPowerTools;
 
 namespace BriefAssistant.Controllers
 {
     [Route("api/[controller]")]
-    public class BriefController : Controller
+    public class BriefsController : Controller
     {
         private const string DocxMimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
         private readonly IHostingEnvironment _env;
         private readonly IEmailSender _emailSender;
+        private readonly ApplicationDbContext _applicationContext;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IAuthorizationService _authorizationService;
 
-        public BriefController(IHostingEnvironment env, IEmailSender emailSender)
+        public BriefsController(IHostingEnvironment env, IEmailSender emailSender, ApplicationDbContext applicationContext, UserManager<ApplicationUser> userManager, IAuthorizationService authorizationService)
         {
             _env = env;
             _emailSender = emailSender;
+            _applicationContext = applicationContext;
+            _userManager = userManager;
+            _authorizationService = authorizationService;
         }
 
         [HttpPost]
-        public IActionResult GenerateDocument([FromBody] BriefInfo value)
+        [Authorize]
+        public async Task<IActionResult> CreateAsync([FromBody] BriefInfo briefInfo)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            var briefDto = Mapper.Map<BriefDto>(briefInfo);
+            briefDto.ApplicationUserId = currentUser.Id;
+
+            briefDto.CaseDto = Mapper.Map<CaseDto>(briefInfo);
+            briefDto.CaseDto.ApplicationUserId = currentUser.Id;
+
+            briefDto.ContactInfoDto = Mapper.Map<ContactInfoDto>(briefInfo);
+            briefDto.ContactInfoDto.ApplicationUserId = currentUser.Id;
+            await _applicationContext.SaveChangesAsync();
+
+            return Created($"/briefs/{briefDto.Id}", briefInfo);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] BriefInfo briefInfo)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var existingBrief = await _applicationContext.Briefs
+                .Include(briefDto => briefDto.ContactInfoDto)
+                .Include(briefDto => briefDto.CaseDto)
+                .SingleAsync(briefDto => briefDto.Id == briefInfo.Id);
+
+            if (existingBrief == null)
+            {
+                return NotFound();
+            }
+
+            var authResult = await _authorizationService.AuthorizeAsync(User, existingBrief, Operations.Update);
+            if (!authResult.Succeeded)
+            {
+                return Forbid();
+            }
+
+            var updatedBrief = Mapper.Map<BriefDto>(briefInfo);
+            updatedBrief.Id = existingBrief.Id;
+            updatedBrief.ApplicationUserId = existingBrief.ApplicationUserId;
+            updatedBrief.ContactInfoDto.Id = existingBrief.ContactInfoDto.Id;
+            updatedBrief.ContactInfoDto.ApplicationUserId = existingBrief.ContactInfoDto.ApplicationUserId;
+            updatedBrief.CaseDto.Id = existingBrief.CaseDto.Id;
+            updatedBrief.CaseDto.ApplicationUserId = existingBrief.CaseDto.ApplicationUserId;
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> GetBriefsAsync()
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            if (currentUser == null)
+            {
+                return Forbid();
+            }
+
+            var result = Mapper.Map<BriefList>(currentUser.Briefs);
+            return Json(result);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAsync(string id)
+        {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
+            var dto = await _applicationContext.Briefs.FindAsync(id);
+            if (dto == null)
+            {
+                return NotFound();
+            }
+            
+            var briefInfo = Mapper.Map<BriefInfo>(dto);
+            var authResult = await _authorizationService.AuthorizeAsync(User, briefInfo, Operations.Read);
+
+            if (!authResult.Succeeded)
+            {
+                return Forbid();
+            }
+
+            return Json(briefInfo);
+        }
+
+
+        private IActionResult GenerateDocument([FromBody] BriefInfo value)
         {
             if (!ModelState.IsValid)
             {
@@ -200,11 +311,6 @@ namespace BriefAssistant.Controllers
             }
 
             return BadRequest();
-        }
-
-        public IActionResult Index()
-        {
-            return View();
         }
     }
 }

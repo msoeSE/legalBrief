@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace BriefAssistant.Models
 {
     [DataContract(Namespace = "")]
-    public class Appellant
+    public class ContactInfo
     {
         [Required]
         [DataMember]

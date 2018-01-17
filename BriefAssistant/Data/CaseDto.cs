@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Threading.Tasks;
+using BriefAssistant.Models;
 
-
-namespace BriefAssistant.Models
+namespace BriefAssistant.Data
 {
-    public class DbCaseInfo
+    public class CaseDto : IUserData
     {
-        public int CaseId { get; set; }
-        public Brief Brief { get; set; }
+        public Guid Id { get; set; }
+        public Guid ApplicationUserId { get; set; }
+
         public County County { get; set; }
         public string CaseNumber { get; set; }
         public Role Role { get; set; }
@@ -20,5 +16,6 @@ namespace BriefAssistant.Models
         public string JudgeLastName { get; set; }
         public string OpponentName { get; set; }
 
+        public IList<BriefDto> BriefDto { get; set; }
     }
 }

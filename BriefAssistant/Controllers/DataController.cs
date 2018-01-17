@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BriefAssistant.Data;
 using BriefAssistant.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
@@ -29,60 +30,60 @@ namespace BriefAssistant.Controllers
         {
             var currentuser = await _userManager.GetUserAsync(User);
             var userId = currentuser.Id;
-            ICollection<Brief> briefs = currentuser.BriefRecord;
+            ICollection<BriefDto> briefs = currentuser.Briefs;
             //check if the brief already exist, if yes, update the tables, if not, insert records to the tables
-            if (briefs.Any(i =>i.Name == briefInfo.BriefName))
+            if (briefs.Any(i =>i.Name == briefInfo.Name))
             {
-                Brief brief = briefs.FirstOrDefault(i => i.Name == briefInfo.BriefName);
+                BriefDto briefDto = briefs.FirstOrDefault(i => i.Name == briefInfo.Name);
 
-                brief.UserInfo.Phone = briefInfo.Appellant.Phone;
-                brief.UserInfo.State = briefInfo.Appellant.Address.State;
-                brief.UserInfo.Street = briefInfo.Appellant.Address.Street;
-                brief.UserInfo.Street2 = briefInfo.Appellant.Address.Street2;
-                brief.UserInfo.Zip = briefInfo.Appellant.Address.Zip;
-                brief.UserInfo.City = briefInfo.Appellant.Address.City;
+                briefDto.ContactInfoDto.Phone = briefInfo.ContactInfo.Phone;
+                briefDto.ContactInfoDto.State = briefInfo.ContactInfo.Address.State;
+                briefDto.ContactInfoDto.Street = briefInfo.ContactInfo.Address.Street;
+                briefDto.ContactInfoDto.Street2 = briefInfo.ContactInfo.Address.Street2;
+                briefDto.ContactInfoDto.Zip = briefInfo.ContactInfo.Address.Zip;
+                briefDto.ContactInfoDto.City = briefInfo.ContactInfo.Address.City;
                               
                 _context.SaveChanges();
 
-                brief.CaseInfo.CaseNumber = briefInfo.CircuitCourtCase.CircuitCourtCaseNumber;
-                brief.CaseInfo.County = briefInfo.CircuitCourtCase.County;
-                brief.CaseInfo.JudgeFirstName = briefInfo.CircuitCourtCase.JudgeFirstName;
-                brief.CaseInfo.JudgeLastName = briefInfo.CircuitCourtCase.JudgeLastName;
-                brief.CaseInfo.OpponentName = briefInfo.CircuitCourtCase.OpponentName;
-                brief.CaseInfo.Role = briefInfo.CircuitCourtCase.Role;
+                briefDto.CircuitCourtCircuitCaseInfoDto.CaseNumber = briefInfo.CircuitCourtCase.CaseNumber;
+                briefDto.CircuitCourtCircuitCaseInfoDto.County = briefInfo.CircuitCourtCase.County;
+                briefDto.CircuitCourtCircuitCaseInfoDto.JudgeFirstName = briefInfo.CircuitCourtCase.JudgeFirstName;
+                briefDto.CircuitCourtCircuitCaseInfoDto.JudgeLastName = briefInfo.CircuitCourtCase.JudgeLastName;
+                briefDto.CircuitCourtCircuitCaseInfoDto.OpponentName = briefInfo.CircuitCourtCase.OpponentName;
+                briefDto.CircuitCourtCircuitCaseInfoDto.Role = briefInfo.CircuitCourtCase.Role;
                 _context.SaveChanges();
             
 
-                brief.BriefInfo.AppendixDocuments = briefInfo.AppendixDocuments;
-                brief.BriefInfo.AppellateCourtCaseNumber = briefInfo.AppellateCourtCaseNumber;
-                brief.BriefInfo.Argument = briefInfo.Argument;
-                brief.BriefInfo.CaseFactsStatement = briefInfo.CaseFactsStatement;
-                brief.BriefInfo.Conclusion = briefInfo.Conclusion;
-                brief.BriefInfo.IssuesPresented = briefInfo.IssuesPresented;
-                brief.BriefInfo.OralArgumentStatement = briefInfo.OralArgumentStatement;
-                brief.BriefInfo.PublicationStatement = briefInfo.PublicationStatement;
+                briefDto.BriefInfo.AppendixDocuments = briefInfo.AppendixDocuments;
+                briefDto.BriefInfo.AppellateCourtCaseNumber = briefInfo.AppellateCourtCaseNumber;
+                briefDto.BriefInfo.Argument = briefInfo.Argument;
+                briefDto.BriefInfo.CaseFactsStatement = briefInfo.CaseFactsStatement;
+                briefDto.BriefInfo.Conclusion = briefInfo.Conclusion;
+                briefDto.BriefInfo.IssuesPresented = briefInfo.IssuesPresented;
+                briefDto.BriefInfo.OralArgumentStatement = briefInfo.OralArgumentStatement;
+                briefDto.BriefInfo.PublicationStatement = briefInfo.PublicationStatement;
                 _context.SaveChanges();
 
             }
             else {
-                DbUserInfo user = new DbUserInfo
+                ContactInfoDto user = new ContactInfoDto
                 {
-                    Name = briefInfo.Appellant.Name,
-                    Phone = briefInfo.Appellant.Phone,
-                    State = briefInfo.Appellant.Address.State,
-                    Street = briefInfo.Appellant.Address.Street,
-                    Street2 = briefInfo.Appellant.Address.Street2,
-                    Zip = briefInfo.Appellant.Address.Zip,
-                    City = briefInfo.Appellant.Address.City,
+                    Name = briefInfo.ContactInfo.Name,
+                    Phone = briefInfo.ContactInfo.Phone,
+                    State = briefInfo.ContactInfo.Address.State,
+                    Street = briefInfo.ContactInfo.Address.Street,
+                    Street2 = briefInfo.ContactInfo.Address.Street2,
+                    Zip = briefInfo.ContactInfo.Address.Zip,
+                    City = briefInfo.ContactInfo.Address.City,
                 };
 
                 _context.UserInfo.Add(user);
                 _context.SaveChanges();
-                var userInfoId = user.UserInfoId;
+                var userInfoId = user.Id;
 
-                DbCaseInfo circuitCourtCase = new DbCaseInfo
+                CaseDto @case = new CaseDto
                 {
-                    CaseNumber = briefInfo.CircuitCourtCase.CircuitCourtCaseNumber,
+                    CaseNumber = briefInfo.CircuitCourtCase.CaseNumber,
                     County = briefInfo.CircuitCourtCase.County,
                     JudgeFirstName = briefInfo.CircuitCourtCase.JudgeFirstName,
                     JudgeLastName = briefInfo.CircuitCourtCase.JudgeLastName,
@@ -90,9 +91,9 @@ namespace BriefAssistant.Controllers
                     Role = briefInfo.CircuitCourtCase.Role,
 
                 };
-                _context.CaseInfo.Add(circuitCourtCase);
+                _context.CaseInfo.Add(@case);
                 _context.SaveChanges();
-                var caseId = circuitCourtCase.CaseId;
+                var caseId = @case.Id;
 
 
                DbbriefInfo dbbriefInfo = new DbbriefInfo
@@ -113,17 +114,17 @@ namespace BriefAssistant.Controllers
                 var briefInfoId = dbbriefInfo.InitialBriefInfoId;
 
 
-                Brief brief = new Brief
+                BriefDto briefDto = new BriefDto
                 {
-                    Name = briefInfo.BriefName,
+                    Name = briefInfo.Name,
                     CaseId = caseId,
-                    UserInfoId = userInfoId,
+                    ContactInfoId = userInfoId,
                     InitialBriefInfoId = briefInfoId
 
                     
                 };
-                _context.Brief.Add(brief);
-                currentuser.BriefRecord.Add(brief);
+                _context.Brief.Add(briefDto);
+                currentuser.Briefs.Add(briefDto);
                 _context.SaveChanges();
 
             }
@@ -138,16 +139,16 @@ namespace BriefAssistant.Controllers
             var currentuser = await _userManager.GetUserAsync(User);
             var userId = currentuser.Id;
 
-            ICollection<Brief> briefs = currentuser.BriefRecord;
+            ICollection<BriefDto> briefs = currentuser.Briefs;
 
-            Brief brief = briefs.FirstOrDefault(i => i.Name == briefName);
+            BriefDto briefDto = briefs.FirstOrDefault(i => i.Name == briefName);
 
 
-            var user = brief.UserInfo;
+            var user = briefDto.ContactInfoDto;
 
-            var caseInfo = brief.CaseInfo;
+            var caseInfo = briefDto.CircuitCourtCircuitCaseInfoDto;
 
-            var briefInfo = brief.BriefInfo;
+            var briefInfo = briefDto.BriefInfo;
                 Address address = new Address
                 {
                     City = user.City,
@@ -157,7 +158,7 @@ namespace BriefAssistant.Controllers
                     Zip = user.Zip
 
                 };
-                Appellant appellant = new Appellant
+                ContactInfo contactInfo = new ContactInfo
                 {
                     Address = address,
                     Phone = user.Phone,
@@ -167,7 +168,7 @@ namespace BriefAssistant.Controllers
                 };
                 CircuitCourtCase circuitCourtCase = new CircuitCourtCase
                 {
-                    CircuitCourtCaseNumber = caseInfo.CaseNumber,
+                    CaseNumber = caseInfo.CaseNumber,
                     County = caseInfo.County,
                     JudgeFirstName = caseInfo.JudgeFirstName,
                     JudgeLastName = caseInfo.JudgeLastName,
@@ -177,7 +178,7 @@ namespace BriefAssistant.Controllers
                 };
                 BriefInfo info = new BriefInfo
                 {
-                    Appellant = appellant,
+                    ContactInfo = contactInfo,
                     CircuitCourtCase = circuitCourtCase,
                     AppendixDocuments = briefInfo.AppendixDocuments,
                     Argument = briefInfo.Argument,

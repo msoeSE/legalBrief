@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Threading.Tasks;
 
-namespace BriefAssistant.Models
+namespace BriefAssistant.Data
 {
-    public class DbbriefInfo
+    public class BriefDto : IUserData
     {
-        public int InitialBriefInfoId { get; set; }
-        public Brief Brief { get; set; }
+        public Guid Id { get; set; }
+        public Guid ApplicationUserId { get; set; }
+        public Guid CaseId { get; set; }
+        public Guid ContactInfoId { get; set; }
+
+        public string Name { get; set; }
         public string IssuesPresented { get; set; }
         public string OralArgumentStatement { get; set; }
         public string PublicationStatement { get; set; }
@@ -20,5 +19,8 @@ namespace BriefAssistant.Models
         public string Argument { get; set; }
         public string Conclusion { get; set; }
         public string AppendixDocuments { get; set; }
+
+        public ContactInfoDto ContactInfoDto { get; set; }
+        public CaseDto CaseDto { get; set; }
     }
 }
