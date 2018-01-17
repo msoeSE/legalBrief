@@ -3,24 +3,26 @@ import { CircuitCourtCase } from "./CircuitCourtCase";
 
 export class BriefInfo {
     circuitCourtCase: CircuitCourtCase;
-    appendixDocuments: string;
-    conclusion: string;
-    caseFactsStatement: string;
-    argument: string;
-    oralArgumentStatement: string;
-    publicationStatement: string;
-    issuesPresented: string;
-    appellant: Appellant;
+    appellateCourtCaseNumber: string;
+	appendixDocuments: string;
+	conclusion: string;
+	caseFactsStatement: string;
+	argument: string;
+	oralArgumentStatement: string;
+	publicationStatement: string;
+	issuesPresented: string;
+	appellant: Appellant;
 
-    constructor() {
+	constructor() {
         this.circuitCourtCase = new CircuitCourtCase();
-        this.appendixDocuments = "";
-        this.conclusion = "";
-        this.caseFactsStatement = "";
-        this.argument = "";
-        this.oralArgumentStatement = "";
-        this.publicationStatement = "";
-        this.issuesPresented = "";
-        this.appellant = new Appellant();
-    }
+        this.appellateCourtCaseNumber = "";
+		this.appendixDocuments = "";
+		this.conclusion = "";
+		this.caseFactsStatement = "";
+		this.argument = "";
+		this.oralArgumentStatement = "";
+		this.publicationStatement = "";
+		this.issuesPresented = "";
+		this.appellant = new Appellant();
+	}
 }

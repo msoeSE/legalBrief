@@ -4,8 +4,7 @@ namespace BriefAssistant.Models
 {
     public class BriefInfo
     {
-        public string Date { get; set; }
-
+        [DataMember]
         public AppellateCase AppellateCase { get; set; }
 
         [Required]
@@ -13,7 +12,10 @@ namespace BriefAssistant.Models
 
         [Required]
         public CircuitCourtCase CircuitCourtCase { get; set; }
-
+        [Required]
+        [DataMember]
+        public string AppellateCourtCaseNumber { get; set; }
+        [DataMember]
         public string IssuesPresented { get; set; }
 
         public string OralArgumentStatement { get; set; }
