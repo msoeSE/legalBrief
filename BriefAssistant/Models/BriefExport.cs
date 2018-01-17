@@ -88,8 +88,8 @@ namespace BriefAssistant.Models
                 case Role.Respondent:
                     TopName = CircuitCourtCase.OpponentName;
                     BottomName = Appellant.Name;
-                    TopRole = "Petitioner-Respondant";
-                    BottomRole = "Respondant-Appellant";
+                    TopRole = "Petitioner-Respondent";
+                    BottomRole = "Respondent-Appellant";
                     break;
                 default:
                     throw new InvalidEnumArgumentException(nameof(role), (int)role, typeof(Role));
