@@ -13,6 +13,8 @@ namespace BriefAssistant.Models
         [DataMember]
         public CircuitCourtCase CircuitCourtCase { get; set; }
         [DataMember]
+        public string AppellateCourtCaseNumber { get; set; }
+        [DataMember]
         public string IssuesPresented { get; set; }
         [DataMember]
         public string OralArgumentStatement { get; set; }
@@ -44,6 +46,7 @@ namespace BriefAssistant.Models
             AppellateCase = info.AppellateCase;
             Appellant = info.Appellant;
             CircuitCourtCase = info.CircuitCourtCase;
+            AppellateCourtCaseNumber = info.AppellateCourtCaseNumber;
             IssuesPresented = info.IssuesPresented;
             OralArgumentStatement = info.OralArgumentStatement;
             PublicationStatement = info.PublicationStatement;

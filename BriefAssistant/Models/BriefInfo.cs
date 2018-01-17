@@ -13,6 +13,7 @@ namespace BriefAssistant.Models
         public CircuitCourtCase CircuitCourtCase { get; set; }
         [Required]
         public string AppellateCourtCaseNumber { get; set; }
+
         public string IssuesPresented { get; set; }
 
         public string OralArgumentStatement { get; set; }
