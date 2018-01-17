@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
@@ -33,22 +32,15 @@ namespace BriefAssistant.Controllers
                 return BadRequest(ModelState);
             }
 
-            value.AppellateCase = new AppellateCase
-            {
-                District = GetDistrictFromCounty(value.CircuitCourtCase.County)
-            };
-
-            value.Date = DateTime.Now.ToShortDateString();
-
-            value = SetTopAndBottomNamesAndRoles(value, value.Appellant.Name, value.CircuitCourtCase.Role, value.CircuitCourtCase.OpponentName);
+            BriefExport export = new BriefExport(value);
 
             XElement data;
             using (var dataStream = new MemoryStream())
             {
-                var serializer = new DataContractSerializer(typeof(BriefInfo));
+                var serializer = new DataContractSerializer(typeof(BriefExport));
                 using (var writer = XmlDictionaryWriter.CreateTextWriter(dataStream, Encoding.UTF8, false))
                 {
-                    serializer.WriteObject(writer, value);
+                    serializer.WriteObject(writer, export);
                 }
 
                 dataStream.Position = 0;
@@ -66,133 +58,6 @@ namespace BriefAssistant.Controllers
             };
 
             return Created($"briefs/download/{id}.docx", result);
-        }
-
-        /// <summary>
-        /// This method determines what order the appellant and opponent name and roles appear on the brief
-        /// </summary>
-        /// <param name="value">The BriefInfo object that is used to create the brief</param>
-        /// <param name="name">The name of the appellant</param>
-        /// <param name="role">The role of the appellant</param>
-        /// <param name="opponentName">The name of the opponent</param>
-        /// <returns></returns>
-        private BriefInfo SetTopAndBottomNamesAndRoles(BriefInfo value, string name, Role role, string opponentName)
-        {
-            switch (role)
-            {
-                case Role.Plaintiff:
-                    value.TopName = name;
-                    value.BottomName = opponentName;
-                    value.TopRole = "Plaintiff-Appellant";
-                    value.BottomRole = "Defendant-Respondent";
-                    break;
-                case Role.Petitioner:
-                    value.TopName = name;
-                    value.BottomName = opponentName;
-                    value.TopRole = "Petitioner-Appellant";
-                    value.BottomRole = "Respondent-Respondent";
-                    break;
-                case Role.Defendent:
-                    value.TopName = opponentName;
-                    value.BottomName = name;
-                    value.TopRole = "Plaintiff-Respondent";
-                    value.BottomRole = "Defendant-Appellant";
-                    break;
-                case Role.Respondent:
-                    value.TopName = opponentName;
-                    value.BottomName = name;
-                    value.TopRole = "Petitioner-Respondant";
-                    value.BottomRole = "Respondant-Appellant";
-                    break;
-                default:
-                    throw new InvalidEnumArgumentException(nameof(role), (int)role, typeof(Role));
-            }
-            return value;
-        }
-
-        private District GetDistrictFromCounty(County county)
-        {
-            switch (county)
-            {
-                case County.Milwaukee:
-                    return District.One;
-                case County.Calumet:
-                case County.FondDuLac:
-                case County.GreenLake:
-                case County.Kenosha:
-                case County.Manitowoc:
-                case County.Ozaukee:
-                case County.Racine:
-                case County.Sheboygan:
-                case County.Walworth:
-                case County.Washington:
-                case County.Waukesha:
-                case County.Winnebago:
-                    return District.Two;
-                case County.Ashland:
-                case County.Barron:
-                case County.Bayfield:
-                case County.Brown:
-                case County.Buffalo:
-                case County.Burnett:
-                case County.Chippewa:
-                case County.Door:
-                case County.Douglas:
-                case County.Dunn:
-                case County.EauClaire:
-                case County.Florence:
-                case County.Forest:
-                case County.Iron:
-                case County.Kewaunee:
-                case County.Langlade:
-                case County.Lincoln:
-                case County.Marathon:
-                case County.Marinette:
-                case County.Menominee:
-                case County.Oconto:
-                case County.Oneida:
-                case County.Outagamie:
-                case County.Pepin:
-                case County.Pierce:
-                case County.Polk:
-                case County.Price:
-                case County.Rusk:
-                case County.Sawyer:
-                case County.Shawano:
-                case County.StCroix:
-                case County.Taylor:
-                case County.Trempealeau:
-                case County.Vilas:
-                case County.Washburn:
-                    return District.Three;
-                case County.Adams:
-                case County.Clark:
-                case County.Columbia:
-                case County.Crawford:
-                case County.Dane:
-                case County.Dodge:
-                case County.Grant:
-                case County.Green:
-                case County.Iowa:
-                case County.Jackson:
-                case County.Jefferson:
-                case County.Juneau:
-                case County.LaCrosse:
-                case County.Lafayette:
-                case County.Marquette:
-                case County.Monroe:
-                case County.Portage:
-                case County.Richland:
-                case County.Rock:
-                case County.Sauk:
-                case County.Vernon:
-                case County.Waupaca:
-                case County.Waushara:
-                case County.Wood:
-                    return District.Four;
-                default:
-                    throw new InvalidEnumArgumentException(nameof(county), (int)county, typeof(County));
-            }
         }
 
         [HttpGet("download/{id}")]
