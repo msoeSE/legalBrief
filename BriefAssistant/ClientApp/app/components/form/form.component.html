@@ -1,4 +1,18 @@
 <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <h1>Title of Document</h1>
+    <div class="form-group">
+        <div class="form-inline">
+            <input type="text" id="docTitle" style="width: 50%;" class="form-control" [(ngModel)]="model.docTitle" #docTitle="ngModel" maxlength="100" name="docTitle" placeholder="Example Brief"><label>.docx</label>
+            <div *ngIf="docTitle.invalid && (docTitle.dirty || docTitle.touched)" class="alert alert-danger" id="docTitle-errors">
+                <div *ngIf="docTitle.errors.maxlength">
+                    Document title cannot be that long.
+                </div>
+            </div>
+        </div>
+        <small class="form-text text-muted" id="docTitleHelp">
+            Naming a document is not required, but is highly recommended.
+        </small>
+    </div>
     <h1>Your Information</h1>
     <div class="form-group">
         <label for="name" class="col-form-label">Name</label>
@@ -106,16 +120,16 @@
     </div>
     <div class="row">
         <div class="form-group col-md-6">
-          <label for="judgeFname" class="col-form-label" aria-describedby="judgeHelp">Judge First Name</label>
+            <label for="judgeFname" class="col-form-label" aria-describedby="judgeHelp">Judge First Name</label>
             <input type="text" id="judgeFname" class="form-control" [(ngModel)]="model.circuitCourtCase.judgeFirstName" #judgeFirstName="ngModel" name="judgeFirstname" placeholder="First Name" required>
             <div *ngIf="judgeFirstName.invalid && (judgeFirstName.dirty || judgeFirstName.touched)" class="alert alert-danger" id="judgeFname-errors">
                 <div *ngIf="judgeFirstName.errors.required">
                     Name is required.
                 </div>
             </div>
-          <small id="judgeHelp" class="form-text text-muted">
+            <small id="judgeHelp" class="form-text text-muted">
                 The name of the judge is listed at the end of the decision, order, or judgment that you are appealing.
-          </small>
+            </small>
         </div>
         <div class="form-group col-md-6">
             <label for="judgeLname" class="col-form-label">Judge Last Name</label>
@@ -142,7 +156,8 @@
             <div class="form-check" *ngFor="let k of roleKeys">
                 <label class="form-check-label">
                     <input class="form-check-input" type="radio" [(ngModel)]="model.circuitCourtCase.role" name="role" [value]="k">
-                {{roles[k]}}</label>
+                    {{roles[k]}}
+                </label>
             </div>
         </fieldset>
     </div>

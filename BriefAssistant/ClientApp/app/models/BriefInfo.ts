@@ -10,7 +10,8 @@ export class BriefInfo {
 	oralArgumentStatement: string;
 	publicationStatement: string;
 	issuesPresented: string;
-	appellant: Appellant;
+    appellant: Appellant;
+    docTitle: string;
 
 	constructor() {
 		this.circuitCourtCase = new CircuitCourtCase();
@@ -21,6 +22,7 @@ export class BriefInfo {
 		this.oralArgumentStatement = "";
 		this.publicationStatement = "";
 		this.issuesPresented = "";
-		this.appellant = new Appellant();
+        this.appellant = new Appellant();
+        this.docTitle = "";
 	}
 }
