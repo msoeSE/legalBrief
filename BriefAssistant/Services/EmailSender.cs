@@ -17,9 +17,9 @@ namespace BriefAssistant.Services
             Options = options.Value;
         }
 
-        public Task SendEmailAsync(string toAddress, string subject, string message, Stream attachmentStream = null, string attachmentName = null)
+        public async Task SendEmailAsync(string toAddress, string subject, string message, Stream attachmentStream = null, string attachmentName = null)
         {
-            using (var client = new SmtpClient("smtp.gmail.com", 465))
+            using (var client = new SmtpClient("smtp.gmail.com", 587))
             {
                 client.EnableSsl = true;
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
@@ -47,7 +47,7 @@ namespace BriefAssistant.Services
                         }
                     }
 
-                    return client.SendMailAsync(mailMessage);
+                    await client.SendMailAsync(mailMessage);
                 }
             }
         }
