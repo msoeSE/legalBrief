@@ -25,8 +25,12 @@ export class briefsListComponent implements OnInit {
             }
             );
     }
-    edit(id: String) {
+    edit(id: string) {
         this.router.navigate(["/dataform", id]);
 
+    }
+    delete(id: string, index: number) {
+        this.briefs.briefs.splice(index, 1);
+        //controller's delete method
     }
 }
