@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using BriefAssistant.Models;
 
 namespace BriefAssistant.Data
 {
     public class CaseDto : IUserData
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         public Guid ApplicationUserId { get; set; }
 

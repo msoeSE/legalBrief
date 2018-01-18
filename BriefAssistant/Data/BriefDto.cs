@@ -5,6 +5,7 @@ namespace BriefAssistant.Data
 {
     public class BriefDto : IUserData
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         public Guid ApplicationUserId { get; set; }
         public Guid CaseId { get; set; }
