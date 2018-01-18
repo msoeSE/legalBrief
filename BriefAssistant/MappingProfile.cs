@@ -15,6 +15,8 @@ namespace BriefAssistant
             CreateMap<BriefInfo, BriefDto>().ReverseMap();
             CreateMap<ContactInfo, ContactInfoDto>().ReverseMap();
             CreateMap<CircuitCourtCase, CaseDto>().ReverseMap();
+
+            CreateMap<BriefDto, BriefListItem>();
         }
     }
 }

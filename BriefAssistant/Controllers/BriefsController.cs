@@ -111,7 +111,11 @@ namespace BriefAssistant.Controllers
                 return Forbid();
             }
 
-            var result = Mapper.Map<BriefList>(currentUser.Briefs);
+            var result = new BriefList
+            {
+                Briefs = currentUser.Briefs.Select(Mapper.Map<BriefListItem>)
+            };
+
             return Json(result);
         }
 
