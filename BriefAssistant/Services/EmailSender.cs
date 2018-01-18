@@ -30,6 +30,7 @@ namespace BriefAssistant.Services
                 {
                     mailMessage.Subject = subject;
                     mailMessage.Body = message;
+                    mailMessage.IsBodyHtml = true;
 
                     if (attachmentStream != null)
                     {
