@@ -1,5 +1,5 @@
 ﻿import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { NgForm } from "@angular/forms";
 import { Http, Headers } from '@angular/http';
 import { LoginRequest } from "../../models/LoginRequest";
@@ -14,7 +14,8 @@ export class LoginRegisterComponent {
     private registerModel = new RegistrationRequest();
 
     constructor(
-        private readonly http: Http
+		private readonly http: Http,
+		private readonly router: Router
     ) { }
 
     onLoginSubmit(form: NgForm) {
@@ -23,8 +24,9 @@ export class LoginRegisterComponent {
         this.http.post("/api/account/login", body, { headers: headers })
             .map(res => res.json())
             .subscribe(data => {
-                console.log(data);
-            });
+				console.log(data);
+		        this.router.navigate(["/example"]);
+	        });
     }
 
     onRegisterSubmit(form: NgForm) {
@@ -33,9 +35,8 @@ export class LoginRegisterComponent {
 
         this.http.post("/api/account/register", body, { headers: headers })
             .map(res => res.json())
-            .subscribe(data => {
-                console.log(data);
-            });
-        console.log("posted");
+			.subscribe(data => {
+				console.log(data);
+	        });
     }
 }

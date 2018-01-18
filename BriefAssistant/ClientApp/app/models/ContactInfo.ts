@@ -1,6 +1,6 @@
 ﻿import { Address } from "./Address";
 
-export class Appellant {
+export class ContactInfo {
 	phone: string;
 	email: string;
 	address: Address;

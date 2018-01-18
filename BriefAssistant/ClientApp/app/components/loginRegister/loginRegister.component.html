@@ -33,7 +33,7 @@
         </div>
     </div>
     <div class="form-group">
-        <input class="form-control" id="registrationPassword" type="text" [(ngModel)]="registerModel.password" name="registrationPassword" placeholder="Password" #registrationPassword="ngModel" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}" required validateEqual="registrationPasswordCheck" reverse="true" />
+        <input class="form-control" id="registrationPassword" type="password" [(ngModel)]="registerModel.password" name="registrationPassword" placeholder="Password" #registrationPassword="ngModel" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}" required validateEqual="registrationPasswordCheck" reverse="true" />
         <div *ngIf="registrationPassword.invalid && (registrationPassword.dirty || registrationPassword.touched)" class="alert alert-danger" id="registrationPassword-errors">
             <div *ngIf="registrationPassword.errors">
                 Password requires the following format:
@@ -48,7 +48,7 @@
         </div>
     </div>
     <div class="form-group">
-        <input class="form-control" id="registrationPasswordCheck" type="text" name="registrationPasswordCheck" [(ngModel)]="registerModel.confirmPassword" placeholder="Confirm Password" validateEqual="registrationPassword" reverse="false" #registrationPasswordCheck="ngModel" required />
+        <input class="form-control" id="registrationPasswordCheck" type="password" name="registrationPasswordCheck" [(ngModel)]="registerModel.confirmPassword" placeholder="Confirm Password" validateEqual="registrationPassword" reverse="false" #registrationPasswordCheck="ngModel" required />
         <div *ngIf="registrationPasswordCheck.invalid && (registrationPasswordCheck.touched || registrationPasswordCheck.dirty)" class="alert alert-danger" id="registrationPasswordCheck-errors">
             <div *ngIf="registrationPasswordCheck.errors">
                 Password mismatch

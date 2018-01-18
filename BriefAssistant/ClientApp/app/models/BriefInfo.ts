@@ -1,4 +1,4 @@
-﻿import { Appellant } from "./Appellant";
+﻿import { ContactInfo } from "./ContactInfo";
 import { CircuitCourtCase } from "./CircuitCourtCase";
 
 export class BriefInfo {
@@ -11,7 +11,7 @@ export class BriefInfo {
 	oralArgumentStatement: string;
 	publicationStatement: string;
 	issuesPresented: string;
-	appellant: Appellant;
+	contactInfo: ContactInfo;
 
 	constructor() {
 		this.circuitCourtCase = new CircuitCourtCase();
@@ -22,6 +22,6 @@ export class BriefInfo {
 		this.oralArgumentStatement = "";
 		this.publicationStatement = "";
 		this.issuesPresented = "";
-		this.appellant = new Appellant();
+		this.contactInfo = new ContactInfo();
 	}
 }

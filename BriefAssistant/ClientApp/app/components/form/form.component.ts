@@ -37,8 +37,12 @@ export class FormComponent implements OnInit {
 		this.briefService
 			.getBriefList()
 			.then(briefList => {
-				this.briefService.getBrief(briefList.briefs[0].id)
-					.then(brief => this.brief = brief);
+				if (briefList != undefined) {
+					this.briefService.getBrief(briefList.briefs[0].id)
+						.then(brief => this.brief = brief);
+				} else {
+					this.brief = new BriefInfo();
+				}
 			});
 	}
 

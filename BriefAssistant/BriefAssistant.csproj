@@ -32,8 +32,8 @@
 
   <ItemGroup>
     <None Remove="ClientApp\app\models\Address.ts" />
-    <None Remove="ClientApp\app\models\Appellant.ts" />
     <None Remove="ClientApp\app\models\BriefInfo.ts" />
+    <None Remove="ClientApp\app\models\ContactInfo.ts" />
     <None Remove="ClientApp\app\models\County.ts" />
     <None Remove="ClientApp\app\models\IBriefList.ts" />
     <None Remove="ClientApp\app\models\IBriefListItem.ts" />
@@ -54,7 +54,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\app\models\Address.ts" />
-    <TypeScriptCompile Include="ClientApp\app\models\Appellant.ts" />
+    <TypeScriptCompile Include="ClientApp\app\models\ContactInfo.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\BriefInfo.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\IBriefListItem.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\CircuitCourtCase.ts" />

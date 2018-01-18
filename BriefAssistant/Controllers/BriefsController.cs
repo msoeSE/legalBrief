@@ -54,11 +54,7 @@ namespace BriefAssistant.Controllers
 
             var briefDto = Mapper.Map<BriefDto>(briefInfo);
             briefDto.ApplicationUserId = currentUser.Id;
-
-            briefDto.CaseDto = Mapper.Map<CaseDto>(briefInfo);
             briefDto.CaseDto.ApplicationUserId = currentUser.Id;
-
-            briefDto.ContactInfoDto = Mapper.Map<ContactInfoDto>(briefInfo);
             briefDto.ContactInfoDto.ApplicationUserId = currentUser.Id;
             await _applicationContext.SaveChangesAsync();
 
@@ -111,6 +107,10 @@ namespace BriefAssistant.Controllers
                 return Forbid();
             }
 
+            _applicationContext.Entry(currentUser)
+                .Collection(t => t.Briefs)
+                .Load();
+
             var result = new BriefList
             {
                 Briefs = currentUser.Briefs.Select(Mapper.Map<BriefListItem>)
@@ -120,9 +120,9 @@ namespace BriefAssistant.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetBriefAsync(string id)
+        public async Task<IActionResult> GetBriefAsync(Guid id)
         {
-            if (id == null)
+            if (id == default(Guid))
             {
                 return BadRequest();
             }
