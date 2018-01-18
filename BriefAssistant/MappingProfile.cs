@@ -12,7 +12,10 @@ namespace BriefAssistant
     {
         public MappingProfile()
         {
-            CreateMap<BriefInfo, BriefDto>(MemberList.None).ReverseMap();
+            CreateMap<BriefInfo, BriefDto>(MemberList.None)
+                .ForMember(dest => dest.ContactInfoDto, opt => opt.MapFrom(src => src.ContactInfo))
+                .ForMember(dest => dest.CircuitCourtCaseDto, opt => opt.MapFrom(src => src.CircuitCourtCase))
+                .ReverseMap();
             CreateMap<ContactInfo, ContactInfoDto>(MemberList.None)
                 .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.Address.City))
                 .ForMember(dest => dest.State, opt => opt.MapFrom(src => src.Address.State))
@@ -20,7 +23,7 @@ namespace BriefAssistant
                 .ForMember(dest => dest.Street, opt => opt.MapFrom(src => src.Address.Street))
                 .ForMember(dest => dest.Street2, opt => opt.MapFrom(src => src.Address.Street2))
                 .ReverseMap();
-            CreateMap<CircuitCourtCase, CaseDto>(MemberList.None).ReverseMap();
+            CreateMap<CircuitCourtCase, CircuitCourtCaseDto>(MemberList.None).ReverseMap();
 
             CreateMap<BriefDto, BriefListItem>();
         }

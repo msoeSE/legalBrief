@@ -5,7 +5,7 @@ using BriefAssistant.Models;
 
 namespace BriefAssistant.Data
 {
-    public class CaseDto : IUserData
+    public class CircuitCourtCaseDto : IUserData
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }

@@ -12,7 +12,7 @@ namespace BriefAssistant.Models
     {
         public Guid Id { get; set; }
         [DataMember]
-        public String Name { get; set; }
+        public String Title { get; set; }
         [DataMember]
         public string Date { get; set; }
         [DataMember]

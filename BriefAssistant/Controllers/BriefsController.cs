@@ -54,8 +54,10 @@ namespace BriefAssistant.Controllers
 
             var briefDto = Mapper.Map<BriefDto>(briefInfo);
             briefDto.ApplicationUserId = currentUser.Id;
-            briefDto.CaseDto.ApplicationUserId = currentUser.Id;
+            briefDto.CircuitCourtCaseDto.ApplicationUserId = currentUser.Id;
             briefDto.ContactInfoDto.ApplicationUserId = currentUser.Id;
+            _applicationContext.Briefs.Add(briefDto);
+
             await _applicationContext.SaveChangesAsync();
 
             return Created($"/briefs/{briefDto.Id}", briefInfo);
@@ -71,7 +73,7 @@ namespace BriefAssistant.Controllers
 
             var existingBrief = await _applicationContext.Briefs
                 .Include(briefDto => briefDto.ContactInfoDto)
-                .Include(briefDto => briefDto.CaseDto)
+                .Include(briefDto => briefDto.CircuitCourtCaseDto)
                 .SingleAsync(briefDto => briefDto.Id == briefInfo.Id);
 
             if (existingBrief == null)
@@ -90,8 +92,8 @@ namespace BriefAssistant.Controllers
             updatedBrief.ApplicationUserId = existingBrief.ApplicationUserId;
             updatedBrief.ContactInfoDto.Id = existingBrief.ContactInfoDto.Id;
             updatedBrief.ContactInfoDto.ApplicationUserId = existingBrief.ContactInfoDto.ApplicationUserId;
-            updatedBrief.CaseDto.Id = existingBrief.CaseDto.Id;
-            updatedBrief.CaseDto.ApplicationUserId = existingBrief.CaseDto.ApplicationUserId;
+            updatedBrief.CircuitCourtCaseDto.Id = existingBrief.CircuitCourtCaseDto.Id;
+            updatedBrief.CircuitCourtCaseDto.ApplicationUserId = existingBrief.CircuitCourtCaseDto.ApplicationUserId;
 
             return Json(updatedBrief);
         }

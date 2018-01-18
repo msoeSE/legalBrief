@@ -22,6 +22,6 @@ namespace BriefAssistant.Data
         public string AppendixDocuments { get; set; }
 
         public ContactInfoDto ContactInfoDto { get; set; }
-        public CaseDto CaseDto { get; set; }
+        public CircuitCourtCaseDto CircuitCourtCaseDto { get; set; }
     }
 }

@@ -37,6 +37,7 @@ export class FormComponent implements OnInit {
 		this.briefService
 			.getBriefList()
 			.then(briefList => {
+				console.log(briefList);
 				if (briefList != undefined) {
 					this.briefService.getBrief(briefList.briefs[0].id)
 						.then(brief => this.brief = brief);

@@ -13,9 +13,12 @@ export class BriefService {
 	constructor(private readonly http: Http) { }
 
 	getBriefList(): Promise<IBriefList> {
-		return this.http.get("/api/briefs/")
+		return this.http.get("/api/briefs")
 			.toPromise()
-			.then(response => response.json().data as IBriefList);
+			.then(response => {
+				console.log(response);
+				 return response.json().data as IBriefList;
+			});
 	}
 
 	getBrief(id: string): Promise<BriefInfo> {
@@ -25,7 +28,7 @@ export class BriefService {
 	}
 
 	create(brief: BriefInfo): Promise<BriefInfo> {
-		return this.http.post("/api/briefs/", JSON.stringify(brief), {headers: this.headers})
+		return this.http.post("/api/briefs", JSON.stringify(brief), {headers: this.headers})
 			.toPromise()
 			.then(response => response.json().data as BriefInfo);
 	}
