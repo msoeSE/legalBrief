@@ -1,4 +1,5 @@
-﻿using System.Text.Encodings.Web;
+﻿using System.IO;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using BriefAssistant.Services;
 
@@ -12,10 +13,10 @@ namespace BriefAssistant.Extensions
             return emailSender.SendEmailAsync(emailAddress, "Confirm your email", message);
         }
 
-        public static Task SendBriefAsync(this IEmailSender emailSender, string emailAddress, string briefFileName)
+        public static Task SendBriefAsync(this IEmailSender emailSender, string emailAddress, Stream attachmentStream, string attachmentName)
         {
             var message = "Your completed brief is attached. Thank you for using the Brief Assistant";
-            return emailSender.SendEmailAsync(emailAddress, "Your completed brief", message, briefFileName);
+            return emailSender.SendEmailAsync(emailAddress, "Your completed brief", message, attachmentStream, "brief.docx");
         }
     }
 }

@@ -96,6 +96,8 @@ namespace BriefAssistant.Controllers
             updatedBrief.ContactInfoDto.ApplicationUserId = existingBrief.ContactInfoDto.ApplicationUserId;
             updatedBrief.CaseDto.Id = existingBrief.CaseDto.Id;
             updatedBrief.CaseDto.ApplicationUserId = existingBrief.CaseDto.ApplicationUserId;
+
+            return Json(updatedBrief);
         }
 
         [Authorize]
@@ -114,7 +116,7 @@ namespace BriefAssistant.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAsync(string id)
+        public async Task<IActionResult> GetBriefAsync(string id)
         {
             if (id == null)
             {
@@ -139,13 +141,8 @@ namespace BriefAssistant.Controllers
         }
 
 
-        private IActionResult GenerateDocument([FromBody] BriefInfo value)
+        private bool WriteDocumentToStream(BriefInfo value, Stream outputStream)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             value.AppellateCase = new AppellateCase
             {
                 District = GetDistrictFromCounty(value.CircuitCourtCase.County)
@@ -170,15 +167,8 @@ namespace BriefAssistant.Controllers
 
             var templateDoc = new WmlDocument(_env.ContentRootFileProvider.GetFileInfo("briefTemplate.docx").PhysicalPath);
             var assembledDoc = DocumentAssembler.AssembleDocument(templateDoc, data, out bool isTemplateError);
-            var id = Guid.NewGuid().ToString("N");
-            assembledDoc.SaveAs(Path.Combine(_env.ContentRootPath, $"briefs/{id}.docx"));
-
-            var result = new BriefGenerationResult
-            {
-                Id = id
-            };
-
-            return Created($"briefs/download/{id}.docx", result);
+            assembledDoc.WriteByteArray(outputStream);
+            return !isTemplateError;
         }
 
         private Role GetOpponentRole(Role role)
@@ -283,34 +273,49 @@ namespace BriefAssistant.Controllers
             }
         }
 
-        [HttpGet("download/{id}")]
-        public IActionResult DownloadBrief(string id)
+        [HttpGet("{id}/download")]
+        public async Task<IActionResult> DownloadBrief(Guid id)
         {
-            var briefFileInfo = _env.ContentRootFileProvider.GetFileInfo($"briefs/{id}.docx");
-            if (briefFileInfo.Exists && !briefFileInfo.IsDirectory)
+            var briefDto = await _applicationContext.Briefs.FindAsync(id);
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, briefDto, Operations.Read);
+
+            if (!authorizationResult.Succeeded)
             {
-                return PhysicalFile(briefFileInfo.PhysicalPath, DocxMimeType, "brief.docx");
+                return Forbid();
             }
 
-            return NotFound();
+            var briefInfo = Mapper.Map<BriefInfo>(briefDto);
+            using (var stream = new MemoryStream())
+            {
+                WriteDocumentToStream(briefInfo, stream);
+                return File(stream, DocxMimeType, briefInfo.Name + ".docx");
+            }
         }
 
-        [HttpPost("email/{id}")]
-        public IActionResult EmailBrief(string id, [FromBody] EmailRequest request)
+        [HttpPost("{id}/email")]
+        public async Task<IActionResult> EmailBrief(string id, [FromBody] EmailRequest request)
         {
             if (ModelState.IsValid)
             {
-                var briefPath = Path.Combine(_env.ContentRootPath, $"briefs/{id}.docx");
-                if (System.IO.File.Exists(briefPath))
+                var dto = await _applicationContext.Briefs.FindAsync(id);
+                var authResult = await _authorizationService.AuthorizeAsync(User, dto, Operations.Read);
+
+                if (!authResult.Succeeded)
                 {
-                    _emailSender.SendBriefAsync(request.Email, briefPath);
-                    return NoContent();
+                    return Forbid();
                 }
 
-                return NotFound();
+                var brief = Mapper.Map<BriefInfo>(dto);
+                using (var stream = new MemoryStream())
+                {
+                    WriteDocumentToStream(brief, stream);
+                    await _emailSender.SendBriefAsync(request.Email, stream, brief.Name + ".docx");
+                }
+                return NoContent();
             }
 
-            return BadRequest();
+
+            return NotFound();
         }
     }
 }

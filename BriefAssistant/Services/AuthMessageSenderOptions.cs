@@ -9,6 +9,6 @@ namespace BriefAssistant.Services
     public class AuthMessageSenderOptions
     {
         public string EmailAddress { get; set; }
-        public SecureString Password { get; set; }
+        public string Password { get; set; }
     }
 }

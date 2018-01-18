@@ -1,14 +1,14 @@
 import { Component } from "@angular/core";
 import { NgForm } from "@angular/forms";
-import { NgModule, OnInit } from "@angular/core";
+import { OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { BrowserModule } from "@angular/platform-browser";
 import { Http, Headers } from '@angular/http';
 import { BriefInfo } from "../../models/BriefInfo";
 import { State } from "../../models/State";
 import { County } from "../../models/County";
 import { Role } from "../../models/Role";
-import { BriefGenerationResult } from "../../models/BriefGenerationResult";
+import { BriefService } from "../../services/brief.service"
+
 import 'rxjs/add/operator/map';
 
 @Component({
@@ -23,48 +23,40 @@ export class FormComponent implements OnInit {
 	private countyKeys = Object.keys(County);
 	private roles = Role;
 	private roleKeys = Object.keys(Role);
-    private model = new BriefInfo();
+	private brief = new BriefInfo();
+
+	private headers = new Headers({ 'Content-Type': "application/json" });
 
 	constructor(
 		private readonly http: Http,
-		private readonly router: Router
+		private readonly router: Router,
+		private readonly briefService: BriefService
     ) { }
 
-    ngOnInit() {
-		this.retrieve();
-
-    }
-    save(form: NgForm) {
-        const body = JSON.stringify(this.model);
-        const headers = new Headers({ 'Content-Type': 'application/json' });
-        this.http.post("/api/data/save", body, { headers: headers })
-            .map(res => res.json())
-            .subscribe(data => {
-                alert("create Sent!");
-            });
-    }
- 
-	retrieve(id: string) {
-        let headers = new Headers({ 'Accept': 'application/json' });
-        this.http.get("/api/briefs/", { headers: headers })
-            .map(res => res.json())
-            .subscribe((data: BriefInfo) => {
-                this.model = data;
-            });
+	ngOnInit() {
+		this.briefService
+			.getBriefList()
+			.then(briefList => {
+				this.briefService.getBrief(briefList.briefs[0].id)
+					.then(brief => this.brief = brief);
+			});
 	}
 
-    updateCounty(county: County) {
-        this.model.circuitCourtCase.county = county;
-    }
+	updateBrief() {
+		this.saveBrief()
+			.then(() => alert("Brief Saved!"));
+	}
 
-	generateBrief(form: NgForm) {
-		var body = JSON.stringify(this.model);
-		let headers = new Headers({ 'Content-Type': 'application/json' });
-		this.http.post("/api/brief", body, { headers: headers })
-			.map(res => res.json())
-			.subscribe((data: BriefGenerationResult) => {
-				this.save(form);
-				this.router.navigate(["/final", data.id]);
-			});
+	private saveBrief() : Promise<BriefInfo> {
+		if (this.brief.id == null) {
+			return this.briefService.create(this.brief);
+		} else {
+			return this.briefService.update(this.brief);
+		}
+	}
+
+	finishBrief(form: NgForm) {
+		this.saveBrief()
+			.then(brief => this.router.navigate(["/final", brief.id]));
 	}
 }

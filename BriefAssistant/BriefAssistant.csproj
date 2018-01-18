@@ -35,7 +35,10 @@
     <None Remove="ClientApp\app\models\Appellant.ts" />
     <None Remove="ClientApp\app\models\BriefInfo.ts" />
     <None Remove="ClientApp\app\models\County.ts" />
+    <None Remove="ClientApp\app\models\IBriefList.ts" />
+    <None Remove="ClientApp\app\models\IBriefListItem.ts" />
     <None Remove="ClientApp\app\models\Role.ts" />
+    <None Remove="ClientApp\app\services\brief.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -53,9 +56,12 @@
     <TypeScriptCompile Include="ClientApp\app\models\Address.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\Appellant.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\BriefInfo.ts" />
+    <TypeScriptCompile Include="ClientApp\app\models\IBriefListItem.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\CircuitCourtCase.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\County.ts" />
+    <TypeScriptCompile Include="ClientApp\app\models\IBriefList.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\Role.ts" />
+    <TypeScriptCompile Include="ClientApp\app\services\brief.service.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

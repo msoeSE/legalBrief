@@ -7,6 +7,6 @@ namespace BriefAssistant.Models
 {
     public class BriefList
     {
-        public IEnumerable<BriefInfo> Briefs { get; set; }
+        public IEnumerable<BriefListItem> Briefs { get; set; }
     }
 }

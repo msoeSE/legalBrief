@@ -26,7 +26,7 @@ namespace BriefAssistant.Authorization
 
             if ((requirement == Operations.Create || requirement == Operations.Update ||
                  requirement == Operations.Delete || requirement == Operations.Delete) &&
-                resource.ApplicationUserId == _userManager.GetUserId(context.User))
+                resource.ApplicationUserId.ToString() == _userManager.GetUserId(context.User))
             {
                 context.Succeed(requirement);
             }

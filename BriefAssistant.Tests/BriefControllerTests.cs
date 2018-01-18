@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using BriefAssistant.Controllers;
 using BriefAssistant.Models;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -61,7 +56,7 @@ namespace BriefAssistant.Tests
             var httpContent = new StringContent(JsonConvert.SerializeObject(brief), Encoding.UTF8, "application/json");
 
             // Act
-            var response = await _testFixture.Client.PostAsync("/api/briefs/", httpContent);
+            var response = await _testFixture.Client.("/api/briefs/", httpContent);
 
             // Assert
             Assert.Equal(HttpStatusCode.Created, response.StatusCode);

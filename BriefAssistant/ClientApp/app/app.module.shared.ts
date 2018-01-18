@@ -13,6 +13,7 @@ import { AccountPageComponent } from "./components/accountPage/accountPage.compo
 import { ForgotPasswordComponent } from "./components/forgotPassword/forgotPassword.component";
 import { ResetPasswordComponent } from "./components/resetPassword/resetPassword.component";
 import { PasswordValidator } from "./passwordValidator.directive";
+import { BriefService } from './services/brief.service';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,7 @@ import { PasswordValidator } from "./passwordValidator.directive";
         LoginRegisterComponent,
         AccountPageComponent,
         ForgotPasswordComponent,
-        ResetPasswordComponent,
+		ResetPasswordComponent,
         PasswordValidator
     ],
     imports: [
@@ -42,7 +43,8 @@ import { PasswordValidator } from "./passwordValidator.directive";
             { path: 'resetPassword', component: ResetPasswordComponent }
         ])
     ],
-    exports: [RouterModule]
+	exports: [RouterModule],
+	providers: [BriefService]
 
 })
 export class AppModuleShared {

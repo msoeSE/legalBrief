@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace BriefAssistant.Models
 {
-    public class BriefGenerationResult
+    public class BriefListItem
     {
-        public string Id { get; set; }
-        public string Error { get; set; }
+        public Guid Id { get; set; }
+        public string Title { get; set; }
     }
 }

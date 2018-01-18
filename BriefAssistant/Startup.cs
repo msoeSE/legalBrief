@@ -27,7 +27,15 @@ namespace BriefAssistant
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
+
+            if (Environment.IsDevelopment())
+            {
+                services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase("testdb"));
+            }
+            else
+            {
+                services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
+            }
 
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

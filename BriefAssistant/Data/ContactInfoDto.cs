@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BriefAssistant.Models;
 
 namespace BriefAssistant.Data
@@ -6,7 +7,7 @@ namespace BriefAssistant.Data
     public class ContactInfoDto : IUserData
     {
         public int Id { get; set; }
-        public string ApplicationUserId { get; set; }
+        public Guid ApplicationUserId { get; set; }
 
         public string Name { get; set; }
         public string Street { get; set; }

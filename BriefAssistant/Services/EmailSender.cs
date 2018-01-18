@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
@@ -16,7 +17,7 @@ namespace BriefAssistant.Services
             Options = options.Value;
         }
 
-        public Task SendEmailAsync(string toAddress, string subject, string message, string attachmentFileName = null)
+        public Task SendEmailAsync(string toAddress, string subject, string message, Stream attachmentStream = null, string attachmentName = null)
         {
             using (var client = new SmtpClient("smtp.gmail.com", 465))
             {
@@ -30,17 +31,16 @@ namespace BriefAssistant.Services
                     mailMessage.Subject = subject;
                     mailMessage.Body = message;
 
-                    if (attachmentFileName != null)
+                    if (attachmentStream != null)
                     {
-                        using (var attachment = new Attachment(attachmentFileName))
+                        using (var attachment = new Attachment(attachmentStream, "application/octect"))
                         {
-                            var fileInfo = new FileInfo(attachmentFileName);
                             ContentDisposition disposition = attachment.ContentDisposition;
-                            disposition.CreationDate = fileInfo.CreationTimeUtc;
-                            disposition.ModificationDate = fileInfo.LastWriteTimeUtc;
-                            disposition.ReadDate = fileInfo.LastAccessTimeUtc;
-                            disposition.FileName = fileInfo.Name;
-                            disposition.Size = fileInfo.Length;
+                            disposition.CreationDate = DateTime.UtcNow;
+                            disposition.ModificationDate = DateTime.UtcNow;
+                            disposition.ReadDate = DateTime.UtcNow;
+                            disposition.FileName = "brief.docx";
+                            disposition.Size = attachmentStream.Length;
                             disposition.DispositionType = DispositionTypeNames.Attachment;
 
                             mailMessage.Attachments.Add(attachment);
