@@ -1,7 +1,9 @@
 using System;
 using AutoMapper;
+using BriefAssistant.Authorization;
 using BriefAssistant.Data;
 using BriefAssistant.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -75,6 +77,9 @@ namespace BriefAssistant
                     "/Account/AccessDenied"; // If the AccessDeniedPath is not set here, ASP.NET Core will default to /Account/AccessDenied
                 options.SlidingExpiration = true;
             });
+
+            services.AddAuthorization();
+            services.AddSingleton<IAuthorizationHandler, BriefAuthorizationCrudHandler>();
 
             services.AddAntiforgery(options =>
                 options.HeaderName = "X-XSRF-TOKEN"); // Angular 2's http client should handle this automaticly
