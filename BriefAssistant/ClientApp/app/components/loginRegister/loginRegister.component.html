@@ -14,6 +14,9 @@
         <input class="checkbox" type="checkbox" id="rememberMeCheck" [(ngModel)]="loginModel.rememberMe" name="rememberMe"/>
         <label for="rememberMeCheck">Remember Me</label>
     </div>
+    <div class="alert alert-danger" *ngIf="showLoginUnauthorizedDiv">
+        Login Unsuccessful. Email/Password was incorrect.
+    </div>
     <div class="form-group">
         <button class="btn btn-primary" type="submit" [disabled]="!loginForm.valid">Login</button>
     </div>
@@ -53,6 +56,9 @@
             <div *ngIf="registrationPasswordCheck.errors">
                 Password mismatch
             </div>
+        </div>
+        <div class="alert alert-success" *ngIf="showRegisterSuccessDiv">
+            Registration Successful. Check your email for a confirmation link.
         </div>
     </div>
     <div class="form-group">
