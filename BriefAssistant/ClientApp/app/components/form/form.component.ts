@@ -38,7 +38,7 @@ export class FormComponent implements OnInit {
 			.getBriefList()
 			.then(briefList => {
 				console.log(briefList);
-				if (briefList != undefined) {
+				if (briefList.briefs.length !== 0) {
 					this.briefService.getBrief(briefList.briefs[0].id)
 						.then(brief => this.brief = brief);
 				} else {
@@ -47,7 +47,7 @@ export class FormComponent implements OnInit {
 			});
 	}
 
-	updateBrief() {
+	updateBrief(form: NgForm) {
 		this.saveBrief()
 			.then(() => alert("Brief Saved!"));
 	}
