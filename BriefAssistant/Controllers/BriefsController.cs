@@ -41,6 +41,14 @@ namespace BriefAssistant.Controllers
             _authorizationService = authorizationService;
         }
 
+        /// <summary>
+        /// Creates a new brief
+        /// </summary>
+        /// <param name="briefInfo"></param>
+        /// <returns>
+        /// 201 if sucessfully created
+        /// 400 if the reqest body is maliformed
+        /// </returns>
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> CreateAsync([FromBody] BriefInfo briefInfo)
@@ -60,9 +68,20 @@ namespace BriefAssistant.Controllers
 
             await _applicationContext.SaveChangesAsync();
 
-            return Created($"/briefs/{briefDto.Id}", briefInfo);
+            return Created($"/briefs/{briefDto.Id}", Json(briefInfo));
         }
 
+        /// <summary>
+        /// Updates an existing brief
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="briefInfo"></param>
+        /// <returns>
+        /// 200 if the brief is updated successfully
+        /// 400 if the request is not in the correct format
+        /// 403 if the user id of the brief does not match the user id of the currently logged in user
+        /// 404 if there is no existing brief with the given id
+        /// </returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] BriefInfo briefInfo)
         {
@@ -135,8 +154,8 @@ namespace BriefAssistant.Controllers
                 return NotFound();
             }
             
+            var authResult = await _authorizationService.AuthorizeAsync(User, dto, Operations.Read);
             var briefInfo = Mapper.Map<BriefInfo>(dto);
-            var authResult = await _authorizationService.AuthorizeAsync(User, briefInfo, Operations.Read);
 
             if (!authResult.Succeeded)
             {
@@ -294,7 +313,7 @@ namespace BriefAssistant.Controllers
             using (var stream = new MemoryStream())
             {
                 WriteDocumentToStream(briefInfo, stream);
-                return File(stream, DocxMimeType, briefInfo.Name + ".docx");
+                return File(stream, DocxMimeType, briefInfo.Title + ".docx");
             }
         }
 
@@ -315,7 +334,7 @@ namespace BriefAssistant.Controllers
                 using (var stream = new MemoryStream())
                 {
                     WriteDocumentToStream(brief, stream);
-                    await _emailSender.SendBriefAsync(request.Email, stream, brief.Name + ".docx");
+                    await _emailSender.SendBriefAsync(request.Email, stream, brief.Title + ".docx");
                 }
                 return NoContent();
             }
