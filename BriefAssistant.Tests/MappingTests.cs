@@ -181,7 +181,7 @@ namespace BriefAssistant.Tests
 
             var result = Mapper.Map<BriefDto>(source);
 
-            Assert.Equal(source.CircuitCourtCase.CaseNumber, result.CaseDto.CaseNumber);
+            Assert.Equal(source.CircuitCourtCase.CaseNumber, result.CircuitCourtCaseDto.CaseNumber);
         }
 
         [Fact]
@@ -195,7 +195,7 @@ namespace BriefAssistant.Tests
 
             var result = Mapper.Map<BriefDto>(source);
 
-            Assert.Equal(source.CircuitCourtCase.County, result.CaseDto.County);
+            Assert.Equal(source.CircuitCourtCase.County, result.CircuitCourtCaseDto.County);
         }
 
         [Fact]
@@ -209,7 +209,7 @@ namespace BriefAssistant.Tests
 
             var result = Mapper.Map<BriefDto>(source);
 
-            Assert.Equal(source.CircuitCourtCase.JudgeFirstName, result.CaseDto.JudgeFirstName);
+            Assert.Equal(source.CircuitCourtCase.JudgeFirstName, result.CircuitCourtCaseDto.JudgeFirstName);
         }
 
         [Fact]
@@ -223,7 +223,7 @@ namespace BriefAssistant.Tests
 
             var result = Mapper.Map<BriefDto>(source);
 
-            Assert.Equal(source.CircuitCourtCase.JudgeLastName, result.CaseDto.JudgeLastName);
+            Assert.Equal(source.CircuitCourtCase.JudgeLastName, result.CircuitCourtCaseDto.JudgeLastName);
         }
 
         [Fact]
@@ -237,7 +237,7 @@ namespace BriefAssistant.Tests
 
             var result = Mapper.Map<BriefDto>(source);
 
-            Assert.Equal(source.CircuitCourtCase.OpponentName, result.CaseDto.OpponentName);
+            Assert.Equal(source.CircuitCourtCase.OpponentName, result.CircuitCourtCaseDto.OpponentName);
         }
 
         [Fact]
@@ -251,7 +251,7 @@ namespace BriefAssistant.Tests
 
             var result = Mapper.Map<BriefDto>(source);
 
-            Assert.Equal(source.CircuitCourtCase.Role, result.CaseDto.Role);
+            Assert.Equal(source.CircuitCourtCase.Role, result.CircuitCourtCaseDto.Role);
         }
 
         [Fact]
