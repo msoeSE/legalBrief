@@ -72,7 +72,7 @@ namespace BriefAssistant.Models
         NewHampshire,
         [EnumMember(Value = "NJ")]
         NewJersey,
-        [EnumMember(Value = "NewMexico")]
+        [EnumMember(Value = "NM")]
         NewMexico,
         [EnumMember(Value = "NY")]
         NewYork,
