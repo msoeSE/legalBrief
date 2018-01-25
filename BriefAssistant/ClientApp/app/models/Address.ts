@@ -9,7 +9,7 @@ export class Address {
 
 	constructor() {
 		this.zip = "";
-		this.state = State.WI;
+		this.state = State.Wisconsin;
 		this.city = "";
 		this.street2 = "";
 		this.street = "";
