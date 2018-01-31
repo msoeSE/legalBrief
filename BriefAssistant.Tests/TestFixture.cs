@@ -21,7 +21,7 @@ namespace BriefAssistant.Tests
     {
         private readonly TestServer _server;
 
-        public TestFixture() : this(Path.Combine("src"))
+        public TestFixture() : this(Path.Combine(""))
         {
         }
 
