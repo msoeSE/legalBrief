@@ -75,31 +75,6 @@ namespace BriefAssistant.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpPost("login")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody] LoginRequest request)
-        {
-            if (ModelState.IsValid)
-            {
-                var result =
-                    await _signInManager.PasswordSignInAsync(request.Email, request.Password, request.RememberMe, false);
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation("User logged in.");
-                    return NoContent();
-                }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    return Forbid();
-                }
-
-                return Unauthorized();
-            }
-
-            return BadRequest(ModelState);
-        }
-
         [HttpPost("forgotPassword")]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
