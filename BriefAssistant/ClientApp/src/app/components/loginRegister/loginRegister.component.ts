@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from "@angular/forms";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { OAuthService } from 'angular-oauth2-oidc';
+
 import { LoginRequest } from "../../models/LoginRequest";
 import { RegistrationRequest } from "../../models/RegistrationRequest";
 
@@ -16,23 +18,18 @@ export class LoginRegisterComponent {
     public showLoginUnauthorizedDiv: boolean = false;
 
     constructor(
+      private oAuthService: OAuthService,
 		private readonly http: HttpClient,
         private readonly router: Router
     ) { }
 
-    onLoginSubmit(form: NgForm) {
+    login(form: NgForm) {
         this.showLoginUnauthorizedDiv = false;
-        var body = JSON.stringify(this.loginModel);
-        let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        this.http.post("/api/account/login", body, { headers: headers })
-            .subscribe(res => {
-                console.log(res);
-                this.router.navigate(["/example"]);
-            }, data1 => {
-                if (data1.status === 401) {
-                    this.showLoginUnauthorizedDiv = true;
-                }
-            });
+        this.oAuthService.fetchTokenUsingPasswordFlow(this.loginModel.email, this.loginModel.password)
+        .then(() => {
+          this.oAuthService.setupAutomaticSilentRefresh();
+          this.router.navigate(['']);
+        });
     }
 
     onRegisterSubmit(form: NgForm) {

@@ -1,8 +1,13 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
+using AspNet.Security.OpenIdConnect.Primitives;
 using AutoMapper;
 using BriefAssistant.Authorization;
 using BriefAssistant.Data;
 using BriefAssistant.Services;
+using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +16,8 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OpenIddict.Core;
+using OpenIddict.Models;
 
 namespace BriefAssistant
 {
@@ -28,16 +35,23 @@ namespace BriefAssistant
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            TelemetryConfiguration.Active.DisableTelemetry = true;
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
 
-            if (Environment.IsDevelopment())
+            services.AddDbContext<ApplicationDbContext>(options =>
             {
-                services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase("testdb"));
-            }
-            else
-            {
-                services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
-            }
+                if (Environment.IsDevelopment())
+                {
+                    options.UseInMemoryDatabase("testdb");
+                }
+                else
+                {
+                    options.UseNpgsql(connectionString);
+                }
+
+                options.UseOpenIddict<Guid>();
+            });
+
 
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -62,21 +76,41 @@ namespace BriefAssistant
 
                 // Sign In settings
                 options.SignIn.RequireConfirmedEmail = true;
+
+                // Configure Identity to use the same JWT claims as OpenIddict instead
+                // of the legacy WS-Federation claims it uses by default (ClaimTypes),
+                // which saves you from doing the mapping in your authorization controller.
+                options.ClaimsIdentity.UserNameClaimType = OpenIdConnectConstants.Claims.Name;
+                options.ClaimsIdentity.UserIdClaimType = OpenIdConnectConstants.Claims.Subject;
+                options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
             });
 
-            services.ConfigureApplicationCookie(options =>
+            services.AddOpenIddict<Guid>(options =>
             {
-                // Cookie settings
-                options.Cookie.HttpOnly = true;
-                options.Cookie.Expiration = TimeSpan.FromDays(150);
-                options.LoginPath =
-                    "/Account/Login"; // If the LoginPath is not set here, ASP.NET Core will default to /Account/Login
-                options.LogoutPath =
-                    "/Account/Logout"; // If the LogoutPath is not set here, ASP.NET Core will default to /Account/Logout
-                options.AccessDeniedPath =
-                    "/Account/AccessDenied"; // If the AccessDeniedPath is not set here, ASP.NET Core will default to /Account/AccessDenied
-                options.SlidingExpiration = true;
+                options.AddEntityFrameworkCoreStores<ApplicationDbContext>();
+                options.AddMvcBinders();
+                // Enable the token endpoint.
+                // Form password flow (used in username/password login requests)
+                options.EnableTokenEndpoint("/connect/token");
+
+                // Enable the password and the refresh token flows.
+                options.AllowPasswordFlow()
+                    .AllowRefreshTokenFlow();
+
+                if (Environment.IsDevelopment())
+                {
+                    options.DisableHttpsRequirement();
+                }
             });
+
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddOAuthValidation();
 
             services.AddAuthorization();
             services.AddSingleton<IAuthorizationHandler, BriefAuthorizationCrudHandler>();
@@ -111,10 +145,12 @@ namespace BriefAssistant
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseStaticFiles();
-            app.UseSpaStaticFiles();
+            RegisterOdicClients(app).GetAwaiter().GetResult();
 
             app.UseAuthentication();
+
+            app.UseStaticFiles();
+            app.UseSpaStaticFiles();
 
             app.UseMvc(routes =>
             {
@@ -135,6 +171,40 @@ namespace BriefAssistant
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+        }
+
+        private async Task RegisterOdicClients(IApplicationBuilder app, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Create a new service scope to ensure the database context is correctly disposed when this methods returns.
+            using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                await context.Database.EnsureCreatedAsync(cancellationToken);
+
+                // Note: when using a custom entity or a custom key type, replace OpenIddictApplication by the appropriate type.
+                var manager = scope.ServiceProvider.GetRequiredService<OpenIddictApplicationManager<OpenIddictApplication<Guid>>>();
+
+                var hostUrl = Configuration["HostUrl"];
+
+                if (await manager.FindByClientIdAsync("[client identifier]", cancellationToken) == null)
+                {
+                    var descriptor = new OpenIddictApplicationDescriptor
+                    {
+                        ClientId = "angular-client",
+                        DisplayName = "Angular Client",
+                        PostLogoutRedirectUris = { new Uri($"{hostUrl}signout-odic")},
+                        RedirectUris = {new Uri(hostUrl) },
+                        Permissions =
+                        {
+                            OpenIddictConstants.Permissions.Endpoints.Token,
+                            OpenIddictConstants.Permissions.GrantTypes.Password,
+                            OpenIddictConstants.Permissions.GrantTypes.RefreshToken
+                        }
+                    };
+
+                    await manager.CreateAsync(descriptor, cancellationToken);
+                }
+            }
         }
     }
 }

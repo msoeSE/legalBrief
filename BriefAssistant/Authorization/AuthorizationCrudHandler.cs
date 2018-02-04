@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
+using AspNet.Security.OpenIdConnect.Primitives;
 using BriefAssistant.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
@@ -8,13 +10,6 @@ namespace BriefAssistant.Authorization
 {
     public class BriefAuthorizationCrudHandler : AuthorizationHandler<OperationAuthorizationRequirement, IUserData>
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-
-        public BriefAuthorizationCrudHandler(UserManager<ApplicationUser> userManager)
-        {
-            _userManager = userManager;
-        }
-
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context,
             OperationAuthorizationRequirement requirement,
             IUserData resource)
@@ -25,8 +20,8 @@ namespace BriefAssistant.Authorization
             }
 
             if ((requirement == Operations.Create || requirement == Operations.Update ||
-                 requirement == Operations.Delete || requirement == Operations.Delete) &&
-                resource.ApplicationUserId.ToString() == _userManager.GetUserId(context.User))
+                 requirement == Operations.Read || requirement == Operations.Delete) &&
+                resource.ApplicationUserId.ToString() == context.User.FindFirst(OpenIdConnectConstants.Claims.Subject).Value)
             {
                 context.Succeed(requirement);
             }
