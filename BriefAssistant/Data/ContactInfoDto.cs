@@ -8,7 +8,7 @@ namespace BriefAssistant.Data
     public class ContactInfoDto : IUserData
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public Guid ApplicationUserId { get; set; }
 
         public string Name { get; set; }
