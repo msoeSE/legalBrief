@@ -17,6 +17,7 @@ import { AccountPageComponent } from './components/accountPage/accountPage.compo
 import { ForgotPasswordComponent } from './components/forgotPassword/forgotPassword.component';
 import { ResetPasswordComponent } from './components/resetPassword/resetPassword.component';
 import { PasswordValidator } from "./passwordValidator.directive";
+import {AuthGuard} from './auth.guard'
 import { BriefService } from './services/brief.service';
 import { OAuthModule } from 'angular-oauth2-oidc';
 
@@ -48,17 +49,17 @@ NgModule({
     }),
     RouterModule.forRoot([
       { path: '', component: WelcomeComponent, pathMatch: 'full' },
-      { path: 'final/:id', component: FinalComponent },
-      { path: 'dataform', component: FormComponent },
+      { path: 'final/:id', component: FinalComponent, canActivate: [AuthGuard] },
+      { path: 'dataform', component: FormComponent, canActivate: [AuthGuard] },
       { path: 'example', component: ExampleComponent },
       { path: 'loginRegister', component: LoginRegisterComponent },
-      { path: 'accountPage', component: AccountPageComponent },
+      { path: 'accountPage', component: AccountPageComponent, canActivate: [AuthGuard] },
       { path: 'forgotPassword', component: ForgotPasswordComponent },
-      { path: 'resetPassword', component: ResetPasswordComponent }
+      { path: 'resetPassword', component: ResetPasswordComponent, canActivate: [AuthGuard] }
     ])
   ],
   exports: [RouterModule],
-  providers: [BriefService],
+  providers: [BriefService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
