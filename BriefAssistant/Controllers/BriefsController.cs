@@ -148,7 +148,10 @@ namespace BriefAssistant.Controllers
                 return BadRequest();
             }
 
-            var dto = await _applicationContext.Briefs.FindAsync(id);
+            var dto = await _applicationContext.Briefs
+                .Include(brief => brief.ContactInfoDto)
+                .Include(brief => brief.CircuitCourtCaseDto)
+                .SingleAsync(brief => brief.Id == id);
             if (dto == null)
             {
                 return NotFound();

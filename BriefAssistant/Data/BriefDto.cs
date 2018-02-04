@@ -8,7 +8,9 @@ namespace BriefAssistant.Data
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         public Guid ApplicationUserId { get; set; }
-        public Guid CaseId { get; set; }
+        [ForeignKey(nameof(CircuitCourtCaseDto))]
+        public Guid CircuitCourtCaseId { get; set; }
+        [ForeignKey(nameof(ContactInfoDto))]
         public Guid ContactInfoId { get; set; }
 
         public string Name { get; set; }
