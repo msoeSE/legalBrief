@@ -26,10 +26,12 @@ export class LoginRegisterComponent {
     login(form: NgForm) {
         this.showLoginUnauthorizedDiv = false;
         this.oAuthService.fetchTokenUsingPasswordFlow(this.loginModel.email, this.loginModel.password)
-        .then(() => {
-          this.oAuthService.setupAutomaticSilentRefresh();
-          this.router.navigate(['']);
-        });
+          .then(() => {
+            this.oAuthService.setupAutomaticSilentRefresh();
+            this.router.navigate(['']);
+          }).catch(reason => {
+            this.showLoginUnauthorizedDiv = true;
+          });
     }
 
     onRegisterSubmit(form: NgForm) {
