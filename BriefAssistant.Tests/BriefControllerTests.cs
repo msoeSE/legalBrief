@@ -169,7 +169,7 @@ namespace BriefAssistant.Tests
                     BriefDto = new List<BriefDto>(),
                     City = "Milwaukee",
                     Email = "test@test.com",
-                    Id = 1,
+                    Id = new Guid(),
                     Name = "Bob Tom",
                     Phone = "555-555-5555",
                     State = State.WI,
