@@ -8,7 +8,7 @@ export class AuthGuard implements CanActivate {
   constructor(private oauthService: OAuthService, private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (this.oauthService.hasValidIdToken()) {
+    if (this.oauthService.hasValidAccessToken()) {
       return true;
     }
 
