@@ -84,7 +84,7 @@
     <div class="form-group">
         <label for="caseCounty" class="col-form-label">County</label>
         <select class="form-control" id="county" [(ngModel)]="model.circuitCourtCase.county" #county="ngModel" name="county" required>
-            <option *ngFor="let k of countyKeys" [value]="counties[k]">{{counties[k]}}</option>
+            <option *ngFor="let k of countyKeys" [value]="k">{{counties[k]}}</option>
         </select>
         <div *ngIf="county.invalid && (county.dirty || county.touched)" class="alert alert-danger" id="county-errors">
             <div *ngIf="county.errors">
