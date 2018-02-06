@@ -9,6 +9,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 
 import { FormComponent } from './components/form/form.component';
+import { HeaderComponent } from './components/header/header.component';
 import { FinalComponent } from './components/final/final.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { ExampleComponent } from './components/example/example.component';
@@ -17,7 +18,8 @@ import { AccountPageComponent } from './components/accountPage/accountPage.compo
 import { ForgotPasswordComponent } from './components/forgotPassword/forgotPassword.component';
 import { ResetPasswordComponent } from './components/resetPassword/resetPassword.component';
 import { PasswordValidator } from "./passwordValidator.directive";
-import {AuthGuard} from './auth.guard'
+import { AuthGuard } from './auth.guard'
+import { AccountService } from './services/account.service';
 import { BriefService } from './services/brief.service';
 import { OAuthModule } from 'angular-oauth2-oidc';
 
@@ -25,6 +27,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 NgModule({
   declarations: [
     AppComponent,
+    HeaderComponent,
     NavMenuComponent,
     HomeComponent,
     FormComponent,
@@ -59,7 +62,11 @@ NgModule({
     ])
   ],
   exports: [RouterModule],
-  providers: [BriefService, AuthGuard],
+  providers: [
+    BriefService,
+    AuthGuard,
+    AccountService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

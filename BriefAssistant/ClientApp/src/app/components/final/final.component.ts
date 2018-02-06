@@ -23,7 +23,7 @@ export class FinalComponent {
         var body = JSON.stringify(this.model);
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-        this.http.post("/api/brief/email/" + this.id, body, { headers: headers })
+        this.http.post(`/api/briefs/${this.id}/email`, body, { headers: headers })
           .subscribe(res => {
             alert("Email Sent!");
         });

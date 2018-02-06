@@ -13,7 +13,7 @@ namespace BriefAssistant.Data
         [ForeignKey(nameof(ContactInfoDto))]
         public Guid ContactInfoId { get; set; }
 
-        public string Name { get; set; }
+        public string Title { get; set; }
         public string IssuesPresented { get; set; }
         public string OralArgumentStatement { get; set; }
         public string PublicationStatement { get; set; }

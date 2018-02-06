@@ -37,20 +37,24 @@ export class FormComponent implements OnInit {
 				console.log(briefList);
 				if (briefList.briefs.length !== 0) {
 					this.briefService.getBrief(briefList.briefs[0].id)
-						.subscribe(brief => this.brief = brief);
+            .subscribe(brief => {
+					    console.log(brief);
+              this.brief = brief;
+					  });
 				} else {
 					this.brief = new BriefInfo();
 				}
 			});
 	}
 
-	updateBrief(form: NgForm) {
+	updateBrief() {
 		this.saveBrief()
 			.subscribe(() => alert("Brief Saved!"));
 	}
 
 	private saveBrief() : Observable<BriefInfo> {
-		if (this.brief.id == null) {
+    if (this.brief.id == null) {
+      console.log(this.brief);
 		  return this.briefService.create(this.brief).pipe(
 		    tap((brief => this.brief = brief))
 		  );
@@ -59,7 +63,7 @@ export class FormComponent implements OnInit {
 		}
 	}
 
-	finishBrief(form: NgForm) {
+	finishBrief() {
 		this.saveBrief()
 			.subscribe(brief => this.router.navigate(["/final", brief.id]));
 	}

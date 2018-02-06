@@ -6,6 +6,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
 
 import { LoginRequest } from "../../models/LoginRequest";
 import { RegistrationRequest } from "../../models/RegistrationRequest";
+import { AccountService } from '../../services/account.service';
 
 @Component({
     selector: "loginRegister",
@@ -18,20 +19,18 @@ export class LoginRegisterComponent {
     public showLoginUnauthorizedDiv: boolean = false;
 
     constructor(
-      private oAuthService: OAuthService,
 		private readonly http: HttpClient,
-        private readonly router: Router
+    private readonly router: Router,
+      private readonly accountService: AccountService
     ) { }
 
     login(form: NgForm) {
         this.showLoginUnauthorizedDiv = false;
-        this.oAuthService.fetchTokenUsingPasswordFlow(this.loginModel.email, this.loginModel.password)
-          .then(() => {
-            this.oAuthService.setupAutomaticSilentRefresh();
-            this.router.navigate(['']);
-          }).catch(reason => {
-            this.showLoginUnauthorizedDiv = true;
-          });
+      this.accountService.login(this.loginModel).then(() => {
+        this.router.navigate(['']);
+      }).catch(() => {
+        this.showLoginUnauthorizedDiv = true;
+      });
     }
 
     onRegisterSubmit(form: NgForm) {

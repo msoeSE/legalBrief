@@ -172,25 +172,17 @@ namespace BriefAssistant.Models
     [DataContract(Namespace = "")]
     public class CircuitCourtCase
     {
-        [Required]
         [DataMember]
         public County County { get; set; }
-        [Required]
         [DataMember]
         public string CaseNumber { get; set; }
-        [Required]
         [DataMember]
         public Role Role { get; set; }
-        [Required]
         [DataMember]
         public string JudgeFirstName { get; set; }
-        [Required]
         [DataMember]
         public string JudgeLastName { get; set; }
-        [Required]
         [DataMember]
         public string OpponentName { get; set; }
-        [DataMember]
-        public Role OpponentRole { get; set; }
     }
 }

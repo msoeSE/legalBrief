@@ -64,7 +64,7 @@ namespace BriefAssistant.Controllers
             briefDto.ApplicationUserId = currentUser.Id;
             briefDto.CircuitCourtCaseDto.ApplicationUserId = currentUser.Id;
             briefDto.ContactInfoDto.ApplicationUserId = currentUser.Id;
-            _applicationContext.Briefs.Add(briefDto);
+            await _applicationContext.Briefs.AddAsync(briefDto);
 
             await _applicationContext.SaveChangesAsync();
 
@@ -106,15 +106,35 @@ namespace BriefAssistant.Controllers
                 return Forbid();
             }
 
-            var updatedBrief = Mapper.Map<BriefDto>(briefInfo);
-            updatedBrief.Id = existingBrief.Id;
-            updatedBrief.ApplicationUserId = existingBrief.ApplicationUserId;
-            updatedBrief.ContactInfoDto.Id = existingBrief.ContactInfoDto.Id;
-            updatedBrief.ContactInfoDto.ApplicationUserId = existingBrief.ContactInfoDto.ApplicationUserId;
-            updatedBrief.CircuitCourtCaseDto.Id = existingBrief.CircuitCourtCaseDto.Id;
-            updatedBrief.CircuitCourtCaseDto.ApplicationUserId = existingBrief.CircuitCourtCaseDto.ApplicationUserId;
+            existingBrief.Title = briefInfo.Title;
+            existingBrief.AppellateCourtCaseNumber = briefInfo.AppellateCourtCaseNumber;
+            existingBrief.IssuesPresented = briefInfo.IssuesPresented;
+            existingBrief.OralArgumentStatement = briefInfo.OralArgumentStatement;
+            existingBrief.PublicationStatement = briefInfo.PublicationStatement;
+            existingBrief.CaseFactsStatement = briefInfo.CaseFactsStatement;
+            existingBrief.Argument = briefInfo.Argument;
+            existingBrief.Conclusion = briefInfo.Conclusion;
+            existingBrief.AppendixDocuments = briefInfo.AppendixDocuments;
 
-            return Json(updatedBrief);
+            existingBrief.ContactInfoDto.Name = briefInfo.ContactInfo.Name;
+            existingBrief.ContactInfoDto.Street = briefInfo.ContactInfo.Address.Street;
+            existingBrief.ContactInfoDto.Street2 = briefInfo.ContactInfo.Address.Street2;
+            existingBrief.ContactInfoDto.City = briefInfo.ContactInfo.Address.City;
+            existingBrief.ContactInfoDto.State = briefInfo.ContactInfo.Address.State;
+            existingBrief.ContactInfoDto.Zip = briefInfo.ContactInfo.Address.Zip;
+            existingBrief.ContactInfoDto.Email = briefInfo.ContactInfo.Email;
+            existingBrief.ContactInfoDto.Phone = briefInfo.ContactInfo.Phone;
+
+            existingBrief.CircuitCourtCaseDto.County = briefInfo.CircuitCourtCase.County;
+            existingBrief.CircuitCourtCaseDto.CaseNumber = briefInfo.CircuitCourtCase.CaseNumber;
+            existingBrief.CircuitCourtCaseDto.Role = briefInfo.CircuitCourtCase.Role;
+            existingBrief.CircuitCourtCaseDto.JudgeFirstName = briefInfo.CircuitCourtCase.JudgeFirstName;
+            existingBrief.CircuitCourtCaseDto.JudgeLastName = briefInfo.CircuitCourtCase.JudgeLastName;
+            existingBrief.CircuitCourtCaseDto.OpponentName = briefInfo.CircuitCourtCase.OpponentName;
+
+            await _applicationContext.SaveChangesAsync();
+
+            return Json(briefInfo);
         }
 
         [Authorize]
@@ -169,24 +189,17 @@ namespace BriefAssistant.Controllers
         }
 
 
-        private bool WriteDocumentToStream(BriefInfo value, Stream outputStream)
+        private bool WriteDocumentToStream(BriefInfo briefInfo, Stream outputStream)
         {
-            value.AppellateCase = new AppellateCase
-            {
-                District = GetDistrictFromCounty(value.CircuitCourtCase.County)
-            };
-
-            value.Date = DateTime.Now.ToShortDateString();
-
-            value.CircuitCourtCase.OpponentRole = GetOpponentRole(value.CircuitCourtCase.Role);
+            var exportData = new BriefExport(briefInfo);
 
             XElement data;
             using (var dataStream = new MemoryStream())
             {
-                var serializer = new DataContractSerializer(typeof(BriefInfo));
+                var serializer = new DataContractSerializer(typeof(BriefExport));
                 using (var writer = XmlDictionaryWriter.CreateTextWriter(dataStream, Encoding.UTF8, false))
                 {
-                    serializer.WriteObject(writer, value);
+                    serializer.WriteObject(writer, exportData);
                 }
 
                 dataStream.Position = 0;
@@ -197,108 +210,6 @@ namespace BriefAssistant.Controllers
             var assembledDoc = DocumentAssembler.AssembleDocument(templateDoc, data, out bool isTemplateError);
             assembledDoc.WriteByteArray(outputStream);
             return !isTemplateError;
-        }
-
-        private Role GetOpponentRole(Role role)
-        {
-            switch (role)
-            {
-                case Role.Plaintiff:
-                    return Role.Defendent;
-                case Role.Defendent:
-                case Role.Petitioner:
-                    return Role.Respondent;
-                case Role.Respondent:
-                    return Role.Petitioner;
-                default:
-                    throw new InvalidEnumArgumentException(nameof(role), (int)role, typeof(Role));
-            }
-            
-        }
-
-        private District GetDistrictFromCounty(County county)
-        {
-            switch (county)
-            {
-                case County.Milwaukee:
-                    return District.One;
-                case County.Calumet:
-                case County.FondDuLac:
-                case County.GreenLake:
-                case County.Kenosha:
-                case County.Manitowoc:
-                case County.Ozaukee:
-                case County.Racine:
-                case County.Sheboygan:
-                case County.Walworth:
-                case County.Washington:
-                case County.Waukesha:
-                case County.Winnebago:
-                    return District.Two;
-                case County.Ashland:
-                case County.Barron:
-                case County.Bayfield:
-                case County.Brown:
-                case County.Buffalo:
-                case County.Burnett:
-                case County.Chippewa:
-                case County.Door:
-                case County.Douglas:
-                case County.Dunn:
-                case County.EauClaire:
-                case County.Florence:
-                case County.Forest:
-                case County.Iron:
-                case County.Kewaunee:
-                case County.Langlade:
-                case County.Lincoln:
-                case County.Marathon:
-                case County.Marinette:
-                case County.Menominee:
-                case County.Oconto:
-                case County.Oneida:
-                case County.Outagamie:
-                case County.Pepin:
-                case County.Pierce:
-                case County.Polk:
-                case County.Price:
-                case County.Rusk:
-                case County.Sawyer:
-                case County.Shawano:
-                case County.StCroix:
-                case County.Taylor:
-                case County.Trempealeau:
-                case County.Vilas:
-                case County.Washburn:
-                    return District.Three;
-                case County.Adams:
-                case County.Clark:
-                case County.Columbia:
-                case County.Crawford:
-                case County.Dane:
-                case County.Dodge:
-                case County.Grant:
-                case County.Green:
-                case County.Iowa:
-                case County.Jackson:
-                case County.Jefferson:
-                case County.Juneau:
-                case County.LaCrosse:
-                case County.Lafayette:
-                case County.Marquette:
-                case County.Monroe:
-                case County.Portage:
-                case County.Richland:
-                case County.Rock:
-                case County.Sauk:
-                case County.Vernon:
-                case County.Waupaca:
-                case County.Waushara:
-                case County.Wood:
-                    return District.Four;
-                default:
-                    throw new InvalidEnumArgumentException(nameof(county), (int)county, typeof(County));
-            }
         }
 
         [HttpGet("{id}/download")]
@@ -321,7 +232,7 @@ namespace BriefAssistant.Controllers
         }
 
         [HttpPost("{id}/email")]
-        public async Task<IActionResult> EmailBrief(string id, [FromBody] EmailRequest request)
+        public async Task<IActionResult> EmailBrief(Guid id, [FromBody] EmailRequest request)
         {
             if (ModelState.IsValid)
             {
