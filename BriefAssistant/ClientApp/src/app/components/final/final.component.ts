@@ -18,7 +18,23 @@ export class FinalComponent {
 	){}
 
     private model = new EmailRequest();
+    download() {
+      let headers = new HttpHeaders({ 'Accept': 'application/octet-stream' });
+      this.http.get(`/api/briefs/${this.id}/download`, {headers: headers, responseType: 'blob' }).subscribe(res => {
+        const url = window.URL.createObjectURL(res);
 
+        // create hidden dom element (so it works in all browsers)
+        const a = document.createElement('a');
+        a.setAttribute('style', 'display:none;');
+        document.body.appendChild(a);
+
+        // create file, attach to hidden element and open hidden element
+        a.href = url;
+        a.download = 'brief.docx';
+        a.click();
+        return url;
+      });
+    }
     onSubmit(form: NgForm) {
         var body = JSON.stringify(this.model);
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });

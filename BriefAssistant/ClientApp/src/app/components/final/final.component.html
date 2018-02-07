@@ -5,7 +5,7 @@
         You can download your brief by clicking the button.
     </p>
     <p>
-        <a class="btn btn-success" href="/api/briefs/{{id}}/download" download>Download</a>
+        <button class="btn btn-success" (click)="download()">Download</button>
     </p>
     <form class="form-inline" #emailForm="ngForm" (ngSubmit)="onSubmit(emailForm)">
         <div class="form-group">
