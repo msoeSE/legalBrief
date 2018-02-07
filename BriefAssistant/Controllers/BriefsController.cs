@@ -169,15 +169,12 @@ namespace BriefAssistant.Controllers
                 return BadRequest();
             }
 
-            var dto = await _applicationContext.Briefs
-                .Include(brief => brief.ContactInfoDto)
-                .Include(brief => brief.CircuitCourtCaseDto)
-                .SingleAsync(brief => brief.Id == id);
+            BriefDto dto = await FindBriefAsync(id);
             if (dto == null)
             {
                 return NotFound();
             }
-            
+
             var authResult = await _authorizationService.AuthorizeAsync(User, dto, Operations.Read);
             var briefInfo = Mapper.Map<BriefInfo>(dto);
 
@@ -189,6 +186,13 @@ namespace BriefAssistant.Controllers
             return Json(briefInfo);
         }
 
+        private async Task<BriefDto> FindBriefAsync(Guid id)
+        {
+            return await _applicationContext.Briefs
+                .Include(brief => brief.ContactInfoDto)
+                .Include(brief => brief.CircuitCourtCaseDto)
+                .SingleAsync(brief => brief.Id == id);
+        }
 
         private bool WriteDocumentToStream(BriefInfo briefInfo, Stream outputStream)
         {
@@ -216,7 +220,7 @@ namespace BriefAssistant.Controllers
         [HttpGet("{id}/download")]
         public async Task<IActionResult> DownloadBrief(Guid id)
         {
-            var briefDto = await _applicationContext.Briefs.FindAsync(id);
+            var briefDto = await FindBriefAsync(id);
             var authorizationResult = await _authorizationService.AuthorizeAsync(User, briefDto, Operations.Read);
 
             if (!authorizationResult.Succeeded)
