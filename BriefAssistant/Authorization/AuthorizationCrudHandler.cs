@@ -21,7 +21,7 @@ namespace BriefAssistant.Authorization
 
             if ((requirement == Operations.Create || requirement == Operations.Update ||
                  requirement == Operations.Read || requirement == Operations.Delete) &&
-                resource.ApplicationUserId.ToString() == context.User.FindFirst(OpenIdConnectConstants.Claims.Subject).Value)
+                resource.ApplicationUserId.ToString() == context.User.FindFirstValue(OpenIdConnectConstants.Claims.Subject))
             {
                 context.Succeed(requirement);
             }
