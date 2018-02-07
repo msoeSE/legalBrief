@@ -12,10 +12,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NetEscapades.AspNetCore.SecurityHeaders;
+using NetEscapades.AspNetCore.SecurityHeaders.Infrastructure;
 using OpenIddict.Core;
 using OpenIddict.Models;
 
@@ -115,9 +119,6 @@ namespace BriefAssistant
             services.AddAuthorization();
             services.AddSingleton<IAuthorizationHandler, BriefAuthorizationCrudHandler>();
 
-            services.AddAntiforgery(options =>
-                options.HeaderName = "X-XSRF-TOKEN"); // Angular 2's http client should handle this automaticly
-
             services.Configure<AuthMessageSenderOptions>(Configuration);
             services.AddTransient<IEmailSender, EmailSender>();
 
@@ -131,6 +132,14 @@ namespace BriefAssistant
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            // Require HTTPS
+            if (Environment.IsProduction())
+            {
+                services.Configure<MvcOptions>(options =>
+                    options.Filters.Add(new RequireHttpsAttribute())
+                );
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -171,6 +180,36 @@ namespace BriefAssistant
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+            // Redirect Http requests to Https
+            if (env.IsProduction())
+            {
+                var rewriterOptions = new RewriteOptions().AddRedirectToHttpsPermanent();
+                app.UseRewriter(rewriterOptions);
+            }
+
+            var headerPolicies = new HeaderPolicyCollection()
+                .AddFrameOptionsDeny()
+                .AddXssProtectionBlock()
+                .AddContentTypeOptionsNoSniff()
+                .AddReferrerPolicyStrictOriginWhenCrossOrigin()
+                .RemoveServerHeader()
+                .AddContentSecurityPolicy(builder =>
+                {
+                    builder.AddDefaultSrc().Self();
+                    builder.AddConnectSrc().Self();
+                    builder.AddFontSrc().Self().Data();
+                    builder.AddObjectSrc().None();
+                    builder.AddFormAction().Self();
+                    builder.AddImgSrc().Self().Data();
+                    builder.AddScriptSrc().Self();
+                    builder.AddStyleSrc().Self();
+                    builder.AddMediaSrc().Self();
+                    builder.AddFrameAncestors().None();
+                    builder.AddFrameSource().None();
+                });
+
+            app.UseSecurityHeaders(headerPolicies);
         }
 
         private async Task RegisterOdicClients(IApplicationBuilder app, CancellationToken cancellationToken = default(CancellationToken))
