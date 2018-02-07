@@ -68,6 +68,7 @@ namespace BriefAssistant.Controllers
 
             await _applicationContext.SaveChangesAsync();
 
+            briefInfo.Id = briefDto.Id;
             return Created($"/briefs/{briefDto.Id}", Json(briefInfo));
         }
 

@@ -56,7 +56,7 @@ export class FormComponent implements OnInit {
     if (this.brief.id == null) {
       console.log(this.brief);
 		  return this.briefService.create(this.brief).pipe(
-		    tap((brief => this.brief = brief))
+		    tap((brief => this.brief.id = brief.id))
 		  );
 		} else {
 			return this.briefService.update(this.brief);
