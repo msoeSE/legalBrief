@@ -17,6 +17,7 @@ import { LoginRegisterComponent } from './components/loginRegister/loginRegister
 import { AccountPageComponent } from './components/accountPage/accountPage.component';
 import { ForgotPasswordComponent } from './components/forgotPassword/forgotPassword.component';
 import { ResetPasswordComponent } from './components/resetPassword/resetPassword.component';
+import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 import { PasswordValidator } from "./passwordValidator.directive";
 import { AuthGuard } from './auth.guard'
 import { AccountService } from './services/account.service';
@@ -38,6 +39,7 @@ NgModule({
     AccountPageComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    ConfirmationComponent,
     PasswordValidator
   ],
   imports: [
@@ -58,7 +60,8 @@ NgModule({
       { path: 'loginRegister', component: LoginRegisterComponent },
       { path: 'accountPage', component: AccountPageComponent, canActivate: [AuthGuard] },
       { path: 'forgotPassword', component: ForgotPasswordComponent },
-      { path: 'resetPassword', component: ResetPasswordComponent, canActivate: [AuthGuard] }
+      { path: 'resetPassword', component: ResetPasswordComponent, canActivate: [AuthGuard] },
+      { path: 'confirmation', component: ConfirmationComponent }
     ])
   ],
   exports: [RouterModule],

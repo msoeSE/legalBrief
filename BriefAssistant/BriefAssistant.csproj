@@ -40,6 +40,7 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\auth.config.ts" />
     <None Remove="ClientApp\src\app\auth.guard.ts" />
+    <None Remove="ClientApp\src\app\components\confirmation\confirmation.component.ts" />
     <None Remove="ClientApp\src\app\components\header\header.component.ts" />
     <None Remove="ClientApp\src\app\services\account.service.ts" />
   </ItemGroup>
@@ -47,6 +48,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\auth.config.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\auth.guard.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\confirmation\confirmation.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\components\header\header.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\account.service.ts" />
   </ItemGroup>

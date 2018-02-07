@@ -69,7 +69,7 @@ namespace BriefAssistant.Controllers
             var result = await _userManager.ConfirmEmailAsync(user, code);
             if (result.Succeeded)
             {
-                return NoContent();
+                return LocalRedirect("/confirmation");
             }
 
             return BadRequest(ModelState);
