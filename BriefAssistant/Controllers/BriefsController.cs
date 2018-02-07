@@ -214,6 +214,7 @@ namespace BriefAssistant.Controllers
             var templateDoc = new WmlDocument(_env.ContentRootFileProvider.GetFileInfo("briefTemplate.docx").PhysicalPath);
             var assembledDoc = DocumentAssembler.AssembleDocument(templateDoc, data, out bool isTemplateError);
             assembledDoc.WriteByteArray(outputStream);
+            outputStream.Position = 0;
             return !isTemplateError;
         }
 
@@ -229,11 +230,9 @@ namespace BriefAssistant.Controllers
             }
 
             var briefInfo = Mapper.Map<BriefInfo>(briefDto);
-            using (var stream = new MemoryStream())
-            {
-                WriteDocumentToStream(briefInfo, stream);
-                return File(stream, DocxMimeType, briefInfo.Title + ".docx");
-            }
+            var stream = new MemoryStream();
+            WriteDocumentToStream(briefInfo, stream);
+            return File(stream, DocxMimeType, briefInfo.Title + ".docx");
         }
 
         [HttpPost("{id}/email")]

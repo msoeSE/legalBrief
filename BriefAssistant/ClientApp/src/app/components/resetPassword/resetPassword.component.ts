@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { NgForm } from "@angular/forms";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
@@ -8,11 +8,12 @@ import { ResetPasswordRequest } from "../../models/ResetPasswordRequest";
     selector: "resetPassword",
     templateUrl: "./resetPassword.component.html",
 })
-export class ResetPasswordComponent {
+export class ResetPasswordComponent implements OnInit{
     private model = new ResetPasswordRequest();
 
     constructor(
-        private readonly http: HttpClient
+      private readonly http: HttpClient,
+      private route: ActivatedRoute
     ) {}
 
     onSubmit(form: NgForm) {
@@ -23,5 +24,11 @@ export class ResetPasswordComponent {
             .subscribe(res => {
                 console.log(res);
             });
+    }
+
+    ngOnInit() {
+      this.route.queryParams.subscribe(params => {
+        this.model.code = params['code'];
+      });
     }
 }

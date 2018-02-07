@@ -16,13 +16,8 @@ namespace BriefAssistant.Models
         [EnumMember(Value = "III")]
         Three,
         [EnumMember(Value = "IV")]
-        Four
-    }
-
-    [DataContract(Namespace = "")]
-    public class AppellateCase
-    {
-        [DataMember]
-        public District District { get; set; }
+        Four,
+        [EnumMember(Value = "V")]
+        Five
     }
 }

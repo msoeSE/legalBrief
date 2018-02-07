@@ -7,7 +7,7 @@ namespace BriefAssistant.Models
     public class BriefExport
     {
         [DataMember]
-        public AppellateCase AppellateCase { get; set; }
+        public District District { get; set; }
         [DataMember]
         public ContactInfo ContactInfo { get; set; }
         [DataMember]
@@ -55,7 +55,7 @@ namespace BriefAssistant.Models
             AppendixDocuments = info.AppendixDocuments;
 
             SetTopAndBottomNamesAndRoles(CircuitCourtCase.Role);
-            AppellateCase.District = GetDistrictFromCounty(CircuitCourtCase.County);
+            District = GetDistrictFromCounty(CircuitCourtCase.County);
         }
 
         /// <summary>

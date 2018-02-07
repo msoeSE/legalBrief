@@ -55,16 +55,21 @@ export class FormComponent implements OnInit {
 	private saveBrief() : Observable<BriefInfo> {
     if (this.brief.id == null) {
       console.log(this.brief);
-		  return this.briefService.create(this.brief).pipe(
-		    tap((brief => this.brief.id = brief.id))
-		  );
-		} else {
+      return this.briefService.create(this.brief);
+      //.pipe(
+      //tap((brief => this.brief.id = brief.id))
+      //);
+    } else {
 			return this.briefService.update(this.brief);
 		}
 	}
 
 	finishBrief() {
 		this.saveBrief()
-			.subscribe(brief => this.router.navigate(["/final", brief.id]));
+      .subscribe(brief => {
+        console.log(brief.id);
+		    this.brief.id = brief.id;
+		    this.router.navigate(["/final", brief.id]);
+		  });
 	}
 }

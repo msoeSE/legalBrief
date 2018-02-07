@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using BriefAssistant.Data;
 using BriefAssistant.Extensions;
 using BriefAssistant.Models;
@@ -77,7 +78,6 @@ namespace BriefAssistant.Controllers
 
         [HttpPost("forgotPassword")]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword([FromBody]EmailRequest request)
         {
             if (ModelState.IsValid)
@@ -90,7 +90,19 @@ namespace BriefAssistant.Controllers
                 }
 
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var callbackUrl = Url.ResetPasswordCallbackLink(user.Id.ToString(), code, Request.Scheme);
+                var uriBuilder = new UriBuilder()
+                {
+                    Scheme = Request.Scheme,
+                    Host = Request.Host.Host,
+                    Path = "resetPassword",
+                    Query = $"code={code}"
+                };
+                if (Request.Host.Port.HasValue)
+                {
+                    uriBuilder.Port = Request.Host.Port.Value;
+                }
+
+                var callbackUrl = uriBuilder.Uri;
                 await _emailSender.SendEmailAsync(request.Email, "Reset Password",
                     $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
                 return NoContent();

@@ -24,8 +24,8 @@ export class BriefService {
 	  return this.http.post<BriefInfo>("/api/briefs", JSON.stringify(brief), { headers: this.headers });
 	}
 
-	update(brief: BriefInfo) : Observable<any> {
+	update(brief: BriefInfo) : Observable<BriefInfo> {
 		const url = `/api/briefs/${brief.id}`;
-    return this.http.put(url, JSON.stringify(brief), { headers: this.headers });
+    return this.http.put<BriefInfo>(url, JSON.stringify(brief), { headers: this.headers });
 	}
 }

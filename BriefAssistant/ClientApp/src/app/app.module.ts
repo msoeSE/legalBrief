@@ -60,7 +60,7 @@ NgModule({
       { path: 'loginRegister', component: LoginRegisterComponent },
       { path: 'accountPage', component: AccountPageComponent, canActivate: [AuthGuard] },
       { path: 'forgotPassword', component: ForgotPasswordComponent },
-      { path: 'resetPassword', component: ResetPasswordComponent, canActivate: [AuthGuard] },
+      { path: 'resetPassword', component: ResetPasswordComponent},
       { path: 'confirmation', component: ConfirmationComponent }
     ])
   ],
