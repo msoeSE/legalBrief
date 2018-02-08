@@ -1,4 +1,4 @@
-﻿import {County} from "./County";
+import {County} from "./County";
 import {Role} from "./Role";
 
 export class CircuitCourtCase {
@@ -6,7 +6,7 @@ export class CircuitCourtCase {
 	judgeLastName: string;
 	judgeFirstName: string;
 	role: Role;
-	circuitCourtCaseNumber: string;
+	caseNumber: string;
 	county: County;
 
 	constructor() {
@@ -14,6 +14,6 @@ export class CircuitCourtCase {
 		this.judgeLastName = "";
 		this.judgeFirstName = "";
 		this.role = Role.Plaintiff;
-        this.circuitCourtCaseNumber = "";
+    this.caseNumber = "";
 	}
 }

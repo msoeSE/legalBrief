@@ -94,7 +94,7 @@
     </div>
     <div class="form-group">
         <label for="circuitCourtCaseNumber" class="col-form-label" aria-describedby="circuitCourtCaseNumberHelp">Circuit Court Case Number</label>
-        <input type="text" id="circuitCourtCaseNumber" class="form-control" [(ngModel)]="brief.circuitCourtCase.circuitCourtCaseNumber" #circuitCourtCaseNumber="ngModel" name="circuitCourtCaseNumber" pattern="^\d{4}\w{2}\d{1,}$" placeholder="0000XX0000" required>
+        <input type="text" id="circuitCourtCaseNumber" class="form-control" [(ngModel)]="brief.circuitCourtCase.caseNumber" #circuitCourtCaseNumber="ngModel" name="circuitCourtCaseNumber" pattern="^\d{4}\w{2}\d{1,}$" placeholder="0000XX0000" required>
         <div *ngIf="circuitCourtCaseNumber.invalid && (circuitCourtCaseNumber.dirty || circuitCourtCaseNumber.touched)" class="alert alert-danger" id="circuitCourtCaseNumber-errors">
             <div *ngIf="circuitCourtCaseNumber.errors">
                 The pattern for the circuit court case number is year (Ex: 2017), two court letters (Ex: CV), and then case number (Ex: 1234)
