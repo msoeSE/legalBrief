@@ -232,7 +232,7 @@ namespace BriefAssistant.Controllers
             var briefInfo = Mapper.Map<BriefInfo>(briefDto);
             var stream = new MemoryStream();
             WriteDocumentToStream(briefInfo, stream);
-            return File(stream, DocxMimeType, briefInfo.Title + ".docx");
+            return File(stream, DocxMimeType, (briefInfo.Title ?? "brief") + ".docx");
         }
 
         [HttpPost("{id}/email")]
@@ -240,7 +240,7 @@ namespace BriefAssistant.Controllers
         {
             if (ModelState.IsValid)
             {
-                var dto = await _applicationContext.Briefs.FindAsync(id);
+                var dto = await FindBriefAsync(id);
                 var authResult = await _authorizationService.AuthorizeAsync(User, dto, Operations.Read);
 
                 if (!authResult.Succeeded)
@@ -252,7 +252,7 @@ namespace BriefAssistant.Controllers
                 using (var stream = new MemoryStream())
                 {
                     WriteDocumentToStream(brief, stream);
-                    await _emailSender.SendBriefAsync(request.Email, stream, brief.Title + ".docx");
+                    await _emailSender.SendBriefAsync(request.Email, stream, (brief.Title ?? "brief") + ".docx");
                 }
                 return NoContent();
             }

@@ -16,7 +16,7 @@ namespace BriefAssistant.Extensions
         public static Task SendBriefAsync(this IEmailSender emailSender, string emailAddress, Stream attachmentStream, string attachmentName)
         {
             var message = "Your completed brief is attached. Thank you for using the Brief Assistant";
-            return emailSender.SendEmailAsync(emailAddress, "Your completed brief", message, attachmentStream, "brief.docx");
+            return emailSender.SendEmailAsync(emailAddress, "Your completed brief", message, attachmentStream, attachmentName);
         }
     }
 }
