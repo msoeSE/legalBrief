@@ -10,14 +10,14 @@ import { Email } from "../../models/Email";
     templateUrl: './final.component.html'
 })
 export class FinalComponent {
-	private id: string | null;
+	id: string | null;
 
     constructor(
-        private readonly http: Http,
-		private route: ActivatedRoute
+        readonly http: Http,
+		protected route: ActivatedRoute
 	){}
 
-    private model: Email = new Email();
+    model: Email = new Email();
 
     onSubmit(form: NgForm) {
         var body = JSON.stringify(this.model);

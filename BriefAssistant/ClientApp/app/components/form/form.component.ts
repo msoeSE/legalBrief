@@ -20,18 +20,18 @@ import 'rxjs/add/operator/map';
 })
 
 export class FormComponent {
-	private states = State;
-	private stateKeys = Object.keys(State);
-	private counties = County;
-	private countyKeys = Object.keys(County);
-	private roles = Role;
-	private roleKeys = Object.keys(Role);
-	private model = new BriefInfo();
+	states = State;
+	stateKeys = Object.keys(State);
+	counties = County;
+	countyKeys = Object.keys(County);
+	roles = Role;
+	roleKeys = Object.keys(Role);
+	model = new BriefInfo();
 
 
 	constructor(
-		private readonly http: Http,
-		private readonly router: Router
+		readonly http: Http,
+		readonly router: Router
 	) { }
 
 	onSubmit(form: NgForm) {
