@@ -6,11 +6,15 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 
-import { FormComponent } from './components/form/form.component';
+import { InitialFormComponent } from './components/forms/initial/initial.form.component';
 import { HeaderComponent } from './components/header/header.component';
-import { FinalComponent } from './components/final/final.component';
-import { WelcomeComponent } from './components/welcome/welcome.component';
-import { ExampleComponent } from './components/example/example.component';
+import { InitialFinalComponent } from './components/finals/initial/initial.final.component';
+import { MainWelcomeComponent } from './components/welcomes/main/main.welcome.component';
+import { InitialWelcomeComponent } from './components/welcomes/initial/initial.Welcome.component';
+import { ReplyWelcomeComponent } from './components/welcomes/reply/reply.Welcome.component';
+import { ResponseWelcomeComponent } from './components/welcomes/response/response.Welcome.component';
+import { PetitionWelcomeComponent } from './components/welcomes/petition/petition.Welcome.component';
+import { InitialExampleComponent } from './components/examples/initial/initial.example.component';
 import { LoginRegisterComponent } from './components/loginRegister/loginRegister.component';
 import { AccountPageComponent } from './components/accountPage/accountPage.component';
 import { ForgotPasswordComponent } from './components/forgotPassword/forgotPassword.component';
@@ -27,10 +31,14 @@ NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    FormComponent,
-    FinalComponent,
-    WelcomeComponent,
-    ExampleComponent,
+    InitialFormComponent,
+    InitialFinalComponent,
+    MainWelcomeComponent,
+    InitialWelcomeComponent,
+    ReplyWelcomeComponent,
+    ResponseWelcomeComponent,
+    PetitionWelcomeComponent,
+    InitialExampleComponent,
     LoginRegisterComponent,
     AccountPageComponent,
     ForgotPasswordComponent,
@@ -49,10 +57,15 @@ NgModule({
       }
     }),
     RouterModule.forRoot([
-      { path: '', component: WelcomeComponent, pathMatch: 'full' },
-      { path: 'final/:id', component: FinalComponent, canActivate: [AuthGuard] },
-      { path: 'dataform', component: FormComponent, canActivate: [AuthGuard] },
-      { path: 'example', component: ExampleComponent },
+      { path: 'welcome', component: MainWelcomeComponent },
+      { path: '', redirectTo: '/welcome', pathMatch: 'full' },
+      { path: 'initial-welcome', component: InitialWelcomeComponent },
+      { path: 'reply-welcome', component: ReplyWelcomeComponent },
+      { path: 'response-welcome', component: ResponseWelcomeComponent },
+      { path: 'petition-welcome', component: PetitionWelcomeComponent },
+      { path: 'initial-final/:id', component: InitialFinalComponent, canActivate: [AuthGuard] },
+      { path: 'initial-form', component: InitialFormComponent, canActivate: [AuthGuard] },
+      { path: 'initial-example', component: InitialExampleComponent },
       { path: 'loginRegister', component: LoginRegisterComponent },
       { path: 'accountPage', component: AccountPageComponent, canActivate: [AuthGuard] },
       { path: 'forgotPassword', component: ForgotPasswordComponent },

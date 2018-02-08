@@ -3,13 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { NgForm } from "@angular/forms";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { EmailRequest } from "../../models/EmailRequest";
+import { EmailRequest } from "../../../models/EmailRequest";
 
 @Component({
-    selector: 'final',
-    templateUrl: './final.component.html'
+    selector: 'initial-final',
+    templateUrl: './initial.final.component.html'
 })
-export class FinalComponent {
+export class InitialFinalComponent {
 	private id: string | null;
 
     constructor(

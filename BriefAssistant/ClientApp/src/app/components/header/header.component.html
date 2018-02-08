@@ -1,9 +1,4 @@
-<div style="background-color: #eee; float: right; padding-right: 30px; padding-top: 10px">
-  <button *ngIf="!accountService.isLoggedIn" class="btn btn-success" routerLink="/loginRegister">Login</button>
-  <button *ngIf="accountService.isLoggedIn" class="btn btn-danger" (click)="accountService.logout()">Logout</button>
-</div>
-<div class="jumbotron" style="padding-top: 30px; padding-bottom: 30px;">
-  <div class="container">
-    <img style="margin-left: auto" src="assets/AppellatePracticeLogo.png" class="img-fluid" alt="Responsive image">
-  </div>
-</div>
+<li>
+  <button *ngIf="!accountService.isLoggedIn" class="btn blendin" routerLink="/loginRegister"><span class="glyphicon glyphicon-log-in"></span> Login</button>
+  <button *ngIf="accountService.isLoggedIn" class="btn blendin" (click)="accountService.logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</button>
+</li>
