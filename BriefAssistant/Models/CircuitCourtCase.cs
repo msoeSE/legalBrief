@@ -128,7 +128,7 @@ namespace BriefAssistant.Models
         Shawano,
         [EnumMember]
         Sheboygan,
-        [EnumMember(Value="St. Croix")]
+        [EnumMember(Value = "St. Croix")]
         StCroix,
         [EnumMember]
         Taylor,
@@ -172,22 +172,16 @@ namespace BriefAssistant.Models
     [DataContract(Namespace = "")]
     public class CircuitCourtCase
     {
-        [Required]
         [DataMember]
         public County County { get; set; }
-        [Required]
         [DataMember]
-        public string CircuitCourtCaseNumber { get; set; }
-        [Required]
+        public string CaseNumber { get; set; }
         [DataMember]
         public Role Role { get; set; }
-        [Required]
         [DataMember]
         public string JudgeFirstName { get; set; }
-        [Required]
         [DataMember]
         public string JudgeLastName { get; set; }
-        [Required]
         [DataMember]
         public string OpponentName { get; set; }
     }
