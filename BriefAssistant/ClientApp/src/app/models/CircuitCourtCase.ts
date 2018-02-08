@@ -6,16 +6,14 @@ export class CircuitCourtCase {
 	judgeLastName: string;
 	judgeFirstName: string;
 	role: Role;
-	caseNumber: string;
+	circuitCourtCaseNumber: string;
 	county: County;
-    opponentRole: Role;
 
 	constructor() {
 		this.opponentName = "";
 		this.judgeLastName = "";
 		this.judgeFirstName = "";
 		this.role = Role.Plaintiff;
-        this.caseNumber = "";
-	    this.opponentRole = Role.Defendent;
+        this.circuitCourtCaseNumber = "";
 	}
 }

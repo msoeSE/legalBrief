@@ -62,18 +62,18 @@
         expect(browser.isElementPresent(by.id('email-errors'))).toEqual(true);
     });
 
-    it('should display error with no case number', function () {
-        var inputField = element(by.name('caseNumber'));
+    it('should display error with no circuit court case number', function () {
+        var inputField = element(by.name('circuitCourtCaseNumber'));
         inputField.sendKeys('');
         element(by.name('street')).click();
-        expect(browser.isElementPresent(by.id('caseNumber-errors'))).toEqual(true);
+        expect(browser.isElementPresent(by.id('circuitCourtCaseNumber-errors'))).toEqual(true);
     });
 
-    it('should display error with wrongly formatted case number', function () {
-        var inputField = element(by.name('caseNumber'));
+    it('should display error with wrongly formatted circuit court case number', function () {
+        var inputField = element(by.name('circuitCourtCaseNumber'));
         inputField.sendKeys('4324afdsaasfd');
         element(by.name('street')).click();
-        expect(browser.isElementPresent(by.id('caseNumber-errors'))).toEqual(true);
+        expect(browser.isElementPresent(by.id('circuitCourtCaseNumber-errors'))).toEqual(true);
     });
 
     it('should display error with no judge first name', function () {
@@ -95,6 +95,20 @@
         inputField.sendKeys('');
         element(by.name('street')).click();
         expect(browser.isElementPresent(by.id('opponentName-errors'))).toEqual(true);
+    });
+
+    it('should display error with no appellate court case number', function () {
+        var inputField = element(by.name('appellateCourtCaseNumber'));
+        inputField.sendKeys('');
+        element(by.name('street')).click();
+        expect(browser.isElementPresent(by.id('appellateCourtCaseNumber-errors'))).toEqual(true);
+    });
+
+    it('should display error with wrongly formatted appellate court case number', function () {
+        var inputField = element(by.name('appellateCourtCaseNumber'));
+        inputField.sendKeys('4324afdsaasfd');
+        element(by.name('street')).click();
+        expect(browser.isElementPresent(by.id('appellateCourtCaseNumber-errors'))).toEqual(true);
     });
 
     it('should display error with no issues presented', function () {
