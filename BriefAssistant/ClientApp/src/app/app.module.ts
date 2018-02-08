@@ -5,8 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
 
 import { FormComponent } from './components/form/form.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -29,8 +27,6 @@ NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    NavMenuComponent,
-    HomeComponent,
     FormComponent,
     FinalComponent,
     WelcomeComponent,
