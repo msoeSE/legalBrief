@@ -54,7 +54,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\app\components\" />
     <Folder Include="ClientApp\src\app\components\examples\petition\" />
     <Folder Include="ClientApp\src\app\components\examples\response\" />
     <Folder Include="ClientApp\src\app\components\examples\reply\" />
