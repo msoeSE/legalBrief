@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { OAuthService, OAuthInfoEvent } from 'angular-oauth2-oidc';
 import { LoginRequest } from '../models/LoginRequest';
@@ -7,7 +8,7 @@ import { LoginRequest } from '../models/LoginRequest';
 export class AccountService {
   private autoRefreshSubscription: Subscription;
 
-  constructor(private readonly oAuthService: OAuthService) {}
+  constructor(private readonly oAuthService: OAuthService, private readonly router: Router) {}
 
   public get isLoggedIn(): boolean {
     return this.oAuthService.hasValidAccessToken();
@@ -44,5 +45,6 @@ export class AccountService {
     }
 
     this.oAuthService.logOut();
+    this.router.navigate(['']);
   }
 }
