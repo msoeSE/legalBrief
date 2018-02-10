@@ -7,7 +7,7 @@ import { EmailRequest } from "../../../models/EmailRequest";
 
 @Component({
     selector: 'initial-final',
-    templateUrl: './initial.final.component.html'
+    templateUrl: './initial-final.component.html'
 })
 export class InitialFinalComponent {
 	private id: string | null;

@@ -13,7 +13,7 @@ import { BriefService } from "../../../services/brief.service"
 
 @Component({
 	selector: "initial-form",
-	templateUrl: "./initial.form.component.html"
+	templateUrl: "./initial-form.component.html"
 })
 
 export class InitialFormComponent implements OnInit {
