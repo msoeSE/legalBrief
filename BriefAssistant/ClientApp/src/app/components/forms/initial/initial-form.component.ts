@@ -5,18 +5,18 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { tap } from 'rxjs/operators';
 
-import { BriefInfo } from "../../models/BriefInfo";
-import { State } from "../../models/State";
-import { County } from "../../models/County";
-import { Role } from "../../models/Role";
-import { BriefService } from "../../services/brief.service"
+import { BriefInfo } from "../../../models/BriefInfo";
+import { State } from "../../../models/State";
+import { County } from "../../../models/County";
+import { Role } from "../../../models/Role";
+import { BriefService } from "../../../services/brief.service"
 
 @Component({
-	selector: "dataform",
-	templateUrl: "./form.component.html"
+	selector: "initial-form",
+	templateUrl: "./initial-form.component.html"
 })
 
-export class FormComponent implements OnInit {
+export class InitialFormComponent implements OnInit {
 	private states = State;
 	private stateKeys = Object.keys(State);
 	private counties = County;
@@ -56,9 +56,6 @@ export class FormComponent implements OnInit {
     if (this.brief.id == null) {
       console.log(this.brief);
       return this.briefService.create(this.brief);
-      //.pipe(
-      //tap((brief => this.brief.id = brief.id))
-      //);
     } else {
 			return this.briefService.update(this.brief);
 		}
@@ -69,7 +66,7 @@ export class FormComponent implements OnInit {
       .subscribe(brief => {
         console.log(brief.id);
 		    this.brief.id = brief.id;
-		    this.router.navigate(["/final", brief.id]);
+		    this.router.navigate(["/initial-final", brief.id]);
 		  });
 	}
 }
