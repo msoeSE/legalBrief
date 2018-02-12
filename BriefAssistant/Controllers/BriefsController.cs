@@ -211,7 +211,7 @@ namespace BriefAssistant.Controllers
                 data = XElement.Load(dataStream);
             }
 
-            var templateDoc = new WmlDocument(_env.ContentRootFileProvider.GetFileInfo("briefTemplate.docx").PhysicalPath);
+            var templateDoc = new WmlDocument(_env.ContentRootFileProvider.GetFileInfo("initialBriefTemplate.docx").PhysicalPath);
             var assembledDoc = DocumentAssembler.AssembleDocument(templateDoc, data, out bool isTemplateError);
             assembledDoc.WriteByteArray(outputStream);
             outputStream.Position = 0;

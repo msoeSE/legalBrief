@@ -1,4 +1,4 @@
-﻿export enum State {
+export enum State {
     Alabama="Alabama",
     Alaska="Alaska",
     Arizona="Arizona",
@@ -12,7 +12,7 @@
     Georgia="Georgia",
     Hawaii="Hawaii",
     Idaho="Idaho",
-    llinois="Illinois",
+    Illinois="Illinois",
     Indiana="Indiana",
     Iowa="Iowa",
     Kansas="Kansas",
