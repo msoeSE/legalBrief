@@ -1,9 +1,9 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BriefAssistant", "BriefAssistant\BriefAssistant.csproj", "{7390D2CF-EE3D-466B-B0A2-71C6AA415EDD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BriefAssistant", "BriefAssistant\BriefAssistant.csproj", "{1B7AC756-01BD-4405-8318-4D63D7403491}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BriefAssistant.Tests", "BriefAssistant.Tests\BriefAssistant.Tests.csproj", "{AFA558B1-3F90-475C-885F-B4B9B660AAF6}"
 EndProject

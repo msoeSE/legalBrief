@@ -7,9 +7,9 @@ namespace BriefAssistant.Models
     public class BriefExport
     {
         [DataMember]
-        public AppellateCase AppellateCase { get; set; }
+        public District District { get; set; }
         [DataMember]
-        public Appellant Appellant { get; set; }
+        public ContactInfo ContactInfo { get; set; }
         [DataMember]
         public CircuitCourtCase CircuitCourtCase { get; set; }
         [DataMember]
@@ -43,8 +43,7 @@ namespace BriefAssistant.Models
         /// <param name="info">The information of the brief retrieved from the user on the form</param>
         public BriefExport(BriefInfo info)
         {
-            AppellateCase = info.AppellateCase ?? new AppellateCase();
-            Appellant = info.Appellant;
+            ContactInfo = info.ContactInfo;
             CircuitCourtCase = info.CircuitCourtCase;
             AppellateCourtCaseNumber = info.AppellateCourtCaseNumber;
             IssuesPresented = info.IssuesPresented;
@@ -56,7 +55,7 @@ namespace BriefAssistant.Models
             AppendixDocuments = info.AppendixDocuments;
 
             SetTopAndBottomNamesAndRoles(CircuitCourtCase.Role);
-            AppellateCase.District = GetDistrictFromCounty(CircuitCourtCase.County);
+            District = GetDistrictFromCounty(CircuitCourtCase.County);
         }
 
         /// <summary>
@@ -68,26 +67,26 @@ namespace BriefAssistant.Models
             switch (role)
             {
                 case Role.Plaintiff:
-                    TopName = Appellant.Name;
+                    TopName = ContactInfo.Name;
                     BottomName = CircuitCourtCase.OpponentName;
                     TopRole = "Plaintiff-Appellant";
                     BottomRole = "Defendant-Respondent";
                     break;
                 case Role.Petitioner:
-                    TopName = Appellant.Name;
+                    TopName = ContactInfo.Name;
                     BottomName = CircuitCourtCase.OpponentName;
                     TopRole = "Petitioner-Appellant";
                     BottomRole = "Respondent-Respondent";
                     break;
                 case Role.Defendent:
                     TopName = CircuitCourtCase.OpponentName;
-                    BottomName = Appellant.Name;
+                    BottomName = ContactInfo.Name;
                     TopRole = "Plaintiff-Respondent";
                     BottomRole = "Defendant-Appellant";
                     break;
                 case Role.Respondent:
                     TopName = CircuitCourtCase.OpponentName;
-                    BottomName = Appellant.Name;
+                    BottomName = ContactInfo.Name;
                     TopRole = "Petitioner-Respondent";
                     BottomRole = "Respondent-Appellant";
                     break;
