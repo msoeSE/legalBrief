@@ -20,6 +20,7 @@ import { AccountPageComponent } from './components/accountPage/accountPage.compo
 import { ForgotPasswordComponent } from './components/forgotPassword/forgotPassword.component';
 import { ResetPasswordComponent } from './components/resetPassword/resetPassword.component';
 import { ConfirmationComponent } from './components/confirmation/confirmation.component';
+import { BriefsListComponent } from './components/briefsList/briefsList.component';
 import { PasswordValidator } from "./passwordValidator.directive";
 import { AuthGuard } from './auth.guard'
 import { AccountService } from './services/account.service';
@@ -44,6 +45,7 @@ NgModule({
     ForgotPasswordComponent,
     ResetPasswordComponent,
     ConfirmationComponent,
+    BriefsListComponent,
     PasswordValidator
   ],
   imports: [
@@ -70,7 +72,8 @@ NgModule({
       { path: 'accountPage', component: AccountPageComponent, canActivate: [AuthGuard] },
       { path: 'forgotPassword', component: ForgotPasswordComponent },
       { path: 'resetPassword', component: ResetPasswordComponent},
-      { path: 'confirmation', component: ConfirmationComponent }
+      { path: 'confirmation', component: ConfirmationComponent },
+      { path: 'briefs', component: BriefsListComponent, canActivate: [AuthGuard] }
     ])
   ],
   exports: [RouterModule],

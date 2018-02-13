@@ -20,7 +20,5 @@ namespace BriefAssistant.Models
         public string Argument { get; set; }
         public string Conclusion { get; set; }
         public string AppendixDocuments { get; set; }
-        [DataMember]
-        public string DocTitle { get; set; }
     }
 }

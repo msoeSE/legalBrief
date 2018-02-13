@@ -10,9 +10,9 @@
             <th></th>
 
         </tr>
-        <tr *ngFor="let brief of briefs; let i = index">
+        <tr *ngFor="let brief of list; let i = index">
             <td>{{i + 1}}</td>
-            <td>{{brief.name}}</td>
+            <td>{{brief.title}}</td>
             <td>
                 <div>
                     <button (click)="edit(brief.id)">Edit</button>
@@ -20,7 +20,7 @@
             </td>
             <td>
                 <div>
-                    <button (click)="Delete(brief.id, i)">Delete</button>
+                    <button (click)="delete(brief.id, i)">Delete</button>
                 </div>
             </td>
         </tr>
