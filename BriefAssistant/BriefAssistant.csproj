@@ -11,6 +11,7 @@
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
     <UserSecretsId>5ebedfaf-3716-43c6-b64c-fd09ccbb326d</UserSecretsId>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -92,4 +93,14 @@
     </ItemGroup>
   </Target>
 
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Amazon.ECS.Tools" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Amazon.ElasticBeanstalk.Tools" Version="1.1.0" />
+  </ItemGroup>
 </Project>
+
+

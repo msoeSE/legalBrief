@@ -9,7 +9,7 @@ import { EmailRequest } from "../../models/EmailRequest"
     templateUrl: "./forgotPassword.component.html",
 })
 export class ForgotPasswordComponent {
-private model = new EmailRequest();
+    model = new EmailRequest();
 
     constructor(
         private readonly http: HttpClient

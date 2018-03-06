@@ -12,7 +12,7 @@ using System;
 namespace BriefAssistant.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180207040824_InitialCreate")]
+    [Migration("20180213065249_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -272,9 +272,9 @@ namespace BriefAssistant.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("OpenIddict.Models.OpenIddictApplication", b =>
+            modelBuilder.Entity("OpenIddict.Models.OpenIddictApplication<System.Guid>", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClientId")
@@ -306,12 +306,12 @@ namespace BriefAssistant.Migrations
                     b.ToTable("OpenIddictApplications");
                 });
 
-            modelBuilder.Entity("OpenIddict.Models.OpenIddictAuthorization", b =>
+            modelBuilder.Entity("OpenIddict.Models.OpenIddictAuthorization<System.Guid>", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ApplicationId");
+                    b.Property<Guid?>("ApplicationId");
 
                     b.Property<string>("ConcurrencyToken")
                         .IsConcurrencyToken();
@@ -336,9 +336,9 @@ namespace BriefAssistant.Migrations
                     b.ToTable("OpenIddictAuthorizations");
                 });
 
-            modelBuilder.Entity("OpenIddict.Models.OpenIddictScope", b =>
+            modelBuilder.Entity("OpenIddict.Models.OpenIddictScope<System.Guid>", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConcurrencyToken")
@@ -356,14 +356,14 @@ namespace BriefAssistant.Migrations
                     b.ToTable("OpenIddictScopes");
                 });
 
-            modelBuilder.Entity("OpenIddict.Models.OpenIddictToken", b =>
+            modelBuilder.Entity("OpenIddict.Models.OpenIddictToken<System.Guid>", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ApplicationId");
+                    b.Property<Guid?>("ApplicationId");
 
-                    b.Property<string>("AuthorizationId");
+                    b.Property<Guid?>("AuthorizationId");
 
                     b.Property<string>("ConcurrencyToken")
                         .IsConcurrencyToken();
@@ -477,20 +477,20 @@ namespace BriefAssistant.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("OpenIddict.Models.OpenIddictAuthorization", b =>
+            modelBuilder.Entity("OpenIddict.Models.OpenIddictAuthorization<System.Guid>", b =>
                 {
-                    b.HasOne("OpenIddict.Models.OpenIddictApplication", "Application")
+                    b.HasOne("OpenIddict.Models.OpenIddictApplication<System.Guid>", "Application")
                         .WithMany("Authorizations")
                         .HasForeignKey("ApplicationId");
                 });
 
-            modelBuilder.Entity("OpenIddict.Models.OpenIddictToken", b =>
+            modelBuilder.Entity("OpenIddict.Models.OpenIddictToken<System.Guid>", b =>
                 {
-                    b.HasOne("OpenIddict.Models.OpenIddictApplication", "Application")
+                    b.HasOne("OpenIddict.Models.OpenIddictApplication<System.Guid>", "Application")
                         .WithMany("Tokens")
                         .HasForeignKey("ApplicationId");
 
-                    b.HasOne("OpenIddict.Models.OpenIddictAuthorization", "Authorization")
+                    b.HasOne("OpenIddict.Models.OpenIddictAuthorization<System.Guid>", "Authorization")
                         .WithMany("Tokens")
                         .HasForeignKey("AuthorizationId");
                 });

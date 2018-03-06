@@ -9,7 +9,7 @@
     "task-definition-name" : "BriefAssistant",
     "task-definition-network-mode" : "bridge",
     "container-name"               : "BriefAssistant",
-    "container-memory-hard-limit"  : 2,
+    "container-memory-hard-limit"  : 10,
     "container-port-mapping"       : "80:80",
     "container-environment-variables" : "\"ASPNETCORE_ENVIRONMENT\"=\"Production\"",
     "skip-image-push"                 : false,

@@ -134,12 +134,12 @@ namespace BriefAssistant
             });
 
             // Require HTTPS
-            if (Environment.IsProduction())
-            {
-                services.Configure<MvcOptions>(options =>
-                    options.Filters.Add(new RequireHttpsAttribute())
-                );
-            }
+            //if (Environment.IsProduction())
+            //{
+            //    services.Configure<MvcOptions>(options =>
+            //        options.Filters.Add(new RequireHttpsAttribute())
+            //    );
+            //}
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -157,7 +157,7 @@ namespace BriefAssistant
             RegisterOdicClients(app).GetAwaiter().GetResult();
 
             app.UseAuthentication();
-
+            app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
@@ -182,32 +182,32 @@ namespace BriefAssistant
             });
 
             // Redirect Http requests to Https
-            if (env.IsProduction())
-            {
-                var rewriterOptions = new RewriteOptions().AddRedirectToHttpsPermanent();
-                app.UseRewriter(rewriterOptions);
-            }
+            //if (env.IsProduction())
+            //{
+            //    var rewriterOptions = new RewriteOptions().AddRedirectToHttpsPermanent();
+            //    app.UseRewriter(rewriterOptions);
+            //}
 
             var headerPolicies = new HeaderPolicyCollection()
                 .AddFrameOptionsDeny()
                 .AddXssProtectionBlock()
                 .AddContentTypeOptionsNoSniff()
                 .AddReferrerPolicyStrictOriginWhenCrossOrigin()
-                .RemoveServerHeader()
-                .AddContentSecurityPolicy(builder =>
-                {
-                    builder.AddDefaultSrc().Self();
-                    builder.AddConnectSrc().Self();
-                    builder.AddFontSrc().Self().Data();
-                    builder.AddObjectSrc().None();
-                    builder.AddFormAction().Self();
-                    builder.AddImgSrc().Self().Data();
-                    builder.AddScriptSrc().Self();
-                    builder.AddStyleSrc().Self();
-                    builder.AddMediaSrc().Self();
-                    builder.AddFrameAncestors().None();
-                    builder.AddFrameSource().None();
-                });
+                .RemoveServerHeader();
+                //.AddContentSecurityPolicy(builder =>
+                //{
+                //    builder.AddDefaultSrc().Self();
+                //    builder.AddConnectSrc().Self();
+                //    builder.AddFontSrc().Self().Data();
+                //    builder.AddObjectSrc().None();
+                //    builder.AddFormAction().Self();
+                //    builder.AddImgSrc().Self().Data();
+                //    builder.AddScriptSrc().Self();
+                //    builder.AddStyleSrc().Self();
+                //    builder.AddMediaSrc().Self();
+                //    builder.AddFrameAncestors().None();
+                //    builder.AddFrameSource().None();
+                //});
 
             app.UseSecurityHeaders(headerPolicies);
         }
@@ -225,7 +225,7 @@ namespace BriefAssistant
 
                 var hostUrl = Configuration["HostUrl"];
 
-                if (await manager.FindByClientIdAsync("[client identifier]", cancellationToken) == null)
+                if (await manager.FindByClientIdAsync("angular-client", cancellationToken) == null)
                 {
                     var descriptor = new OpenIddictApplicationDescriptor
                     {

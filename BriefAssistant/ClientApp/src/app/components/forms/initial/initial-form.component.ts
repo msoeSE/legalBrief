@@ -17,17 +17,17 @@ import { BriefService } from "../../../services/brief.service"
 })
 
 export class InitialFormComponent implements OnInit {
-	private states = State;
-	private stateKeys = Object.keys(State);
-	private counties = County;
-	private countyKeys = Object.keys(County);
-	private roles = Role;
-	private roleKeys = Object.keys(Role);
-	private brief = new BriefInfo();
+	states = State;
+	stateKeys = Object.keys(State);
+	counties = County;
+	countyKeys = Object.keys(County);
+	roles = Role;
+	roleKeys = Object.keys(Role);
+	brief = new BriefInfo();
 
 	constructor(
-		private readonly router: Router,
-		private readonly briefService: BriefService
+		readonly router: Router,
+		readonly briefService: BriefService
     ) { }
 
 	ngOnInit() {

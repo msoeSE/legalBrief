@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.0</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>96f4c0a1-2771-483f-b073-fc372360ff8a</ProjectGuid>
+    <ProjectGuid>f5ca6917-544e-4a43-8a8d-59c9c7fac723</ProjectGuid>
     <DockerLaunchBrowser>True</DockerLaunchBrowser>
     <DockerServiceUrl>http://localhost:{ServicePort}</DockerServiceUrl>
     <DockerServiceName>briefassistant</DockerServiceName>
