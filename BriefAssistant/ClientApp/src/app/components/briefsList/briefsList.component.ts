@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { IBriefList } from "../../models/IBriefList";
 import { BriefService } from "../../services/brief.service";
 import { IBriefListItem } from "../../models/IBriefListItem";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
     selector: "briefs",
@@ -15,7 +16,9 @@ export class BriefsListComponent implements OnInit {
 
     constructor(
         private readonly router: Router,
-        private readonly briefService: BriefService
+        private readonly briefService: BriefService,
+        private readonly http: HttpClient,
+
     ) { }
 
     ngOnInit() {
@@ -30,11 +33,18 @@ export class BriefsListComponent implements OnInit {
         });
     }
     edit(id: string) {
-        this.router.navigate(["/initial-form", id]);
+      this.router.navigate(["/initial-form",id]);
+      
 
     }
     delete(id: string, index: number) {
         this.briefs.briefs.splice(index, 1);
         //controller's delete method
+        let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+        this.http.post(`/api/briefs/${id}/email`, { headers: headers })
+          .subscribe(res => {
+            alert("Email Sent!");
+          });
     }
 }

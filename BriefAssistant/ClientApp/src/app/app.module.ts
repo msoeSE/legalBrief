@@ -67,6 +67,7 @@ NgModule({
       { path: 'petition-welcome', component: PetitionWelcomeComponent },
       { path: 'initial-final/:id', component: InitialFinalComponent, canActivate: [AuthGuard] },
       { path: 'initial-form', component: InitialFormComponent, canActivate: [AuthGuard] },
+      { path: 'initial-form/:id', component: InitialFormComponent, canActivate: [AuthGuard] },
       { path: 'initial-example', component: InitialExampleComponent },
       { path: 'loginRegister', component: LoginRegisterComponent },
       { path: 'accountPage', component: AccountPageComponent, canActivate: [AuthGuard] },
