@@ -44,6 +44,11 @@ export class InitialFormComponent implements OnInit {
               this.briefService.getBrief(this.id)
                 .subscribe(brief => {
                   this.brief = brief;
+                  this.brief.contactInfo.address.state = State[this.stateKeys[brief.contactInfo.address.state]];
+                  this.brief.circuitCourtCase.county = County[this.countyKeys[brief.circuitCourtCase.county]];
+                  this.brief.circuitCourtCase.role = Role[this.roleKeys[brief.circuitCourtCase.role]];
+
+
                 });
             });
         } else {

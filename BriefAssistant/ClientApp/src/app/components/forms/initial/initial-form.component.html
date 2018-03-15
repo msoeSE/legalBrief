@@ -2,7 +2,7 @@
   <h1>Title of Document</h1>
   <div class="form-group">
     <div class="form-inline">
-      <input type="text" id="title" style="width: 50%;" class="form-control" [(ngModel)]="brief.title" #title="ngModel" maxlength="100" name="title" placeholder="Example Brief" required><label>.docx</label>
+      <input type="text" id="title" style="width: 50%;" class="form-control" [(ngModel)]="brief.title" #title="ngModel" maxlength="100" name="title" placeholder="Example Brief" required>
       <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger" id="title-errors">
         <div *ngIf="title.errors.required">
           Document must have a title.
