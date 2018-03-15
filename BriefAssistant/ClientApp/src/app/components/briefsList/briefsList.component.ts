@@ -28,7 +28,6 @@ export class BriefsListComponent implements OnInit {
           if (briefList != null) {
             this.briefs = briefList;
             this.list = this.briefs.briefs;
-            console.log(this.briefs);
           }
         });
     }
@@ -42,9 +41,9 @@ export class BriefsListComponent implements OnInit {
         //controller's delete method
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-        this.http.post(`/api/briefs/${id}/email`, { headers: headers })
+        this.http.post(`/api/briefs/${id}/delete`, { headers: headers })
           .subscribe(res => {
-            alert("Email Sent!");
+            alert("Delete successful");
           });
     }
 }

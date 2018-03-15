@@ -194,6 +194,22 @@ namespace BriefAssistant.Controllers
                 .SingleAsync(brief => brief.Id == id);
         }
 
+        [HttpPost("{id}/delete")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            if (id == default(Guid))
+            {
+                return BadRequest();
+            }
+            BriefDto dto = await FindBriefAsync(id);
+            _applicationContext.Briefs.Remove(dto);
+            _applicationContext.SaveChanges();
+            return Ok();
+
+
+
+        }
+
         private bool WriteDocumentToStream(BriefInfo briefInfo, Stream outputStream)
         {
             var exportData = new BriefExport(briefInfo);
