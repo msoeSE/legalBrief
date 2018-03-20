@@ -479,13 +479,13 @@ namespace BriefAssistant.Controllers
                 return NotFound();
             }
 
-            //var authResult = await _authorizationService.AuthorizeAsync(User, dto, Operations.Read);
+            var authResult = await _authorizationService.AuthorizeAsync(User, dto, Operations.Read);
             var briefInfo = Mapper.Map<InitialBriefInfo>(dto);
 
-            //if (!authResult.Succeeded)
-            //{
-            //    return Forbid();
-            //}
+            if (!authResult.Succeeded)
+            {
+                return Forbid();
+            }
 
             return Json(briefInfo);
         }
