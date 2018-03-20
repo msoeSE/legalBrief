@@ -13,8 +13,8 @@ export class ReplyFinalComponent {
     private id: string | null;
 
     constructor(
-        private readonly http: HttpClient,
-        private route: ActivatedRoute
+      private readonly http: HttpClient,
+      private route: ActivatedRoute
     ) { }
 
     private model = new EmailRequest();

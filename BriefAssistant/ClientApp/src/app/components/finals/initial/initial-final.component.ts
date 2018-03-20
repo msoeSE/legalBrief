@@ -13,11 +13,12 @@ export class InitialFinalComponent {
 	private id: string | null;
 
     constructor(
-        private readonly http: HttpClient,
-		private route: ActivatedRoute
-	){}
+      private readonly http: HttpClient,
+		  private route: ActivatedRoute
+	  ){}
 
     private model = new EmailRequest();
+
     download() {
       let headers = new HttpHeaders({ 'Accept': 'application/octet-stream' });
       this.http.get(`/api/briefs/${this.id}/download`, {headers: headers, responseType: 'blob' }).subscribe(res => {
@@ -35,6 +36,7 @@ export class InitialFinalComponent {
         return url;
       });
     }
+
     onSubmit(form: NgForm) {
         var body = JSON.stringify(this.model);
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });

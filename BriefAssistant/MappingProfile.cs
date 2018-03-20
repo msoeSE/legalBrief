@@ -26,6 +26,11 @@ namespace BriefAssistant
             CreateMap<CircuitCourtCase, CircuitCourtCaseDto>(MemberList.None).ReverseMap();
 
             CreateMap<BriefDto, BriefListItem>();
+
+            CreateMap<InitialBriefInfo, InitialBriefDto>(MemberList.None).ReverseMap();
+            CreateMap<ReplyBriefInfo, ReplyBriefDto>(MemberList.None).ReverseMap();
+            //TODO create response map
+            //TODO create petition map
         }
     }
 }

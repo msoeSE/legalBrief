@@ -7,6 +7,8 @@ namespace BriefAssistant.Data
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
         public DbSet<BriefDto> Briefs { get; set; }
+        public DbSet<InitialBriefDto> Initials { get; set; }
+        public DbSet<ReplyBriefDto> Replys { get; set; }
         public DbSet<CircuitCourtCaseDto> Cases { get; set; }
         public DbSet<ContactInfoDto> Contacts { get; set; }
 

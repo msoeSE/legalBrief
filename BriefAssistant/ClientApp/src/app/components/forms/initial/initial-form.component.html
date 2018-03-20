@@ -164,7 +164,7 @@
         <label for="issuesPresented" class="col-form-label" aria-describedby="issuesPresentedHelp">
             What are your Issues Presented?
         </label>
-        <textarea id="issuesPresented" class="form-control" [(ngModel)]="brief.issuesPresented" #issuesPresented="ngModel" name="issuesPresented" rows="8" required></textarea>
+        <textarea id="issuesPresented" class="form-control" [(ngModel)]="initialInfo.issuesPresented" #issuesPresented="ngModel" name="issuesPresented" rows="8" required></textarea>
         <div *ngIf="issuesPresented.invalid && (issuesPresented.dirty || issuesPresented.touched)" class="alert alert-danger" id="issuesPresented-errors">
             <div *ngIf="issuesPresented.errors.required">
                 Issues presented is required.
@@ -183,7 +183,7 @@
         <label for="oralArgument" class="col-form-label" aria-describedby="oralArgumentHelp">
             What is your Statement on Oral Argument?
         </label>
-        <textarea id="oralArgument" class="form-control" [(ngModel)]="brief.oralArgumentStatement" #oralArgumentStatement="ngModel" name="oralArgumentStatement" rows="8" required></textarea>
+        <textarea id="oralArgument" class="form-control" [(ngModel)]="initialInfo.oralArgumentStatement" #oralArgumentStatement="ngModel" name="oralArgumentStatement" rows="8" required></textarea>
         <div *ngIf="oralArgumentStatement.invalid && (oralArgumentStatement.dirty || oralArgumentStatement.touched)" class="alert alert-danger" id="oralArgumentStatement-errors">
             <div *ngIf="oralArgumentStatement.errors.required">
                 Oral argument statement is required.
@@ -206,7 +206,7 @@
         <label for="publication" class="col-form-label" aria-describedby="publicationHelp">
             What is your Statement on Publication?
         </label>
-        <textarea id="publication" class="form-control" [(ngModel)]="brief.publicationStatement" #publicationStatement="ngModel" name="publicationStatement" rows="8" required></textarea>
+        <textarea id="publication" class="form-control" [(ngModel)]="initialInfo.publicationStatement" #publicationStatement="ngModel" name="publicationStatement" rows="8" required></textarea>
         <div *ngIf="publicationStatement.invalid && (publicationStatement.dirty || publicationStatement.touched)" class="alert alert-danger" id="publicationStatement-errors">
             <div *ngIf="publicationStatement.errors.required">
                 Publication statement is required.
@@ -228,7 +228,7 @@
         <label for="caseAndFacts" class="col-form-label" aria-describedby="caseAndFactsHelp">
             What is your Statement of Case and Facts?
         </label>
-        <textarea id="caseAndFacts" class="form-control" [(ngModel)]="brief.caseFactsStatement" #caseFactsStatement="ngModel" name="caseFactsStatement" rows="8" required></textarea>
+        <textarea id="caseAndFacts" class="form-control" [(ngModel)]="initialInfo.caseFactsStatement" #caseFactsStatement="ngModel" name="caseFactsStatement" rows="8" required></textarea>
         <div *ngIf="caseFactsStatement.invalid && (caseFactsStatement.dirty || caseFactsStatement.touched)" class="alert alert-danger" id="caseFactsStatement-errors">
             <div *ngIf="caseFactsStatement.errors.required">
                 Case and facts statement is required.
@@ -294,7 +294,7 @@
             Please list the documents that you will include in the Appendix to your brief. List one document per line.<br />
             NOTE: The page numbers for each of the documents will NOT be included in the Appendix.
         </label>
-        <textarea id="appendix" class="form-control" [(ngModel)]="brief.appendixDocuments" #appendixDocuments="ngModel" name="appendixDocuments" rows="8" required></textarea>
+        <textarea id="appendix" class="form-control" [(ngModel)]="initialInfo.appendixDocuments" #appendixDocuments="ngModel" name="appendixDocuments" rows="8" required></textarea>
         <div *ngIf="appendixDocuments.invalid && (appendixDocuments.dirty || appendixDocuments.touched)" class="alert alert-danger" id="appendixDocuments-errors">
             <div *ngIf="appendixDocuments.errors.required">
                 Appendix documents are required.
