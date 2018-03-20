@@ -26,11 +26,11 @@ export class BriefService {
   }
 
   getInitialBrief(id: string): Observable<InitialBriefInfo> {
-    return this.http.get<InitialBriefInfo>(`api/briefs/initials/${id}`);
+    return this.http.get<InitialBriefInfo>(`/api/briefs/initials/${id}`);
   }
 
   getReplyBrief(id: string): Observable<ReplyBriefInfo> {
-    return this.http.get<ReplyBriefInfo>(`api/briefs/replys/${id}`);
+    return this.http.get<ReplyBriefInfo>(`/api/briefs/replys/${id}`);
   }
 
   //TODO add getResponseBrief
