@@ -191,7 +191,7 @@ namespace BriefAssistant.Controllers
             return await _applicationContext.Briefs
                 .Include(brief => brief.ContactInfoDto)
                 .Include(brief => brief.CircuitCourtCaseDto)
-                .SingleAsync(brief => brief.Id == id);
+                .SingleOrDefaultAsync(brief => brief.Id == id);
         }
 
         [HttpPost("{id}/delete")]

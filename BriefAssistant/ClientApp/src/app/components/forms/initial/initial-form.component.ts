@@ -28,27 +28,26 @@ export class InitialFormComponent implements OnInit {
 
 	constructor(
 		private readonly router: Router,
-        private readonly briefService: BriefService,
+    private readonly briefService: BriefService,
     private route: ActivatedRoute
-    ) { }
+   ) { }
 
     ngOnInit() {
       this.id = this.route.snapshot.paramMap.get('id');
-      console.log(this.id)
+      console.log(this.id);
      
         //check lead Id here
       if (this.id !== null) {
           this.briefService
-            .getBriefList()
-            .subscribe(briefList => {
-              this.briefService.getBrief(this.id)
+            .getBrief(this.id)
                 .subscribe(brief => {
                   this.brief = brief;
                   this.brief.contactInfo.address.state =(<any>State)[this.stateKeys[brief.contactInfo.address.state]];
                   this.brief.circuitCourtCase.county = (<any>County)[this.countyKeys[brief.circuitCourtCase.county]];
                   this.brief.circuitCourtCase.role = (<any>Role)[this.roleKeys[brief.circuitCourtCase.role]];
+                }, error => {
+                  this.router.navigate(["/**"]);
                 });
-            });
         } else {
               this.brief = new BriefInfo();
         }
