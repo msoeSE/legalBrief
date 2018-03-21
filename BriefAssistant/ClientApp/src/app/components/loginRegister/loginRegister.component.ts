@@ -13,8 +13,8 @@ import { AccountService } from '../../services/account.service';
     templateUrl: "./loginRegister.component.html",
 })
 export class LoginRegisterComponent {
-    private loginModel = new LoginRequest();
-    private registerModel = new RegistrationRequest();
+    loginModel = new LoginRequest();
+    registerModel = new RegistrationRequest();
     public showRegisterSuccessDiv: boolean = false;
     public showLoginUnauthorizedDiv: boolean = false;
 
