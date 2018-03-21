@@ -10,7 +10,7 @@ import { EmailRequest } from "../../../models/EmailRequest";
     templateUrl: './initial-final.component.html'
 })
 export class InitialFinalComponent {
-	private id: string | null;
+	id: string | null;
 
     constructor(
         private readonly http: HttpClient,

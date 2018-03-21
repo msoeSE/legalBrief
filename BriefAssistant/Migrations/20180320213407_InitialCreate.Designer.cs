@@ -12,7 +12,7 @@ using System;
 namespace BriefAssistant.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180213065249_InitialCreate")]
+    [Migration("20180320213407_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -285,6 +285,8 @@ namespace BriefAssistant.Migrations
                     b.Property<string>("ConcurrencyToken")
                         .IsConcurrencyToken();
 
+                    b.Property<string>("ConsentType");
+
                     b.Property<string>("DisplayName");
 
                     b.Property<string>("Permissions");
@@ -346,12 +348,19 @@ namespace BriefAssistant.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<string>("DisplayName");
+
                     b.Property<string>("Name")
                         .IsRequired();
 
                     b.Property<string>("Properties");
 
+                    b.Property<string>("Resources");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("OpenIddictScopes");
                 });

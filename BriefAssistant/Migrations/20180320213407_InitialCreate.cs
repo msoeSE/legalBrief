@@ -56,6 +56,7 @@ namespace BriefAssistant.Migrations
                     ClientId = table.Column<string>(nullable: false),
                     ClientSecret = table.Column<string>(nullable: true),
                     ConcurrencyToken = table.Column<string>(nullable: true),
+                    ConsentType = table.Column<string>(nullable: true),
                     DisplayName = table.Column<string>(nullable: true),
                     Permissions = table.Column<string>(nullable: true),
                     PostLogoutRedirectUris = table.Column<string>(nullable: true),
@@ -75,8 +76,10 @@ namespace BriefAssistant.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     ConcurrencyToken = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
+                    DisplayName = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: false),
-                    Properties = table.Column<string>(nullable: true)
+                    Properties = table.Column<string>(nullable: true),
+                    Resources = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -410,6 +413,12 @@ namespace BriefAssistant.Migrations
                 name: "IX_OpenIddictAuthorizations_ApplicationId",
                 table: "OpenIddictAuthorizations",
                 column: "ApplicationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OpenIddictScopes_Name",
+                table: "OpenIddictScopes",
+                column: "Name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_OpenIddictTokens_ApplicationId",

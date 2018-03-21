@@ -52,7 +52,7 @@ export class InitialFormComponent implements OnInit {
 			.subscribe(() => alert("Brief Saved!"));
 	}
 
-	private saveBrief() : Observable<BriefInfo> {
+	saveBrief() : Observable<BriefInfo> {
     if (this.brief.id == null) {
       console.log(this.brief);
       return this.briefService.create(this.brief);
