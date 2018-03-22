@@ -195,6 +195,7 @@ namespace BriefAssistant.Controllers
         }
 
         [HttpPost("{id}/delete")]
+        [Authorize]
         public async Task<IActionResult> Delete(Guid id)
         {
             if (id == default(Guid))
