@@ -61,7 +61,11 @@ export class ReplyFormComponent implements OnInit{
 
   updateBrief() {
     this.saveBrief()
-      .subscribe(() => alert("Brief Saved!"));
+      .subscribe(brief => {
+        this.brief.id = brief.briefInfo.id;
+        this.replyInfo.id = brief.briefInfo.id;
+        alert("Brief Saved!");
+      });
   }
 
   private saveBrief(): Observable<ReplyBriefHolder> {

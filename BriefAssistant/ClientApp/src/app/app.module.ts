@@ -86,8 +86,8 @@ NgModule({
       { path: 'forgotPassword', component: ForgotPasswordComponent },
       { path: 'resetPassword', component: ResetPasswordComponent},
       { path: 'confirmation', component: ConfirmationComponent },
-      { path: 'briefs', component: BriefsListComponent, canActivate: [AuthGuard] }
-      { path: '**', component: NotFoundComponent },
+      { path: 'briefs', component: BriefsListComponent, canActivate: [AuthGuard] },
+      { path: '**', component: NotFoundComponent }
     ])
   ],
   exports: [RouterModule],
