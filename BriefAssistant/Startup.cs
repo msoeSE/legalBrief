@@ -19,8 +19,6 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NetEscapades.AspNetCore.SecurityHeaders;
-using NetEscapades.AspNetCore.SecurityHeaders.Infrastructure;
 using OpenIddict.Core;
 using OpenIddict.Models;
 
@@ -41,6 +39,7 @@ namespace BriefAssistant
         public void ConfigureServices(IServiceCollection services)
         {
             TelemetryConfiguration.Active.DisableTelemetry = true;
+
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
 
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -123,7 +122,14 @@ namespace BriefAssistant
             services.Configure<AuthMessageSenderOptions>(Configuration);
             services.AddTransient<IEmailSender, EmailSender>();
 
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                if (!Environment.IsDevelopment())
+                {
+                    options.Filters.Add(new RequireHttpsAttribute());
+                }
+            });
+
             services.AddAutoMapper();
             services.AddSingleton<IHostingEnvironment>(Environment);
 
@@ -133,26 +139,11 @@ namespace BriefAssistant
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-
-            // Require HTTPS
-            if (Environment.IsProduction())
-            {
-                services.Configure<MvcOptions>(options =>
-                    options.Filters.Add(new RequireHttpsAttribute())
-                );
-            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsProduction())
-            {
-                app.UseForwardedHeaders(new ForwardedHeadersOptions
-                {
-                    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-                });
-            }
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -160,6 +151,14 @@ namespace BriefAssistant
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+
+                var forwardOptions = new ForwardedHeadersOptions();
+                forwardOptions.ForwardedHeaders = ForwardedHeaders.All;
+                forwardOptions.KnownProxies.Clear();
+                forwardOptions.KnownNetworks.Clear();
+                app.UseForwardedHeaders(forwardOptions);
+
+                app.UseRewriter(new RewriteOptions().AddRedirectToHttpsPermanent());
             }
 
             RegisterOdicClients(app).GetAwaiter().GetResult();
@@ -188,36 +187,6 @@ namespace BriefAssistant
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
-
-            // Redirect Http requests to Https
-            if (env.IsProduction())
-            {
-                var rewriterOptions = new RewriteOptions().AddRedirectToHttpsPermanent();
-                app.UseRewriter(rewriterOptions);
-            }
-
-            var headerPolicies = new HeaderPolicyCollection()
-                .AddFrameOptionsDeny()
-                .AddXssProtectionBlock()
-                .AddContentTypeOptionsNoSniff()
-                .AddReferrerPolicyStrictOriginWhenCrossOrigin()
-                .RemoveServerHeader()
-                .AddContentSecurityPolicy(builder =>
-                {
-                    builder.AddDefaultSrc().Self();
-                    builder.AddConnectSrc().Self();
-                    builder.AddFontSrc().Self().Data();
-                    builder.AddObjectSrc().None();
-                    builder.AddFormAction().Self();
-                    builder.AddImgSrc().Self().Data();
-                    builder.AddScriptSrc().Self();
-                    builder.AddStyleSrc().Self();
-                    builder.AddMediaSrc().Self();
-                    builder.AddFrameAncestors().None();
-                    builder.AddFrameSource().None();
-                });
-
-            app.UseSecurityHeaders(headerPolicies);
         }
 
         private async Task RegisterOdicClients(IApplicationBuilder app, CancellationToken cancellationToken = default(CancellationToken))

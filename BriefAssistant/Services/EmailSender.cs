@@ -19,14 +19,14 @@ namespace BriefAssistant.Services
 
         public async Task SendEmailAsync(string toAddress, string subject, string message, Stream attachmentStream = null, string attachmentName = null)
         {
-            using (var client = new SmtpClient("smtp.gmail.com", 587))
+            using (var client = new SmtpClient("email-smtp.us-east-1.amazonaws.com", 587))
             {
                 client.EnableSsl = true;
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
                 client.UseDefaultCredentials = false;
-                client.Credentials = new NetworkCredential(Options.EmailAddress, Options.Password);
+                client.Credentials = new NetworkCredential(Options.SmtpUsername, Options.SmtpPassword);
 
-                using (var mailMessage = new MailMessage(Options.EmailAddress, toAddress))
+                using (var mailMessage = new MailMessage("no-reply@briefassistant.com", toAddress))
                 {
                     mailMessage.Subject = subject;
                     mailMessage.Body = message;
