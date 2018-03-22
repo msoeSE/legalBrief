@@ -19,6 +19,8 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NetEscapades.AspNetCore.SecurityHeaders;
+using NetEscapades.AspNetCore.SecurityHeaders.Infrastructure;
 using OpenIddict.Core;
 using OpenIddict.Models;
 
@@ -187,6 +189,27 @@ namespace BriefAssistant
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+            var headerPolicies = new HeaderPolicyCollection()
+                .AddFrameOptionsDeny()
+                .AddXssProtectionBlock()
+                .AddContentTypeOptionsNoSniff()
+                .AddReferrerPolicyStrictOriginWhenCrossOrigin()
+                .RemoveServerHeader()
+                .AddContentSecurityPolicy(builder =>
+                {
+                    builder.AddDefaultSrc().Self();
+                    builder.AddConnectSrc().Self().Data();
+                    builder.AddObjectSrc().None();
+                    builder.AddFormAction().Self();
+                    builder.AddImgSrc().Self();
+                    builder.AddScriptSrc().Self();
+                    builder.AddStyleSrc().Self();
+                    builder.AddMediaSrc().Self();
+                    builder.AddFrameAncestors().None();
+                    builder.AddFrameSource().None();
+                });
+            app.UseSecurityHeaders(headerPolicies);
         }
 
         private async Task RegisterOdicClients(IApplicationBuilder app, CancellationToken cancellationToken = default(CancellationToken))
