@@ -191,7 +191,30 @@ namespace BriefAssistant.Controllers
             return await _applicationContext.Briefs
                 .Include(brief => brief.ContactInfoDto)
                 .Include(brief => brief.CircuitCourtCaseDto)
-                .SingleAsync(brief => brief.Id == id);
+                .SingleOrDefaultAsync(brief => brief.Id == id);
+        }
+
+        [HttpPost("{id}/delete")]
+        [Authorize]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            if (id == default(Guid))
+            {
+                return BadRequest();
+            }
+
+            BriefDto dto = await FindBriefAsync(id);
+            var authResult = await _authorizationService.AuthorizeAsync(User, dto, Operations.Delete);
+            if (!authResult.Succeeded)
+            {
+                return Forbid();
+            }
+            _applicationContext.Briefs.Remove(dto);
+            _applicationContext.SaveChanges();
+            return Ok();
+
+
+
         }
 
         private bool WriteDocumentToStream(BriefInfo briefInfo, Stream outputStream)

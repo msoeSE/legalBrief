@@ -45,10 +45,14 @@ namespace BriefAssistant.Services
                             disposition.DispositionType = DispositionTypeNames.Attachment;
 
                             mailMessage.Attachments.Add(attachment);
+
+                            await client.SendMailAsync(mailMessage);
                         }
                     }
-
-                    await client.SendMailAsync(mailMessage);
+                    else
+                    {
+                        await client.SendMailAsync(mailMessage);
+                    }
                 }
             }
         }

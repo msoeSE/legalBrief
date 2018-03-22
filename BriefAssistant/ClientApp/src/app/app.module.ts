@@ -19,6 +19,8 @@ import { LoginRegisterComponent } from './components/loginRegister/loginRegister
 import { ForgotPasswordComponent } from './components/forgotPassword/forgotPassword.component';
 import { ResetPasswordComponent } from './components/resetPassword/resetPassword.component';
 import { ConfirmationComponent } from './components/confirmation/confirmation.component';
+import { BriefsListComponent } from './components/briefsList/briefsList.component';
+import { NotFoundComponent } from './components/notFound/notFound.component';
 import { PasswordValidator } from "./passwordValidator.directive";
 import { AuthGuard } from './auth.guard'
 import { AccountService } from './services/account.service';
@@ -42,6 +44,8 @@ NgModule({
     ForgotPasswordComponent,
     ResetPasswordComponent,
     ConfirmationComponent,
+    BriefsListComponent,
+    NotFoundComponent,
     PasswordValidator
   ],
   imports: [
@@ -63,11 +67,14 @@ NgModule({
       { path: 'petition-welcome', component: PetitionWelcomeComponent },
       { path: 'initial-final/:id', component: InitialFinalComponent, canActivate: [AuthGuard] },
       { path: 'initial-form', component: InitialFormComponent, canActivate: [AuthGuard] },
+      { path: 'initial-form/:id', component: InitialFormComponent, canActivate: [AuthGuard] },
       { path: 'initial-example', component: InitialExampleComponent },
       { path: 'loginRegister', component: LoginRegisterComponent },
       { path: 'forgotPassword', component: ForgotPasswordComponent },
       { path: 'resetPassword', component: ResetPasswordComponent},
-      { path: 'confirmation', component: ConfirmationComponent }
+      { path: 'confirmation', component: ConfirmationComponent },
+      { path: 'briefs', component: BriefsListComponent, canActivate: [AuthGuard] }
+      { path: '**', component: NotFoundComponent },
     ])
   ],
   exports: [RouterModule],
