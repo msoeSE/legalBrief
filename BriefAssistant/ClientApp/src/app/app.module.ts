@@ -21,6 +21,7 @@ import { ForgotPasswordComponent } from './components/forgotPassword/forgotPassw
 import { ResetPasswordComponent } from './components/resetPassword/resetPassword.component';
 import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 import { BriefsListComponent } from './components/briefsList/briefsList.component';
+import { NotFoundComponent } from './components/notFound/notFound.component';
 import { PasswordValidator } from "./passwordValidator.directive";
 import { AuthGuard } from './auth.guard'
 import { AccountService } from './services/account.service';
@@ -46,6 +47,7 @@ NgModule({
     ResetPasswordComponent,
     ConfirmationComponent,
     BriefsListComponent,
+    NotFoundComponent,
     PasswordValidator
   ],
   imports: [
@@ -75,6 +77,7 @@ NgModule({
       { path: 'resetPassword', component: ResetPasswordComponent},
       { path: 'confirmation', component: ConfirmationComponent },
       { path: 'briefs', component: BriefsListComponent, canActivate: [AuthGuard] }
+      { path: '**', component: NotFoundComponent },
     ])
   ],
   exports: [RouterModule],
