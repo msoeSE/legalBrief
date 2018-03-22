@@ -64,8 +64,12 @@ export class InitialFormComponent implements OnInit {
   }
 
 	updateBrief() {
-		this.saveBrief()
-			.subscribe(() => alert("Brief Saved!"));
+	  this.saveBrief()
+	    .subscribe(brief => {
+	      this.brief.id = brief.briefInfo.id;
+	      this.initialInfo.id = brief.briefInfo.id;
+	      alert("Brief Saved!");
+	    });
 	}
 
   private saveBrief(): Observable<InitialBriefHolder> {

@@ -17,19 +17,19 @@ import { ReplyBriefHolder } from "../../../models/ReplyBriefHolder";
 })
 
 export class ReplyFormComponent implements OnInit{
-  private id: string | null;
-  private states = State;
-  private stateKeys = Object.keys(State);
-  private counties = County;
-  private countyKeys = Object.keys(County);
-  private roles = Role;
-  private roleKeys = Object.keys(Role);
-  private brief = new BriefInfo();
-  private replyInfo = new ReplyBriefInfo();
+  id: string | null;
+  states = State;
+  stateKeys = Object.keys(State);
+  counties = County;
+  countyKeys = Object.keys(County);
+  roles = Role;
+  roleKeys = Object.keys(Role);
+  brief = new BriefInfo();
+  replyInfo = new ReplyBriefInfo();
 
   constructor(
-    private readonly router: Router,
-    private readonly briefService: BriefService,
+    readonly router: Router,
+    readonly briefService: BriefService,
     private route: ActivatedRoute
   ) { }
 
@@ -68,7 +68,7 @@ export class ReplyFormComponent implements OnInit{
       });
   }
 
-  private saveBrief(): Observable<ReplyBriefHolder> {
+  saveBrief(): Observable<ReplyBriefHolder> {
     var holder = new ReplyBriefHolder();
     holder.briefInfo = this.brief;
     holder.replyBriefInfo = this.replyInfo;
