@@ -85,7 +85,7 @@ namespace BriefAssistant.Controllers
         /// </returns>
         [HttpPost("initialcreate")]
         [Authorize]
-        public async Task<IActionResult> CreateAsync([FromBody] InitialBriefHolder briefHolder)
+        public async Task<IActionResult> CreateAsync([FromBody] InitialBriefInfo briefInfo)
         {
             if (!ModelState.IsValid)
             {
@@ -94,30 +94,18 @@ namespace BriefAssistant.Controllers
 
             var currentUser = await _userManager.GetUserAsync(User);
 
-            var briefInfoDto = Mapper.Map<BriefDto>(briefHolder.BriefInfo);
-            briefInfoDto.ApplicationUserId = currentUser.Id;
-            briefInfoDto.CircuitCourtCaseDto.ApplicationUserId = currentUser.Id;
-            briefInfoDto.ContactInfoDto.ApplicationUserId = currentUser.Id;
-            await _applicationContext.Briefs.AddAsync(briefInfoDto);
-
-            await _applicationContext.SaveChangesAsync();
-
-            briefHolder.BriefInfo.Id = briefInfoDto.Id;
-            briefHolder.InitialBriefInfo.Id = briefInfoDto.Id;
-
-            var existingBrief = await _applicationContext.Briefs
-                .Include(briefDto => briefDto.ContactInfoDto)
-                .Include(briefDto => briefDto.CircuitCourtCaseDto)
-                .SingleAsync(briefDto => briefDto.Id == briefInfoDto.Id);
-
-            var initialBriefDto = Mapper.Map<InitialBriefDto>(briefHolder.InitialBriefInfo);
+            var initialBriefDto = Mapper.Map<InitialBriefDto>(briefInfo);
             initialBriefDto.ApplicationUserId = currentUser.Id;
-            initialBriefDto.Id = existingBrief.Id;
+            initialBriefDto.BriefDto.ApplicationUserId = currentUser.Id;
+            initialBriefDto.BriefDto.CircuitCourtCaseDto.ApplicationUserId = currentUser.Id;
+            initialBriefDto.BriefDto.ContactInfoDto.ApplicationUserId = currentUser.Id;
             await _applicationContext.Initials.AddAsync(initialBriefDto);
-
             await _applicationContext.SaveChangesAsync();
 
-            return Created($"/briefs/{initialBriefDto.Id}", briefHolder);
+            briefInfo.Id = initialBriefDto.BriefId;
+            briefInfo.BriefInfo.Id = initialBriefDto.BriefId;
+
+            return Created($"/briefs/{initialBriefDto.BriefId}", briefInfo);
         }
 
         /// <summary>
@@ -132,7 +120,7 @@ namespace BriefAssistant.Controllers
         /// </returns>
         [HttpPost("replycreate")]
         [Authorize]
-        public async Task<IActionResult> CreateAsync([FromBody] ReplyBriefHolder briefHolder)
+        public async Task<IActionResult> CreateAsync([FromBody] ReplyBriefInfo briefInfo)
         {
             if (!ModelState.IsValid)
             {
@@ -141,30 +129,18 @@ namespace BriefAssistant.Controllers
 
             var currentUser = await _userManager.GetUserAsync(User);
 
-            var briefInfoDto = Mapper.Map<BriefDto>(briefHolder.BriefInfo);
-            briefInfoDto.ApplicationUserId = currentUser.Id;
-            briefInfoDto.CircuitCourtCaseDto.ApplicationUserId = currentUser.Id;
-            briefInfoDto.ContactInfoDto.ApplicationUserId = currentUser.Id;
-            await _applicationContext.Briefs.AddAsync(briefInfoDto);
-
-            await _applicationContext.SaveChangesAsync();
-
-            briefHolder.BriefInfo.Id = briefInfoDto.Id;
-            briefHolder.ReplyBriefInfo.Id = briefInfoDto.Id;
-
-            var existingBrief = await _applicationContext.Briefs
-                .Include(briefDto => briefDto.ContactInfoDto)
-                .Include(briefDto => briefDto.CircuitCourtCaseDto)
-                .SingleAsync(briefDto => briefDto.Id == briefInfoDto.Id);
-
-            var replyBriefDto = Mapper.Map<ReplyBriefDto>(briefHolder.ReplyBriefInfo);
+            var replyBriefDto = Mapper.Map<ReplyBriefDto>(briefInfo);
             replyBriefDto.ApplicationUserId = currentUser.Id;
-            replyBriefDto.Id = existingBrief.Id;
+            replyBriefDto.BriefDto.ApplicationUserId = currentUser.Id;
+            replyBriefDto.BriefDto.CircuitCourtCaseDto.ApplicationUserId = currentUser.Id;
+            replyBriefDto.BriefDto.ContactInfoDto.ApplicationUserId = currentUser.Id;
             await _applicationContext.Replies.AddAsync(replyBriefDto);
-
             await _applicationContext.SaveChangesAsync();
 
-            return Created($"/briefs/{replyBriefDto.Id}", briefHolder);
+            briefInfo.Id = replyBriefDto.BriefId;
+            briefInfo.BriefInfo.Id = replyBriefDto.BriefId;
+
+            return Created($"/briefs/{briefInfo.Id}", briefInfo);
         }
 
         //TODO add ResponseCreate
@@ -265,20 +241,18 @@ namespace BriefAssistant.Controllers
         /// 404 if there is no existing brief with the given id
         /// </returns>
         [HttpPut("initialupdate/{id}")]
-        public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] InitialBriefHolder briefHolder)
+        public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] InitialBriefInfo briefInfo)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var briefInfo = briefHolder.BriefInfo;
-            var initialInfo = briefHolder.InitialBriefInfo;
-
-            var existingBrief = await _applicationContext.Briefs
-                .Include(briefDto => briefDto.ContactInfoDto)
-                .Include(briefDto => briefDto.CircuitCourtCaseDto)
-                .SingleAsync(briefDto => briefDto.Id == id);
+            var existingBrief = await _applicationContext.Initials
+                .Include(intialDto => intialDto.BriefDto)
+                .Include(intialDto => intialDto.BriefDto.ContactInfoDto)
+                .Include(intialDto => intialDto.BriefDto.CircuitCourtCaseDto)
+                .SingleAsync(briefDto => briefDto.BriefId == id);
 
             if (existingBrief == null)
             {
@@ -291,31 +265,17 @@ namespace BriefAssistant.Controllers
                 return Forbid();
             }
 
-            UpdateExistingBrief(existingBrief, briefInfo);
+            UpdateExistingBrief(existingBrief.BriefDto, briefInfo.BriefInfo);
 
-            var existingInitialBrief = await _applicationContext.Initials
-                .SingleAsync(briefDto => briefDto.Id == id);
-
-            if (existingInitialBrief == null)
-            {
-                return NotFound();
-            }
-
-            authResult = await _authorizationService.AuthorizeAsync(User, existingInitialBrief, Operations.Update);
-            if (!authResult.Succeeded)
-            {
-                return Forbid();
-            }
-
-            existingInitialBrief.IssuesPresented = initialInfo.IssuesPresented;
-            existingInitialBrief.OralArgumentStatement = initialInfo.OralArgumentStatement;
-            existingInitialBrief.PublicationStatement = initialInfo.PublicationStatement;
-            existingInitialBrief.CaseFactsStatement = initialInfo.CaseFactsStatement;
-            existingInitialBrief.AppendixDocuments = initialInfo.AppendixDocuments;
+            existingBrief.IssuesPresented = briefInfo.IssuesPresented;
+            existingBrief.OralArgumentStatement = briefInfo.OralArgumentStatement;
+            existingBrief.PublicationStatement = briefInfo.PublicationStatement;
+            existingBrief.CaseFactsStatement = briefInfo.CaseFactsStatement;
+            existingBrief.AppendixDocuments = briefInfo.AppendixDocuments;
 
             await _applicationContext.SaveChangesAsync();
 
-            return Json(briefHolder);
+            return Json(briefInfo);
         }
 
         /// <summary>
@@ -334,20 +294,18 @@ namespace BriefAssistant.Controllers
         /// 404 if there is no existing brief with the given id
         /// </returns>
         [HttpPut("replyupdate/{id}")]
-        public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] ReplyBriefHolder briefHolder)
+        public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] ReplyBriefInfo briefInfo)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var briefInfo = briefHolder.BriefInfo;
-            var replyInfo = briefHolder.ReplyBriefInfo;
-
-            var existingBrief = await _applicationContext.Briefs
-                .Include(briefDto => briefDto.ContactInfoDto)
-                .Include(briefDto => briefDto.CircuitCourtCaseDto)
-                .SingleAsync(briefDto => briefDto.Id == id);
+            var existingBrief = await _applicationContext.Replies
+                .Include(replyDto => replyDto.BriefDto)
+                .Include(replyDto => replyDto.BriefDto.ContactInfoDto)
+                .Include(replyDto => replyDto.BriefDto.CircuitCourtCaseDto)
+                .SingleAsync(briefDto => briefDto.BriefId == id);
 
             if (existingBrief == null)
             {
@@ -360,27 +318,13 @@ namespace BriefAssistant.Controllers
                 return Forbid();
             }
 
-            UpdateExistingBrief(existingBrief, briefInfo);
-
-            var existingReplyBrief = await _applicationContext.Replies
-                .SingleAsync(briefDto => briefDto.Id == id);
-
-            if (existingReplyBrief == null)
-            {
-                return NotFound();
-            }
-
-            authResult = await _authorizationService.AuthorizeAsync(User, existingReplyBrief, Operations.Update);
-            if (!authResult.Succeeded)
-            {
-                return Forbid();
-            }
+            UpdateExistingBrief(existingBrief.BriefDto, briefInfo.BriefInfo);
 
             //TODO existingReplyBrief.variable = replyInfo.variable; if such variables exist in the future
 
             await _applicationContext.SaveChangesAsync();
 
-            return Json(briefHolder);
+            return Json(briefInfo);
         }
 
         //TODO add ResponseUpdate
@@ -565,9 +509,6 @@ namespace BriefAssistant.Controllers
             _applicationContext.Briefs.Remove(dto);
             _applicationContext.SaveChanges();
             return Ok();
-
-
-
         }
 
         /// <summary>
@@ -582,7 +523,7 @@ namespace BriefAssistant.Controllers
         private async Task<InitialBriefDto> FindInitialBriefAsync(Guid id)
         {
             return await _applicationContext.Initials
-                .SingleAsync(brief => brief.Id == id);
+                .SingleAsync(brief => brief.BriefId == id);
         }
 
         /// <summary>
@@ -597,7 +538,7 @@ namespace BriefAssistant.Controllers
         private async Task<ReplyBriefDto> FindReplyBriefAsync(Guid id)
         {
             return await _applicationContext.Replies
-                .SingleAsync(brief => brief.Id == id);
+                .SingleAsync(brief => brief.BriefId == id);
         }
 
         //TODO add FindResponseBriefAsync

@@ -1,5 +1,8 @@
+import { BriefInfo } from "./BriefInfo";
+
 export class InitialBriefInfo {
   id: string;
+  briefInfo: BriefInfo;
   appendixDocuments: string;
   caseFactsStatement: string;
   oralArgumentStatement: string;
@@ -7,6 +10,7 @@ export class InitialBriefInfo {
   issuesPresented: string;
 
   constructor() {
+    this.briefInfo = new BriefInfo();
     this.appendixDocuments = "";
     this.caseFactsStatement = "";
     this.oralArgumentStatement = "";

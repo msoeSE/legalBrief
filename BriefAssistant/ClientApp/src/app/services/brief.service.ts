@@ -6,9 +6,6 @@ import { BriefInfo } from "../models/BriefInfo";
 import { InitialBriefInfo } from "../models/InitialBriefInfo";
 import { ReplyBriefInfo } from "../models/ReplyBriefInfo";
 
-import { InitialBriefHolder } from "../models/InitialBriefHolder";
-import { ReplyBriefHolder } from "../models/ReplyBriefHolder";
-
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
@@ -36,34 +33,25 @@ export class BriefService {
   //TODO add getResponseBrief
   //TODO add getPetitionBrief
 
-	create(brief: BriefInfo): Observable<BriefInfo> {
-	  return this.http.post<BriefInfo>("/api/briefs", JSON.stringify(brief), { headers: this.headers });
-	}
-
-  createInitial(brief: InitialBriefHolder): Observable<InitialBriefHolder> {
-    return this.http.post<InitialBriefHolder>(`/api/briefs/initialcreate`, JSON.stringify(brief), { headers: this.headers });
+  createInitial(brief: InitialBriefInfo): Observable<InitialBriefInfo> {
+    return this.http.post<InitialBriefInfo>(`/api/briefs/initialcreate`, JSON.stringify(brief), { headers: this.headers });
   }
 
-  createReply(brief: ReplyBriefHolder): Observable<ReplyBriefHolder> {
-    return this.http.post<ReplyBriefHolder>(`/api/briefs/replycreate`, JSON.stringify(brief), { headers: this.headers });
+  createReply(brief: ReplyBriefInfo): Observable<ReplyBriefInfo> {
+    return this.http.post<ReplyBriefInfo>(`/api/briefs/replycreate`, JSON.stringify(brief), { headers: this.headers });
   }
 
   //TODO add createResponse
   //TODO add createPetition
 
-	update(brief: BriefInfo) : Observable<BriefInfo> {
-		const url = `/api/briefs/${brief.id}`;
-    return this.http.put<BriefInfo>(url, JSON.stringify(brief), { headers: this.headers });
-  }
-
-  updateInitial(brief: InitialBriefHolder): Observable<InitialBriefHolder> {
+  updateInitial(brief: InitialBriefInfo): Observable<InitialBriefInfo> {
     const url = `/api/briefs/initialupdate/${brief.briefInfo.id}`;
-    return this.http.put<InitialBriefHolder>(url, JSON.stringify(brief), { headers: this.headers });
+    return this.http.put<InitialBriefInfo>(url, JSON.stringify(brief), { headers: this.headers });
   }
 
-  updateReply(brief: ReplyBriefHolder): Observable<ReplyBriefHolder> {
+  updateReply(brief: ReplyBriefInfo): Observable<ReplyBriefInfo> {
     const url = `/api/briefs/replyupdate/${brief.briefInfo.id}`;
-    return this.http.put<ReplyBriefHolder>(url, JSON.stringify(brief), { headers: this.headers });
+    return this.http.put<ReplyBriefInfo>(url, JSON.stringify(brief), { headers: this.headers });
   }
 
   //TODO add updateResponse

@@ -1,9 +1,10 @@
-import { ContactInfo } from "./ContactInfo";
-import { CircuitCourtCase } from "./CircuitCourtCase";
+import { BriefInfo } from "./BriefInfo";
 
 export class ReplyBriefInfo {
   id: string;
+  briefInfo: BriefInfo;
 
-	constructor() {
-	}
+  constructor() {
+    this.briefInfo = new BriefInfo();
+  }
 }

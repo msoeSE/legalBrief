@@ -1,6 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
 
 namespace BriefAssistant.Models
 {
@@ -12,5 +10,7 @@ namespace BriefAssistant.Models
         public string PublicationStatement { get; set; }
         public string CaseFactsStatement { get; set; }
         public string AppendixDocuments { get; set; }
+
+        public BriefInfo BriefInfo { get; set; }
     }
 }
