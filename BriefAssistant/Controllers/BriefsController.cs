@@ -202,7 +202,13 @@ namespace BriefAssistant.Controllers
             {
                 return BadRequest();
             }
+
             BriefDto dto = await FindBriefAsync(id);
+            var authResult = await _authorizationService.AuthorizeAsync(User, dto, Operations.Delete);
+            if (!authResult.Succeeded)
+            {
+                return Forbid();
+            }
             _applicationContext.Briefs.Remove(dto);
             _applicationContext.SaveChanges();
             return Ok();
