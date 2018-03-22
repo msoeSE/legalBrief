@@ -19,20 +19,20 @@ import { InitialBriefHolder } from "../../../models/InitialBriefHolder";
 })
 
 export class InitialFormComponent implements OnInit {
-  private id: string | null;
-	private states = State;
-	private stateKeys = Object.keys(State);
-	private counties = County;
-	private countyKeys = Object.keys(County);
-	private roles = Role;
-	private roleKeys = Object.keys(Role);
-  private brief = new BriefInfo();
-  private initialInfo = new InitialBriefInfo();
+  id: string | null;
+	states = State;
+	stateKeys = Object.keys(State);
+	counties = County;
+	countyKeys = Object.keys(County);
+	roles = Role;
+	roleKeys = Object.keys(Role);
+	brief = new BriefInfo();
+  initialInfo = new InitialBriefInfo();
 
 	constructor(
-		private readonly router: Router,
-    private readonly briefService: BriefService,
-		private route: ActivatedRoute
+		readonly router: Router,
+		readonly briefService: BriefService,
+    private route: ActivatedRoute
     ) { }
 
   ngOnInit() {
@@ -72,6 +72,7 @@ export class InitialFormComponent implements OnInit {
     var holder = new InitialBriefHolder();
     holder.briefInfo = this.brief;
     holder.initialBriefInfo = this.initialInfo;
+    
     if (this.brief.id == null) {
       console.log(this.brief);
       return this.briefService.createInitial(holder);

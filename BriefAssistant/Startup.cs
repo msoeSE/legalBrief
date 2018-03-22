@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
@@ -40,6 +41,7 @@ namespace BriefAssistant
         public void ConfigureServices(IServiceCollection services)
         {
             TelemetryConfiguration.Active.DisableTelemetry = true;
+
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
 
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -122,7 +124,14 @@ namespace BriefAssistant
             services.Configure<AuthMessageSenderOptions>(Configuration);
             services.AddTransient<IEmailSender, EmailSender>();
 
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                if (!Environment.IsDevelopment())
+                {
+                    options.Filters.Add(new RequireHttpsAttribute());
+                }
+            });
+
             services.AddAutoMapper();
             services.AddSingleton<IHostingEnvironment>(Environment);
 
@@ -132,14 +141,6 @@ namespace BriefAssistant
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-
-            // Require HTTPS
-            if (Environment.IsProduction())
-            {
-                services.Configure<MvcOptions>(options =>
-                    options.Filters.Add(new RequireHttpsAttribute())
-                );
-            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -152,6 +153,14 @@ namespace BriefAssistant
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+
+                var forwardOptions = new ForwardedHeadersOptions();
+                forwardOptions.ForwardedHeaders = ForwardedHeaders.All;
+                forwardOptions.KnownProxies.Clear();
+                forwardOptions.KnownNetworks.Clear();
+                app.UseForwardedHeaders(forwardOptions);
+
+                app.UseRewriter(new RewriteOptions().AddRedirectToHttpsPermanent());
             }
 
             RegisterOdicClients(app).GetAwaiter().GetResult();
@@ -181,13 +190,6 @@ namespace BriefAssistant
                 }
             });
 
-            // Redirect Http requests to Https
-            if (env.IsProduction())
-            {
-                var rewriterOptions = new RewriteOptions().AddRedirectToHttpsPermanent();
-                app.UseRewriter(rewriterOptions);
-            }
-
             var headerPolicies = new HeaderPolicyCollection()
                 .AddFrameOptionsDeny()
                 .AddXssProtectionBlock()
@@ -197,18 +199,16 @@ namespace BriefAssistant
                 .AddContentSecurityPolicy(builder =>
                 {
                     builder.AddDefaultSrc().Self();
-                    builder.AddConnectSrc().Self();
-                    builder.AddFontSrc().Self().Data();
+                    builder.AddConnectSrc().Self().Data();
                     builder.AddObjectSrc().None();
                     builder.AddFormAction().Self();
-                    builder.AddImgSrc().Self().Data();
+                    builder.AddImgSrc().Self();
                     builder.AddScriptSrc().Self();
                     builder.AddStyleSrc().Self();
                     builder.AddMediaSrc().Self();
                     builder.AddFrameAncestors().None();
                     builder.AddFrameSource().None();
                 });
-
             app.UseSecurityHeaders(headerPolicies);
         }
 
@@ -225,11 +225,13 @@ namespace BriefAssistant
 
                 var hostUrl = Configuration["HostUrl"];
 
-                if (await manager.FindByClientIdAsync("[client identifier]", cancellationToken) == null)
+                const string clientId = "angular-client";
+                if (await manager.FindByClientIdAsync(clientId, cancellationToken) == null)
                 {
+                    
                     var descriptor = new OpenIddictApplicationDescriptor
                     {
-                        ClientId = "angular-client",
+                        ClientId = clientId,
                         DisplayName = "Angular Client",
                         PostLogoutRedirectUris = { new Uri($"{hostUrl}signout-odic")},
                         RedirectUris = {new Uri(hostUrl) },

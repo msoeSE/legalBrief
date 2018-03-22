@@ -10,15 +10,15 @@ import { EmailRequest } from "../../../models/EmailRequest";
     templateUrl: './initial-final.component.html'
 })
 export class InitialFinalComponent {
-	private id: string | null;
+	id: string | null;
 
     constructor(
       private readonly http: HttpClient,
 		  private route: ActivatedRoute
 	  ){}
 
-    private model = new EmailRequest();
-
+    model = new EmailRequest();
+  
     download() {
       let headers = new HttpHeaders({ 'Accept': 'application/octet-stream' });
       this.http.get(`/api/briefs/${this.id}/download`, {headers: headers, responseType: 'blob' }).subscribe(res => {

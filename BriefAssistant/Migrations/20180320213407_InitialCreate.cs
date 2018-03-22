@@ -52,10 +52,11 @@ namespace BriefAssistant.Migrations
                 name: "OpenIddictApplications",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     ClientId = table.Column<string>(nullable: false),
                     ClientSecret = table.Column<string>(nullable: true),
                     ConcurrencyToken = table.Column<string>(nullable: true),
+                    ConsentType = table.Column<string>(nullable: true),
                     DisplayName = table.Column<string>(nullable: true),
                     Permissions = table.Column<string>(nullable: true),
                     PostLogoutRedirectUris = table.Column<string>(nullable: true),
@@ -72,11 +73,13 @@ namespace BriefAssistant.Migrations
                 name: "OpenIddictScopes",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     ConcurrencyToken = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
+                    DisplayName = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: false),
-                    Properties = table.Column<string>(nullable: true)
+                    Properties = table.Column<string>(nullable: true),
+                    Resources = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -243,8 +246,8 @@ namespace BriefAssistant.Migrations
                 name: "OpenIddictAuthorizations",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    ApplicationId = table.Column<string>(nullable: true),
+                    Id = table.Column<Guid>(nullable: false),
+                    ApplicationId = table.Column<Guid>(nullable: true),
                     ConcurrencyToken = table.Column<string>(nullable: true),
                     Properties = table.Column<string>(nullable: true),
                     Scopes = table.Column<string>(nullable: true),
@@ -308,9 +311,9 @@ namespace BriefAssistant.Migrations
                 name: "OpenIddictTokens",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    ApplicationId = table.Column<string>(nullable: true),
-                    AuthorizationId = table.Column<string>(nullable: true),
+                    Id = table.Column<Guid>(nullable: false),
+                    ApplicationId = table.Column<Guid>(nullable: true),
+                    AuthorizationId = table.Column<Guid>(nullable: true),
                     ConcurrencyToken = table.Column<string>(nullable: true),
                     CreationDate = table.Column<DateTimeOffset>(nullable: true),
                     ExpirationDate = table.Column<DateTimeOffset>(nullable: true),
@@ -410,6 +413,12 @@ namespace BriefAssistant.Migrations
                 name: "IX_OpenIddictAuthorizations_ApplicationId",
                 table: "OpenIddictAuthorizations",
                 column: "ApplicationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OpenIddictScopes_Name",
+                table: "OpenIddictScopes",
+                column: "Name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_OpenIddictTokens_ApplicationId",

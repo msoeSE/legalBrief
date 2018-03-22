@@ -9,7 +9,7 @@ import { ResetPasswordRequest } from "../../models/ResetPasswordRequest";
     templateUrl: "./resetPassword.component.html",
 })
 export class ResetPasswordComponent implements OnInit{
-    private model = new ResetPasswordRequest();
+    model = new ResetPasswordRequest();
 
     constructor(
       private readonly http: HttpClient,
