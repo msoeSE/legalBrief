@@ -1,4 +1,4 @@
-﻿import { ContactInfo } from "./ContactInfo";
+import { ContactInfo } from "./ContactInfo";
 import { CircuitCourtCase } from "./CircuitCourtCase";
 
 export class BriefInfo {
@@ -11,11 +11,12 @@ export class BriefInfo {
 	oralArgumentStatement: string;
 	publicationStatement: string;
 	issuesPresented: string;
-	contactInfo: ContactInfo;
+  contactInfo: ContactInfo;
+  title: string;
 
 	constructor() {
-        this.circuitCourtCase = new CircuitCourtCase();
-        this.appellateCourtCaseNumber = "";
+    this.circuitCourtCase = new CircuitCourtCase();
+    this.appellateCourtCaseNumber = "";
 		this.appendixDocuments = "";
 		this.conclusion = "";
 		this.caseFactsStatement = "";
@@ -23,6 +24,7 @@ export class BriefInfo {
 		this.oralArgumentStatement = "";
 		this.publicationStatement = "";
 		this.issuesPresented = "";
-		this.contactInfo = new ContactInfo();
+    this.contactInfo = new ContactInfo();
+	  this.title = "";
 	}
 }

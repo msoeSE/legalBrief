@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { tap } from 'rxjs/operators';
 
@@ -17,6 +17,7 @@ import { BriefService } from "../../../services/brief.service"
 })
 
 export class InitialFormComponent implements OnInit {
+  private id: string | null;
 	private states = State;
 	private stateKeys = Object.keys(State);
 	private counties = County;
@@ -27,25 +28,31 @@ export class InitialFormComponent implements OnInit {
 
 	constructor(
 		private readonly router: Router,
-		private readonly briefService: BriefService
-    ) { }
+    private readonly briefService: BriefService,
+    private route: ActivatedRoute
+   ) { }
 
-	ngOnInit() {
-		this.briefService
-			.getBriefList()
-			.subscribe(briefList => {
-				console.log(briefList);
-				if (briefList.briefs.length !== 0) {
-					this.briefService.getBrief(briefList.briefs[0].id)
-            .subscribe(brief => {
-					    console.log(brief);
-              this.brief = brief;
-					  });
-				} else {
-					this.brief = new BriefInfo();
-				}
-			});
-	}
+    ngOnInit() {
+      this.id = this.route.snapshot.paramMap.get('id');
+      console.log(this.id);
+     
+        //check lead Id here
+      if (this.id !== null) {
+          this.briefService
+            .getBrief(this.id)
+                .subscribe(brief => {
+                  this.brief = brief;
+                  this.brief.contactInfo.address.state =(<any>State)[this.stateKeys[brief.contactInfo.address.state]];
+                  this.brief.circuitCourtCase.county = (<any>County)[this.countyKeys[brief.circuitCourtCase.county]];
+                  this.brief.circuitCourtCase.role = (<any>Role)[this.roleKeys[brief.circuitCourtCase.role]];
+                }, error => {
+                  this.router.navigate(["/**"]);
+                });
+        } else {
+              this.brief = new BriefInfo();
+        }
+      
+    }
 
 	updateBrief() {
 		this.saveBrief()
