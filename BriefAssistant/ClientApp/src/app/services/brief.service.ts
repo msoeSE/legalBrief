@@ -30,7 +30,7 @@ export class BriefService {
   }
 
   getReplyBrief(id: string): Observable<ReplyBriefInfo> {
-    return this.http.get<ReplyBriefInfo>(`/api/briefs/replys/${id}`);
+    return this.http.get<ReplyBriefInfo>(`/api/briefs/replies/${id}`);
   }
 
   //TODO add getResponseBrief

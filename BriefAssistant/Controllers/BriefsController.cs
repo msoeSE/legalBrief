@@ -160,7 +160,7 @@ namespace BriefAssistant.Controllers
             var replyBriefDto = Mapper.Map<ReplyBriefDto>(briefHolder.ReplyBriefInfo);
             replyBriefDto.ApplicationUserId = currentUser.Id;
             replyBriefDto.Id = existingBrief.Id;
-            await _applicationContext.Replys.AddAsync(replyBriefDto);
+            await _applicationContext.Replies.AddAsync(replyBriefDto);
 
             await _applicationContext.SaveChangesAsync();
 
@@ -209,7 +209,7 @@ namespace BriefAssistant.Controllers
                 return Forbid();
             }
 
-            updateExistingBrief(existingBrief, briefInfo);
+            UpdateExistingBrief(existingBrief, briefInfo);
 
             await _applicationContext.SaveChangesAsync();
 
@@ -225,7 +225,7 @@ namespace BriefAssistant.Controllers
         /// <param name="briefInfo">
         /// The new information that the brief is updated with
         /// </param>
-        private void updateExistingBrief(BriefDto existingBrief, BriefInfo briefInfo)
+        private void UpdateExistingBrief(BriefDto existingBrief, BriefInfo briefInfo)
         {
             existingBrief.Title = briefInfo.Title;
             existingBrief.AppellateCourtCaseNumber = briefInfo.AppellateCourtCaseNumber;
@@ -291,7 +291,7 @@ namespace BriefAssistant.Controllers
                 return Forbid();
             }
 
-            updateExistingBrief(existingBrief, briefInfo);
+            UpdateExistingBrief(existingBrief, briefInfo);
 
             var existingInitialBrief = await _applicationContext.Initials
                 .SingleAsync(briefDto => briefDto.Id == id);
@@ -360,9 +360,9 @@ namespace BriefAssistant.Controllers
                 return Forbid();
             }
 
-            updateExistingBrief(existingBrief, briefInfo);
+            UpdateExistingBrief(existingBrief, briefInfo);
 
-            var existingReplyBrief = await _applicationContext.Replys
+            var existingReplyBrief = await _applicationContext.Replies
                 .SingleAsync(briefDto => briefDto.Id == id);
 
             if (existingReplyBrief == null)
@@ -443,12 +443,12 @@ namespace BriefAssistant.Controllers
             }
 
             var authResult = await _authorizationService.AuthorizeAsync(User, dto, Operations.Read);
-            var briefInfo = Mapper.Map<BriefInfo>(dto);
-
             if (!authResult.Succeeded)
             {
                 return Forbid();
             }
+
+            var briefInfo = Mapper.Map<BriefInfo>(dto);
 
             return Json(briefInfo);
         }
@@ -480,12 +480,12 @@ namespace BriefAssistant.Controllers
             }
 
             var authResult = await _authorizationService.AuthorizeAsync(User, dto, Operations.Read);
-            var briefInfo = Mapper.Map<InitialBriefInfo>(dto);
-
             if (!authResult.Succeeded)
             {
                 return Forbid();
             }
+
+            var briefInfo = Mapper.Map<InitialBriefInfo>(dto);
 
             return Json(briefInfo);
         }
@@ -502,7 +502,7 @@ namespace BriefAssistant.Controllers
         /// 403 if the user id of brief does not match the currently logged in user
         /// 404 if the brief could not be found
         /// </returns>
-        [HttpGet("replys/{id}")]
+        [HttpGet("replies/{id}")]
         public async Task<IActionResult> GetReplyBriefAsync(Guid id)
         {
             if (id == default(Guid))
@@ -517,12 +517,12 @@ namespace BriefAssistant.Controllers
             }
 
             var authResult = await _authorizationService.AuthorizeAsync(User, dto, Operations.Read);
-            var briefInfo = Mapper.Map<ReplyBriefInfo>(dto);
-
             if (!authResult.Succeeded)
             {
                 return Forbid();
             }
+
+            var briefInfo = Mapper.Map<ReplyBriefInfo>(dto);
 
             return Json(briefInfo);
         }
@@ -573,7 +573,7 @@ namespace BriefAssistant.Controllers
         /// </returns>
         private async Task<ReplyBriefDto> FindReplyBriefAsync(Guid id)
         {
-            return await _applicationContext.Replys
+            return await _applicationContext.Replies
                 .SingleAsync(brief => brief.Id == id);
         }
 
