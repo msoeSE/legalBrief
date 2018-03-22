@@ -10,6 +10,7 @@ export class BriefInfo {
 	argument: string;
   contactInfo: ContactInfo;
   type: BriefType;
+  title: string;
 
 	constructor() {
     this.circuitCourtCase = new CircuitCourtCase();
@@ -18,5 +19,6 @@ export class BriefInfo {
 		this.argument = "";
     this.contactInfo = new ContactInfo();
 	  this.type = BriefType.Initial;
+	  this.title = "";
 	}
 }

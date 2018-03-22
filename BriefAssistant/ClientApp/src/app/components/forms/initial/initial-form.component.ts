@@ -47,6 +47,8 @@ export class InitialFormComponent implements OnInit {
           this.brief.contactInfo.address.state =(<any>State)[this.stateKeys[brief.contactInfo.address.state]];
           this.brief.circuitCourtCase.county = (<any>County)[this.countyKeys[brief.circuitCourtCase.county]];
           this.brief.circuitCourtCase.role = (<any>Role)[this.roleKeys[brief.circuitCourtCase.role]];
+        }, error => {
+          this.router.navigate(["/**"]);
         });
 
       this.briefService
