@@ -19,7 +19,6 @@ import { PetitionWelcomeComponent } from './components/welcomes/petition/petitio
 import { InitialExampleComponent } from './components/examples/initial/initial-example.component';
 import { ReplyExampleComponent } from './components/examples/reply/reply-example.component';
 import { LoginRegisterComponent } from './components/loginRegister/loginRegister.component';
-import { AccountPageComponent } from './components/accountPage/accountPage.component';
 import { ForgotPasswordComponent } from './components/forgotPassword/forgotPassword.component';
 import { ResetPasswordComponent } from './components/resetPassword/resetPassword.component';
 import { ConfirmationComponent } from './components/confirmation/confirmation.component';
@@ -48,7 +47,6 @@ NgModule({
     PetitionWelcomeComponent,
     InitialExampleComponent,
     LoginRegisterComponent,
-    AccountPageComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
     ConfirmationComponent,
@@ -82,7 +80,6 @@ NgModule({
       { path: 'reply-form/:id', component: ReplyFormComponent, canActivate: [AuthGuard] },
       { path: 'reply-example', component: ReplyExampleComponent },
       { path: 'loginRegister', component: LoginRegisterComponent },
-      { path: 'accountPage', component: AccountPageComponent, canActivate: [AuthGuard] },
       { path: 'forgotPassword', component: ForgotPasswordComponent },
       { path: 'resetPassword', component: ResetPasswordComponent},
       { path: 'confirmation', component: ConfirmationComponent },

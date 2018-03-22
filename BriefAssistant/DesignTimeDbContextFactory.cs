@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using BriefAssistant.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
@@ -18,7 +19,7 @@ namespace BriefAssistant
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             builder.UseNpgsql(connectionString);
-            builder.UseOpenIddict();
+            builder.UseOpenIddict<Guid>();
             return new ApplicationDbContext(builder.Options);
         }
     }
