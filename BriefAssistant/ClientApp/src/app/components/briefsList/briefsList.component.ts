@@ -12,8 +12,8 @@ import { BriefType } from "../../models/BriefType";
 })
 
 export class BriefsListComponent implements OnInit {
-    private briefs : IBriefList;
-    private list: IBriefListItem[];
+    briefs : IBriefList;
+    list: IBriefListItem[];
 
     constructor(
         private readonly router: Router,

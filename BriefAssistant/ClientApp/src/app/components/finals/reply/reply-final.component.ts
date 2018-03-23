@@ -17,7 +17,7 @@ export class ReplyFinalComponent {
       private route: ActivatedRoute
     ) { }
 
-    private model = new EmailRequest();
+    model = new EmailRequest();
 
     download() {
       let headers = new HttpHeaders({ 'Accept': 'application/octet-stream' });
