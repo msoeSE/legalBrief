@@ -76,8 +76,8 @@ namespace BriefAssistant.Controllers
         /// <summary>
         /// Creates a new initial brief database object
         /// </summary>
-        /// <param name="briefHolder">
-        /// The object that holds the necessary brief and initialBrief data
+        /// <param name="briefInfo">
+        /// The object that holds the necessary initialBrief data
         /// </param>
         /// <returns>
         /// 201 if successfully created
@@ -111,8 +111,8 @@ namespace BriefAssistant.Controllers
         /// <summary>
         /// Creates a new reply brief database object
         /// </summary>
-        /// <param name="briefHolder">
-        /// The object that holds the necessary brief and replyBrief data
+        /// <param name="briefInfo">
+        /// The object that holds the necessary replyBrief data
         /// </param>
         /// <returns>
         /// 201 if successfully created
@@ -231,8 +231,8 @@ namespace BriefAssistant.Controllers
         /// <param name="id">
         /// The id of the brief being updated
         /// </param>
-        /// <param name="briefHolder">
-        /// The object that holds the new brief and initialBrief information
+        /// <param name="briefInfo">
+        /// The object that holds the new initialBrief information
         /// </param>
         /// <returns>
         /// 200 if the brief is updated successfully
@@ -280,8 +280,8 @@ namespace BriefAssistant.Controllers
         /// <param name="id">
         /// The id of the brief being updated
         /// </param>
-        /// <param name="briefHolder">
-        /// The object that holds the new brief and replyBrief information
+        /// <param name="briefInfo">
+        /// The object that holds the new replyBrief information
         /// </param>
         /// <returns>
         /// 200 if the brief is updated successfully
