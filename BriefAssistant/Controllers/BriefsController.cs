@@ -248,11 +248,7 @@ namespace BriefAssistant.Controllers
                 return BadRequest(ModelState);
             }
 
-            var existingBrief = await _applicationContext.Initials
-                .Include(intialDto => intialDto.BriefDto)
-                .Include(intialDto => intialDto.BriefDto.ContactInfoDto)
-                .Include(intialDto => intialDto.BriefDto.CircuitCourtCaseDto)
-                .SingleAsync(briefDto => briefDto.BriefId == id);
+            var existingBrief = await FindInitialBriefAsync(id);
 
             if (existingBrief == null)
             {
@@ -301,11 +297,7 @@ namespace BriefAssistant.Controllers
                 return BadRequest(ModelState);
             }
 
-            var existingBrief = await _applicationContext.Replies
-                .Include(replyDto => replyDto.BriefDto)
-                .Include(replyDto => replyDto.BriefDto.ContactInfoDto)
-                .Include(replyDto => replyDto.BriefDto.CircuitCourtCaseDto)
-                .SingleAsync(briefDto => briefDto.BriefId == id);
+            var existingBrief = await FindReplyBriefAsync(id);
 
             if (existingBrief == null)
             {
@@ -523,7 +515,10 @@ namespace BriefAssistant.Controllers
         private async Task<InitialBriefDto> FindInitialBriefAsync(Guid id)
         {
             return await _applicationContext.Initials
-                .SingleAsync(brief => brief.BriefId == id);
+                .Include(intialDto => intialDto.BriefDto)
+                .Include(intialDto => intialDto.BriefDto.ContactInfoDto)
+                .Include(intialDto => intialDto.BriefDto.CircuitCourtCaseDto)
+                .SingleAsync(briefDto => briefDto.BriefId == id);
         }
 
         /// <summary>
@@ -538,7 +533,10 @@ namespace BriefAssistant.Controllers
         private async Task<ReplyBriefDto> FindReplyBriefAsync(Guid id)
         {
             return await _applicationContext.Replies
-                .SingleAsync(brief => brief.BriefId == id);
+                .Include(replyDto => replyDto.BriefDto)
+                .Include(replyDto => replyDto.BriefDto.ContactInfoDto)
+                .Include(replyDto => replyDto.BriefDto.CircuitCourtCaseDto)
+                .SingleAsync(briefDto => briefDto.BriefId == id);
         }
 
         //TODO add FindResponseBriefAsync
@@ -598,38 +596,38 @@ namespace BriefAssistant.Controllers
         private async Task<string> GetTemplateName(BriefInfo briefInfo, BriefExport exportData)
         {
             String templateName = null;
-            if (briefInfo.Type == BriefType.Initial)
+            switch (briefInfo.Type)
             {
-                templateName = "initialBriefTemplate.docx";
-                InitialBriefDto init = await FindInitialBriefAsync(briefInfo.Id);
-                if (init != null)
-                {
-                    //var authResult = await _authorizationService.AuthorizeAsync(User, init, Operations.Read);
-                    var info = Mapper.Map<InitialBriefInfo>(init);
-                    exportData.SetInitialInformation(info);
-                }
-            }
-            else if (briefInfo.Type == BriefType.Reply)
-            {
-                templateName = "replyBriefTemplate.docx";
-                ReplyBriefDto reply = await FindReplyBriefAsync(briefInfo.Id);
-                if (reply != null)
-                {
-                    //var authResult = await _authorizationService.AuthorizeAsync(User, reply, Operations.Read);
-                    var info = Mapper.Map<ReplyBriefInfo>(reply);
-                    exportData.SetReplyInformation(info);
-                }
+                case BriefType.Initial:
+                    templateName = "initialBriefTemplate.docx";
+                    InitialBriefDto init = await FindInitialBriefAsync(briefInfo.Id);
+                    if (init != null)
+                    {
+                        //var authResult = await _authorizationService.AuthorizeAsync(User, init, Operations.Read);
+                        var info = Mapper.Map<InitialBriefInfo>(init);
+                        exportData.SetInitialInformation(info);
+                    }
 
-            }
-            else if (briefInfo.Type == BriefType.Response)
-            {
-                templateName = "responseBriefTemplate.docx";
-                //TODO
-            }
-            else if (briefInfo.Type == BriefType.Petition)
-            {
-                templateName = "petitionForReviewTemplate.docx";
-                //TODO
+                    break;
+                case BriefType.Reply:
+                    templateName = "replyBriefTemplate.docx";
+                    ReplyBriefDto reply = await FindReplyBriefAsync(briefInfo.Id);
+                    if (reply != null)
+                    {
+                        //var authResult = await _authorizationService.AuthorizeAsync(User, reply, Operations.Read);
+                        var info = Mapper.Map<ReplyBriefInfo>(reply);
+                        exportData.SetReplyInformation(info);
+                    }
+
+                    break;
+                case BriefType.Response:
+                    templateName = "responseBriefTemplate.docx";
+                    //TODO
+                    break;
+                case BriefType.Petition:
+                    templateName = "petitionForReviewTemplate.docx";
+                    //TODO
+                    break;
             }
 
             return templateName;
