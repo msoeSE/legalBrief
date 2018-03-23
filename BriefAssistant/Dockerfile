@@ -51,4 +51,5 @@ RUN dotnet publish -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
+CMD mkdir logs
 ENTRYPOINT ["dotnet", "BriefAssistant.dll"]

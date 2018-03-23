@@ -2,7 +2,7 @@
   <h1>Title of Document</h1>
   <div class="form-group">
     <div class="form-inline">
-      <input type="text" id="title" style="width: 50%;" class="form-control" [(ngModel)]="brief.title" #title="ngModel" maxlength="100" name="title" placeholder="Example Brief" required>
+      <input type="text" id="title" style="width: 50%;" class="form-control" [(ngModel)]="initialInfo.briefInfo.title" #title="ngModel" maxlength="100" name="title" placeholder="Example Brief" required>
       <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger" id="title-errors">
         <div *ngIf="title.errors.required">
           Document must have a title.
@@ -16,7 +16,7 @@
   <h1>Your Information</h1>
   <div class="form-group">
     <label for="name" class="col-form-label">Name</label>
-    <input type="text" id="name" class="form-control" [(ngModel)]="brief.contactInfo.name" #name="ngModel" minlength="4" maxlength="100" name="name" placeholder="John Doe" required autocomplete="name">
+    <input type="text" id="name" class="form-control" [(ngModel)]="initialInfo.briefInfo.contactInfo.name" #name="ngModel" minlength="4" maxlength="100" name="name" placeholder="John Doe" required autocomplete="name">
     <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger" id="name-errors">
       <div *ngIf="name.errors.required">
         Name is required.
@@ -31,7 +31,7 @@
   </div>
   <div class="form-group">
     <label for="street" class="col-form-label">Address</label>
-    <input type="text" id="street" class="form-control" [(ngModel)]="brief.contactInfo.address.street" #street="ngModel" name="street" placeholder="1234 Main St." required autocomplete="address-line1">
+    <input type="text" id="street" class="form-control" [(ngModel)]="initialInfo.briefInfo.contactInfo.address.street" #street="ngModel" name="street" placeholder="1234 Main St." required autocomplete="address-line1">
     <div *ngIf="street.invalid && (street.dirty || street.touched)" class="alert alert-danger" id="street-errors">
       <div *ngIf="street.errors">
         Address is required.
@@ -40,12 +40,12 @@
   </div>
   <div class="form-group">
     <label for="street2" class="col-form-label">Address Line 2</label>
-    <input type="text" id="street2" class="form-control" [(ngModel)]="brief.contactInfo.address.street2" name="street2" placeholder="Apartment, studio, or floor" autocomplete="address-line2">
+    <input type="text" id="street2" class="form-control" [(ngModel)]="initialInfo.briefInfo.contactInfo.address.street2" name="street2" placeholder="Apartment, studio, or floor" autocomplete="address-line2">
   </div>
   <div class="row">
     <div class="form-group col-md-6">
       <label for="city" class="col-form-label">City</label>
-      <input type="text" id="city" class="form-control" [(ngModel)]="brief.contactInfo.address.city" #city="ngModel" name="city" placeholder="City" required autocomplete="address-level2">
+      <input type="text" id="city" class="form-control" [(ngModel)]="initialInfo.briefInfo.contactInfo.address.city" #city="ngModel" name="city" placeholder="City" required autocomplete="address-level2">
       <div *ngIf="city.invalid && (city.dirty || city.touched)" class="alert alert-danger" id="city-errors">
         <div *ngIf="city.errors">
           City name is required.
@@ -54,7 +54,7 @@
     </div>
     <div class="form-group col-md-4">
       <label for="state" class="col-form-label">State</label>
-      <select id="state" [(ngModel)]="brief.contactInfo.address.state" #state="ngModel" name="state" class="form-control" required>
+      <select id="state" [(ngModel)]="initialInfo.briefInfo.contactInfo.address.state" #state="ngModel" name="state" class="form-control" required>
         <option *ngFor="let k of stateKeys" [value]="k">{{states[k]}}</option>
       </select>
       <div *ngIf="state.invalid && (state.dirty || state.touched)" class="alert alert-danger">
@@ -65,7 +65,7 @@
     </div>
     <div class="form-group col-md-2">
       <label for="zip" class="col-form-label">Zip</label>
-      <input type="text" id="zip" class="form-control" [(ngModel)]="brief.contactInfo.address.zip" #zip="ngModel" pattern="^\d{5}(?:[ \-]\d{4})?" name="zip" placeholder="12345" required autocomplete="postal-code">
+      <input type="text" id="zip" class="form-control" [(ngModel)]="initialInfo.briefInfo.contactInfo.address.zip" #zip="ngModel" pattern="^\d{5}(?:[ \-]\d{4})?" name="zip" placeholder="12345" required autocomplete="postal-code">
       <div *ngIf="zip.invalid && (zip.dirty || zip.touched)" class="alert alert-danger" id="zip-errors">
         <div *ngIf="zip.errors.required">
           Zip is required and must be a number.
@@ -78,7 +78,7 @@
   </div>
   <div class="form-group">
     <label for="phone" class="col-form-label">Phone</label>
-    <input type="tel" id="phone" class="form-control" [(ngModel)]="brief.contactInfo.phone" #phone="ngModel" pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$" name="phone" placeholder="(123) 456-7890" required autocomplete="tel-national">
+    <input type="tel" id="phone" class="form-control" [(ngModel)]="initialInfo.briefInfo.contactInfo.phone" #phone="ngModel" pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$" name="phone" placeholder="(123) 456-7890" required autocomplete="tel-national">
     <div *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="alert alert-danger" id="phone-errors">
       <div *ngIf="phone.errors">
         Valid phone number is required.
@@ -87,7 +87,7 @@
   </div>
   <div class="form-group">
     <label for="email" class="col-form-label">Email</label>
-    <input type="email" id="email" class="form-control" [(ngModel)]="brief.contactInfo.email" ngModel [email]="true" #email="ngModel" name="email" placeholder="johndoe@example.com" required autocomplete="email">
+    <input type="email" id="email" class="form-control" [(ngModel)]="initialInfo.briefInfo.contactInfo.email" ngModel [email]="true" #email="ngModel" name="email" placeholder="johndoe@example.com" required autocomplete="email">
     <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger" id="email-errors">
       <div *ngIf="email.errors">
         Valid email is required.
@@ -97,7 +97,7 @@
   <h1>Case Information</h1>
   <div class="form-group">
     <label for="county" class="col-form-label">County</label>
-    <select class="form-control" id="county" [(ngModel)]="brief.circuitCourtCase.county" #county="ngModel" name="county" required>
+    <select class="form-control" id="county" [(ngModel)]="initialInfo.briefInfo.circuitCourtCase.county" #county="ngModel" name="county" required>
       <option *ngFor="let k of countyKeys" [value]="k">{{counties[k]}}</option>
     </select>
     <div *ngIf="county.invalid && (county.dirty || county.touched)" class="alert alert-danger" id="county-errors">
@@ -108,7 +108,7 @@
   </div>
   <div class="form-group">
     <label for="circuitCourtCaseNumber" class="col-form-label" aria-describedby="circuitCourtCaseNumberHelp">Circuit Court Case Number</label>
-    <input type="text" id="circuitCourtCaseNumber" class="form-control" [(ngModel)]="brief.circuitCourtCase.caseNumber" #circuitCourtCaseNumber="ngModel" name="circuitCourtCaseNumber" pattern="^\d{4}\w{2}\d{1,}$" placeholder="0000XX0000" required>
+    <input type="text" id="circuitCourtCaseNumber" class="form-control" [(ngModel)]="initialInfo.briefInfo.circuitCourtCase.caseNumber" #circuitCourtCaseNumber="ngModel" name="circuitCourtCaseNumber" pattern="^\d{4}\w{2}\d{1,}$" placeholder="0000XX0000" required>
     <div *ngIf="circuitCourtCaseNumber.invalid && (circuitCourtCaseNumber.dirty || circuitCourtCaseNumber.touched)" class="alert alert-danger" id="circuitCourtCaseNumber-errors">
       <div *ngIf="circuitCourtCaseNumber.errors">
         The pattern for the circuit court case number is year (Ex: 2017), two court letters (Ex: CV), and then case number (Ex: 1234)
@@ -121,7 +121,7 @@
   <div class="row">
     <div class="form-group col-md-6">
       <label for="judgeFname" class="col-form-label" aria-describedby="judgeHelp">Judge First Name</label>
-      <input type="text" id="judgeFname" class="form-control" [(ngModel)]="brief.circuitCourtCase.judgeFirstName" #judgeFirstName="ngModel" name="judgeFirstname" placeholder="First Name" required>
+      <input type="text" id="judgeFname" class="form-control" [(ngModel)]="initialInfo.briefInfo.circuitCourtCase.judgeFirstName" #judgeFirstName="ngModel" name="judgeFirstname" placeholder="First Name" required>
       <div *ngIf="judgeFirstName.invalid && (judgeFirstName.dirty || judgeFirstName.touched)" class="alert alert-danger" id="judgeFname-errors">
         <div *ngIf="judgeFirstName.errors.required">
           Name is required.
@@ -133,7 +133,7 @@
     </div>
     <div class="form-group col-md-6">
       <label for="judgeLname" class="col-form-label">Judge Last Name</label>
-      <input type="text" id="judgeLname" class="form-control" [(ngModel)]="brief.circuitCourtCase.judgeLastName" #judgeLastName="ngModel" name="judgeLastname" placeholder="Last Name" required>
+      <input type="text" id="judgeLname" class="form-control" [(ngModel)]="initialInfo.briefInfo.circuitCourtCase.judgeLastName" #judgeLastName="ngModel" name="judgeLastname" placeholder="Last Name" required>
       <div *ngIf="judgeLastName.invalid && (judgeLastName.dirty || judgeLastName.touched)" class="alert alert-danger" id="judgeLname-errors">
         <div *ngIf="judgeLastName.errors.required">
           Name is required.
@@ -143,7 +143,7 @@
   </div>
   <div class="form-group">
     <label for="opponentName" class="col-form-label">Opponent Name</label>
-    <input type="text" id="opponentName" class="form-control" [(ngModel)]="brief.circuitCourtCase.opponentName" #opponentName="ngModel" name="opponentName" placeholder="Opponent Name" required>
+    <input type="text" id="opponentName" class="form-control" [(ngModel)]="initialInfo.briefInfo.circuitCourtCase.opponentName" #opponentName="ngModel" name="opponentName" placeholder="Opponent Name" required>
     <div *ngIf="opponentName.invalid && (opponentName.dirty || opponentName.touched)" class="alert alert-danger" id="opponentName-errors">
       <div *ngIf="opponentName.errors.required">
         Name is required.
@@ -155,7 +155,7 @@
       <legend>In my circuit court case, I was the:</legend>
       <div class="form-check" *ngFor="let k of roleKeys">
         <label class="form-check-label">
-          <input class="form-check-input" type="radio" [(ngModel)]="brief.circuitCourtCase.role" name="role" [value]="k">
+          <input class="form-check-input" type="radio" [(ngModel)]="initialInfo.briefInfo.circuitCourtCase.role" name="role" [value]="k">
           {{roles[k]}}
         </label>
       </div>
@@ -163,7 +163,7 @@
   </div>
   <div class="form-group" style="padding-top: 10px;">
     <label for="appellateCourtCaseNumber" class="col-form-label" aria-describedby="appellateCourtCaseNumberHelp">Appellate Court Case Number</label>
-    <input type="text" id="appellateCourtCaseNumber" class="form-control" [(ngModel)]="brief.appellateCourtCaseNumber" #appellateCourtCaseNumber="ngModel" name="appellateCourtCaseNumber" pattern="^\d{4}\w{2}\d{1,}$" placeholder="0000XX0000" required>
+    <input type="text" id="appellateCourtCaseNumber" class="form-control" [(ngModel)]="initialInfo.briefInfo.appellateCourtCaseNumber" #appellateCourtCaseNumber="ngModel" name="appellateCourtCaseNumber" pattern="^\d{4}\w{2}\d{1,}$" placeholder="0000XX0000" required>
     <div *ngIf="appellateCourtCaseNumber.invalid && (appellateCourtCaseNumber.dirty || appellateCourtCaseNumber.touched)" class="alert alert-danger" id="appellateCourtCaseNumber-errors">
       <div *ngIf="appellateCourtCaseNumber.errors">
         The pattern for the appellate court case number is year (Ex: 2017), two court letters (Ex: AP), and then case number (Ex: 1234)
@@ -178,7 +178,7 @@
     <label for="issuesPresented" class="col-form-label" aria-describedby="issuesPresentedHelp">
       What are your Issues Presented?
     </label>
-    <textarea id="issuesPresented" class="form-control" [(ngModel)]="brief.issuesPresented" #issuesPresented="ngModel" name="issuesPresented" rows="8" required></textarea>
+    <textarea id="issuesPresented" class="form-control" [(ngModel)]="initialInfo.issuesPresented" #issuesPresented="ngModel" name="issuesPresented" rows="8" required></textarea>
     <div *ngIf="issuesPresented.invalid && (issuesPresented.dirty || issuesPresented.touched)" class="alert alert-danger" id="issuesPresented-errors">
       <div *ngIf="issuesPresented.errors.required">
         Issues presented is required.
@@ -197,7 +197,7 @@
     <label for="oralArgument" class="col-form-label" aria-describedby="oralArgumentHelp">
       What is your Statement on Oral Argument?
     </label>
-    <textarea id="oralArgument" class="form-control" [(ngModel)]="brief.oralArgumentStatement" #oralArgumentStatement="ngModel" name="oralArgumentStatement" rows="8" required></textarea>
+    <textarea id="oralArgument" class="form-control" [(ngModel)]="initialInfo.oralArgumentStatement" #oralArgumentStatement="ngModel" name="oralArgumentStatement" rows="8" required></textarea>
     <div *ngIf="oralArgumentStatement.invalid && (oralArgumentStatement.dirty || oralArgumentStatement.touched)" class="alert alert-danger" id="oralArgumentStatement-errors">
       <div *ngIf="oralArgumentStatement.errors.required">
         Oral argument statement is required.
@@ -220,7 +220,7 @@
     <label for="publication" class="col-form-label" aria-describedby="publicationHelp">
       What is your Statement on Publication?
     </label>
-    <textarea id="publication" class="form-control" [(ngModel)]="brief.publicationStatement" #publicationStatement="ngModel" name="publicationStatement" rows="8" required></textarea>
+    <textarea id="publication" class="form-control" [(ngModel)]="initialInfo.publicationStatement" #publicationStatement="ngModel" name="publicationStatement" rows="8" required></textarea>
     <div *ngIf="publicationStatement.invalid && (publicationStatement.dirty || publicationStatement.touched)" class="alert alert-danger" id="publicationStatement-errors">
       <div *ngIf="publicationStatement.errors.required">
         Publication statement is required.
@@ -242,7 +242,7 @@
     <label for="caseAndFacts" class="col-form-label" aria-describedby="caseAndFactsHelp">
       What is your Statement of Case and Facts?
     </label>
-    <textarea id="caseAndFacts" class="form-control" [(ngModel)]="brief.caseFactsStatement" #caseFactsStatement="ngModel" name="caseFactsStatement" rows="8" required></textarea>
+    <textarea id="caseAndFacts" class="form-control" [(ngModel)]="initialInfo.caseFactsStatement" #caseFactsStatement="ngModel" name="caseFactsStatement" rows="8" required></textarea>
     <div *ngIf="caseFactsStatement.invalid && (caseFactsStatement.dirty || caseFactsStatement.touched)" class="alert alert-danger" id="caseFactsStatement-errors">
       <div *ngIf="caseFactsStatement.errors.required">
         Case and facts statement is required.
@@ -266,7 +266,7 @@
     <label for="argument" class="col-form-label" aria-describedby="argumentHelp">
       What is your Argument?
     </label>
-    <textarea id="argument" class="form-control" [(ngModel)]="brief.argument" #argument="ngModel" name="argument" rows="8" required></textarea>
+    <textarea id="argument" class="form-control" [(ngModel)]="initialInfo.briefInfo.argument" #argument="ngModel" name="argument" rows="8" required></textarea>
     <div *ngIf="argument.invalid && (argument.dirty || argument.touched)" class="alert alert-danger" id="argument-errors">
       <div *ngIf="argument.errors.required">
         Argument is required.
@@ -288,7 +288,7 @@
     <label for="conclusion" class="col-form-label" aria-describedby="conclusionHelp">
       What is your Conclusion?
     </label>
-    <textarea id="conclusion" class="form-control" [(ngModel)]="brief.conclusion" #conclusion="ngModel" name="conclusion" rows="8" required></textarea>
+    <textarea id="conclusion" class="form-control" [(ngModel)]="initialInfo.briefInfo.conclusion" #conclusion="ngModel" name="conclusion" rows="8" required></textarea>
     <div *ngIf="conclusion.invalid && (conclusion.dirty || conclusion.touched)" class="alert alert-danger" id="conclusion-errors">
       <div *ngIf="conclusion.errors.required">
         Conclusion is required.
@@ -308,7 +308,7 @@
       Please list the documents that you will include in the Appendix to your brief. List one document per line.<br/>
       NOTE: The page numbers for each of the documents will NOT be included in the Appendix.
     </label>
-    <textarea id="appendix" class="form-control" [(ngModel)]="brief.appendixDocuments" #appendixDocuments="ngModel" name="appendixDocuments" rows="8" required></textarea>
+    <textarea id="appendix" class="form-control" [(ngModel)]="initialInfo.appendixDocuments" #appendixDocuments="ngModel" name="appendixDocuments" rows="8" required></textarea>
     <div *ngIf="appendixDocuments.invalid && (appendixDocuments.dirty || appendixDocuments.touched)" class="alert alert-danger" id="appendixDocuments-errors">
       <div *ngIf="appendixDocuments.errors.required">
         Appendix documents are required.

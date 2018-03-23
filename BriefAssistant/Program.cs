@@ -21,7 +21,7 @@ namespace BriefAssistant
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
-                .WriteTo.File(@"/var/log/brief-assistant/log.log", LogEventLevel.Warning, rollingInterval: RollingInterval.Day, retainedFileCountLimit: 7)
+                .WriteTo.File(@"logs/log.log", rollingInterval: RollingInterval.Day, retainedFileCountLimit: 7)
                 .CreateLogger();
 
             try

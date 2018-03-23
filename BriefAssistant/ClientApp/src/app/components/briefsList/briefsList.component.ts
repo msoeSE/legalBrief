@@ -4,6 +4,7 @@ import { IBriefList } from "../../models/IBriefList";
 import { BriefService } from "../../services/brief.service";
 import { IBriefListItem } from "../../models/IBriefListItem";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { BriefType } from "../../models/BriefType";
 
 @Component({
     selector: "briefs",
@@ -11,8 +12,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 
 export class BriefsListComponent implements OnInit {
-    private briefs : IBriefList;
-    private list: IBriefListItem[];
+    briefs : IBriefList;
+    list: IBriefListItem[];
 
     constructor(
         private readonly router: Router,
@@ -32,9 +33,27 @@ export class BriefsListComponent implements OnInit {
         });
     }
     edit(id: string) {
-      this.router.navigate(["/initial-form",id]);
-      
-
+      if (id !== null) {
+        this.briefService.getBrief(id)
+          .subscribe(brief => {
+            switch (brief.type) {
+              case BriefType.Initial:
+                this.router.navigate(["/initial-form", id]);
+                break;
+              case BriefType.Reply:
+                this.router.navigate(["/reply-form", id]);
+                break;
+              case BriefType.Response:
+              case BriefType.Petition:
+              default:
+                this.router.navigate(["/**"]);
+            }
+          }, error => {
+            this.router.navigate(["/**"]);
+          });
+      } else {
+        this.router.navigate(["/**"]);
+      }
     }
     delete(id: string, index: number) {
         this.briefs.briefs.splice(index, 1);

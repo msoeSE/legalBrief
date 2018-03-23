@@ -7,14 +7,17 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 
 import { InitialFormComponent } from './components/forms/initial/initial-form.component';
+import { ReplyFormComponent } from './components/forms/reply/reply-form.component';
 import { HeaderComponent } from './components/header/header.component';
 import { InitialFinalComponent } from './components/finals/initial/initial-final.component';
+import { ReplyFinalComponent } from './components/finals/reply/reply-final.component';
 import { MainWelcomeComponent } from './components/welcomes/main/main-welcome.component';
 import { InitialWelcomeComponent } from './components/welcomes/initial/initial-welcome.component';
 import { ReplyWelcomeComponent } from './components/welcomes/reply/reply-welcome.component';
 import { ResponseWelcomeComponent } from './components/welcomes/response/response-welcome.component';
 import { PetitionWelcomeComponent } from './components/welcomes/petition/petition-welcome.component';
 import { InitialExampleComponent } from './components/examples/initial/initial-example.component';
+import { ReplyExampleComponent } from './components/examples/reply/reply-example.component';
 import { LoginRegisterComponent } from './components/loginRegister/loginRegister.component';
 import { ForgotPasswordComponent } from './components/forgotPassword/forgotPassword.component';
 import { ResetPasswordComponent } from './components/resetPassword/resetPassword.component';
@@ -34,6 +37,9 @@ NgModule({
     HeaderComponent,
     InitialFormComponent,
     InitialFinalComponent,
+    ReplyFormComponent,
+    ReplyFinalComponent,
+    ReplyExampleComponent,
     MainWelcomeComponent,
     InitialWelcomeComponent,
     ReplyWelcomeComponent,
@@ -69,12 +75,16 @@ NgModule({
       { path: 'initial-form', component: InitialFormComponent, canActivate: [AuthGuard] },
       { path: 'initial-form/:id', component: InitialFormComponent, canActivate: [AuthGuard] },
       { path: 'initial-example', component: InitialExampleComponent },
+      { path: 'reply-final/:id', component: ReplyFinalComponent, canActivate: [AuthGuard] },
+      { path: 'reply-form', component: ReplyFormComponent, canActivate: [AuthGuard] },
+      { path: 'reply-form/:id', component: ReplyFormComponent, canActivate: [AuthGuard] },
+      { path: 'reply-example', component: ReplyExampleComponent },
       { path: 'loginRegister', component: LoginRegisterComponent },
       { path: 'forgotPassword', component: ForgotPasswordComponent },
       { path: 'resetPassword', component: ResetPasswordComponent},
       { path: 'confirmation', component: ConfirmationComponent },
-      { path: 'briefs', component: BriefsListComponent, canActivate: [AuthGuard] }
-      { path: '**', component: NotFoundComponent },
+      { path: 'briefs', component: BriefsListComponent, canActivate: [AuthGuard] },
+      { path: '**', component: NotFoundComponent }
     ])
   ],
   exports: [RouterModule],

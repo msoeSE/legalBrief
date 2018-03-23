@@ -1,30 +1,24 @@
 import { ContactInfo } from "./ContactInfo";
 import { CircuitCourtCase } from "./CircuitCourtCase";
+import { BriefType } from "./BriefType";
 
 export class BriefInfo {
-	id: string;circuitCourtCase: CircuitCourtCase;
+  id: string;
+  circuitCourtCase: CircuitCourtCase;
 	appellateCourtCaseNumber: string;
-	appendixDocuments: string;
 	conclusion: string;
-	caseFactsStatement: string;
 	argument: string;
-	oralArgumentStatement: string;
-	publicationStatement: string;
-	issuesPresented: string;
   contactInfo: ContactInfo;
+  type: BriefType;
   title: string;
 
 	constructor() {
     this.circuitCourtCase = new CircuitCourtCase();
     this.appellateCourtCaseNumber = "";
-		this.appendixDocuments = "";
 		this.conclusion = "";
-		this.caseFactsStatement = "";
 		this.argument = "";
-		this.oralArgumentStatement = "";
-		this.publicationStatement = "";
-		this.issuesPresented = "";
     this.contactInfo = new ContactInfo();
+	  this.type = BriefType.Initial;
 	  this.title = "";
 	}
 }

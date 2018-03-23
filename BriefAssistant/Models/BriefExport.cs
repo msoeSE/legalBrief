@@ -36,7 +36,6 @@ namespace BriefAssistant.Models
         public string BottomRole { get; set; }
         [DataMember]
         public string BottomName { get; set; }
-        public string Title { get; set; }
 
         /// <summary>
         /// This is the constructor for the BriefExport class. This class is used in the generation of the word document
@@ -47,16 +46,24 @@ namespace BriefAssistant.Models
             ContactInfo = info.ContactInfo;
             CircuitCourtCase = info.CircuitCourtCase;
             AppellateCourtCaseNumber = info.AppellateCourtCaseNumber;
+            Argument = info.Argument;
+            Conclusion = info.Conclusion;
+            SetTopAndBottomNamesAndRoles(CircuitCourtCase.Role);
+            District = GetDistrictFromCounty(CircuitCourtCase.County);
+        }
+
+        public void SetInitialInformation(InitialBriefInfo info)
+        {
             IssuesPresented = info.IssuesPresented;
             OralArgumentStatement = info.OralArgumentStatement;
             PublicationStatement = info.PublicationStatement;
             CaseFactsStatement = info.CaseFactsStatement;
-            Argument = info.Argument;
-            Conclusion = info.Conclusion;
             AppendixDocuments = info.AppendixDocuments;
-            Title = info.Title;
-            SetTopAndBottomNamesAndRoles(CircuitCourtCase.Role);
-            District = GetDistrictFromCounty(CircuitCourtCase.County);
+        }
+
+        public void SetReplyInformation(ReplyBriefInfo info)
+        {
+
         }
 
         /// <summary>
