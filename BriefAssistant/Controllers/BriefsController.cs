@@ -96,6 +96,7 @@ namespace BriefAssistant.Controllers
 
             var initialBriefDto = Mapper.Map<InitialBriefDto>(briefInfo);
             initialBriefDto.ApplicationUserId = currentUser.Id;
+            initialBriefDto.BriefDto.Type = BriefType.Initial;
             initialBriefDto.BriefDto.ApplicationUserId = currentUser.Id;
             initialBriefDto.BriefDto.CircuitCourtCaseDto.ApplicationUserId = currentUser.Id;
             initialBriefDto.BriefDto.ContactInfoDto.ApplicationUserId = currentUser.Id;
@@ -131,6 +132,7 @@ namespace BriefAssistant.Controllers
 
             var replyBriefDto = Mapper.Map<ReplyBriefDto>(briefInfo);
             replyBriefDto.ApplicationUserId = currentUser.Id;
+            replyBriefDto.BriefDto.Type = BriefType.Reply;
             replyBriefDto.BriefDto.ApplicationUserId = currentUser.Id;
             replyBriefDto.BriefDto.CircuitCourtCaseDto.ApplicationUserId = currentUser.Id;
             replyBriefDto.BriefDto.ContactInfoDto.ApplicationUserId = currentUser.Id;
