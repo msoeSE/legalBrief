@@ -5,6 +5,7 @@ import { IBriefList } from "../models/IBriefList";
 import { BriefInfo } from "../models/BriefInfo";
 import { InitialBriefInfo } from "../models/InitialBriefInfo";
 import { ReplyBriefInfo } from "../models/ReplyBriefInfo";
+import { ResponseBriefInfo } from "../models/ResponseBriefInfo";
 
 import { Observable } from 'rxjs/Observable';
 
@@ -30,7 +31,10 @@ export class BriefService {
     return this.http.get<ReplyBriefInfo>(`/api/briefs/replies/${id}`);
   }
 
-  //TODO add getResponseBrief
+  getResponseBrief(id: string): Observable<ResponseBriefInfo> {
+    return this.http.get<ResponseBriefInfo>(`/api/briefs/responses/${id}`);
+  }
+
   //TODO add getPetitionBrief
 
   createInitial(brief: InitialBriefInfo): Observable<InitialBriefInfo> {
@@ -41,7 +45,10 @@ export class BriefService {
     return this.http.post<ReplyBriefInfo>(`/api/briefs/replycreate`, JSON.stringify(brief), { headers: this.headers });
   }
 
-  //TODO add createResponse
+  createResponse(brief: ResponseBriefInfo): Observable<ResponseBriefInfo> {
+    return this.http.post<ResponseBriefInfo>(`/api/briefs/responsecreate`, JSON.stringify(brief), { headers: this.headers });
+  }
+
   //TODO add createPetition
 
   updateInitial(brief: InitialBriefInfo): Observable<InitialBriefInfo> {
@@ -54,6 +61,9 @@ export class BriefService {
     return this.http.put<ReplyBriefInfo>(url, JSON.stringify(brief), { headers: this.headers });
   }
 
-  //TODO add updateResponse
+  updateResponse(brief: ResponseBriefInfo): Observable<ResponseBriefInfo> {
+    const url = `/api/briefs/responseupdate/${brief.briefInfo.id}`;
+    return this.http.put<ResponseBriefInfo>(url, JSON.stringify(brief), { headers: this.headers });
+  }
   //TODO add updatePetition
 }

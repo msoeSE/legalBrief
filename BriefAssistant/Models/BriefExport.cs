@@ -48,10 +48,16 @@ namespace BriefAssistant.Models
             AppellateCourtCaseNumber = info.AppellateCourtCaseNumber;
             Argument = info.Argument;
             Conclusion = info.Conclusion;
-            SetTopAndBottomNamesAndRoles(CircuitCourtCase.Role);
+            SetTopAndBottomNamesAndRoles(CircuitCourtCase.Role, info.Type);
             District = GetDistrictFromCounty(CircuitCourtCase.County);
         }
 
+        /// <summary>
+        /// Sets the information required in an initial brief
+        /// </summary>
+        /// <param name="info">
+        /// The object containing the necessary information for an initial brief
+        /// </param>
         public void SetInitialInformation(InitialBriefInfo info)
         {
             IssuesPresented = info.IssuesPresented;
@@ -61,42 +67,103 @@ namespace BriefAssistant.Models
             AppendixDocuments = info.AppendixDocuments;
         }
 
+        /// <summary>
+        /// Sets the information required in an reply brief
+        /// </summary>
+        /// <param name="info">
+        /// The object containing the necessary information for an reply brief
+        /// </param>
         public void SetReplyInformation(ReplyBriefInfo info)
         {
 
         }
 
         /// <summary>
+        /// Sets the information required in an response brief
+        /// </summary>
+        /// <param name="info">
+        /// The object containing the necessary information for an response brief
+        /// </param>
+        public void SetResponseInformation(ResponseBriefInfo info)
+        {
+            IssuesPresented = info.IssuesPresented;
+            OralArgumentStatement = info.OralArgumentStatement;
+            PublicationStatement = info.PublicationStatement;
+            CaseFactsStatement = info.CaseFactsStatement;
+        }
+
+        /// <summary>
         /// This method determines what order the appellant and opponent name and roles appear on the brief
         /// </summary>
         /// <param name="role">The role of the appellant</param>
-        private void SetTopAndBottomNamesAndRoles(Role role)
+        /// <param name="type">The type of brief being generated</param>
+        private void SetTopAndBottomNamesAndRoles(Role role, BriefType type)
         {
             switch (role)
             {
                 case Role.Plaintiff:
                     TopName = ContactInfo.Name;
                     BottomName = CircuitCourtCase.OpponentName;
-                    TopRole = "Plaintiff-Appellant";
-                    BottomRole = "Defendant-Respondent";
+                    switch (type)
+                    {
+                        case BriefType.Response:
+                            TopRole = "Plaintiff-Respondent";
+                            BottomRole = "Defendant-Appellant";
+                            break;
+                        default:
+                            TopRole = "Plaintiff-Appellant";
+                            BottomRole = "Defendant-Respondent";
+                            break;
+                    }
+                    
                     break;
                 case Role.Petitioner:
                     TopName = ContactInfo.Name;
                     BottomName = CircuitCourtCase.OpponentName;
-                    TopRole = "Petitioner-Appellant";
-                    BottomRole = "Respondent-Respondent";
+                    switch (type)
+                    {
+                        case BriefType.Response:
+                            TopRole = "Petitioner-Respondent";
+                            BottomRole = "Respondent-Appellant";
+                            break;
+                        default:
+                            TopRole = "Petitioner-Appellant";
+                            BottomRole = "Respondent-Respondent";
+                            break;
+                    }
+                    
                     break;
                 case Role.Defendent:
                     TopName = CircuitCourtCase.OpponentName;
                     BottomName = ContactInfo.Name;
-                    TopRole = "Plaintiff-Respondent";
-                    BottomRole = "Defendant-Appellant";
+                    switch (type)
+                    {
+                        case BriefType.Response:
+                            TopRole = "Plaintiff-Appellant";
+                            BottomRole = "Defendant-Respondent";
+                            break;
+                        default:
+                            TopRole = "Plaintiff-Respondent";
+                            BottomRole = "Defendant-Appellant";
+                            break;
+                    }
+
                     break;
                 case Role.Respondent:
                     TopName = CircuitCourtCase.OpponentName;
                     BottomName = ContactInfo.Name;
-                    TopRole = "Petitioner-Respondent";
-                    BottomRole = "Respondent-Appellant";
+                    switch (type)
+                    {
+                        case BriefType.Response:
+                            TopRole = "Petitioner-Appellant";
+                            BottomRole = "Respondent-Respondent";
+                            break;
+                        default:
+                            TopRole = "Petitioner-Respondent";
+                            BottomRole = "Respondent-Appellant";
+                            break;
+                    }
+                    
                     break;
                 default:
                     throw new InvalidEnumArgumentException(nameof(role), (int)role, typeof(Role));
@@ -107,7 +174,7 @@ namespace BriefAssistant.Models
         /// This method determines which district to put on the brief based on the county of the circuit court case
         /// </summary>
         /// <param name="county">The county that the circuit court case took place in</param>
-        /// <returns></returns>
+        /// <returns>The district type of the county</returns>
         private District GetDistrictFromCounty(County county)
         {
             switch (county)

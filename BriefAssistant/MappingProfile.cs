@@ -35,7 +35,10 @@ namespace BriefAssistant
                 .ForMember(dest => dest.BriefId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.BriefDto, opt => opt.MapFrom(src => src.BriefInfo))
                 .ReverseMap();
-            //TODO create response map
+            CreateMap<ResponseBriefInfo, ResponseBriefDto>(MemberList.None)
+                .ForMember(dest => dest.BriefId, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.BriefDto, opt => opt.MapFrom(src => src.BriefInfo))
+                .ReverseMap();
             //TODO create petition map
         }
     }

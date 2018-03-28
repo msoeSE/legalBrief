@@ -60,11 +60,8 @@
 
   <ItemGroup>
     <Folder Include="ClientApp\src\app\components\examples\petition\" />
-    <Folder Include="ClientApp\src\app\components\examples\response\" />
     <Folder Include="ClientApp\src\app\components\finals\petition\" />
-    <Folder Include="ClientApp\src\app\components\finals\response\" />
     <Folder Include="ClientApp\src\app\components\forms\petition\" />
-    <Folder Include="ClientApp\src\app\components\forms\response\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
