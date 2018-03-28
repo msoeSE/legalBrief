@@ -29,6 +29,7 @@ import { AuthGuard } from './auth.guard'
 import { AccountService } from './services/account.service';
 import { BriefService } from './services/brief.service';
 import { OAuthModule } from 'angular-oauth2-oidc';
+import { PagerService } from './components/briefsList/_services/index';
 
 @
 NgModule({
@@ -91,7 +92,8 @@ NgModule({
   providers: [
     BriefService,
     AuthGuard,
-    AccountService
+    AccountService,
+    PagerService
   ],
   bootstrap: [AppComponent]
 })

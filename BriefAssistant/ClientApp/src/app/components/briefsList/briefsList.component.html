@@ -1,48 +1,47 @@
 <div>
-    <br>
-    <h2>Briefs you have created:</h2>
-    <table class="table">
-        <tr>
-            <th>#</th>
-            <th>Brief Name</th>
-            <th></th>
-            <th></th>
-
-        </tr>
-        <tr *ngFor="let brief of list; let i = index">
-            <td>{{i + 1}}</td>
-            <td>{{brief.title}}</td>
-            <td>
-                <div>
-                    <button (click)="edit(brief.id)">Edit</button>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <button (click)="delete(brief.id, i)">Delete</button>
-                </div>
-            </td>
-        </tr>
-    </table>
-    <nav aria-label="Page navigation">
-      <ul class="pagination">
-        <li>
-          <a href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li>
-          <a href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
+  <br>
+  <h2>Briefs you have created:</h2>
+  <table class="table">
+    <tr>
+      <th>#</th>
+      <th>Brief Name</th>
+      <th></th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let brief of pagedItems; let i = index">
+      <td>{{i + 1 + pager.pageSize*(pager.currentPage - 1)}}</td>
+      <td>{{brief.title}}</td>
+      <td>
+        <div>
+          <button class="btn btn-primary" (click)="edit(brief.id)">Edit</button>
+        </div>
+      </td>
+      <td>
+        <div>
+          <button class=" btn btn-danger" (click)="delete(brief.id, i)">Delete</button>
+        </div>
+      </td>
+    </tr>
+  </table>
+  <nav aria-label="Page navigation">
+    <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+      <li [ngClass]="{disabled:pager.currentPage === 1}">
+        <a (click)="setPage(1)">First</a>
+      </li>
+      <li [ngClass]="{disabled:pager.currentPage === 1}">
+        <a (click)="setPage(pager.currentPage - 1)">Previous</a>
+      </li>
+      <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+        <a (click)="setPage(page)">{{page}}</a>
+      </li>
+      <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+        <a (click)="setPage(pager.currentPage + 1)">Next</a>
+      </li>
+      <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+        <a (click)="setPage(pager.totalPages)">Last</a>
+      </li>
+    </ul>
+  </nav>
 </div>
 
 

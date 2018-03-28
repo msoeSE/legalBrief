@@ -54,7 +54,6 @@ export class ReplyFormComponent implements OnInit{
 
   saveBrief(): Observable<ReplyBriefInfo> {
     if (this.replyInfo.id == null) {
-      console.log(this.replyInfo);
       return this.briefService.createReply(this.replyInfo);
     } else {
       return this.briefService.updateReply(this.replyInfo);
@@ -64,7 +63,6 @@ export class ReplyFormComponent implements OnInit{
   finishBrief() {
     this.saveBrief()
       .subscribe(brief => {
-        console.log(brief.briefInfo.id);
         this.replyInfo.briefInfo.id = brief.briefInfo.id;
         this.replyInfo.id = brief.briefInfo.id;
         this.router.navigate(["/reply-final", brief.briefInfo.id]);

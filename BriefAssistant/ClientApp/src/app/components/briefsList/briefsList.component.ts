@@ -5,6 +5,7 @@ import { BriefService } from "../../services/brief.service";
 import { IBriefListItem } from "../../models/IBriefListItem";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BriefType } from "../../models/BriefType";
+import { PagerService } from './_services/index'
 
 @Component({
     selector: "briefs",
@@ -19,8 +20,17 @@ export class BriefsListComponent implements OnInit {
         private readonly router: Router,
         private readonly briefService: BriefService,
         private readonly http: HttpClient,
-
+        private pagerService: PagerService
     ) { }
+
+    // array of all items to be paged
+    private allItems: any[];
+
+    // pager object
+    pager: any = {};
+
+    // paged items
+    pagedItems: any[];
 
     ngOnInit() {
       this.briefService
@@ -29,9 +39,26 @@ export class BriefsListComponent implements OnInit {
           if (briefList != null) {
             this.briefs = briefList;
             this.list = this.briefs.briefs;
+            this.allItems = this.list;
+
+            // initialize to page 1
+            this.setPage(1);
           }
         });
     }
+
+    setPage(page: number) {
+      if (page < 1 || page > this.pager.totalPages) {
+        return;
+      }
+
+      // get pager object from service
+      this.pager = this.pagerService.getPager(this.allItems.length, page);
+
+      // get current page of items
+      this.pagedItems = this.allItems.slice(this.pager.startIndex, this.pager.endIndex + 1);
+    }
+
     edit(id: string) {
       if (id !== null) {
         this.briefService.getBrief(id)
