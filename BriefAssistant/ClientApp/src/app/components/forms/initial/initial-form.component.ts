@@ -38,13 +38,14 @@ export class InitialFormComponent implements OnInit {
       this.briefService
         .getInitialBrief(this.id)
         .subscribe(brief => {
+            this.initialInfo = brief;
             this.initialInfo.briefInfo.contactInfo.address.state =
               (<any>State)[this.stateKeys[brief.briefInfo.contactInfo.address.state]];
             this.initialInfo.briefInfo.circuitCourtCase.county =
               (<any>County)[this.countyKeys[brief.briefInfo.circuitCourtCase.county]];
             this.initialInfo.briefInfo.circuitCourtCase.role =
               (<any>Role)[this.roleKeys[brief.briefInfo.circuitCourtCase.role]];
-            this.initialInfo = brief;
+            
           },
           error => {
             this.router.navigate(["/**"]);

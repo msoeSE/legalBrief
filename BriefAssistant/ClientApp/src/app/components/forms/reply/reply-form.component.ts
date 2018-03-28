@@ -37,6 +37,12 @@ export class ReplyFormComponent implements OnInit{
         .getReplyBrief(this.id)
         .subscribe(brief => {
           this.replyInfo = brief;
+          this.replyInfo.briefInfo.contactInfo.address.state =
+            (<any>State)[this.stateKeys[brief.briefInfo.contactInfo.address.state]];
+          this.replyInfo.briefInfo.circuitCourtCase.county =
+            (<any>County)[this.countyKeys[brief.briefInfo.circuitCourtCase.county]];
+          this.replyInfo.briefInfo.circuitCourtCase.role =
+            (<any>Role)[this.roleKeys[brief.briefInfo.circuitCourtCase.role]];
         });
     } else {
       this.replyInfo = new ReplyBriefInfo();
