@@ -32,7 +32,6 @@ export class ResponseFormComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
-    console.log(this.id);
       
     //check lead Id here
     if (this.id !== null) {
@@ -65,7 +64,6 @@ export class ResponseFormComponent implements OnInit {
 
   private saveBrief(): Observable<ResponseBriefInfo> {
     if (this.responseInfo.id == null) {
-      console.log(this.responseInfo);
       return this.briefService.createResponse(this.responseInfo);
     } else {
       return this.briefService.updateResponse(this.responseInfo);
@@ -75,7 +73,6 @@ export class ResponseFormComponent implements OnInit {
 	finishBrief() {
 		this.saveBrief()
       .subscribe(brief => {
-        console.log(brief.briefInfo.id);
         this.responseInfo.id = brief.id;
 		    this.responseInfo.briefInfo.id = brief.briefInfo.id;
 		    this.router.navigate(["/response-final", brief.briefInfo.id]);
