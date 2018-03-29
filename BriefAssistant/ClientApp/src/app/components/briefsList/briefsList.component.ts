@@ -5,6 +5,7 @@ import { BriefService } from "../../services/brief.service";
 import { IBriefListItem } from "../../models/IBriefListItem";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BriefType } from "../../models/BriefType";
+import { PagerService } from './services/pager.service'
 
 @Component({
     selector: "briefs",
@@ -12,26 +13,48 @@ import { BriefType } from "../../models/BriefType";
 })
 
 export class BriefsListComponent implements OnInit {
-    briefs : IBriefList;
+    briefList : IBriefList;
     list: IBriefListItem[];
 
     constructor(
         private readonly router: Router,
         private readonly briefService: BriefService,
         private readonly http: HttpClient,
-
+        private readonly pagerService: PagerService
     ) { }
+
+  // pager object
+  pager: any = {};
+
+  // paged items
+  pagedItems: IBriefListItem[];
 
     ngOnInit() {
       this.briefService
         .getBriefList()
         .subscribe(briefList => {
           if (briefList != null) {
-            this.briefs = briefList;
-            this.list = this.briefs.briefs;
+            this.briefList = briefList;
+            this.list = this.briefList.briefs;
+
+            // initialize to page 1
+            this.setPage(1);
           }
         });
     }
+
+    setPage(page: number) {
+      if (page < 1 || page > this.pager.totalPages) {
+        return;
+      }
+
+      // get pager object from service
+      this.pager = this.pagerService.getPager(this.list.length, page);
+
+      // get current page of items
+      this.pagedItems = this.list.slice(this.pager.startIndex, this.pager.endIndex + 1);
+    }
+
     edit(id: string) {
       if (id !== null) {
         this.briefService.getBrief(id)
@@ -56,7 +79,7 @@ export class BriefsListComponent implements OnInit {
       }
     }
     delete(id: string, index: number) {
-        this.briefs.briefs.splice(index, 1);
+        this.briefList.briefs.splice(index, 1);
         //controller's delete method
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 

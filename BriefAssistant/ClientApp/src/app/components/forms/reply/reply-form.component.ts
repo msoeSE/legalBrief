@@ -37,6 +37,12 @@ export class ReplyFormComponent implements OnInit{
         .getReplyBrief(this.id)
         .subscribe(brief => {
           this.replyInfo = brief;
+          this.replyInfo.briefInfo.contactInfo.address.state =
+            (<any>State)[this.stateKeys[brief.briefInfo.contactInfo.address.state]];
+          this.replyInfo.briefInfo.circuitCourtCase.county =
+            (<any>County)[this.countyKeys[brief.briefInfo.circuitCourtCase.county]];
+          this.replyInfo.briefInfo.circuitCourtCase.role =
+            (<any>Role)[this.roleKeys[brief.briefInfo.circuitCourtCase.role]];
         });
     } else {
       this.replyInfo = new ReplyBriefInfo();
@@ -54,7 +60,6 @@ export class ReplyFormComponent implements OnInit{
 
   saveBrief(): Observable<ReplyBriefInfo> {
     if (this.replyInfo.id == null) {
-      console.log(this.replyInfo);
       return this.briefService.createReply(this.replyInfo);
     } else {
       return this.briefService.updateReply(this.replyInfo);
@@ -64,7 +69,6 @@ export class ReplyFormComponent implements OnInit{
   finishBrief() {
     this.saveBrief()
       .subscribe(brief => {
-        console.log(brief.briefInfo.id);
         this.replyInfo.briefInfo.id = brief.briefInfo.id;
         this.replyInfo.id = brief.briefInfo.id;
         this.router.navigate(["/reply-final", brief.briefInfo.id]);

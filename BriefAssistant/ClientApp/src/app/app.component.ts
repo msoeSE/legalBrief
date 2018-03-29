@@ -10,6 +10,15 @@ import { authConfig } from './auth.config';
 })
 export class AppComponent {
   title = 'app';
+  isExpanded = false;
+
+  collapse() {
+    this.isExpanded = false;
+  }
+
+  toggle() {
+    this.isExpanded = !this.isExpanded;
+  }
   constructor(private oAuthService: OAuthService, @Inject('BASE_URL') private baseUrl: string, public accountService: AccountService) {
     this.oAuthService.configure(authConfig(this.baseUrl));
     //this.oAuthService.setStorage(localStorage);
