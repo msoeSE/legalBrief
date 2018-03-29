@@ -44,6 +44,8 @@ export class BriefsListComponent implements OnInit {
                 this.router.navigate(["/reply-form", id]);
                 break;
               case BriefType.Response:
+                this.router.navigate(["/response-form", id]);
+                break;
               case BriefType.Petition:
               default:
                 this.router.navigate(["/**"]);

@@ -38,13 +38,13 @@ export class ResponseFormComponent implements OnInit {
       this.briefService
         .getResponseBrief(this.id)
         .subscribe(brief => {
+            this.responseInfo = brief;
             this.responseInfo.briefInfo.contactInfo.address.state =
               (<any>State)[this.stateKeys[brief.briefInfo.contactInfo.address.state]];
             this.responseInfo.briefInfo.circuitCourtCase.county =
               (<any>County)[this.countyKeys[brief.briefInfo.circuitCourtCase.county]];
             this.responseInfo.briefInfo.circuitCourtCase.role =
               (<any>Role)[this.roleKeys[brief.briefInfo.circuitCourtCase.role]];
-            this.responseInfo = brief;
           },
           error => {
             this.router.navigate(["/**"]);
