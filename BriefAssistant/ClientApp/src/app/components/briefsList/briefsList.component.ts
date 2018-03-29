@@ -5,7 +5,7 @@ import { BriefService } from "../../services/brief.service";
 import { IBriefListItem } from "../../models/IBriefListItem";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BriefType } from "../../models/BriefType";
-import { PagerService } from './_services/index'
+import { PagerService } from './services/pager.service'
 
 @Component({
     selector: "briefs",
@@ -13,33 +13,29 @@ import { PagerService } from './_services/index'
 })
 
 export class BriefsListComponent implements OnInit {
-    briefs : IBriefList;
+    briefList : IBriefList;
     list: IBriefListItem[];
 
     constructor(
         private readonly router: Router,
         private readonly briefService: BriefService,
         private readonly http: HttpClient,
-        private pagerService: PagerService
+        private readonly pagerService: PagerService
     ) { }
 
-    // array of all items to be paged
-    private allItems: any[];
+  // pager object
+  pager: any = {};
 
-    // pager object
-    pager: any = {};
-
-    // paged items
-    pagedItems: any[];
+  // paged items
+  pagedItems: IBriefListItem[];
 
     ngOnInit() {
       this.briefService
         .getBriefList()
         .subscribe(briefList => {
           if (briefList != null) {
-            this.briefs = briefList;
-            this.list = this.briefs.briefs;
-            this.allItems = this.list;
+            this.briefList = briefList;
+            this.list = this.briefList.briefs;
 
             // initialize to page 1
             this.setPage(1);
@@ -53,10 +49,10 @@ export class BriefsListComponent implements OnInit {
       }
 
       // get pager object from service
-      this.pager = this.pagerService.getPager(this.allItems.length, page);
+      this.pager = this.pagerService.getPager(this.list.length, page);
 
       // get current page of items
-      this.pagedItems = this.allItems.slice(this.pager.startIndex, this.pager.endIndex + 1);
+      this.pagedItems = this.list.slice(this.pager.startIndex, this.pager.endIndex + 1);
     }
 
     edit(id: string) {
@@ -83,7 +79,7 @@ export class BriefsListComponent implements OnInit {
       }
     }
     delete(id: string, index: number) {
-        this.briefs.briefs.splice(index, 1);
+        this.briefList.briefs.splice(index, 1);
         //controller's delete method
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 

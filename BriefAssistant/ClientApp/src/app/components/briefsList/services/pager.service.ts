@@ -1,3 +1,6 @@
+import { Injectable } from '@angular/core';
+
+@Injectable()
 export class PagerService {
   /**
    * To change the number of briefs per page, change the pageSize variable
