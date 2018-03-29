@@ -8,9 +8,7 @@ namespace BriefAssistant.Models
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
-        [Required]
         public ContactInfo ContactInfo { get; set; }
-        [Required]
         public CircuitCourtCase CircuitCourtCase { get; set; }
         public string AppellateCourtCaseNumber { get; set; }
         public string Argument { get; set; }
