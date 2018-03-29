@@ -34,13 +34,13 @@ namespace BriefAssistant.Services
 
                     if (attachmentStream != null)
                     {
-                        using (var attachment = new Attachment(attachmentStream, "application/octect"))
+                        using (var attachment = new Attachment(attachmentStream, attachmentName, "application/octect"))
                         {
                             ContentDisposition disposition = attachment.ContentDisposition;
                             disposition.CreationDate = DateTime.UtcNow;
                             disposition.ModificationDate = DateTime.UtcNow;
                             disposition.ReadDate = DateTime.UtcNow;
-                            disposition.FileName = "brief.docx";
+                            disposition.FileName = attachmentName;
                             disposition.Size = attachmentStream.Length;
                             disposition.DispositionType = DispositionTypeNames.Attachment;
 
