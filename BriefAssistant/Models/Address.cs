@@ -118,19 +118,15 @@ namespace BriefAssistant.Models
     public class Address
     {
 
-        [Required]
         [DataMember]
         public string Street { get; set; }
         [DataMember]
         public string Street2 { get; set; }
-        [Required]
         [DataMember]
         public string City { get; set; }
-        [Required]
         [DataMember]
         public State State { get; set; }
 
-        [Required]
         [RegularExpression(@"\A\d{5}(?:[ \-]\d{4})?")]
         [DataMember]
         public string Zip { get; set; }
