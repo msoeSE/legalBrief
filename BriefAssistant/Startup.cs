@@ -144,7 +144,7 @@ namespace BriefAssistant
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env, RoleManager<ApplicationRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -210,6 +210,8 @@ namespace BriefAssistant
                     builder.AddFrameSource().None();
                 });
             app.UseSecurityHeaders(headerPolicies);
+
+            await RoleInitializer.Initialize(roleManager);
         }
 
         private async Task RegisterOdicClients(IApplicationBuilder app, CancellationToken cancellationToken = default(CancellationToken))

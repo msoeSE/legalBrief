@@ -51,7 +51,7 @@ namespace BriefAssistant.Controllers
         /// 400 if the request body is malformed
         /// </returns>
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Lawyer")]
         public async Task<IActionResult> CreateAsync([FromBody] BriefInfo briefInfo)
         {
             if (!ModelState.IsValid)

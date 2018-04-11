@@ -19,13 +19,15 @@ namespace BriefAssistant.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly RoleManager<ApplicationRole> _roleManager;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailSender emailSender, ILogger<AccountController> logger)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailSender emailSender, ILogger<AccountController> logger, RoleManager<ApplicationRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _roleManager = roleManager;
         }
 
         [HttpPost("register")]
@@ -43,6 +45,33 @@ namespace BriefAssistant.Controllers
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.EmailConfirmationLink(user.Id.ToString(), code, Request.Scheme);
                     await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+
+                    if (model.UserType == UserType.Lawyer)
+                    {
+                        if (!await _roleManager.RoleExistsAsync("Lawyer"))
+                        {
+                            var role = new ApplicationRole("Lawyer");
+                            var res = await _roleManager.CreateAsync(role);
+
+                            if (res.Succeeded)
+                            {
+                                await _userManager.AddToRoleAsync(user, "Lawyer");
+                            }
+                        }
+                    }else if (model.UserType == UserType.ProSe)
+                    {
+                        if (!await _roleManager.RoleExistsAsync("User"))
+                        {
+                            var role = new ApplicationRole("User");
+                            var res = await _roleManager.CreateAsync(role);
+
+                            if (res.Succeeded)
+                            {
+                                await _userManager.AddToRoleAsync(user, "User");
+                            }
+                        }
+                    }
+                    
 
                     return NoContent();
                 }
