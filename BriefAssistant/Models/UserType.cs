@@ -2,7 +2,7 @@
 {
     public enum UserType
     {
-        ProSe,
+        User,
         Lawyer
     }
 }

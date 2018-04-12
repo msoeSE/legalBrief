@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from "@angular/forms";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { OAuthService } from 'angular-oauth2-oidc';
 
 import { LoginRequest } from "../../models/LoginRequest";
 import { RegistrationRequest } from "../../models/RegistrationRequest";
 import { AccountService } from '../../services/account.service';
+import { UserType } from '../../models/UserType';
 
 @Component({
     selector: "loginRegister",
@@ -19,10 +19,12 @@ export class LoginRegisterComponent {
     public showLoginUnauthorizedDiv: boolean = false;
 
     constructor(
-		private readonly http: HttpClient,
-    private readonly router: Router,
+      private readonly http: HttpClient,
+      private readonly router: Router,
       private readonly accountService: AccountService
-    ) { }
+    ) {
+      this.registerModel.userType = UserType.User;
+    }
 
     login(form: NgForm) {
         this.showLoginUnauthorizedDiv = false;

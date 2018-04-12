@@ -1,4 +1,4 @@
 export enum UserType {
-	ProSe = "Pro Se",
+	User = "User",
 	Lawyer = "Lawyer"
 }

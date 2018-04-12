@@ -48,28 +48,10 @@ namespace BriefAssistant.Controllers
 
                     if (model.UserType == UserType.Lawyer)
                     {
-                        if (!await _roleManager.RoleExistsAsync("Lawyer"))
-                        {
-                            var role = new ApplicationRole("Lawyer");
-                            var res = await _roleManager.CreateAsync(role);
-
-                            if (res.Succeeded)
-                            {
-                                await _userManager.AddToRoleAsync(user, "Lawyer");
-                            }
-                        }
-                    }else if (model.UserType == UserType.ProSe)
+                        await _userManager.AddToRoleAsync(user, "Lawyer");
+                    }else if (model.UserType == UserType.User)
                     {
-                        if (!await _roleManager.RoleExistsAsync("User"))
-                        {
-                            var role = new ApplicationRole("User");
-                            var res = await _roleManager.CreateAsync(role);
-
-                            if (res.Succeeded)
-                            {
-                                await _userManager.AddToRoleAsync(user, "User");
-                            }
-                        }
+                        await _userManager.AddToRoleAsync(user, "User");
                     }
                     
 

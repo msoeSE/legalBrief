@@ -10,6 +10,6 @@ export class RegistrationRequest {
         this.email = "";
         this.password = "";
         this.confirmPassword = "";
-        this.userType = UserType.ProSe;
+        this.userType = UserType.User;
     }
 }

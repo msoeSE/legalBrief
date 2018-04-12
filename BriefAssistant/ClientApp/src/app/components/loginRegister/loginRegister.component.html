@@ -20,9 +20,24 @@
 </form>
 <hr/>
 <form #registerForm="ngForm" (ngSubmit)="onRegisterSubmit(registerForm)">
-    <div class="form-group">
-        <label class="col-form-label">Don't have an account? Register for free</label>
-    </div>
+  <div class="form-group">
+    <label class="col-form-label">Don't have an account? Register for free</label>
+  </div>
+  <div class="form-group">
+    <fieldset>
+      <label>Are you a lawyer?</label>
+      <div class="form-check">
+        <label class="form-check-label radio-inline">
+          <input class="form-check-input" type="radio" [(ngModel)]="registerModel.userType" name="role" value="User">
+          No
+        </label>
+        <label class="form-check-label radio-inline">
+          <input class="form-check-input" type="radio" [(ngModel)]="registerModel.userType" name="role" value="Lawyer">
+          Yes
+        </label>
+      </div>
+    </fieldset>
+  </div>
     <div class="form-group">
         <input class="form-control" id="registrationEmail" type="email" [(ngModel)]="registerModel.email" name="registrationEmail" placeholder="Email" required #registrationEmail="ngModel" />
         <div *ngIf="registrationEmail.invalid && (registrationEmail.dirty || registrationEmail.touched)" class="alert alert-danger" id="registrationEmail-errors">
@@ -30,14 +45,6 @@
                 Valid email is required.
             </div>
         </div>
-    </div>
-    <div class="form-group">
-      <label class="radio-inline active">
-        <input type="radio" [(ngModel)]="registerModel.userType" name="userType" checked="" value="ProSe">Pro Se
-      </label>
-      <label class="radio-inline">
-        <input type="radio" [(ngModel)]="registerModel.userType" name="userType" value="Lawyer">Lawyer
-      </label>
     </div>
     <div class="form-group">
         <input class="form-control" id="registrationPassword" type="password" [(ngModel)]="registerModel.password" name="registrationPassword" placeholder="Password" #registrationPassword="ngModel" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}" required validateEqual="registrationPasswordCheck" reverse="true" />
