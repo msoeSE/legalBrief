@@ -1,16 +1,18 @@
 ﻿exports.config = {
-    seleniumAddress: 'http://localhost:4444/wd/hub',
-    specs: ['form-validation-spec.js', 'registration-validation-spec.js'],
-    //specs: ['registration-validation-spec.js'],
+    //seleniumAddress: 'http://localhost:4444/wd/hub',
+    specs: ['registration-validation-spec.js'],
     framework: 'jasmine2',
 
     capabilities: {
-        'browserName': 'chrome'
+        'browserName': 'chrome',
         //'maxInstances': 2, // will split your test files across 2 browser instances
         //'shardTestFiles': true,
+        chromeOptions: {
+            args: ['--headless', '--disable-gpu', '--window-size=800,600', '--no-sandbox']
+    }
     }, 
 
-    baseUrl: 'http://localhost:27902',
+    baseUrl: 'www.briefassistant.com',
 
     jasmineNodeOpts: {
         showColors: true,

@@ -1,7 +1,26 @@
 language: csharp
-solution: BriefAssistant.sln
-mono: none
-dotnet: 2.0.0
+sudo: required
 dist: trusty
+group: deprecated-2017Q4
+addons:
+  chrome: stable
+
+solution: BriefAssistant.sln
+dotnet: 2.0.0
+mono: none
+  
+install:
+  - dotnet restore BriefAssistant.sln
+  - npm install -g @angular/cli
+  - npm install -g protractor
+  - npm --prefix /home/travis/build/msoeSE/legalBrief/BriefAssistant install 
+  - webdriver-manager update
+
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
+  
 script:
- - dotnet restore BriefAssistant.sln
+  - dotnet test BriefAssistant.Tests
+  - protractor /home/travis/build/msoeSE/legalBrief/BriefAssistant.Tests/conf.js
