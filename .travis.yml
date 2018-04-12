@@ -22,5 +22,4 @@ before_script:
   - sleep 3 # give xvfb some time to start
   
 script:
-  - dotnet test BriefAssistant.Tests
   - protractor /home/travis/build/msoeSE/legalBrief/BriefAssistant.Tests/conf.js
