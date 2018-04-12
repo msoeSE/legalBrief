@@ -217,7 +217,7 @@
       </a>.
     </small>
   </div>
-  <button class="btn btn-primary" routerLink="/reply-example" routerLinkActive="active">Back to Example</button>
-  <button class="btn btn-primary" (click)="updateBrief()">Save And Finish Later</button>
-  <button class="btn btn-primary" (click)="finishBrief()" [disabled]="!f.valid">Generate Brief</button>
+  <button class="btn btn-primary" id="replyFormBackButton" name="replyFormBackButton" routerLink="/reply-example" routerLinkActive="active">Back to Example</button>
+  <button class="btn btn-primary" id="replyFormSaveButton" name="replyFormSaveButton" (click)="updateBrief()">Save And Finish Later</button>
+  <button class="btn btn-primary" id="replyFormGenButton" name="replyFormGenButton" (click)="finishBrief()" [disabled]="!f.valid">Generate Brief</button>
 </form>

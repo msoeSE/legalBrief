@@ -5,12 +5,12 @@
     You can download your brief by clicking the button.
   </p>
   <p>
-    <button class="btn btn-success" (click)="download()">Download</button>
+    <button class="btn btn-success" id="replyFinalDownloadButton" name="replyFinalDownloadButton" (click)="download()">Download</button>
   </p>
   <form class="form-inline" #emailForm="ngForm" (ngSubmit)="onSubmit(emailForm)">
     <div class="form-group">
       <input type="email" id="email-send" class="form-control" [(ngModel)]="model.email" name="email" placeholder="johndoe@example.com">
-      <button class="btn btn-success" type="submit">Email</button>
+      <button class="btn btn-success" id="replyFinalEmailButton" name="replyFinalEmailButton" type="submit">Email</button>
     </div>
   </form>
 </div>
