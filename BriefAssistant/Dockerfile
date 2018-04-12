@@ -45,7 +45,7 @@ RUN dotnet build -c Release -o /app
 
 FROM build AS publish
 RUN chmod +x ClientApp/node_modules/.bin/ng
-RUN npm cache clean --force
+RUN npm cache verify
 RUN dotnet publish -c Release -o /app
 
 FROM base AS final

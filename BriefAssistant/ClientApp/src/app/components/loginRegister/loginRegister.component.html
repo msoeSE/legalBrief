@@ -8,7 +8,6 @@
     </div>
     <div class="form-group form-inline">
         <input class="form-control" id="loginPassword" type="password" [(ngModel)]="loginModel.password" name="loginPassword" placeholder="Password" required/>
-        <input class="checkbox" type="checkbox" onchange="document.getElementById('loginPassword').type = this.checked ? 'text' : 'password'"/> Show Password
     </div>
     <div class="alert alert-danger" *ngIf="showLoginUnauthorizedDiv">
         Login Unsuccessful. Email/Password was incorrect.
