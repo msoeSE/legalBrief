@@ -3,7 +3,7 @@
     beforeEach(function () {
         browser.waitForAngularEnabled(false);
         browser.ignoreSynchronization = true;
-        browser.get(browser.baseUrl + '/loginRegister');
+        browser.get('https://www.briefassistant.com' + '/loginRegister');
     });
 
     it('should display error with no registration email', function () {
