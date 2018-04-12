@@ -1,9 +1,13 @@
 ﻿describe('dataform input fields', function () {
 
     beforeEach(function () {
-        //browser.waitForAngularEnabled(false);
+        browser.waitForAngularEnabled(false);
         browser.ignoreSynchronization = true;
-        browser.get(browser.baseUrl + '/dataform');
+        browser.get(browser.baseUrl + '/loginRegister');
+        element(by.name('loginEmail')).sendKeys(Options.TestUserEmail);
+        element(by.name('loginEmail')).sendKeys(Options.TestUserPassword);
+        element(by.name('loginButton')).click();
+        browser.get(browser.baseUrl + '/initial-form');
     });
 
     it('should display error with no name', function () {

@@ -1,6 +1,6 @@
 ﻿exports.config = {
     //seleniumAddress: 'http://localhost:4444/wd/hub',
-    specs: ['registration-validation-spec.js'],
+    specs: ['initial-form-validation.spec.js', 'registration-validation-spec.js'],
     framework: 'jasmine2',
 
     capabilities: {
@@ -12,7 +12,7 @@
     }
     }, 
 
-    baseUrl: 'www.briefassistant.com',
+    baseUrl: 'https://briefassistant.com',
 
     jasmineNodeOpts: {
         showColors: true,
