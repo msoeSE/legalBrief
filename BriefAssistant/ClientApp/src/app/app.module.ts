@@ -30,6 +30,8 @@ import { AccountService } from './services/account.service';
 import { BriefService } from './services/brief.service';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { PagerService } from './components/briefsList/services/pager.service';
+import { ClientListComponent } from './components/clients/client-list.component';
+import { ClientPageComponent } from './components/clients/client-page.component';
 
 @
 NgModule({
@@ -53,7 +55,9 @@ NgModule({
     ConfirmationComponent,
     BriefsListComponent,
     NotFoundComponent,
-    PasswordValidator
+    PasswordValidator,
+    ClientListComponent,
+    ClientPageComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -85,6 +89,8 @@ NgModule({
       { path: 'resetPassword', component: ResetPasswordComponent},
       { path: 'confirmation', component: ConfirmationComponent },
       { path: 'briefs', component: BriefsListComponent, canActivate: [AuthGuard] },
+      { path: 'clients', component: ClientListComponent, canActivate: [AuthGuard] },
+      { path: 'client-page', component: ClientPageComponent, canActivate: [AuthGuard] },
       { path: '**', component: NotFoundComponent }
     ])
   ],

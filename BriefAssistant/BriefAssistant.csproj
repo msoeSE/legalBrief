@@ -45,6 +45,8 @@
     <None Remove="ClientApp\src\app\auth.config.ts" />
     <None Remove="ClientApp\src\app\auth.guard.ts" />
     <None Remove="ClientApp\src\app\components\briefsList\services\pager.service.ts" />
+    <None Remove="ClientApp\src\app\components\clients\client-list.component.ts" />
+    <None Remove="ClientApp\src\app\components\clients\client-page.component.ts" />
     <None Remove="ClientApp\src\app\components\confirmation\confirmation.component.ts" />
     <None Remove="ClientApp\src\app\components\header\header.component.ts" />
     <None Remove="ClientApp\src\app\services\account.service.ts" />
@@ -54,6 +56,8 @@
     <TypeScriptCompile Include="ClientApp\src\app\auth.config.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\auth.guard.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\components\briefsList\services\pager.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\clients\client-page.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\clients\client-list.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\components\confirmation\confirmation.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\components\header\header.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\account.service.ts" />
