@@ -13,12 +13,12 @@
       <td>{{brief.title}}</td>
       <td>
         <div>
-          <button class="btn btn-primary" (click)="edit(brief.id)">Edit</button>
+          <button class="btn btn-primary" id="briefListEditButton" name="briefListEditButton" (click)="edit(brief.id)">Edit</button>
         </div>
       </td>
       <td>
         <div>
-          <button class=" btn btn-danger" (click)="delete(brief.id, i)">Delete</button>
+          <button class=" btn btn-danger" id="briefListDeleteButton" name="briefListDeleteButton" (click)="delete(brief.id, i)">Delete</button>
         </div>
       </td>
     </tr>
