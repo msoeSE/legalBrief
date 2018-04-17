@@ -4,22 +4,22 @@ dist: trusty
 group: deprecated-2017Q4
 addons:
   chrome: stable
-
 solution: BriefAssistant.sln
 dotnet: 2.0.0
 mono: none
-  
 install:
-  - dotnet restore BriefAssistant.sln
-  - npm install -g @angular/cli
-  - npm install -g protractor
-  - npm --prefix /home/travis/build/msoeSE/legalBrief/BriefAssistant install 
-  - webdriver-manager update
-
+- dotnet restore BriefAssistant.sln
+- npm install -g @angular/cli
+- npm install -g protractor
+- npm --prefix /home/travis/build/msoeSE/legalBrief/BriefAssistant install
+- webdriver-manager update
 before_script:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 3 # give xvfb some time to start
-  
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+- sleep 3
 script:
-  - protractor /home/travis/build/msoeSE/legalBrief/BriefAssistant.Tests/conf.js
+- protractor /home/travis/build/msoeSE/legalBrief/BriefAssistant.Tests/conf.js
+env:
+  matrix:
+  - secure: Ollk5GRgXRqPPpGqfH8vArKpQPb+9hksWyZ6PNo8Z7mD14L01DD4MDm3WhnPlN2vHRwxpinK8mqhXLvSdiw2vHHL/yF2RY765JWWeGTmZadTkk2cpcf8MJPULItdWIagcAxPtRWJCJ7FOU9wWo+OeunZo+Nx6XuyGRYKZHO+XrqU6LHQ0+4Ni7U3jiX5QObxuztAygumiiPJ0PS4iz0m0SwMd3DyjVz2Zor/yJhhH7ftwR9nEwuYpzf8a6NWOO2VoJz0SlUIZePvKAhsP2pX3RSJNO+2zLqVCAam5hPylEs3fVwzDSC2oPDUACFEPIIHpeaBAfN7GfPZiDezsGgUsY3cjLYe3x+5eyQDlyo4dkBF8cyA8jgBEjFPYeGY//5O5fzh9qBUOD7HfSTp5HGuJS/jQGApyE53VzT4zbaVhmbze087Y5wnNQbUKcX4uuBqtWSkgY+77YaxCJJNqYTwn4jKrgoOhy6mDMpFgAXZnkfbOez3CUa17ucYJmeSV4YAVh/+60k4T9npjdl5ussH6txXcit5bH+JfsnzGMs2Ym6EAuwPsSCC31FiLZ9HFCWLwOWXxUBgNqYTJwQ5mc6T3HLOjCbAgt3MQAU4cJVTZLWxYcHTiLgPWCDjBN8LLM6kuLbxmqgkaCZPz6yNbeQW7njyxLBWQ3m+7JvlsPDmOTI=
+  - secure: WvdCL19vAZPQ6APtdrUgkSKK1qKi50+lHg9pqEJU15o/kgXrKog5Hi6IutsHnqan+IhkChsOPnoLnsuv2WKlZEx5qkuQ2xRrtXt5Oe+8FUVFcZw550HAjteEWq2v4ES/kV2a51wgzqr72fXf3TxYaO2b3pBaDjfz5Foft8/Dqi1J1ooz/71FmwJTgPZPS/iXM9rxL5zf4ZzTd7bXryzwzgHM0BuIvDQFsWB6jTQLN04rggkpeNpbkFYxssQ20CtCNV3t0r2vKASfbixe69VwFQYfqoVCE6r1h3041xHvAyay3NexEpFOydeQLKB+Th3L42tViIMtc3rfBv+2r+UG/uK3plvx0M8a5K+CnZb19+N8OA+0AGtBO9Gmd9Xu7NT1m7M1ds04DdEcXPHZby/RQ0v2gUa8a2aT7ERNN/m/dSC9y+mMSG7Dh3ZTK6zWb0iVIUsClI7WM5fafiULhXcmEwzyIdPo7O6Xzpw6AMkofYx9tVhur2gluKUMbLpN2ytz2msm29xLEBqkuZuIpnEH7Epc84lUOQbRBvM10+FSaaKDhxt5F7EMSZL8QlT3OFEv/AZbEvFpdmYdg5IocRA2rZfkTTYTfXhY5vrsk6zU61G5NXeD6p09lB542UFv1kslPUgunQke37QpIFFKi5/9L7XJy+Qs1arD1Gy72pJktVM=

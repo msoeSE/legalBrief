@@ -21,8 +21,8 @@
 
     onPrepare: function () {
         browser.get(browser.baseUrl + '/loginRegister');
-        element(by.name('loginEmail')).sendKeys("THIS IS NOT THE EMAIL");
-        element(by.name('loginPassword')).sendKeys("THIS IS NOT THE PASSWORD");
+        element(by.name('loginEmail')).sendKeys("process.env.MY_SERCRET_ENV_USER");
+        element(by.name('loginPassword')).sendKeys("process.env.MY_SERCRET_ENV_PASSWORD");
         browser.sleep(1000);
         element(by.name('loginButton')).click();
         browser.sleep(1000);
