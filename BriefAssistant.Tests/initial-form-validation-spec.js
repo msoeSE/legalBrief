@@ -3,10 +3,6 @@
     beforeEach(function () {
         browser.waitForAngularEnabled(false);
         browser.ignoreSynchronization = true;
-        browser.get(browser.baseUrl + '/loginRegister');
-        element(by.name('loginEmail')).sendKeys(Options.TestUserEmail);
-        element(by.name('loginEmail')).sendKeys(Options.TestUserPassword);
-        element(by.name('loginButton')).click();
         browser.get(browser.baseUrl + '/initial-form');
     });
 

@@ -9,7 +9,7 @@
         //'shardTestFiles': true,
         chromeOptions: {
             args: ['--headless', '--disable-gpu', '--window-size=800,600', '--no-sandbox']
-    }
+        }
     }, 
 
     baseUrl: 'https://briefassistant.com',
@@ -17,5 +17,14 @@
     jasmineNodeOpts: {
         showColors: true,
         defaultTimeoutInterval: 30000
-    } 
+    }, 
+
+    onPrepare: function () {
+        browser.get(browser.baseUrl + '/loginRegister');
+        element(by.name('loginEmail')).sendKeys("THIS IS NOT THE EMAIL");
+        element(by.name('loginPassword')).sendKeys("THIS IS NOT THE PASSWORD");
+        browser.sleep(1000);
+        element(by.name('loginButton')).click();
+        browser.sleep(1000);
+    }
 };
