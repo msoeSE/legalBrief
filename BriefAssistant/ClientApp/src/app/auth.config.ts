@@ -2,6 +2,7 @@ import { AuthConfig } from 'angular-oauth2-oidc';
 import { environment } from '../environments/environment';
 
 export function authConfig(url: string): AuthConfig {
+  console.log(url);
 
   return {
     // Url of the Identity Provider

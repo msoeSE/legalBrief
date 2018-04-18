@@ -94,7 +94,7 @@ namespace BriefAssistant
                 options.User.RequireUniqueEmail = true;
 
                 // Sign In settings
-                options.SignIn.RequireConfirmedEmail = true;
+                //options.SignIn.RequireConfirmedEmail = true;
 
                 // Configure Identity to use the same JWT claims as OpenIddict instead
                 // of the legacy WS-Federation claims it uses by default (ClaimTypes),
@@ -111,6 +111,7 @@ namespace BriefAssistant
                 // Enable the token endpoint.
                 // Form password flow (used in username/password login requests)
                 options.EnableTokenEndpoint("/connect/token");
+                options.EnableUserinfoEndpoint("/userinfo");
 
                 // Enable the password and the refresh token flows.
                 options.AllowPasswordFlow()
@@ -124,7 +125,6 @@ namespace BriefAssistant
 
             services.AddAuthentication(options =>
                 {
-                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -158,6 +158,7 @@ namespace BriefAssistant
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public async void Configure(IApplicationBuilder app, IHostingEnvironment env, RoleManager<ApplicationRole> roleManager)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -233,7 +234,8 @@ namespace BriefAssistant
                         {
                             OpenIddictConstants.Permissions.Endpoints.Token,
                             OpenIddictConstants.Permissions.GrantTypes.Password,
-                            OpenIddictConstants.Permissions.GrantTypes.RefreshToken
+                            OpenIddictConstants.Permissions.GrantTypes.RefreshToken,
+                            OpenIddictConstants.Permissions.Endpoints.Introspection
                         }
                     };
 

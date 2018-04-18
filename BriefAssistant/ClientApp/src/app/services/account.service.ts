@@ -23,6 +23,8 @@ export class AccountService {
   public login(loginModel: LoginRequest): Promise<any> {
     return this.oAuthService.fetchTokenUsingPasswordFlow(loginModel.email, loginModel.password)
       .then(() => {
+        this.oAuthService.oidc = false;
+          this.oAuthService.loadUserProfile().then(() => this.oAuthService.oidc = true);
         this.oAuthService.setupAutomaticSilentRefresh();
       });
   }

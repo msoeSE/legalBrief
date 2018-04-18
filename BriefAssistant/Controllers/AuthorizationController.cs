@@ -7,6 +7,7 @@ using AspNet.Security.OpenIdConnect.Extensions;
 using AspNet.Security.OpenIdConnect.Primitives;
 using AspNet.Security.OpenIdConnect.Server;
 using BriefAssistant.Data;
+using BriefAssistant.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -111,6 +112,37 @@ namespace BriefAssistant.Controllers
                 Error = OpenIdConnectConstants.Errors.UnsupportedGrantType,
                 ErrorDescription = "The specified grant type is not supported."
             });
+        }
+
+        [Authorize]
+        [HttpGet("/userinfo"), Produces("application/json")]
+        public async Task<IActionResult> Userinfo(OpenIdConnectRequest request)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return BadRequest(new OpenIdConnectResponse
+                {
+                    Error = OpenIdConnectConstants.Errors.InvalidGrant,
+                    ErrorDescription = "The user profile is no loger available"
+                });
+            }
+
+            var result = new UserInfo();
+            result.Sub = User.GetClaim(OpenIdConnectConstants.Claims.Subject);
+
+            if (User.HasClaim(OpenIdConnectConstants.Claims.Scope, OpenIdConnectConstants.Scopes.Email))
+            {
+                result.Email = user.Email;
+                result.EmailVerified = user.EmailConfirmed;
+            }
+
+            if (User.HasClaim(OpenIdConnectConstants.Claims.Scope, OpenIddictConstants.Scopes.Roles))
+            {
+                result.Roles = await _userManager.GetRolesAsync(user);
+            }
+
+            return Json(result);
         }
 
         private async Task<AuthenticationTicket> CreateTicketAsync(OpenIdConnectRequest request, ApplicationUser user, AuthenticationProperties properties = null)
