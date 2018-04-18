@@ -40,7 +40,6 @@ export class LoginRegisterComponent {
 
         this.http.post("/api/account/register", body, { headers: headers })
 			.subscribe(res => {
-                console.log(res);
                 this.showRegisterSuccessDiv = true;
 	        });
     }

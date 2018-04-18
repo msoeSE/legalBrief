@@ -181,6 +181,9 @@ ClientBin/
 *.publishsettings
 orleans.codegen.cs
 
+# AWS Cert Bundle exception
+!rds-combined-ca-bundle.pfx
+
 /node_modules
 
 # RIA/Silverlight projects

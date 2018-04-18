@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using AspNet.Security.OpenIdConnect.Primitives;
@@ -19,10 +21,10 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NetEscapades.AspNetCore.SecurityHeaders;
-using NetEscapades.AspNetCore.SecurityHeaders.Infrastructure;
+using Npgsql;
 using OpenIddict.Core;
 using OpenIddict.Models;
+using Serilog.Core;
 
 namespace BriefAssistant
 {
@@ -52,7 +54,18 @@ namespace BriefAssistant
                 }
                 else
                 {
-                    options.UseNpgsql(connectionString);
+                    var conn = new NpgsqlConnection(connectionString)
+                    {
+                        ProvideClientCertificatesCallback = certificates =>
+                        {
+                            var absPath = Path.GetFullPath("rds-combined-ca-bundle.pfx");
+                            Console.WriteLine("Trying to import certs from: " + absPath);
+                            var rdsCertBundle = new X509Certificate2Collection();
+                            rdsCertBundle.Import("rds-combined-ca-bundle.pfx");
+                            certificates.AddRange(rdsCertBundle);
+                        }
+                    };
+                    options.UseNpgsql(conn);
                 }
 
                 options.UseOpenIddict<Guid>();
@@ -189,27 +202,6 @@ namespace BriefAssistant
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
-
-            var headerPolicies = new HeaderPolicyCollection()
-                .AddFrameOptionsDeny()
-                .AddXssProtectionBlock()
-                .AddContentTypeOptionsNoSniff()
-                .AddReferrerPolicyStrictOriginWhenCrossOrigin()
-                .RemoveServerHeader()
-                .AddContentSecurityPolicy(builder =>
-                {
-                    builder.AddDefaultSrc().Self();
-                    builder.AddConnectSrc().Self().Data();
-                    builder.AddObjectSrc().None();
-                    builder.AddFormAction().Self();
-                    builder.AddImgSrc().Self();
-                    builder.AddScriptSrc().Self();
-                    builder.AddStyleSrc().Self();
-                    builder.AddMediaSrc().Self();
-                    builder.AddFrameAncestors().None();
-                    builder.AddFrameSource().None();
-                });
-            app.UseSecurityHeaders(headerPolicies);
         }
 
         private async Task RegisterOdicClients(IApplicationBuilder app, CancellationToken cancellationToken = default(CancellationToken))
