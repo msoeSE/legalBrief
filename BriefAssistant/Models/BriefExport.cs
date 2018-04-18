@@ -62,7 +62,7 @@ namespace BriefAssistant.Models
             AppellateCourtCaseNumber = info.AppellateCourtCaseNumber;
             Argument = ToParagraphs(info.Argument);
             Conclusion = ToParagraphs(info.Conclusion);
-            SetTopAndBottomNamesAndRoles(CircuitCourtCase.Role);
+            SetTopAndBottomNamesAndRoles(CircuitCourtCase.Role, info.Type);
             District = GetDistrictFromCounty(CircuitCourtCase.County);
         }
 
@@ -108,10 +108,10 @@ namespace BriefAssistant.Models
         /// </param>
         public void SetResponseInformation(ResponseBriefInfo info)
         {
-            IssuesPresented = info.IssuesPresented;
-            OralArgumentStatement = info.OralArgumentStatement;
-            PublicationStatement = info.PublicationStatement;
-            CaseFactsStatement = info.CaseFactsStatement;
+            IssuesPresented = ToParagraphs(info.IssuesPresented);
+            OralArgumentStatement = ToParagraphs(info.OralArgumentStatement);
+            PublicationStatement = ToParagraphs(info.PublicationStatement);
+            CaseFactsStatement = ToParagraphs(info.CaseFactsStatement);
         }
 
         /// <summary>
