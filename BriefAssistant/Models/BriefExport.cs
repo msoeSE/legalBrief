@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Runtime.Serialization;
 
 namespace BriefAssistant.Models
@@ -6,6 +8,18 @@ namespace BriefAssistant.Models
     [DataContract(Namespace = "")]
     public class BriefExport
     {
+        [DataContract(Namespace = "")]
+        public class Paragraph
+        {
+            public Paragraph(string value)
+            {
+                Value = value;
+            }
+
+            [DataMember]
+            public string Value { get; set; }
+        }
+
         [DataMember]
         public District District { get; set; }
         [DataMember]
@@ -15,17 +29,17 @@ namespace BriefAssistant.Models
         [DataMember]
         public string AppellateCourtCaseNumber { get; set; }
         [DataMember]
-        public string IssuesPresented { get; set; }
+        public IList<Paragraph> IssuesPresented { get; set; }
         [DataMember]
-        public string OralArgumentStatement { get; set; }
+        public IList<Paragraph> OralArgumentStatement { get; set; }
         [DataMember]
-        public string PublicationStatement { get; set; }
+        public IList<Paragraph> PublicationStatement { get; set; }
         [DataMember]
-        public string CaseFactsStatement { get; set; }
+        public IList<Paragraph> CaseFactsStatement { get; set; }
         [DataMember]
-        public string Argument { get; set; }
+        public IList<Paragraph> Argument { get; set; }
         [DataMember]
-        public string Conclusion { get; set; }
+        public IList<Paragraph> Conclusion { get; set; }
         [DataMember]
         public string AppendixDocuments { get; set; }
         [DataMember]
@@ -46,19 +60,27 @@ namespace BriefAssistant.Models
             ContactInfo = info.ContactInfo;
             CircuitCourtCase = info.CircuitCourtCase;
             AppellateCourtCaseNumber = info.AppellateCourtCaseNumber;
-            Argument = info.Argument;
-            Conclusion = info.Conclusion;
+            Argument = ToParagraphs(info.Argument);
+            Conclusion = ToParagraphs(info.Conclusion);
             SetTopAndBottomNamesAndRoles(CircuitCourtCase.Role);
             District = GetDistrictFromCounty(CircuitCourtCase.County);
         }
 
         public void SetInitialInformation(InitialBriefInfo info)
         {
-            IssuesPresented = info.IssuesPresented;
-            OralArgumentStatement = info.OralArgumentStatement;
-            PublicationStatement = info.PublicationStatement;
-            CaseFactsStatement = info.CaseFactsStatement;
+            IssuesPresented = ToParagraphs(info.IssuesPresented);
+            OralArgumentStatement = ToParagraphs(info.OralArgumentStatement);
+            PublicationStatement = ToParagraphs(info.PublicationStatement);
+            CaseFactsStatement = ToParagraphs(info.CaseFactsStatement);
             AppendixDocuments = info.AppendixDocuments;
+        }
+
+        private static IList<Paragraph> ToParagraphs(string s)
+        {
+            return s.Trim()
+                .Split('\n')
+                .Select(p => new Paragraph(p))
+                .ToList();
         }
 
         public void SetReplyInformation(ReplyBriefInfo info)
