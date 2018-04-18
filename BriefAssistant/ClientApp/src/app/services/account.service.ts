@@ -20,6 +20,12 @@ export class AccountService {
     return claims['name'];
   }
 
+  public get userType(): string {
+    let claims = this.oAuthService.getIdentityClaims();
+    if (!claims) return null;
+    return claims['role'][0];
+  }
+
   public login(loginModel: LoginRequest): Promise<any> {
     return this.oAuthService.fetchTokenUsingPasswordFlow(loginModel.email, loginModel.password)
       .then(() => {

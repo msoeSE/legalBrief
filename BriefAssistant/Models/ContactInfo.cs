@@ -16,5 +16,8 @@ namespace BriefAssistant.Models
 
         [DataMember]
         public string Phone { get; set; }
+
+        [DataMember]
+        public string BarId { get; set; }
     }
 }

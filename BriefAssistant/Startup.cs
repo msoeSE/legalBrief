@@ -94,7 +94,7 @@ namespace BriefAssistant
                 options.User.RequireUniqueEmail = true;
 
                 // Sign In settings
-                //options.SignIn.RequireConfirmedEmail = true;
+                options.SignIn.RequireConfirmedEmail = true;
 
                 // Configure Identity to use the same JWT claims as OpenIddict instead
                 // of the legacy WS-Federation claims it uses by default (ClaimTypes),
@@ -157,8 +157,7 @@ namespace BriefAssistant
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app, IHostingEnvironment env, RoleManager<ApplicationRole> roleManager)
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, RoleManager<ApplicationRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -204,7 +203,7 @@ namespace BriefAssistant
                 }
             });
 
-            await RoleInitializer.Initialize(roleManager);
+            CreateRoles(app).GetAwaiter().GetResult();
         }
 
         private async Task RegisterOdicClients(IApplicationBuilder app, CancellationToken cancellationToken = default(CancellationToken))
@@ -240,6 +239,29 @@ namespace BriefAssistant
                     };
 
                     await manager.CreateAsync(descriptor, cancellationToken);
+                }
+            }
+        }
+
+        private async Task CreateRoles(IApplicationBuilder app, CancellationToken token = default(CancellationToken))
+        {
+            using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                await context.Database.EnsureCreatedAsync(token);
+
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+
+                if (!await roleManager.RoleExistsAsync("Lawyer"))
+                {
+                    var role = new ApplicationRole("Lawyer");
+                    await roleManager.CreateAsync(role);
+                }
+
+                if (!await roleManager.RoleExistsAsync("User"))
+                {
+                    var role = new ApplicationRole("User");
+                    await roleManager.CreateAsync(role);
                 }
             }
         }
