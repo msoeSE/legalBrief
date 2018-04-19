@@ -32,6 +32,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import { PagerService } from './components/briefsList/services/pager.service';
 import { ClientListComponent } from './components/clients/client-list.component';
 import { ClientPageComponent } from './components/clients/client-page.component';
+import { ClientService } from './services/client.service';
 
 @
 NgModule({
@@ -99,7 +100,8 @@ NgModule({
     BriefService,
     AuthGuard,
     AccountService,
-    PagerService
+    PagerService,
+    ClientService
   ],
   bootstrap: [AppComponent]
 })

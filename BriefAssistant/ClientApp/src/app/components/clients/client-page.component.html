@@ -80,6 +80,6 @@
       </div>
     </div>
   </div>
-  <button class="btn btn-primary" routerLink="/clients" routerLinkActive="active">Cancel</button>
+  <button class="btn btn-primary" [routerLink]="['/clients']" routerLinkActive="active">Cancel</button>
   <button class="btn btn-primary" [disabled]="!f.valid">Save Information</button>
 </form>
