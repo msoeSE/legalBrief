@@ -1,5 +1,5 @@
 ﻿exports.config = {
-    specs: ['form-validation-spec.js', 'registration-validation-spec.js'], //'reply-form-validation-spec.js', 'response-form-validation-spec.js'],
+    specs: ['form-validation-spec.js', 'registration-validation-spec.js', 'reply-form-validation-spec.js'], //'response-form-validation-spec.js'],
     framework: 'jasmine2',
 
     capabilities: {
