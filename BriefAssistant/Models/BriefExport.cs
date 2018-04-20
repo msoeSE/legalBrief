@@ -81,23 +81,17 @@ namespace BriefAssistant.Models
             AppendixDocuments = info.AppendixDocuments;
         }
 
-        private static IList<Paragraph> ToParagraphs(string s)
-        {
-            return s.Trim()
-                .Split('\n')
-                .Select(p => new Paragraph(p))
-                .ToList();
-        }
-
         /// <summary>
-        /// Sets the information required in an reply brief
+        /// Takes a string of text and creates paragraphs from line breaks
         /// </summary>
-        /// <param name="info">
-        /// The object containing the necessary information for an reply brief
-        /// </param>
-        public void SetReplyInformation(ReplyBriefInfo info)
+        /// <param name="text">The text that will be splint into paragraphs</param>
+        /// <returns>A list of paragraphs</returns>
+        private static IList<Paragraph> ToParagraphs(string text)
         {
-
+            return text.Trim()
+                .Split('\n')
+                .Select(paragraph => new Paragraph(paragraph))
+                .ToList();
         }
 
         /// <summary>

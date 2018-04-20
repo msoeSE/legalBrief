@@ -35,8 +35,6 @@ export class BriefService {
     return this.http.get<ResponseBriefInfo>(`/api/briefs/responses/${id}`);
   }
 
-  //TODO add getPetitionBrief
-
   createInitial(brief: InitialBriefInfo): Observable<InitialBriefInfo> {
     return this.http.post<InitialBriefInfo>(`/api/briefs/initialcreate`, JSON.stringify(brief), { headers: this.headers });
   }
@@ -48,8 +46,6 @@ export class BriefService {
   createResponse(brief: ResponseBriefInfo): Observable<ResponseBriefInfo> {
     return this.http.post<ResponseBriefInfo>(`/api/briefs/responsecreate`, JSON.stringify(brief), { headers: this.headers });
   }
-
-  //TODO add createPetition
 
   updateInitial(brief: InitialBriefInfo): Observable<InitialBriefInfo> {
     const url = `/api/briefs/initialupdate/${brief.briefInfo.id}`;
@@ -65,5 +61,4 @@ export class BriefService {
     const url = `/api/briefs/responseupdate/${brief.briefInfo.id}`;
     return this.http.put<ResponseBriefInfo>(url, JSON.stringify(brief), { headers: this.headers });
   }
-  //TODO add updatePetition
 }

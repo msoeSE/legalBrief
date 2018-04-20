@@ -1,4 +1,5 @@
 import { BriefInfo } from "./BriefInfo";
+import { BriefType } from "./BriefType";
 
 export class ResponseBriefInfo {
   id: string;
@@ -14,5 +15,6 @@ export class ResponseBriefInfo {
     this.oralArgumentStatement = "";
     this.publicationStatement = "";
     this.issuesPresented = "";
-	}
+    this.briefInfo.type = BriefType.Response;
+  }
 }

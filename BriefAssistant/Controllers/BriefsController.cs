@@ -96,7 +96,6 @@ namespace BriefAssistant.Controllers
 
             var initialBriefDto = Mapper.Map<InitialBriefDto>(briefInfo);
             initialBriefDto.ApplicationUserId = currentUser.Id;
-            initialBriefDto.BriefDto.Type = BriefType.Initial;
             initialBriefDto.BriefDto.ApplicationUserId = currentUser.Id;
             initialBriefDto.BriefDto.CircuitCourtCaseDto.ApplicationUserId = currentUser.Id;
             initialBriefDto.BriefDto.ContactInfoDto.ApplicationUserId = currentUser.Id;
@@ -132,7 +131,6 @@ namespace BriefAssistant.Controllers
 
             var replyBriefDto = Mapper.Map<ReplyBriefDto>(briefInfo);
             replyBriefDto.ApplicationUserId = currentUser.Id;
-            replyBriefDto.BriefDto.Type = BriefType.Reply;
             replyBriefDto.BriefDto.ApplicationUserId = currentUser.Id;
             replyBriefDto.BriefDto.CircuitCourtCaseDto.ApplicationUserId = currentUser.Id;
             replyBriefDto.BriefDto.ContactInfoDto.ApplicationUserId = currentUser.Id;
@@ -168,7 +166,6 @@ namespace BriefAssistant.Controllers
 
             var responseBriefDto = Mapper.Map<ResponseBriefDto>(briefInfo);
             responseBriefDto.ApplicationUserId = currentUser.Id;
-            responseBriefDto.BriefDto.Type = BriefType.Response;
             responseBriefDto.BriefDto.ApplicationUserId = currentUser.Id;
             responseBriefDto.BriefDto.CircuitCourtCaseDto.ApplicationUserId = currentUser.Id;
             responseBriefDto.BriefDto.ContactInfoDto.ApplicationUserId = currentUser.Id;
@@ -180,8 +177,6 @@ namespace BriefAssistant.Controllers
 
             return Created($"/briefs/{responseBriefDto.BriefId}", briefInfo);
         }
-
-        //TODO add PetitionCreate
 
         /// <summary>
         /// Updates an existing brief database object
@@ -349,8 +344,6 @@ namespace BriefAssistant.Controllers
 
             UpdateExistingBrief(existingBrief.BriefDto, briefInfo.BriefInfo);
 
-            //TODO existingReplyBrief.variable = replyInfo.variable; if such variables exist in the future
-
             await _applicationContext.SaveChangesAsync();
 
             return Json(briefInfo);
@@ -403,8 +396,6 @@ namespace BriefAssistant.Controllers
 
             return Json(briefInfo);
         }
-
-        //TODO add PetitionUpdate
 
         /// <summary>
         /// Retrieves the list of briefs created by the currently logged in user
@@ -584,8 +575,6 @@ namespace BriefAssistant.Controllers
             return Json(briefInfo);
         }
 
-        //TODO add GetPetitionBriefAsync
-
         /// <summary>
         /// Retrieves the brief database object with the given id
         /// </summary>
@@ -613,10 +602,25 @@ namespace BriefAssistant.Controllers
             }
 
             BriefDto dto = await FindBriefAsync(id);
+
             var authResult = await _authorizationService.AuthorizeAsync(User, dto, Operations.Delete);
             if (!authResult.Succeeded)
             {
                 return Forbid();
+            }
+
+            if (dto.Type == BriefType.Initial)
+            {
+                InitialBriefDto initialBriefDto = await FindInitialBriefAsync(id);
+                _applicationContext.Initials.Remove(initialBriefDto);
+            } else if (dto.Type == BriefType.Reply)
+            {
+                ReplyBriefDto replyBriefDto = await FindReplyBriefAsync(id);
+                _applicationContext.Replies.Remove(replyBriefDto);
+            } else if (dto.Type == BriefType.Response)
+            {
+                ResponseBriefDto responseBriefDto = await FindResponseBriefAsync(id);
+                _applicationContext.Responses.Remove(responseBriefDto);
             }
             _applicationContext.Briefs.Remove(dto);
             _applicationContext.SaveChanges();
@@ -676,8 +680,6 @@ namespace BriefAssistant.Controllers
                 .Include(responseDto => responseDto.BriefDto.CircuitCourtCaseDto)
                 .SingleAsync(briefDto => briefDto.BriefId == id);
         }
-
-        //TODO add FindPetitionBriefAsync
 
         /// <summary>
         /// Writes a given brief to an output stream
@@ -747,12 +749,6 @@ namespace BriefAssistant.Controllers
                     break;
                 case BriefType.Reply:
                     templateName = "replyBriefTemplate.docx";
-                    ReplyBriefDto reply = await FindReplyBriefAsync(briefInfo.Id);
-                    if (reply != null)
-                    {
-                        var info = Mapper.Map<ReplyBriefInfo>(reply);
-                        exportData.SetReplyInformation(info);
-                    }
 
                     break;
                 case BriefType.Response:
@@ -764,10 +760,6 @@ namespace BriefAssistant.Controllers
                         exportData.SetResponseInformation(info);
                     }
 
-                    break;
-                case BriefType.Petition:
-                    templateName = "petitionForReviewTemplate.docx";
-                    //TODO
                     break;
             }
 
