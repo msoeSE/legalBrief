@@ -87,6 +87,11 @@ namespace BriefAssistant.Controllers
         [Authorize]
         public async Task<IActionResult> CreateAsync([FromBody] InitialBriefInfo briefInfo)
         {
+            if (briefInfo.BriefInfo.Type != BriefType.Initial)
+            {
+                var key = nameof(InitialBriefInfo.BriefInfo) + "." + nameof(BriefInfo.Type);
+                ModelState.TryAddModelError(key, "Type mismatch");
+            }
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -122,6 +127,11 @@ namespace BriefAssistant.Controllers
         [Authorize]
         public async Task<IActionResult> CreateAsync([FromBody] ReplyBriefInfo briefInfo)
         {
+            if (briefInfo.BriefInfo.Type != BriefType.Reply)
+            {
+                var key = nameof(ReplyBriefInfo.BriefInfo) + "." + nameof(BriefInfo.Type);
+                ModelState.TryAddModelError(key, "Type mismatch");
+            }
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -157,6 +167,11 @@ namespace BriefAssistant.Controllers
         [Authorize]
         public async Task<IActionResult> CreateAsync([FromBody] ResponseBriefInfo briefInfo)
         {
+            if (briefInfo.BriefInfo.Type != BriefType.Response)
+            {
+                var key = nameof(ResponseBriefInfo.BriefInfo) + "." + nameof(BriefInfo.Type);
+                ModelState.TryAddModelError(key, "Type mismatch");
+            }
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
