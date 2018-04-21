@@ -19,6 +19,11 @@ export class AppComponent {
   toggle() {
     this.isExpanded = !this.isExpanded;
   }
+
+  onActivate(event) {
+    window.scroll(0, 0);
+  }
+
   constructor(private oAuthService: OAuthService, @Inject('BASE_URL') private baseUrl: string, public accountService: AccountService) {
     this.oAuthService.configure(authConfig(this.baseUrl));
     //this.oAuthService.setStorage(localStorage);

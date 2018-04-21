@@ -1,18 +1,4 @@
 <form #f="ngForm">
-  <h1>Title of Document</h1>
-  <div class="form-group">
-    <div class="form-inline">
-      <input type="text" id="title" style="width: 50%;" class="form-control" [(ngModel)]="replyInfo.briefInfo.title" #title="ngModel" maxlength="100" name="title" placeholder="Example Brief" required>
-      <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger" id="title-errors">
-        <div *ngIf="title.errors.required">
-          Document must have a title.
-        </div>
-        <div *ngIf="title.errors.maxlength">
-          Document title cannot be that long.
-        </div>
-      </div>
-    </div>
-  </div>
   <h1>Your Information</h1>
   <div class="form-group">
     <label for="name" class="col-form-label">Name</label>
@@ -216,6 +202,20 @@
         Wis. Stat. &sect;809.19(1)(e)
       </a>.
     </small>
+  </div>
+  <h1>Document Filename</h1>
+  <div class="form-group">
+    <div class="form-inline">
+      <input type="text" id="title" style="width: 50%;" class="form-control" [(ngModel)]="replyInfo.briefInfo.title" #title="ngModel" maxlength="100" name="title" placeholder="Example Brief" required>
+      <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger" id="title-errors">
+        <div *ngIf="title.errors.required">
+          Document must have a filename.
+        </div>
+        <div *ngIf="title.errors.maxlength">
+          Document filename cannot be that long.
+        </div>
+      </div>
+    </div>
   </div>
   <button class="btn btn-primary" id="replyFormBackButton" name="replyFormBackButton" routerLink="/reply-example" routerLinkActive="active">Back to Example</button>
   <button class="btn btn-primary" id="replyFormSaveButton" name="replyFormSaveButton" (click)="updateBrief()">Save And Finish Later</button>

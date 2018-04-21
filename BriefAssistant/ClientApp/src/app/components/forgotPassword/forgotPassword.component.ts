@@ -9,7 +9,8 @@ import { EmailRequest } from "../../models/EmailRequest"
     templateUrl: "./forgotPassword.component.html",
 })
 export class ForgotPasswordComponent {
-model = new EmailRequest();
+  model = new EmailRequest();
+  public showEmailSentNotification: boolean = false;
 
     constructor(
         private readonly http: HttpClient
@@ -21,7 +22,7 @@ model = new EmailRequest();
 
         this.http.post("/api/account/forgotPassword", body, { headers: headers })
             .subscribe(res => {
-                console.log(res);
+              this.showEmailSentNotification = true;
             });
     }
 }
