@@ -87,6 +87,11 @@ namespace BriefAssistant.Controllers
         [Authorize]
         public async Task<IActionResult> CreateAsync([FromBody] InitialBriefInfo briefInfo)
         {
+            if (briefInfo.BriefInfo.Type != BriefType.Initial)
+            {
+                var key = nameof(InitialBriefInfo.BriefInfo) + "." + nameof(BriefInfo.Type);
+                ModelState.TryAddModelError(key, "Type mismatch");
+            }
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -96,7 +101,6 @@ namespace BriefAssistant.Controllers
 
             var initialBriefDto = Mapper.Map<InitialBriefDto>(briefInfo);
             initialBriefDto.ApplicationUserId = currentUser.Id;
-            initialBriefDto.BriefDto.Type = BriefType.Initial;
             initialBriefDto.BriefDto.ApplicationUserId = currentUser.Id;
             initialBriefDto.BriefDto.CircuitCourtCaseDto.ApplicationUserId = currentUser.Id;
             initialBriefDto.BriefDto.ContactInfoDto.ApplicationUserId = currentUser.Id;
@@ -123,6 +127,11 @@ namespace BriefAssistant.Controllers
         [Authorize]
         public async Task<IActionResult> CreateAsync([FromBody] ReplyBriefInfo briefInfo)
         {
+            if (briefInfo.BriefInfo.Type != BriefType.Reply)
+            {
+                var key = nameof(ReplyBriefInfo.BriefInfo) + "." + nameof(BriefInfo.Type);
+                ModelState.TryAddModelError(key, "Type mismatch");
+            }
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -132,7 +141,6 @@ namespace BriefAssistant.Controllers
 
             var replyBriefDto = Mapper.Map<ReplyBriefDto>(briefInfo);
             replyBriefDto.ApplicationUserId = currentUser.Id;
-            replyBriefDto.BriefDto.Type = BriefType.Reply;
             replyBriefDto.BriefDto.ApplicationUserId = currentUser.Id;
             replyBriefDto.BriefDto.CircuitCourtCaseDto.ApplicationUserId = currentUser.Id;
             replyBriefDto.BriefDto.ContactInfoDto.ApplicationUserId = currentUser.Id;
@@ -145,8 +153,45 @@ namespace BriefAssistant.Controllers
             return Created($"/briefs/{briefInfo.Id}", briefInfo);
         }
 
-        //TODO add ResponseCreate
-        //TODO add PetitionCreate
+        /// <summary>
+        /// Creates a new response brief database object
+        /// </summary>
+        /// <param name="briefInfo">
+        /// The object that holds the necessary responseBrief data
+        /// </param>
+        /// <returns>
+        /// 201 if successfully created
+        /// 400 if the request body is malformed
+        /// </returns>
+        [HttpPost("responsecreate")]
+        [Authorize]
+        public async Task<IActionResult> CreateAsync([FromBody] ResponseBriefInfo briefInfo)
+        {
+            if (briefInfo.BriefInfo.Type != BriefType.Response)
+            {
+                var key = nameof(ResponseBriefInfo.BriefInfo) + "." + nameof(BriefInfo.Type);
+                ModelState.TryAddModelError(key, "Type mismatch");
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            var responseBriefDto = Mapper.Map<ResponseBriefDto>(briefInfo);
+            responseBriefDto.ApplicationUserId = currentUser.Id;
+            responseBriefDto.BriefDto.ApplicationUserId = currentUser.Id;
+            responseBriefDto.BriefDto.CircuitCourtCaseDto.ApplicationUserId = currentUser.Id;
+            responseBriefDto.BriefDto.ContactInfoDto.ApplicationUserId = currentUser.Id;
+            await _applicationContext.Responses.AddAsync(responseBriefDto);
+            await _applicationContext.SaveChangesAsync();
+
+            briefInfo.Id = responseBriefDto.BriefId;
+            briefInfo.BriefInfo.Id = responseBriefDto.BriefId;
+
+            return Created($"/briefs/{responseBriefDto.BriefId}", briefInfo);
+        }
 
         /// <summary>
         /// Updates an existing brief database object
@@ -314,15 +359,58 @@ namespace BriefAssistant.Controllers
 
             UpdateExistingBrief(existingBrief.BriefDto, briefInfo.BriefInfo);
 
-            //TODO existingReplyBrief.variable = replyInfo.variable; if such variables exist in the future
-
             await _applicationContext.SaveChangesAsync();
 
             return Json(briefInfo);
         }
 
-        //TODO add ResponseUpdate
-        //TODO add PetitionUpdate
+        /// <summary>
+        /// Updates an existing response brief database object
+        /// </summary>
+        /// <param name="id">
+        /// The id of the brief being updated
+        /// </param>
+        /// <param name="briefInfo">
+        /// The object that holds the new responseBrief information
+        /// </param>
+        /// <returns>
+        /// 200 if the brief is updated successfully
+        /// 400 if the request is not in the correct format
+        /// 403 if the user id of the brief does not match the user id of the currently logged in user
+        /// 404 if there is no existing brief with the given id
+        /// </returns>
+        [HttpPut("responseupdate/{id}")]
+        public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] ResponseBriefInfo briefInfo)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var existingBrief = await FindResponseBriefAsync(id);
+
+            if (existingBrief == null)
+            {
+                return NotFound();
+            }
+
+            var authResult = await _authorizationService.AuthorizeAsync(User, existingBrief, Operations.Update);
+            if (!authResult.Succeeded)
+            {
+                return Forbid();
+            }
+
+            UpdateExistingBrief(existingBrief.BriefDto, briefInfo.BriefInfo);
+
+            existingBrief.IssuesPresented = briefInfo.IssuesPresented;
+            existingBrief.OralArgumentStatement = briefInfo.OralArgumentStatement;
+            existingBrief.PublicationStatement = briefInfo.PublicationStatement;
+            existingBrief.CaseFactsStatement = briefInfo.CaseFactsStatement;
+
+            await _applicationContext.SaveChangesAsync();
+
+            return Json(briefInfo);
+        }
 
         /// <summary>
         /// Retrieves the list of briefs created by the currently logged in user
@@ -465,8 +553,42 @@ namespace BriefAssistant.Controllers
             return Json(briefInfo);
         }
 
-        //TODO add GetResponseBriefAsync
-        //TODO add GetPetitionBriefAsync
+        /// <summary>
+        /// Retreives an response brief with a given ID
+        /// </summary>
+        /// <param name="id">
+        /// The ID of the brief being retrieved
+        /// </param>
+        /// <returns>
+        /// A JSON object of the brief if the brief is retrieved successfully
+        /// 400 if the id of the brief is the default GUID value
+        /// 403 if the user id of brief does not match the currently logged in user
+        /// 404 if the brief could not be found
+        /// </returns>
+        [HttpGet("responses/{id}")]
+        public async Task<IActionResult> GetResponseBriefAsync(Guid id)
+        {
+            if (id == default(Guid))
+            {
+                return BadRequest();
+            }
+
+            ResponseBriefDto dto = await FindResponseBriefAsync(id);
+            if (dto == null)
+            {
+                return NotFound();
+            }
+
+            var authResult = await _authorizationService.AuthorizeAsync(User, dto, Operations.Read);
+            if (!authResult.Succeeded)
+            {
+                return Forbid();
+            }
+
+            var briefInfo = Mapper.Map<ResponseBriefInfo>(dto);
+
+            return Json(briefInfo);
+        }
 
         /// <summary>
         /// Retrieves the brief database object with the given id
@@ -495,10 +617,25 @@ namespace BriefAssistant.Controllers
             }
 
             BriefDto dto = await FindBriefAsync(id);
+
             var authResult = await _authorizationService.AuthorizeAsync(User, dto, Operations.Delete);
             if (!authResult.Succeeded)
             {
                 return Forbid();
+            }
+
+            if (dto.Type == BriefType.Initial)
+            {
+                InitialBriefDto initialBriefDto = await FindInitialBriefAsync(id);
+                _applicationContext.Initials.Remove(initialBriefDto);
+            } else if (dto.Type == BriefType.Reply)
+            {
+                ReplyBriefDto replyBriefDto = await FindReplyBriefAsync(id);
+                _applicationContext.Replies.Remove(replyBriefDto);
+            } else if (dto.Type == BriefType.Response)
+            {
+                ResponseBriefDto responseBriefDto = await FindResponseBriefAsync(id);
+                _applicationContext.Responses.Remove(responseBriefDto);
             }
             _applicationContext.Briefs.Remove(dto);
             _applicationContext.SaveChanges();
@@ -517,9 +654,9 @@ namespace BriefAssistant.Controllers
         private async Task<InitialBriefDto> FindInitialBriefAsync(Guid id)
         {
             return await _applicationContext.Initials
-                .Include(intialDto => intialDto.BriefDto)
-                .Include(intialDto => intialDto.BriefDto.ContactInfoDto)
-                .Include(intialDto => intialDto.BriefDto.CircuitCourtCaseDto)
+                .Include(initialDto => initialDto.BriefDto)
+                .Include(initialDto => initialDto.BriefDto.ContactInfoDto)
+                .Include(initialDto => initialDto.BriefDto.CircuitCourtCaseDto)
                 .SingleAsync(briefDto => briefDto.BriefId == id);
         }
 
@@ -541,8 +678,23 @@ namespace BriefAssistant.Controllers
                 .SingleAsync(briefDto => briefDto.BriefId == id);
         }
 
-        //TODO add FindResponseBriefAsync
-        //TODO add FindPetitionBriefAsync
+        /// <summary>
+        /// Retrieves the response brief database object with the given id
+        /// </summary>
+        /// <param name="id">
+        /// The ID of the brief being retrieved
+        /// </param>
+        /// <returns>
+        /// The brief database object associated with the ID
+        /// </returns>
+        private async Task<ResponseBriefDto> FindResponseBriefAsync(Guid id)
+        {
+            return await _applicationContext.Responses
+                .Include(responseDto => responseDto.BriefDto)
+                .Include(responseDto => responseDto.BriefDto.ContactInfoDto)
+                .Include(responseDto => responseDto.BriefDto.CircuitCourtCaseDto)
+                .SingleAsync(briefDto => briefDto.BriefId == id);
+        }
 
         /// <summary>
         /// Writes a given brief to an output stream
@@ -605,7 +757,6 @@ namespace BriefAssistant.Controllers
                     InitialBriefDto init = await FindInitialBriefAsync(briefInfo.Id);
                     if (init != null)
                     {
-                        //var authResult = await _authorizationService.AuthorizeAsync(User, init, Operations.Read);
                         var info = Mapper.Map<InitialBriefInfo>(init);
                         exportData.SetInitialInformation(info);
                     }
@@ -613,22 +764,17 @@ namespace BriefAssistant.Controllers
                     break;
                 case BriefType.Reply:
                     templateName = "replyBriefTemplate.docx";
-                    ReplyBriefDto reply = await FindReplyBriefAsync(briefInfo.Id);
-                    if (reply != null)
-                    {
-                        //var authResult = await _authorizationService.AuthorizeAsync(User, reply, Operations.Read);
-                        var info = Mapper.Map<ReplyBriefInfo>(reply);
-                        exportData.SetReplyInformation(info);
-                    }
 
                     break;
                 case BriefType.Response:
                     templateName = "responseBriefTemplate.docx";
-                    //TODO
-                    break;
-                case BriefType.Petition:
-                    templateName = "petitionForReviewTemplate.docx";
-                    //TODO
+                    ResponseBriefDto resp = await FindResponseBriefAsync(briefInfo.Id);
+                    if (resp != null)
+                    {
+                        var info = Mapper.Map<ResponseBriefInfo>(resp);
+                        exportData.SetResponseInformation(info);
+                    }
+
                     break;
             }
 

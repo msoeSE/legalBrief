@@ -1,0 +1,86 @@
+<div>
+    <p>
+        Congratulations! You have completed the Brief Assistant App!
+        <br />
+        You can download your brief by clicking the button.
+    </p>
+    <p>
+        <button class="btn btn-success" (click)="download()">Download</button>
+    </p>
+    <form class="form-inline" #emailForm="ngForm" (ngSubmit)="onSubmit(emailForm)">
+        <div class="form-group">
+            <input type="email" id="email-send" class="form-control" [(ngModel)]="model.email" name="email" placeholder="johndoe@example.com">
+            <button class="btn btn-success" type="submit">Email</button>
+        </div>
+    </form>
+</div>
+<div>
+    <p style="padding-top: 10px;">
+        <b>PLEASE FOLLOW THE STEPS BELOW BEFORE FILING YOUR BRIEF WITH THE COURT OF APPEALS.</b>
+    </p>
+    <p>
+        1. The Brief Assistant does NOT produce a completed brief. Do NOT file the brief you downloaded. You must fill out the various sections of your brief before filing it.
+    </p>
+    <p>
+        2. When you write the Statement of Case and Facts section of your brief, be sure to insert a "record citation" for each fact you assert. A "record citation" refers to the Index of the Record on Appeal--a document that the circuit court sent to you.
+    </p>
+    <p>
+        3. When you write the Argument section of your brief, be sure to cite to legal authorities to support your arguments. Legal authorities include cases, statutes, constitutions, and regulations.
+        <ul>
+            <li>
+                To find a broad range of legal resources and to "ask a librarian" visit the Wisconsin State Law Library's website:
+                <a href="http://wilawlibrary.gov/" target="_blank">http://wilawlibrary.gov</a>
+            </li>
+            <li>
+                To consult with a lawyer about the law that the Court of Appeals will apply to the issues in your appeal, visit Wisconsin Legal Advice Online:
+                <a href="https://wi.freelegalanswers.org/" target="_blank">https://wi.freelegalanswers.org/</a>
+            </li>
+            <li>
+                To find case law, visit Google Scholar, select "case law" and the appropriate court(s).
+                <a href="https://scholar.google.com/" target="_blank">https://scholar.google.com/</a>
+            </li>
+            <li>
+                To find statutes, constitutions and administrative rules visit the Wisconsin State Legislature's website and click "Law and Legislation."
+                <a href="http://legis.wisconsin.gov/" target="_blank">http://legis.wisconsin.gov/</a>
+            </li>
+        </ul>
+    <p>
+        4. After you finish writing your brief, you must list all of the legal authorities that it cites in your Table of Authorities and indicate the page number of your brief where the legal authority appears.
+    </p>
+    <p>
+        5. After you finish writing your brief, you must list all of the sections of the brief in your Table of Contents and indicate the page number of your brief where the section appears.
+    </p>
+    <p>
+        6. Include the date you will be filing your brief after the Conclusion, and after the Certificate of Compliance with Rule. This will be indicated by the text "INSERT FILING DATE HERE".
+    </p>
+    <p>
+        7. Include the word count in the CERTIFICATION AS TO FORM/LENGTH section of the brief. This will be indicated by the text "INSERT WORD COUNT HERE". An Response Brief may not exceed 11,000 words. This word limit applies only to the Statement of Case and Facts, the Argument, and the Conclusion portions of the Response Brief.
+    </p>
+    <p>
+        8. Sign and date the last page of your brief.
+    </p>
+    <p>
+        9. Complete and sign the Form and Length Certification.
+    </p>
+    <p>
+        10. Complete and sign the Certification of Appendix.
+    </p>
+    <p>
+        11. Attach copies of the documents you want to include in your Appendix, with the corresponding page numbers, at the end of your brief--behind the page called Index to Appendix and before the page called Certification of Appendix.
+    </p>
+    <p>
+        12. You will need to file 10 copies of the brief with the Court of Appeals. If a court has found you indigent, then you may file 5 copies (in a 3-judge appeal) or only 3 copies (in a 1-judge appeal). You will also need to send 3 copies of your brief to your opponent or his lawyer, if he has one.
+    </p>
+    <p>
+        13. Make sure all copies of your brief are stapled down the left side.
+    </p>
+    <p>
+        14. To learn more about how to prepare and file a brief in the Court of Appeals, click Guide to Appellate Procedure for the Self-Represented (
+        <a href="https://www.wicourts.gov/publications/guides/docs/proseappealsguide.pdf" target="_blank">https://www.wicourts.gov/publications/guides/docs/proseappealsguide.pdf</a>). Also, to consult a lawyer about the form of your brief and how to file a brief, call, text or email the Appellate Help Desk: 414-671-9041;
+        <a href="mailto:appellatehelp@gmail.com">appellatehelp@gmail.com</a>. It is open on Tuesdays and Thursdays.
+    </p>
+    <p>
+        <b>Thank you for using the Brief Assistant!</b>
+    </p>
+</div>
+<button class="btn btn-primary" type="submit"  routerLink="/response-form" routerLinkActive="active">Back to Form</button>

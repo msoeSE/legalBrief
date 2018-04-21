@@ -1,4 +1,5 @@
 import { BriefInfo } from "./BriefInfo";
+import { BriefType } from "./BriefType";
 
 export class ReplyBriefInfo {
   id: string;
@@ -6,5 +7,6 @@ export class ReplyBriefInfo {
 
   constructor() {
     this.briefInfo = new BriefInfo();
+    this.briefInfo.type = BriefType.Reply;
   }
 }
