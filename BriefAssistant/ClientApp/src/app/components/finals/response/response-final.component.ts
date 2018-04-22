@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from "@angular/forms";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -13,6 +13,7 @@ export class ResponseFinalComponent {
 	id: string | null;
 
     constructor(
+      readonly router: Router,
       private readonly http: HttpClient,
 		  private route: ActivatedRoute
 	  ){}
@@ -49,5 +50,9 @@ export class ResponseFinalComponent {
 
 	ngOnInit() {
 		this.id = this.route.snapshot.paramMap.get('id');
-	}
+    }
+
+  backToForm() {
+    this.router.navigate(["/response-form", this.id]);
+  }
 }
