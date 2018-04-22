@@ -1,6 +1,5 @@
 ﻿exports.config = {
-    //seleniumAddress: 'http://localhost:4444/wd/hub',
-    specs: ['initial-form-validation-spec.js', 'registration-validation-spec.js'],
+    specs: ['form-validation-spec.js', 'registration-validation-spec.js', 'reply-form-validation-spec.js'], //'response-form-validation-spec.js'],
     framework: 'jasmine2',
 
     capabilities: {

@@ -10,6 +10,7 @@ namespace BriefAssistant.Data
         public IList<BriefDto> Briefs { get; set; }
         public IList<InitialBriefDto> Initials { get; set; }
         public IList<ReplyBriefDto> Replies { get; set; }
+        public IList<ResponseBriefDto> Responses { get; set; }
         public IList<CircuitCourtCaseDto> Cases { get; set; }
     }
 }
