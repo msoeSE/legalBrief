@@ -37,6 +37,7 @@ export class LoginRegisterComponent {
 
     onRegisterSubmit(form: NgForm) {
         this.showRegisterSuccessDiv = false;
+        this.showRegisterFailDiv = false;
         this.disableSignupButton = true;
         var body = JSON.stringify(this.registerModel);
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
