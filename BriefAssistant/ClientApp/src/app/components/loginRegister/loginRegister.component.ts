@@ -17,7 +17,8 @@ export class LoginRegisterComponent {
     registerModel = new RegistrationRequest();
   public showRegisterSuccessDiv: boolean = false;
   public showRegisterFailDiv: boolean = false;
-    public showLoginUnauthorizedDiv: boolean = false;
+  public showLoginUnauthorizedDiv: boolean = false;
+  public disableSignupButton: boolean = false;
 
     constructor(
 		private readonly http: HttpClient,
@@ -36,6 +37,7 @@ export class LoginRegisterComponent {
 
     onRegisterSubmit(form: NgForm) {
         this.showRegisterSuccessDiv = false;
+        this.disableSignupButton = true;
         var body = JSON.stringify(this.registerModel);
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
@@ -45,5 +47,6 @@ export class LoginRegisterComponent {
           }, err => {
             this.showRegisterFailDiv = true;
           });
+        this.disableSignupButton = true;
     }
 }

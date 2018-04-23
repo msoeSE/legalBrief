@@ -11,18 +11,21 @@ import { EmailRequest } from "../../models/EmailRequest"
 export class ForgotPasswordComponent {
   model = new EmailRequest();
   public showEmailSentNotification: boolean = false;
+  public disableButton: boolean = false;
 
     constructor(
         private readonly http: HttpClient
     ) { }
 
     onSubmit(form: NgForm) {
-        var body = JSON.stringify(this.model);
-        let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-
-        this.http.post("/api/account/forgotPassword", body, { headers: headers })
-            .subscribe(res => {
-              this.showEmailSentNotification = true;
-            });
+      this.disableButton = true;
+      var body = JSON.stringify(this.model);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.showEmailSentNotification = false;
+      this.http.post("/api/account/forgotPassword", body, { headers: headers })
+        .subscribe(res => {
+            this.showEmailSentNotification = true;
+        });
+      this.disableButton = false;
     }
 }
