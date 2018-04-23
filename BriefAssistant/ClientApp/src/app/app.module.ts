@@ -49,7 +49,6 @@ NgModule({
     MainWelcomeComponent,
     NotFoundComponent,
     PasswordValidator,
-    PetitionWelcomeComponent,
     ReplyFinalComponent,
     ReplyFormComponent,
     ReplyExampleComponent,
@@ -65,7 +64,7 @@ NgModule({
     ConfirmationComponent,
     BriefsListComponent,
     NotFoundComponent,
-    PasswordValidator
+    PasswordValidator,
     ResetPasswordComponent
   ],
   imports: [
