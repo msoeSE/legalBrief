@@ -24,7 +24,7 @@
         <label class="col-form-label">Don't have an account? Register for free</label>
     </div>
     <div class="form-group">
-        <input class="form-control" id="registrationEmail" type="email" [(ngModel)]="registerModel.email" name="registrationEmail" placeholder="Email" required #registrationEmail="ngModel" />
+        <input class="form-control" id="registrationEmail" type="email" [(ngModel)]="registerModel.email" [email]="true" name="registrationEmail" placeholder="Email" required #registrationEmail="ngModel" />
         <div *ngIf="registrationEmail.invalid && (registrationEmail.dirty || registrationEmail.touched)" class="alert alert-danger" id="registrationEmail-errors">
             <div *ngIf="registrationEmail.errors">
                 Valid email is required.
@@ -47,17 +47,20 @@
         </div>
     </div>
     <div class="form-group">
-        <input class="form-control" id="registrationPasswordCheck" type="password" name="registrationPasswordCheck" [(ngModel)]="registerModel.confirmPassword" placeholder="Confirm Password" validateEqual="registrationPassword" reverse="false" #registrationPasswordCheck="ngModel" required />
-        <div *ngIf="registrationPasswordCheck.invalid && (registrationPasswordCheck.touched || registrationPasswordCheck.dirty)" class="alert alert-danger" id="registrationPasswordCheck-errors">
-            <div *ngIf="registrationPasswordCheck.errors">
-                Password mismatch
-            </div>
+      <input class="form-control" id="registrationPasswordCheck" type="password" name="registrationPasswordCheck" [(ngModel)]="registerModel.confirmPassword" placeholder="Confirm Password" validateEqual="registrationPassword" reverse="false" #registrationPasswordCheck="ngModel" required />
+      <div *ngIf="registrationPasswordCheck.invalid && (registrationPasswordCheck.touched || registrationPasswordCheck.dirty)" class="alert alert-danger" id="registrationPasswordCheck-errors">
+        <div *ngIf="registrationPasswordCheck.errors">
+          Password mismatch
         </div>
-        <div class="alert alert-success" *ngIf="showRegisterSuccessDiv">
-            Registration Successful. Check your email for a confirmation link.
-        </div>
+      </div>
+      <div class="alert alert-success" *ngIf="showRegisterSuccessDiv">
+        Registration Successful. Check your email for a confirmation link.
+      </div>
+      <div class="alert alert-danger" *ngIf="showRegisterFailDiv">
+        Registration failed. Email provided may already be in use.
+      </div>
     </div>
     <div class="form-group">
-        <button class="btn btn-primary" id="signupButton" name="signupButton" type="submit" [disabled]="!registerForm.valid">Sign Up</button>
+        <button class="btn btn-primary" id="signupButton" name="signupButton" type="submit" [disabled]="!registerForm.valid || disableSignupButton">Sign Up</button>
     </div>
 </form>

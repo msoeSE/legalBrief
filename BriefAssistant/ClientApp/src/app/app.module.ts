@@ -17,7 +17,6 @@ import { MainWelcomeComponent } from './components/welcomes/main/main-welcome.co
 import { InitialWelcomeComponent } from './components/welcomes/initial/initial-welcome.component';
 import { ReplyWelcomeComponent } from './components/welcomes/reply/reply-welcome.component';
 import { ResponseWelcomeComponent } from './components/welcomes/response/response-welcome.component';
-import { PetitionWelcomeComponent } from './components/welcomes/petition/petition-welcome.component';
 import { InitialExampleComponent } from './components/examples/initial/initial-example.component';
 import { ReplyExampleComponent } from './components/examples/reply/reply-example.component';
 import { ResponseExampleComponent } from './components/examples/response/response-example.component';
@@ -50,7 +49,6 @@ NgModule({
     MainWelcomeComponent,
     NotFoundComponent,
     PasswordValidator,
-    PetitionWelcomeComponent,
     ReplyFinalComponent,
     ReplyFormComponent,
     ReplyExampleComponent,
@@ -59,8 +57,15 @@ NgModule({
     ResponseFinalComponent,
     ResponseFormComponent,
     ResponseWelcomeComponent,
+    InitialExampleComponent,
+    LoginRegisterComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
+    ConfirmationComponent,
+    BriefsListComponent,
+    NotFoundComponent,
+    PasswordValidator,
     ResetPasswordComponent
-    
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -78,7 +83,6 @@ NgModule({
       { path: 'initial-welcome', component: InitialWelcomeComponent },
       { path: 'reply-welcome', component: ReplyWelcomeComponent },
       { path: 'response-welcome', component: ResponseWelcomeComponent },
-      { path: 'petition-welcome', component: PetitionWelcomeComponent },
       { path: 'initial-final/:id', component: InitialFinalComponent, canActivate: [AuthGuard] },
       { path: 'initial-form', component: InitialFormComponent, canActivate: [AuthGuard] },
       { path: 'initial-form/:id', component: InitialFormComponent, canActivate: [AuthGuard] },

@@ -37,8 +37,23 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\src\app\components\examples\petition\**" />
+    <Compile Remove="ClientApp\src\app\components\finals\petition\**" />
+    <Compile Remove="ClientApp\src\app\components\forms\petition\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\src\app\components\examples\petition\**" />
+    <Content Remove="ClientApp\src\app\components\finals\petition\**" />
+    <Content Remove="ClientApp\src\app\components\forms\petition\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="ClientApp\src\app\components\examples\petition\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\components\finals\petition\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\components\forms\petition\**" />
+    <None Remove="ClientApp\src\app\components\examples\petition\**" />
+    <None Remove="ClientApp\src\app\components\finals\petition\**" />
+    <None Remove="ClientApp\src\app\components\forms\petition\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -60,9 +75,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\app\components\examples\petition\" />
-    <Folder Include="ClientApp\src\app\components\finals\petition\" />
-    <Folder Include="ClientApp\src\app\components\forms\petition\" />
+    <Folder Include="ClientApp\src\app\components\examples\response\" />
+    <Folder Include="ClientApp\src\app\components\finals\response\" />
+    <Folder Include="ClientApp\src\app\components\forms\response\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
