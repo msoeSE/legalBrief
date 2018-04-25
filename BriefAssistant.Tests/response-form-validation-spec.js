@@ -1,9 +1,16 @@
-﻿describe('dataform input fields', function () {
+﻿describe('response form input fields', function () {
 
     beforeEach(function () {
         //browser.waitForAngularEnabled(false);
         browser.ignoreSynchronization = true;
-        browser.get(browser.baseUrl + '/dataform');
+        browser.get(browser.baseUrl + '/response-form');
+    });
+
+    it('should display error with no title', function () {
+        var inputField = element(by.name('title'));
+        inputField.sendKeys('');
+        element(by.name('street')).click();
+        expect(browser.isElementPresent(by.id('title-errors'))).toEqual(true);
     });
 
     it('should display error with no name', function () {
@@ -151,12 +158,5 @@
         inputField.sendKeys('');
         element(by.name('street')).click();
         expect(browser.isElementPresent(by.id('conclusion-errors'))).toEqual(true);
-    });
-
-    it('should display error with no appendix documents', function () {
-        var inputField = element(by.name('appendixDocuments'));
-        inputField.sendKeys('');
-        element(by.name('street')).click();
-        expect(browser.isElementPresent(by.id('appendixDocuments-errors'))).toEqual(true);
     });
 });

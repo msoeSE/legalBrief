@@ -9,6 +9,7 @@ namespace BriefAssistant.Data
         public DbSet<BriefDto> Briefs { get; set; }
         public DbSet<InitialBriefDto> Initials { get; set; }
         public DbSet<ReplyBriefDto> Replies { get; set; }
+        public DbSet<ResponseBriefDto> Responses { get; set; }
         public DbSet<CircuitCourtCaseDto> Cases { get; set; }
         public DbSet<ContactInfoDto> Contacts { get; set; }
 

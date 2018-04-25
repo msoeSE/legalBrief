@@ -1,43 +1,33 @@
 <h2>Welcome to the Brief Assistant!</h2>
-<h4>Begin the process by selecting the appropriate Brief below or by using the Create Brief dropdown at the top!</h4>
+<h4>Begin the process by selecting the appropriate Brief below or by using the navigation bar at the top!</h4>
 <div class="row" id="upper-row-panel">
-    <div class="col-sm-6">
-        <div class="card">
-            <div class="card-block">
-                <h3 class="card-title">Initial Brief</h3>
-                <button [routerLink]="['/initial-welcome']" class="btn btn-primary">Go to Initial Brief</button>
-            </div>
-        </div>
+  <div class="col-sm-4">
+    <div class="card">
+      <div class="card-block">
+        <h3 class="card-title">Initial Brief</h3>
+        <button [routerLink]="['/initial-welcome']" class="btn btn-primary" id="initialWelcomeButton" name="initialWelcomeButton">Go to Initial Brief</button>
+      </div>
     </div>
-    <div class="col-sm-6">
-        <div class="card">
-            <div class="card-block">
-                <h3 class="card-title">Reply Brief</h3>
-                <button [routerLink]="['/reply-welcome']" class="btn btn-primary">Go to Reply Brief</button>
-            </div>
-        </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="card">
+      <div class="card-block">
+        <h3 class="card-title">Reply Brief</h3>
+        <button [routerLink]="['/reply-welcome']" class="btn btn-primary" id="replyWelcomeButton" name="replyWelcomeButton">Go to Reply Brief</button>
+      </div>
     </div>
-</div>
-<div class="row" id="lower-row-panel">
-    <div class="col-sm-6">
-        <div class="card">
-            <div class="card-block">
-                <h3 class="card-title">Response Brief</h3>
-                <button [routerLink]="['/response-welcome']" class="btn btn-primary" disabled>Go to Response Brief</button>
-            </div>
-        </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="card">
+      <div class="card-block">
+        <h3 class="card-title">Response Brief</h3>
+        <button [routerLink]="['/response-welcome']" class="btn btn-primary" id="responseWelcomeButton" name="responseWelcomeButton">Go to Response Brief</button>
+      </div>
     </div>
-    <div class="col-sm-6">
-        <div class="card">
-            <div class="card-block">
-                <h3 class="card-title">Petition for Review</h3>
-                <button [routerLink]="['/petition-welcome']" class="btn btn-primary" disabled>Go to Petition for Review</button>
-            </div>
-        </div>
-    </div>
+  </div>
 </div>
 <div>
-    <h4>
+    <h4 id="disclaimer">
         <b>Disclaimer:</b>
     </h4>
     <p>

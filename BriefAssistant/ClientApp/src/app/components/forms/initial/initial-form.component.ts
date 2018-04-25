@@ -80,8 +80,8 @@ export class InitialFormComponent implements OnInit {
     this.saveBrief()
       .subscribe(brief => {
         this.initialInfo.id = brief.id;
-        this.initialInfo.briefInfo.id = brief.briefInfo.id
-        this.router.navigate(["/initial-final", brief.briefInfo.id]);
-      });
-  }
+		    this.initialInfo.briefInfo.id = brief.briefInfo.id;
+		    this.router.navigate(["/initial-final", brief.briefInfo.id]);
+		  });
+	}
 }

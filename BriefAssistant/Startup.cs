@@ -24,7 +24,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 using OpenIddict.Core;
 using OpenIddict.Models;
-using Serilog.Core;
 
 namespace BriefAssistant
 {
@@ -176,7 +175,7 @@ namespace BriefAssistant
                 app.UseRewriter(new RewriteOptions().AddRedirectToHttpsPermanent());
             }
 
-            RegisterOdicClients(app).GetAwaiter().GetResult();
+            SetupDatabase(app).GetAwaiter().GetResult();
 
             app.UseAuthentication();
 
@@ -206,37 +205,47 @@ namespace BriefAssistant
             CreateRoles(app).GetAwaiter().GetResult();
         }
 
-        private async Task RegisterOdicClients(IApplicationBuilder app, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task SetupDatabase(IApplicationBuilder app, CancellationToken cts = default(CancellationToken))
         {
-            // Create a new service scope to ensure the database context is correctly disposed when this methods returns.
             using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                await context.Database.EnsureCreatedAsync(cancellationToken);
-
-                // Note: when using a custom entity or a custom key type, replace OpenIddictApplication by the appropriate type.
-                var manager = scope.ServiceProvider.GetRequiredService<OpenIddictApplicationManager<OpenIddictApplication<Guid>>>();
-
-                var hostUrl = Configuration["HostUrl"];
-
-                const string clientId = "angular-client";
-                if (await manager.FindByClientIdAsync(clientId, cancellationToken) == null)
+                if (Environment.IsDevelopment())
                 {
-                    
-                    var descriptor = new OpenIddictApplicationDescriptor
+                    await context.Database.EnsureCreatedAsync(cts);
+                }
+                else
+                {
+                    await context.Database.MigrateAsync(cts);
+                }
+
+                var openIddictManager = scope.ServiceProvider.GetRequiredService<OpenIddictApplicationManager<OpenIddictApplication<Guid>>>();
+                await RegisterOdicClients(openIddictManager, cts);
+            }
+        }
+
+        private async Task RegisterOdicClients(OpenIddictApplicationManager<OpenIddictApplication<Guid>> manager,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Note: when using a custom entity or a custom key type, replace OpenIddictApplication by the appropriate type.
+            var hostUrl = Configuration["HostUrl"];
+
+            const string clientId = "angular-client";
+            if (await manager.FindByClientIdAsync(clientId, cancellationToken) == null)
+            {
+                var descriptor = new OpenIddictApplicationDescriptor
+                {
+                    ClientId = clientId,
+                    DisplayName = "Angular Client",
+                    PostLogoutRedirectUris = {new Uri($"{hostUrl}signout-odic")},
+                    RedirectUris = {new Uri(hostUrl)},
+                    Permissions =
                     {
-                        ClientId = clientId,
-                        DisplayName = "Angular Client",
-                        PostLogoutRedirectUris = { new Uri($"{hostUrl}signout-odic")},
-                        RedirectUris = {new Uri(hostUrl) },
-                        Permissions =
-                        {
-                            OpenIddictConstants.Permissions.Endpoints.Token,
-                            OpenIddictConstants.Permissions.GrantTypes.Password,
-                            OpenIddictConstants.Permissions.GrantTypes.RefreshToken,
-                            OpenIddictConstants.Permissions.Endpoints.Introspection
-                        }
-                    };
+                        OpenIddictConstants.Permissions.Endpoints.Token,
+                        OpenIddictConstants.Permissions.GrantTypes.Password,
+                        OpenIddictConstants.Permissions.GrantTypes.RefreshToken
+                    }
+                };
 
                     await manager.CreateAsync(descriptor, cancellationToken);
                 }

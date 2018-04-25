@@ -15,8 +15,10 @@ import { UserType } from '../../models/UserType';
 export class LoginRegisterComponent {
     loginModel = new LoginRequest();
     registerModel = new RegistrationRequest();
-    public showRegisterSuccessDiv: boolean = false;
-    public showLoginUnauthorizedDiv: boolean = false;
+  public showRegisterSuccessDiv: boolean = false;
+  public showRegisterFailDiv: boolean = false;
+  public showLoginUnauthorizedDiv: boolean = false;
+  public disableSignupButton: boolean = false;
 
     constructor(
       private readonly http: HttpClient,
@@ -37,12 +39,17 @@ export class LoginRegisterComponent {
 
     onRegisterSubmit(form: NgForm) {
         this.showRegisterSuccessDiv = false;
+        this.showRegisterFailDiv = false;
+        this.disableSignupButton = true;
         var body = JSON.stringify(this.registerModel);
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
         this.http.post("/api/account/register", body, { headers: headers })
-			.subscribe(res => {
+          .subscribe(res => {
                 this.showRegisterSuccessDiv = true;
-	        });
+          }, err => {
+            this.showRegisterFailDiv = true;
+          });
+        this.disableSignupButton = true;
     }
 }

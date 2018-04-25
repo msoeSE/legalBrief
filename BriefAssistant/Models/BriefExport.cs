@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Runtime.Serialization;
 
 namespace BriefAssistant.Models
@@ -6,6 +8,18 @@ namespace BriefAssistant.Models
     [DataContract(Namespace = "")]
     public class BriefExport
     {
+        [DataContract(Namespace = "")]
+        public class Paragraph
+        {
+            public Paragraph(string value)
+            {
+                Value = value;
+            }
+
+            [DataMember]
+            public string Value { get; set; }
+        }
+
         [DataMember]
         public District District { get; set; }
         [DataMember]
@@ -15,17 +29,17 @@ namespace BriefAssistant.Models
         [DataMember]
         public string AppellateCourtCaseNumber { get; set; }
         [DataMember]
-        public string IssuesPresented { get; set; }
+        public IList<Paragraph> IssuesPresented { get; set; }
         [DataMember]
-        public string OralArgumentStatement { get; set; }
+        public IList<Paragraph> OralArgumentStatement { get; set; }
         [DataMember]
-        public string PublicationStatement { get; set; }
+        public IList<Paragraph> PublicationStatement { get; set; }
         [DataMember]
-        public string CaseFactsStatement { get; set; }
+        public IList<Paragraph> CaseFactsStatement { get; set; }
         [DataMember]
-        public string Argument { get; set; }
+        public IList<Paragraph> Argument { get; set; }
         [DataMember]
-        public string Conclusion { get; set; }
+        public IList<Paragraph> Conclusion { get; set; }
         [DataMember]
         public string AppendixDocuments { get; set; }
         [DataMember]
@@ -46,57 +60,126 @@ namespace BriefAssistant.Models
             ContactInfo = info.ContactInfo;
             CircuitCourtCase = info.CircuitCourtCase;
             AppellateCourtCaseNumber = info.AppellateCourtCaseNumber;
-            Argument = info.Argument;
-            Conclusion = info.Conclusion;
-            SetTopAndBottomNamesAndRoles(CircuitCourtCase.Role);
+            Argument = ToParagraphs(info.Argument);
+            Conclusion = ToParagraphs(info.Conclusion);
+            SetTopAndBottomNamesAndRoles(CircuitCourtCase.Role, info.Type);
             District = GetDistrictFromCounty(CircuitCourtCase.County);
         }
 
+        /// <summary>
+        /// Sets the information required in an initial brief
+        /// </summary>
+        /// <param name="info">
+        /// The object containing the necessary information for an initial brief
+        /// </param>
         public void SetInitialInformation(InitialBriefInfo info)
         {
-            IssuesPresented = info.IssuesPresented;
-            OralArgumentStatement = info.OralArgumentStatement;
-            PublicationStatement = info.PublicationStatement;
-            CaseFactsStatement = info.CaseFactsStatement;
+            IssuesPresented = ToParagraphs(info.IssuesPresented);
+            OralArgumentStatement = ToParagraphs(info.OralArgumentStatement);
+            PublicationStatement = ToParagraphs(info.PublicationStatement);
+            CaseFactsStatement = ToParagraphs(info.CaseFactsStatement);
             AppendixDocuments = info.AppendixDocuments;
         }
 
-        public void SetReplyInformation(ReplyBriefInfo info)
+        /// <summary>
+        /// Takes a string of text and creates paragraphs from line breaks
+        /// </summary>
+        /// <param name="text">The text that will be splint into paragraphs</param>
+        /// <returns>A list of paragraphs</returns>
+        private static IList<Paragraph> ToParagraphs(string text)
         {
+            return text.Trim()
+                .Split('\n')
+                .Select(paragraph => new Paragraph(paragraph))
+                .ToList();
+        }
 
+        /// <summary>
+        /// Sets the information required in an response brief
+        /// </summary>
+        /// <param name="info">
+        /// The object containing the necessary information for an response brief
+        /// </param>
+        public void SetResponseInformation(ResponseBriefInfo info)
+        {
+            IssuesPresented = ToParagraphs(info.IssuesPresented);
+            OralArgumentStatement = ToParagraphs(info.OralArgumentStatement);
+            PublicationStatement = ToParagraphs(info.PublicationStatement);
+            CaseFactsStatement = ToParagraphs(info.CaseFactsStatement);
         }
 
         /// <summary>
         /// This method determines what order the appellant and opponent name and roles appear on the brief
         /// </summary>
         /// <param name="role">The role of the appellant</param>
-        private void SetTopAndBottomNamesAndRoles(Role role)
+        /// <param name="type">The type of brief being generated</param>
+        private void SetTopAndBottomNamesAndRoles(Role role, BriefType type)
         {
             switch (role)
             {
                 case Role.Plaintiff:
                     TopName = ContactInfo.Name;
                     BottomName = CircuitCourtCase.OpponentName;
-                    TopRole = "Plaintiff-Appellant";
-                    BottomRole = "Defendant-Respondent";
+                    switch (type)
+                    {
+                        case BriefType.Response:
+                            TopRole = "Plaintiff-Respondent";
+                            BottomRole = "Defendant-Appellant";
+                            break;
+                        default:
+                            TopRole = "Plaintiff-Appellant";
+                            BottomRole = "Defendant-Respondent";
+                            break;
+                    }
+                    
                     break;
                 case Role.Petitioner:
                     TopName = ContactInfo.Name;
                     BottomName = CircuitCourtCase.OpponentName;
-                    TopRole = "Petitioner-Appellant";
-                    BottomRole = "Respondent-Respondent";
+                    switch (type)
+                    {
+                        case BriefType.Response:
+                            TopRole = "Petitioner-Respondent";
+                            BottomRole = "Respondent-Appellant";
+                            break;
+                        default:
+                            TopRole = "Petitioner-Appellant";
+                            BottomRole = "Respondent-Respondent";
+                            break;
+                    }
+                    
                     break;
                 case Role.Defendent:
                     TopName = CircuitCourtCase.OpponentName;
                     BottomName = ContactInfo.Name;
-                    TopRole = "Plaintiff-Respondent";
-                    BottomRole = "Defendant-Appellant";
+                    switch (type)
+                    {
+                        case BriefType.Response:
+                            TopRole = "Plaintiff-Appellant";
+                            BottomRole = "Defendant-Respondent";
+                            break;
+                        default:
+                            TopRole = "Plaintiff-Respondent";
+                            BottomRole = "Defendant-Appellant";
+                            break;
+                    }
+
                     break;
                 case Role.Respondent:
                     TopName = CircuitCourtCase.OpponentName;
                     BottomName = ContactInfo.Name;
-                    TopRole = "Petitioner-Respondent";
-                    BottomRole = "Respondent-Appellant";
+                    switch (type)
+                    {
+                        case BriefType.Response:
+                            TopRole = "Petitioner-Appellant";
+                            BottomRole = "Respondent-Respondent";
+                            break;
+                        default:
+                            TopRole = "Petitioner-Respondent";
+                            BottomRole = "Respondent-Appellant";
+                            break;
+                    }
+                    
                     break;
                 default:
                     throw new InvalidEnumArgumentException(nameof(role), (int)role, typeof(Role));
@@ -107,7 +190,7 @@ namespace BriefAssistant.Models
         /// This method determines which district to put on the brief based on the county of the circuit court case
         /// </summary>
         /// <param name="county">The county that the circuit court case took place in</param>
-        /// <returns></returns>
+        /// <returns>The district type of the county</returns>
         private District GetDistrictFromCounty(County county)
         {
             switch (county)
