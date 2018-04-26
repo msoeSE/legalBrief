@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NgForm } from "@angular/forms";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { finalize } from 'rxjs/operators/finalize';
 
 import { LoginRequest } from "../../models/LoginRequest";
 import { RegistrationRequest } from "../../models/RegistrationRequest";
@@ -36,18 +37,19 @@ export class LoginRegisterComponent {
     }
 
     onRegisterSubmit(form: NgForm) {
-        this.showRegisterSuccessDiv = false;
-        this.showRegisterFailDiv = false;
-        this.disableSignupButton = true;
-        var body = JSON.stringify(this.registerModel);
-        let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.showRegisterSuccessDiv = false;
+      this.showRegisterFailDiv = false;
+      this.disableSignupButton = true;
+      var body = JSON.stringify(this.registerModel);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-        this.http.post("/api/account/register", body, { headers: headers })
-          .subscribe(res => {
-                this.showRegisterSuccessDiv = true;
-          }, err => {
-            this.showRegisterFailDiv = true;
-          });
-        this.disableSignupButton = true;
+      this.http.post("/api/account/register", body, { headers: headers })
+        .pipe(
+        finalize(() => this.disableSignupButton = false)
+        ).subscribe(res => {
+          this.showRegisterSuccessDiv = true;
+        }, err => {
+          this.showRegisterFailDiv = true;
+        });
     }
 }

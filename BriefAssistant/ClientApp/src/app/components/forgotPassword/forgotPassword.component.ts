@@ -2,7 +2,8 @@ import { Component } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { NgForm } from "@angular/forms";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { EmailRequest } from "../../models/EmailRequest"
+import { EmailRequest } from "../../models/EmailRequest";
+import { finalize } from 'rxjs/operators/finalize';
 
 @Component({
     selector: "forgotPassword",
@@ -23,9 +24,10 @@ export class ForgotPasswordComponent {
       let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
       this.showEmailSentNotification = false;
       this.http.post("/api/account/forgotPassword", body, { headers: headers })
-        .subscribe(res => {
-            this.showEmailSentNotification = true;
+        .pipe(
+        finalize(() => this.disableButton = false)
+        ).subscribe(res => {
+          this.showEmailSentNotification = true;
         });
-      this.disableButton = false;
     }
 }

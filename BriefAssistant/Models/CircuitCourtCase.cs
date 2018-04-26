@@ -162,7 +162,7 @@ namespace BriefAssistant.Models
         [EnumMember]
         Plaintiff,
         [EnumMember]
-        Defendent,
+        Defendant,
         [EnumMember]
         Respondent,
         [EnumMember]

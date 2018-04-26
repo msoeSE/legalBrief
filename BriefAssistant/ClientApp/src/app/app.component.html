@@ -13,8 +13,8 @@
         <ul class="nav navbar-nav">
           <li class="nav-item" [routerLinkActive]="['active']"><a class="nav-link" [routerLink]="['welcome']">Home</a></li>
           <li><a [routerLink]="['/initial-welcome']">Initial Brief</a></li>
-          <li><a [routerLink]="['/reply-welcome']">Reply Brief</a></li>
           <li><a [routerLink]="['/response-welcome']">Response Brief</a></li>
+          <li><a [routerLink]="['/reply-welcome']">Reply Brief</a></li>
           <li><a [routerLink]="['/briefs']" *ngIf="accountService.isLoggedIn">My Briefs</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right" style="height: inherit">

@@ -161,7 +161,7 @@ namespace BriefAssistant.Tests
                     JudgeFirstName = "Judge",
                     JudgeLastName = "Jo",
                     OpponentName = "opp",
-                    Role = Role.Defendent
+                    Role = Role.Defendant
                 });
                 context.Contacts.Add(new ContactInfoDto
                 {
