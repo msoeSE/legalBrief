@@ -120,7 +120,7 @@ namespace BriefAssistant.Models
 
         [DataMember]
         public string Street { get; set; }
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string Street2 { get; set; }
         [DataMember]
         public string City { get; set; }
