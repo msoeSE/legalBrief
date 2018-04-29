@@ -247,10 +247,10 @@ namespace BriefAssistant
                     }
                 };
 
-                    await manager.CreateAsync(descriptor, cancellationToken);
-                }
+                await manager.CreateAsync(descriptor, cancellationToken);
             }
         }
+
 
         private async Task CreateRoles(IApplicationBuilder app, CancellationToken token = default(CancellationToken))
         {
