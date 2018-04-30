@@ -124,7 +124,7 @@ namespace BriefAssistant.Controllers
                 return BadRequest(new OpenIdConnectResponse
                 {
                     Error = OpenIdConnectConstants.Errors.InvalidGrant,
-                    ErrorDescription = "The user profile is no loger available"
+                    ErrorDescription = "The user profile is no longer available"
                 });
             }
 
