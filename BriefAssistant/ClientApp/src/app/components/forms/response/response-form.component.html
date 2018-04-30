@@ -80,9 +80,14 @@
       </div>
     </div>
   </div>
-  <div *ngIf="userType == 'Lawyer'">
+  <div class="form-group" *ngIf="userType == 'Lawyer'">
     <label for="barId" class="col-form-label">State Bar ID #</label>
     <input id="barId" class="form-control" [(ngModel)]="responseInfo.briefInfo.contactInfo.barId" ngModel #barId="ngModel" name="barId" placeholder="Bar ID Here" required>
+    <div *ngIf="barId.invalid && (barId.dirty || barId.touched)" class="alert alert-danger" id="barId-errors">
+      <div *ngIf="barId.errors">
+        Your State Bar ID is required.
+      </div>
+    </div>
   </div>
   <h1>Case Information</h1>
   <div class="form-group">
