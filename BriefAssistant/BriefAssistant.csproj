@@ -62,6 +62,7 @@
     <None Remove="ClientApp\src\app\components\briefsList\services\pager.service.ts" />
     <None Remove="ClientApp\src\app\components\confirmation\confirmation.component.ts" />
     <None Remove="ClientApp\src\app\components\header\header.component.ts" />
+    <None Remove="ClientApp\src\app\components\legalResources\legal-resources.component.ts" />
     <None Remove="ClientApp\src\app\services\account.service.ts" />
   </ItemGroup>
 
@@ -71,6 +72,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\components\briefsList\services\pager.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\components\confirmation\confirmation.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\components\header\header.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\legalResources\legal-resources.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\account.service.ts" />
   </ItemGroup>
 

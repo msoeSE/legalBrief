@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="form-group">
-        <input class="form-control" id="registrationPassword" type="password" [(ngModel)]="registerModel.password" name="registrationPassword" placeholder="Password" #registrationPassword="ngModel" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}" required validateEqual="registrationPasswordCheck" reverse="true" />
+        <input class="form-control" id="registrationPassword" type="password" [(ngModel)]="registerModel.password" name="registrationPassword" placeholder="Password" #registrationPassword="ngModel" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$" required validateEqual="registrationPasswordCheck" reverse="true" />
         <div *ngIf="registrationPassword.invalid && (registrationPassword.dirty || registrationPassword.touched)" class="alert alert-danger" id="registrationPassword-errors">
             <div *ngIf="registrationPassword.errors">
                 Password requires the following format:
@@ -41,7 +41,6 @@
                     <li>At least one number</li>
                     <li>Uppercase</li>
                     <li>Lowercase</li>
-                    <li>At least one special character (i.e. !, @, #, etc.)</li>
                 </ul>
             </div>
         </div>
@@ -62,5 +61,8 @@
     </div>
     <div class="form-group">
         <button class="btn btn-primary" id="signupButton" name="signupButton" type="submit" [disabled]="!registerForm.valid || disableSignupButton">Sign Up</button>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary" id="privacyPolicyButton" name="privacyPolicyButton" routerLink="/privacy-policy">Privacy Policy</button>
     </div>
 </form>
