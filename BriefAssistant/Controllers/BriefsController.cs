@@ -263,6 +263,7 @@ namespace BriefAssistant.Controllers
             existingBrief.ContactInfoDto.Zip = briefInfo.ContactInfo.Address.Zip;
             existingBrief.ContactInfoDto.Email = briefInfo.ContactInfo.Email;
             existingBrief.ContactInfoDto.Phone = briefInfo.ContactInfo.Phone;
+            existingBrief.ContactInfoDto.BarId = briefInfo.ContactInfo.BarId;
 
             existingBrief.CircuitCourtCaseDto.County = briefInfo.CircuitCourtCase.County;
             existingBrief.CircuitCourtCaseDto.CaseNumber = briefInfo.CircuitCourtCase.CaseNumber;

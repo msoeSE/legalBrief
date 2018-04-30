@@ -63,12 +63,13 @@ export class InitialFormComponent implements OnInit {
   updateBrief() {
     this.saveBrief()
       .subscribe(brief => {
+        this.initialInfo.briefInfo.id = brief.briefInfo.id;
         this.initialInfo.id = brief.briefInfo.id;
         alert("Brief Saved!");
       });
   }
 
-  private saveBrief(): Observable<InitialBriefInfo> {
+  saveBrief(): Observable<InitialBriefInfo> {
     if (this.initialInfo.id == null) {
       return this.briefService.createInitial(this.initialInfo);
     } else {
