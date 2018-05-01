@@ -1,18 +1,18 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { IBriefList } from "../../models/IBriefList";
-import { BriefService } from "../../services/brief.service";
-import { IBriefListItem } from "../../models/IBriefListItem";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BriefType } from "../../models/BriefType";
-import { PagerService } from './services/pager.service'
+
+import { IBriefList } from "../shared/IBriefList";
+import { BriefService } from "../shared/brief.service";
+import { IBriefListItem } from "../shared/IBriefListItem";
+import { BriefType } from "../shared/BriefType";
+import { PagerService } from './pager.service'
 
 @Component({
     selector: "briefs",
-    templateUrl: "./briefsList.component.html"
+    templateUrl: "./briefs.component.html"
 })
-
-export class BriefsListComponent implements OnInit {
+export class BriefsComponent implements OnInit {
     briefList : IBriefList;
     list: IBriefListItem[];
 

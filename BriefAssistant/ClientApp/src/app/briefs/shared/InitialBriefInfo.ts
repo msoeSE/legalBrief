@@ -1,5 +1,5 @@
-import { BriefInfo } from "./BriefInfo";
-import { BriefType } from "./BriefType";
+import { BriefInfo } from "../../shared/BriefInfo";
+import { BriefType } from "../../shared/BriefType";
 
 export class InitialBriefInfo {
   id: string;
