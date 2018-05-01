@@ -44,6 +44,15 @@ namespace BriefAssistant.Controllers
                     var callbackUrl = Url.EmailConfirmationLink(user.Id.ToString(), code, Request.Scheme);
                     await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
+                    if (model.UserType == UserType.Lawyer)
+                    {
+                        await _userManager.AddToRoleAsync(user, "Lawyer");
+                    }else if (model.UserType == UserType.User)
+                    {
+                        await _userManager.AddToRoleAsync(user, "User");
+                    }
+                    
+
                     return NoContent();
                 }
                 AddErrors(result);

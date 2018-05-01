@@ -12,5 +12,7 @@ namespace BriefAssistant.Models
         public string Password { get; set; }
         
         public string ConfirmPassword { get; set; }
+
+        public UserType UserType { get; set; }
     }
 }

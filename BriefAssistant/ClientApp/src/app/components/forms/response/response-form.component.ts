@@ -7,7 +7,8 @@ import { ResponseBriefInfo } from "../../../models/ResponseBriefInfo";
 import { State } from "../../../models/State";
 import { County } from "../../../models/County";
 import { Role } from "../../../models/Role";
-import { BriefService } from "../../../services/brief.service"
+import { BriefService } from "../../../services/brief.service";
+import { AccountService } from '../../../services/account.service';
 
 @Component({
 	selector: "response-form",
@@ -23,12 +24,14 @@ export class ResponseFormComponent implements OnInit {
 	roles = Role;
 	roleKeys = Object.keys(Role);
   responseInfo = new ResponseBriefInfo();
+  userType: string;
 
 	constructor(
 		readonly router: Router,
 		readonly briefService: BriefService,
-    private route: ActivatedRoute
-    ) { }
+    private route: ActivatedRoute,
+    public accountService: AccountService
+  ) { this.userType = accountService.userType.toString();}
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -56,7 +59,8 @@ export class ResponseFormComponent implements OnInit {
 
 	updateBrief() {
 	  this.saveBrief()
-	    .subscribe(brief => {
+      .subscribe(brief => {
+	      this.responseInfo.briefInfo.id = brief.briefInfo.id;
 	      this.responseInfo.id = brief.briefInfo.id;
 	      alert("Brief Saved!");
 	    });
