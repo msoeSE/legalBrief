@@ -1,6 +1,6 @@
 export enum Role {
     Plaintiff = "Plaintiff",
-    Defendent = "Defendent",
+    Defendant = "Defendant",
     Respondent = "Respondent",
     Petitioner = "Petitioner" 
 }

@@ -149,7 +149,7 @@ namespace BriefAssistant.Models
                     }
                     
                     break;
-                case Role.Defendent:
+                case Role.Defendant:
                     TopName = CircuitCourtCase.OpponentName;
                     BottomName = ContactInfo.Name;
                     switch (type)
