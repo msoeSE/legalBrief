@@ -8,6 +8,7 @@ import { finalize } from 'rxjs/operators/finalize';
 import { LoginRequest } from "../../models/LoginRequest";
 import { RegistrationRequest } from "../../models/RegistrationRequest";
 import { AccountService } from '../../services/account.service';
+import { UserType } from '../../models/UserType';
 
 @Component({
     selector: "loginRegister",
@@ -22,10 +23,12 @@ export class LoginRegisterComponent {
   public disableSignupButton: boolean = false;
 
     constructor(
-		private readonly http: HttpClient,
-    private readonly router: Router,
+      private readonly http: HttpClient,
+      private readonly router: Router,
       private readonly accountService: AccountService
-    ) { }
+    ) {
+      this.registerModel.userType = UserType.User;
+    }
 
     login(form: NgForm) {
         this.showLoginUnauthorizedDiv = false;

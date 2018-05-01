@@ -19,6 +19,7 @@ namespace BriefAssistant.Data
         public string Zip { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+        public string BarId { get; set; }
 
         public IList<BriefDto> BriefDto { get; set; }
     }

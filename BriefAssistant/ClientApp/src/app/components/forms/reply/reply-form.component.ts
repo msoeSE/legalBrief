@@ -6,6 +6,7 @@ import { County } from "../../../models/County";
 import { Role } from "../../../models/Role";
 import { Observable } from 'rxjs/Observable';
 import { BriefService } from "../../../services/brief.service";
+import { AccountService } from '../../../services/account.service';
 import { ReplyBriefInfo } from "../../../models/ReplyBriefInfo";
 
 @Component({
@@ -13,7 +14,7 @@ import { ReplyBriefInfo } from "../../../models/ReplyBriefInfo";
   templateUrl: "./reply-form.component.html"
 })
 
-export class ReplyFormComponent implements OnInit{
+export class ReplyFormComponent implements OnInit {
   id: string | null;
   states = State;
   stateKeys = Object.keys(State);
@@ -22,12 +23,16 @@ export class ReplyFormComponent implements OnInit{
   roles = Role;
   roleKeys = Object.keys(Role);
   replyInfo = new ReplyBriefInfo();
+  userType: string;
 
   constructor(
     readonly router: Router,
     readonly briefService: BriefService,
-    private route: ActivatedRoute
-  ) { }
+    private route: ActivatedRoute,
+    public accountService: AccountService
+  ) {
+    this.userType = accountService.userType.toString();
+  }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');

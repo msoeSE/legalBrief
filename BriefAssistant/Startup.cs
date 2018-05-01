@@ -110,6 +110,7 @@ namespace BriefAssistant
                 // Enable the token endpoint.
                 // Form password flow (used in username/password login requests)
                 options.EnableTokenEndpoint("/connect/token");
+                options.EnableUserinfoEndpoint("/userinfo");
 
                 // Enable the password and the refresh token flows.
                 options.AllowPasswordFlow()
@@ -123,7 +124,6 @@ namespace BriefAssistant
 
             services.AddAuthentication(options =>
                 {
-                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -175,7 +175,7 @@ namespace BriefAssistant
                 app.UseRewriter(new RewriteOptions().AddRedirectToHttpsPermanent());
             }
 
-            SetupDatabase(app).GetAwaiter().GetResult();
+            SetupDatabaseAsync(app).GetAwaiter().GetResult();
 
             app.UseAuthentication();
 
@@ -203,7 +203,7 @@ namespace BriefAssistant
             });
         }
 
-        private async Task SetupDatabase(IApplicationBuilder app, CancellationToken cts = default(CancellationToken))
+        private async Task SetupDatabaseAsync(IApplicationBuilder app, CancellationToken cts = default(CancellationToken))
         {
             using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
@@ -218,34 +218,62 @@ namespace BriefAssistant
                 }
 
                 var openIddictManager = scope.ServiceProvider.GetRequiredService<OpenIddictApplicationManager<OpenIddictApplication<Guid>>>();
-                await RegisterOdicClients(openIddictManager, cts);
+                await RegisterOdicClientsAsync(openIddictManager, cts);
+
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+                await CreateRolesAsync(roleManager);
             }
         }
 
-        private async Task RegisterOdicClients(OpenIddictApplicationManager<OpenIddictApplication<Guid>> manager,
-            CancellationToken cancellationToken = default(CancellationToken))
+        private async Task RegisterOdicClientsAsync(OpenIddictApplicationManager<OpenIddictApplication<Guid>> manager,
+            CancellationToken cts = default(CancellationToken))
         {
             // Note: when using a custom entity or a custom key type, replace OpenIddictApplication by the appropriate type.
             var hostUrl = Configuration["HostUrl"];
-
             const string clientId = "angular-client";
-            if (await manager.FindByClientIdAsync(clientId, cancellationToken) == null)
+
+            var clientApp = await manager.FindByClientIdAsync(clientId, cts);
+            if (clientApp == null)
             {
                 var descriptor = new OpenIddictApplicationDescriptor
                 {
                     ClientId = clientId,
                     DisplayName = "Angular Client",
-                    PostLogoutRedirectUris = {new Uri($"{hostUrl}signout-odic")},
-                    RedirectUris = {new Uri(hostUrl)},
+                    PostLogoutRedirectUris = { new Uri($"{hostUrl}signout-odic") },
+                    RedirectUris = { new Uri(hostUrl) },
                     Permissions =
                     {
                         OpenIddictConstants.Permissions.Endpoints.Token,
+                        OpenIddictConstants.Permissions.Endpoints.Introspection,
                         OpenIddictConstants.Permissions.GrantTypes.Password,
                         OpenIddictConstants.Permissions.GrantTypes.RefreshToken
                     }
                 };
 
-                await manager.CreateAsync(descriptor, cancellationToken);
+                await manager.CreateAsync(descriptor, cts);
+            } else
+            {
+                const string newPermission = OpenIddictConstants.Permissions.Endpoints.Introspection;
+                if (!await manager.HasPermissionAsync(clientApp, newPermission, cts))
+                {
+                    await manager.UpdateAsync(clientApp, desc => Task.FromResult(desc.Permissions.Add(newPermission)), cts);
+                }
+            }
+        }
+
+
+        private async Task CreateRolesAsync(RoleManager<ApplicationRole> roleManager)
+        {
+            if (!await roleManager.RoleExistsAsync("Lawyer"))
+            {
+                var role = new ApplicationRole("Lawyer");
+                await roleManager.CreateAsync(role);
+            }
+
+            if (!await roleManager.RoleExistsAsync("User"))
+            {
+                var role = new ApplicationRole("User");
+                await roleManager.CreateAsync(role);
             }
         }
     }
