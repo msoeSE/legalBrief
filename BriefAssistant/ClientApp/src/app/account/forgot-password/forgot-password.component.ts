@@ -1,13 +1,12 @@
 import { Component } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
 import { NgForm } from "@angular/forms";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { EmailRequest } from "../../models/EmailRequest";
+import { EmailRequest } from "../../shared/EmailRequest";
 import { finalize } from 'rxjs/operators/finalize';
 
 @Component({
     selector: "forgotPassword",
-    templateUrl: "./forgotPassword.component.html",
+    templateUrl: "./forgot-password.component.html",
 })
 export class ForgotPasswordComponent {
   model = new EmailRequest();

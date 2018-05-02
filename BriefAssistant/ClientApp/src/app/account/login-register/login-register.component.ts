@@ -2,17 +2,16 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from "@angular/forms";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { OAuthService } from 'angular-oauth2-oidc';
 import { finalize } from 'rxjs/operators/finalize';
 
-import { LoginRequest } from "../../models/LoginRequest";
-import { RegistrationRequest } from "../../models/RegistrationRequest";
-import { AccountService } from '../../services/account.service';
-import { UserType } from '../../models/UserType';
+import { LoginRequest } from "./LoginRequest";
+import { RegistrationRequest } from "./RegistrationRequest";
+import { AccountService } from '../../core/account.service';
+import { UserType } from '../../shared/UserType';
 
 @Component({
     selector: "loginRegister",
-    templateUrl: "./loginRegister.component.html",
+    templateUrl: "./login-register.component.html",
 })
 export class LoginRegisterComponent {
     loginModel = new LoginRequest();
@@ -32,7 +31,7 @@ export class LoginRegisterComponent {
 
     login(form: NgForm) {
         this.showLoginUnauthorizedDiv = false;
-      this.accountService.login(this.loginModel).then(() => {
+      this.accountService.login(this.loginModel.email, this.loginModel.password).then(() => {
         this.router.navigate(['']);
       }).catch(() => {
         this.showLoginUnauthorizedDiv = true;

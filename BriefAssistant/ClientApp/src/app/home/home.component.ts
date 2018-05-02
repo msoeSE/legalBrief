@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'mainWelcome',
-    templateUrl: './main-welcome.component.html',
-    styleUrls: ['./main-welcome.component.css']
+    selector: 'home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.css']
 })
-export class MainWelcomeComponent {
+export class HomeComponent {
 }

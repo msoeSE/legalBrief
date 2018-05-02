@@ -3,12 +3,12 @@ import { OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
-import { ResponseBriefInfo } from "../../../models/ResponseBriefInfo";
-import { State } from "../../../models/State";
-import { County } from "../../../models/County";
-import { Role } from "../../../models/Role";
-import { BriefService } from "../../../services/brief.service";
-import { AccountService } from '../../../services/account.service';
+import { ResponseBriefInfo } from "../../shared/ResponseBriefInfo";
+import { State } from "../../shared/State";
+import { County } from "../../shared/County";
+import { Role } from "../../shared/Role";
+import { BriefService } from "../../shared/brief.service";
+import { AccountService } from '../../../core/account.service';
 
 @Component({
 	selector: "response-form",
@@ -79,7 +79,7 @@ export class ResponseFormComponent implements OnInit {
       .subscribe(brief => {
         this.responseInfo.id = brief.id;
 		    this.responseInfo.briefInfo.id = brief.briefInfo.id;
-		    this.router.navigate(["/response-final", brief.briefInfo.id]);
+		    this.router.navigate(["/briefs/response", brief.briefInfo.id, "final"]);
 		  });
 	}
 }

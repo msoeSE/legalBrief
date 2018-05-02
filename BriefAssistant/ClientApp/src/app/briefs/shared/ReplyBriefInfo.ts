@@ -1,5 +1,5 @@
-import { BriefInfo } from "../../shared/BriefInfo";
-import { BriefType } from "../../shared/BriefType";
+import { BriefInfo } from "./BriefInfo";
+import { BriefType } from "./BriefType";
 
 export class ReplyBriefInfo {
   id: string;

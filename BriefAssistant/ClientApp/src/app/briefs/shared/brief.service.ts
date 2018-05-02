@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { IBriefList } from "../models/IBriefList";
-import { BriefInfo } from "../models/BriefInfo";
-import { InitialBriefInfo } from "../models/InitialBriefInfo";
-import { ReplyBriefInfo } from "../models/ReplyBriefInfo";
-import { ResponseBriefInfo } from "../models/ResponseBriefInfo";
+import { IBriefList } from "./IBriefList";
+import { BriefInfo } from "./BriefInfo";
+import { InitialBriefInfo } from "./InitialBriefInfo";
+import { ReplyBriefInfo } from "./ReplyBriefInfo";
+import { ResponseBriefInfo } from "./ResponseBriefInfo";
 
 import { Observable } from 'rxjs/Observable';
 

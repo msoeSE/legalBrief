@@ -3,15 +3,15 @@ import { OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
-import { InitialBriefInfo } from "../../../models/InitialBriefInfo";
-import { State } from "../../../models/State";
-import { County } from "../../../models/County";
-import { Role } from "../../../models/Role";
-import { BriefService } from "../../../services/brief.service"
-import { AccountService } from '../../../services/account.service';
+import { InitialBriefInfo } from '../../shared/InitialBriefInfo';
+import { State } from "../../shared/State";
+import { County } from "../../shared/County";
+import { Role } from "../../shared/Role";
+import { BriefService } from "../../shared/brief.service"
+import { AccountService } from '../../../core/account.service';
 
 @Component({
-  selector: "initial-form",
+  selector: "initialForm",
   templateUrl: "./initial-form.component.html"
 })
 
@@ -82,7 +82,7 @@ export class InitialFormComponent implements OnInit {
       .subscribe(brief => {
         this.initialInfo.id = brief.id;
 		    this.initialInfo.briefInfo.id = brief.briefInfo.id;
-		    this.router.navigate(["/initial-final", brief.briefInfo.id]);
+		    this.router.navigate(["/briefs/initial", brief.briefInfo.id, "final"]);
 		  });
 	}
 }

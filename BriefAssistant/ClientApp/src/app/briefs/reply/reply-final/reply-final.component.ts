@@ -3,10 +3,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from "@angular/forms";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { EmailRequest } from "../../../models/EmailRequest";
+import { EmailRequest } from '../../../shared/EmailRequest';
 
 @Component({
-    selector: 'reply-final',
+    selector: 'replyFinal',
     templateUrl: './reply-final.component.html'
 })
 export class ReplyFinalComponent {
@@ -53,6 +53,6 @@ export class ReplyFinalComponent {
     }
 
     backToForm() {
-      this.router.navigate(["/reply-form", this.id]);
+      this.router.navigate(["/briefs/reply", this.id]);
     }
 }

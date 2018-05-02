@@ -1,16 +1,15 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
-import { BriefInfo } from "../../../models/BriefInfo";
-import { State } from "../../../models/State";
-import { County } from "../../../models/County";
-import { Role } from "../../../models/Role";
+import { State } from "../../shared/State";
+import { County } from "../../shared/County";
+import { Role } from "../../shared/Role";
 import { Observable } from 'rxjs/Observable';
-import { BriefService } from "../../../services/brief.service";
-import { AccountService } from '../../../services/account.service';
-import { ReplyBriefInfo } from "../../../models/ReplyBriefInfo";
+import { BriefService } from "../../shared/brief.service";
+import { AccountService } from '../../../core/account.service';
+import { ReplyBriefInfo } from "../../shared/ReplyBriefInfo";
 
 @Component({
-  selector: "reply-form",
+  selector: "replyForm",
   templateUrl: "./reply-form.component.html"
 })
 
@@ -76,7 +75,7 @@ export class ReplyFormComponent implements OnInit {
       .subscribe(brief => {
         this.replyInfo.briefInfo.id = brief.briefInfo.id;
         this.replyInfo.id = brief.briefInfo.id;
-        this.router.navigate(["/reply-final", brief.briefInfo.id]);
+        this.router.navigate(["/briefs/reply", brief.briefInfo.id, "final"]);
       });
   }
 }

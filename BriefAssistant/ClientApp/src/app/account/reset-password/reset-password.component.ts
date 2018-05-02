@@ -2,11 +2,11 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { NgForm } from "@angular/forms";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { ResetPasswordRequest } from "../../models/ResetPasswordRequest";
+import { ResetPasswordRequest } from "./ResetPasswordRequest";
 
 @Component({
     selector: "resetPassword",
-    templateUrl: "./resetPassword.component.html",
+    templateUrl: "./reset-password.component.html",
 })
 export class ResetPasswordComponent implements OnInit{
     model = new ResetPasswordRequest();

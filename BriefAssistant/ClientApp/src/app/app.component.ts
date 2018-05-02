@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { OAuthService, JwksValidationHandler } from 'angular-oauth2-oidc';
-import { AccountService } from './services/account.service';
+import { AccountService } from './core/account.service';
 
 import { authConfig } from './auth.config';
 

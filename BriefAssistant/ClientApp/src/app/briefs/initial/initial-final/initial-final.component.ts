@@ -3,10 +3,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from "@angular/forms";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { EmailRequest } from "../../../models/EmailRequest";
+import { EmailRequest } from "../../../shared/EmailRequest";
 
 @Component({
-    selector: 'initial-final',
+    selector: 'initialFinal',
     templateUrl: './initial-final.component.html'
 })
 export class InitialFinalComponent {
@@ -53,6 +53,6 @@ export class InitialFinalComponent {
       }
 
     backToForm() {
-      this.router.navigate(["/initial-form", this.id]);
+      this.router.navigate(["/briefs/initial", this.id]);
     }
 }

@@ -37,49 +37,61 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
-    <Compile Remove="ClientApp\src\app\components\examples\petition\**" />
-    <Compile Remove="ClientApp\src\app\components\finals\petition\**" />
-    <Compile Remove="ClientApp\src\app\components\forms\petition\**" />
     <Content Remove="$(SpaRoot)**" />
-    <Content Remove="ClientApp\src\app\components\examples\petition\**" />
-    <Content Remove="ClientApp\src\app\components\finals\petition\**" />
-    <Content Remove="ClientApp\src\app\components\forms\petition\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Remove="ClientApp\src\app\components\examples\petition\**" />
-    <EmbeddedResource Remove="ClientApp\src\app\components\finals\petition\**" />
-    <EmbeddedResource Remove="ClientApp\src\app\components\forms\petition\**" />
-    <None Remove="ClientApp\src\app\components\examples\petition\**" />
-    <None Remove="ClientApp\src\app\components\finals\petition\**" />
-    <None Remove="ClientApp\src\app\components\forms\petition\**" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <None Remove="ClientApp\src\app\account\account-routing.module.ts" />
+    <None Remove="ClientApp\src\app\account\account.component.ts" />
+    <None Remove="ClientApp\src\app\account\account.module.ts" />
+    <None Remove="ClientApp\src\app\app-routing.module.ts" />
     <None Remove="ClientApp\src\app\auth.config.ts" />
     <None Remove="ClientApp\src\app\auth.guard.ts" />
-    <None Remove="ClientApp\src\app\components\briefsList\services\pager.service.ts" />
-    <None Remove="ClientApp\src\app\components\confirmation\confirmation.component.ts" />
-    <None Remove="ClientApp\src\app\components\header\header.component.ts" />
-    <None Remove="ClientApp\src\app\components\legalResources\legal-resources.component.ts" />
-    <None Remove="ClientApp\src\app\services\account.service.ts" />
+    <None Remove="ClientApp\src\app\briefs\briefs-routing.module.ts" />
+    <None Remove="ClientApp\src\app\briefs\briefs.component.ts" />
+    <None Remove="ClientApp\src\app\briefs\briefs.module.ts" />
+    <None Remove="ClientApp\src\app\briefs\initial\initial-routing.module.ts" />
+    <None Remove="ClientApp\src\app\briefs\initial\initial.component.ts" />
+    <None Remove="ClientApp\src\app\briefs\initial\initial.module.ts" />
+    <None Remove="ClientApp\src\app\briefs\reply\reply-routing.module.ts" />
+    <None Remove="ClientApp\src\app\briefs\reply\reply.module.ts" />
+    <None Remove="ClientApp\src\app\briefs\response\response-routing.module.ts" />
+    <None Remove="ClientApp\src\app\briefs\response\response.module.ts" />
+    <None Remove="ClientApp\src\app\core\core.module.ts" />
+    <None Remove="ClientApp\src\app\core\header\header.component.ts" />
+    <None Remove="ClientApp\src\app\core\module-import-guard.ts" />
+    <None Remove="ClientApp\src\app\legal-resources\legal-resources-routing.module.ts" />
+    <None Remove="ClientApp\src\app\legal-resources\legal-resources.module.ts" />
+    <None Remove="ClientApp\src\app\shared\shared.module.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\account\account-routing.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\account\account.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\account\account.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\app-routing.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\auth.config.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\auth.guard.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\components\briefsList\services\pager.service.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\components\confirmation\confirmation.component.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\components\header\header.component.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\components\legalResources\legal-resources.component.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\services\account.service.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ClientApp\src\app\components\examples\response\" />
-    <Folder Include="ClientApp\src\app\components\finals\response\" />
-    <Folder Include="ClientApp\src\app\components\forms\response\" />
+    <TypeScriptCompile Include="ClientApp\src\app\briefs\briefs-routing.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\briefs\briefs.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\briefs\briefs.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\briefs\initial\initial.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\briefs\initial\initial-routing.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\briefs\initial\initial.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\briefs\reply\reply-routing.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\briefs\reply\reply.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\briefs\response\response-routing.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\briefs\response\response.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\core\auth-guard.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\account\confirmation\confirmation.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\core\core.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\core\header\header.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\core\module-import-guard.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\legal-resources\legal-resources-routing.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\legal-resources\legal-resources.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\core\account.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\legal-resources\legal-resources.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\shared.module.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

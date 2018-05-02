@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { OAuthService, OAuthInfoEvent } from 'angular-oauth2-oidc';
-import { LoginRequest } from '../models/LoginRequest';
 
 @Injectable()
 export class AccountService {
@@ -26,8 +25,8 @@ export class AccountService {
     return claims['role'][0];
   }
 
-  public login(loginModel: LoginRequest): Promise<any> {
-    return this.oAuthService.fetchTokenUsingPasswordFlow(loginModel.email, loginModel.password)
+  public login(email: string, password: string): Promise<any> {
+    return this.oAuthService.fetchTokenUsingPasswordFlow(email, password)
       .then(() => {
         this.oAuthService.oidc = false;
           this.oAuthService.loadUserProfile().then(() => this.oAuthService.oidc = true);

@@ -9,10 +9,10 @@ import { BriefType } from "../shared/BriefType";
 import { PagerService } from './pager.service'
 
 @Component({
-    selector: "briefs",
-    templateUrl: "./briefs.component.html"
+    selector: "briefList",
+    templateUrl: "./brief-list.component.html"
 })
-export class BriefsComponent implements OnInit {
+export class BriefListComponent implements OnInit {
     briefList : IBriefList;
     list: IBriefListItem[];
 
@@ -61,13 +61,13 @@ export class BriefsComponent implements OnInit {
           .subscribe(brief => {
             switch (brief.type) {
               case BriefType.Initial:
-                this.router.navigate(["/initial-form", id]);
+                this.router.navigate(["/briefs/initial",id]);
                 break;
               case BriefType.Reply:
-                this.router.navigate(["/reply-form", id]);
+                this.router.navigate(["/briefs/reply", id]);
                 break;
               case BriefType.Response:
-                this.router.navigate(["/response-form", id]);
+                this.router.navigate(["/briefs/response", id]);
                 break;
               case BriefType.Petition:
               default:

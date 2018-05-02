@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { AccountService } from '../../services/account.service';
+
+import { AccountService } from '../account.service';
 
 @Component({
-  selector: 'app-header',
+  selector: 'appHeader',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })

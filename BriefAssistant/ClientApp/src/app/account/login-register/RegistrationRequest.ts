@@ -1,4 +1,4 @@
-import { UserType } from "./UserType";
+import { UserType } from "../../shared/UserType";
 
 export class RegistrationRequest {
     email: string;
