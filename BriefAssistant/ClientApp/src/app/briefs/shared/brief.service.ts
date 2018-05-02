@@ -6,6 +6,7 @@ import { BriefInfo } from "./BriefInfo";
 import { InitialBriefInfo } from "./InitialBriefInfo";
 import { ReplyBriefInfo } from "./ReplyBriefInfo";
 import { ResponseBriefInfo } from "./ResponseBriefInfo";
+import { EmailRequest } from '../../shared/EmailRequest';
 
 import { Observable } from 'rxjs/Observable';
 
@@ -60,5 +61,14 @@ export class BriefService {
   updateResponse(brief: ResponseBriefInfo): Observable<ResponseBriefInfo> {
     const url = `/api/briefs/responseupdate/${brief.briefInfo.id}`;
     return this.http.put<ResponseBriefInfo>(url, JSON.stringify(brief), { headers: this.headers });
+  }
+
+  downloadBrief(id: string): Observable<Blob> {
+    return this.http.get(`/api/briefs/${id}/download`, { responseType: 'blob' })
+      .map(res => new Blob([res]));
+  }
+
+  emailBrief(id: string, request: EmailRequest): Observable<object> {
+    return this.http.post(`/api/briefs/${id}/email`, JSON.stringify(request), {headers: this.headers});
   }
 }
