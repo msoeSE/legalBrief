@@ -9,6 +9,8 @@ export class AccountService {
 
   constructor(private readonly oAuthService: OAuthService, private readonly router: Router) {}
 
+  redirectUrl: string;
+
   public get isLoggedIn(): boolean {
     return this.oAuthService.hasValidAccessToken();
   }

@@ -32,7 +32,10 @@ export class LoginRegisterComponent {
     login(form: NgForm) {
         this.showLoginUnauthorizedDiv = false;
       this.accountService.login(this.loginModel.email, this.loginModel.password).then(() => {
-        this.router.navigate(['']);
+        var url = this.accountService.redirectUrl ? this.accountService.redirectUrl : '/home';
+        this.accountService.redirectUrl = null;
+
+        this.router.navigateByUrl(url);
       }).catch(() => {
         this.showLoginUnauthorizedDiv = true;
       });
