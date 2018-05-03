@@ -55,8 +55,10 @@
     <None Remove="ClientApp\src\app\briefs\initial\initial.component.ts" />
     <None Remove="ClientApp\src\app\briefs\initial\initial.module.ts" />
     <None Remove="ClientApp\src\app\briefs\reply\reply-routing.module.ts" />
+    <None Remove="ClientApp\src\app\briefs\reply\reply.component.ts" />
     <None Remove="ClientApp\src\app\briefs\reply\reply.module.ts" />
     <None Remove="ClientApp\src\app\briefs\response\response-routing.module.ts" />
+    <None Remove="ClientApp\src\app\briefs\response\response.component.ts" />
     <None Remove="ClientApp\src\app\briefs\response\response.module.ts" />
     <None Remove="ClientApp\src\app\core\core.module.ts" />
     <None Remove="ClientApp\src\app\core\header\header.component.ts" />
@@ -79,8 +81,10 @@
     <TypeScriptCompile Include="ClientApp\src\app\briefs\initial\initial-routing.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\briefs\initial\initial.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\briefs\reply\reply-routing.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\briefs\reply\reply.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\briefs\reply\reply.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\briefs\response\response-routing.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\briefs\response\response.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\briefs\response\response.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\core\auth-guard.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\account\confirmation\confirmation.component.ts" />

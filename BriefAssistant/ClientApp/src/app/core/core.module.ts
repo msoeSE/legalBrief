@@ -1,4 +1,5 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../shared/shared.module';
 import { HeaderComponent } from './header/header.component';
@@ -9,7 +10,10 @@ import { AuthGuard } from './auth-guard';
 import { throwIfAlreadyLoaded } from './module-import-guard';
 
 @NgModule({
-  imports: [SharedModule],
+  imports: [
+    SharedModule,
+    RouterModule
+  ],
   declarations: [
     HeaderComponent,
     NotFoundComponent,

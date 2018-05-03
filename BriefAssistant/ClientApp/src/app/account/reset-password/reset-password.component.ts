@@ -29,6 +29,7 @@ export class ResetPasswordComponent implements OnInit{
     ngOnInit() {
       this.route.queryParams.subscribe(params => {
         this.model.code = params['code'];
+        this.model.email = params['email'];
       });
     }
 }
