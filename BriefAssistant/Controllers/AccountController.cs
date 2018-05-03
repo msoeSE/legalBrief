@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using BriefAssistant.Data;
 using BriefAssistant.Extensions;
@@ -103,8 +105,8 @@ namespace BriefAssistant.Controllers
                 {
                     Scheme = Request.Scheme,
                     Host = Request.Host.Host,
-                    Path = "resetPassword",
-                    Query = $"code={code}"
+                    Path = "account/reset-password",
+                    Query = $"email={user.Email}&code={WebUtility.UrlEncode(code)}"
                 };
                 if (Request.Host.Port.HasValue)
                 {
