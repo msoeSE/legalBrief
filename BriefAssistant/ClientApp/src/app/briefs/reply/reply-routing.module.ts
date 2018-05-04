@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from '../../core/auth-guard';
 import { ReplyComponent } from './reply.component';
 import { ReplyExampleComponent } from './reply-example/reply-example.component';
 import { ReplyFormComponent } from './reply-form/reply-form.component';
@@ -14,9 +13,9 @@ const intialRoutes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'example' },
       { path: 'example', component: ReplyExampleComponent },
-      { path: ':id', component: ReplyFormComponent, canActivate: [AuthGuard] },
-      { path: 'new', component: ReplyFormComponent, canActivate: [AuthGuard] },
-      { path: ':id/final', component: ReplyFinalComponent, canActivate: [AuthGuard] }
+      { path: ':id', component: ReplyFormComponent },
+      { path: 'new', component: ReplyFormComponent },
+      { path: ':id/final', component: ReplyFinalComponent }
     ]
   }
 ];
