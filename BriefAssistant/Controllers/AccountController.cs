@@ -4,6 +4,7 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using BriefAssistant.Data;
 using BriefAssistant.Extensions;
+using BriefAssistant.Filters;
 using BriefAssistant.Models;
 using BriefAssistant.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -32,33 +33,31 @@ namespace BriefAssistant.Controllers
 
         [HttpPost("register")]
         [AllowAnonymous]
+        [ValidateModel]
         public async Task<IActionResult> Register([FromBody] RegistrationRequest model)
         {
-            if (ModelState.IsValid)
+            var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
             {
-                var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
-                var result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                _logger.LogInformation("User created a new account with password.");
+
+                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                var callbackUrl = Url.EmailConfirmationLink(user.Id.ToString(), code, Request.Scheme);
+                await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+
+                if (model.UserType == UserType.Lawyer)
                 {
-                    _logger.LogInformation("User created a new account with password.");
-
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.EmailConfirmationLink(user.Id.ToString(), code, Request.Scheme);
-                    await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
-
-                    if (model.UserType == UserType.Lawyer)
-                    {
-                        await _userManager.AddToRoleAsync(user, "Lawyer");
-                    }else if (model.UserType == UserType.User)
-                    {
-                        await _userManager.AddToRoleAsync(user, "User");
-                    }
+                    await _userManager.AddToRoleAsync(user, "Lawyer");
+                }else if (model.UserType == UserType.User)
+                {
+                    await _userManager.AddToRoleAsync(user, "User");
+                }
                     
 
-                    return NoContent();
-                }
-                AddErrors(result);
+                return NoContent();
             }
+            AddErrors(result);
 
             return BadRequest(ModelState);
         }
@@ -89,63 +88,57 @@ namespace BriefAssistant.Controllers
 
         [HttpPost("forgotPassword")]
         [AllowAnonymous]
+        [ValidateModel]
         public async Task<IActionResult> ForgotPassword([FromBody]EmailRequest request)
         {
-            if (ModelState.IsValid)
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if (user == null || !await _userManager.IsEmailConfirmedAsync(user))
             {
-                var user = await _userManager.FindByEmailAsync(request.Email);
-                if (user == null || !await _userManager.IsEmailConfirmedAsync(user))
-                {
-                    // Don't reveal that the user does not exist or is not confirmed to prevent user enumeration
-                    return NoContent();
-                }
-
-                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var uriBuilder = new UriBuilder()
-                {
-                    Scheme = Request.Scheme,
-                    Host = Request.Host.Host,
-                    Path = "account/reset-password",
-                    Query = $"email={user.Email}&code={WebUtility.UrlEncode(code)}"
-                };
-                if (Request.Host.Port.HasValue)
-                {
-                    uriBuilder.Port = Request.Host.Port.Value;
-                }
-
-                var callbackUrl = uriBuilder.Uri;
-                await _emailSender.SendEmailAsync(request.Email, "Reset Password",
-                    $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
+                // Don't reveal that the user does not exist or is not confirmed to prevent user enumeration
                 return NoContent();
             }
 
-            return BadRequest(ModelState);
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var uriBuilder = new UriBuilder()
+            {
+                Scheme = Request.Scheme,
+                Host = Request.Host.Host,
+                Path = "account/reset-password",
+                Query = $"email={user.Email}&code={WebUtility.UrlEncode(code)}"
+            };
+            if (Request.Host.Port.HasValue)
+            {
+                uriBuilder.Port = Request.Host.Port.Value;
+            }
+
+            var callbackUrl = uriBuilder.Uri;
+            await _emailSender.SendEmailAsync(request.Email, "Reset Password",
+                $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
+            return NoContent();
+
         }
 
         [HttpPost("resetPassword")]
         [AllowAnonymous]
+        [ValidateModel]
         public async Task<IActionResult> ResetPassword([FromBody]ResetPasswordRequest request)
         {
-            if (ModelState.IsValid)
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if (user == null)
             {
-                var user = await _userManager.FindByEmailAsync(request.Email);
-                if (user == null)
-                {
-                    // Don't reveal that the user does not exist to prevent user enumeration
-                    return Unauthorized();
-                }
-
-                var result = await _userManager.ResetPasswordAsync(user, request.Code, request.Password);
-                if (result.Succeeded)
-                {
-                    return NoContent();
-                }
-
-                AddErrors(result);
+                // Don't reveal that the user does not exist to prevent user enumeration
                 return Unauthorized();
             }
 
-            return BadRequest(ModelState);
+            var result = await _userManager.ResetPasswordAsync(user, request.Code, request.Password);
+            if (result.Succeeded)
+            {
+                return NoContent();
+            }
+
+            AddErrors(result);
+            return Unauthorized();
+
         }
 
         [HttpPost("logout")]

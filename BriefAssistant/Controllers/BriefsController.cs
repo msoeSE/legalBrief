@@ -10,6 +10,7 @@ using AutoMapper;
 using BriefAssistant.Authorization;
 using BriefAssistant.Data;
 using BriefAssistant.Extensions;
+using BriefAssistant.Filters;
 using BriefAssistant.Models;
 using BriefAssistant.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -41,39 +42,6 @@ namespace BriefAssistant.Controllers
         }
 
         /// <summary>
-        /// Creates a new brief database object
-        /// </summary>
-        /// <param name="briefInfo">
-        /// The information used to create a brief
-        /// </param>
-        /// <returns>
-        /// 201 if successfully created
-        /// 400 if the request body is malformed
-        /// </returns>
-        [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> CreateAsync([FromBody] BriefInfo briefInfo)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var currentUser = await _userManager.GetUserAsync(User);
-
-            var briefDto = Mapper.Map<BriefDto>(briefInfo);
-            briefDto.ApplicationUserId = currentUser.Id;
-            briefDto.CircuitCourtCaseDto.ApplicationUserId = currentUser.Id;
-            briefDto.ContactInfoDto.ApplicationUserId = currentUser.Id;
-            await _applicationContext.Briefs.AddAsync(briefDto);
-
-            await _applicationContext.SaveChangesAsync();
-
-            briefInfo.Id = briefDto.Id;
-            return Created($"/briefs/{briefDto.Id}", briefInfo);
-        }
-
-        /// <summary>
         /// Creates a new initial brief database object
         /// </summary>
         /// <param name="briefInfo">
@@ -85,16 +53,12 @@ namespace BriefAssistant.Controllers
         /// </returns>
         [HttpPost("initialcreate")]
         [Authorize]
+        [ValidateModel]
         public async Task<IActionResult> CreateAsync([FromBody] InitialBriefInfo briefInfo)
         {
             if (briefInfo.BriefInfo.Type != BriefType.Initial)
             {
-                var key = nameof(InitialBriefInfo.BriefInfo) + "." + nameof(BriefInfo.Type);
-                ModelState.TryAddModelError(key, "Type mismatch");
-            }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
+                return BadRequest("Brief Type mismatch");
             }
 
             var currentUser = await _userManager.GetUserAsync(User);
@@ -125,16 +89,12 @@ namespace BriefAssistant.Controllers
         /// </returns>
         [HttpPost("replycreate")]
         [Authorize]
+        [ValidateModel]
         public async Task<IActionResult> CreateAsync([FromBody] ReplyBriefInfo briefInfo)
         {
             if (briefInfo.BriefInfo.Type != BriefType.Reply)
             {
-                var key = nameof(ReplyBriefInfo.BriefInfo) + "." + nameof(BriefInfo.Type);
-                ModelState.TryAddModelError(key, "Type mismatch");
-            }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
+                return BadRequest("Brief type mismatch");
             }
 
             var currentUser = await _userManager.GetUserAsync(User);
@@ -165,16 +125,12 @@ namespace BriefAssistant.Controllers
         /// </returns>
         [HttpPost("responsecreate")]
         [Authorize]
+        [ValidateModel]
         public async Task<IActionResult> CreateAsync([FromBody] ResponseBriefInfo briefInfo)
         {
             if (briefInfo.BriefInfo.Type != BriefType.Response)
             {
-                var key = nameof(ResponseBriefInfo.BriefInfo) + "." + nameof(BriefInfo.Type);
-                ModelState.TryAddModelError(key, "Type mismatch");
-            }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
+                return BadRequest("Brief type mismatch");
             }
 
             var currentUser = await _userManager.GetUserAsync(User);
@@ -194,52 +150,6 @@ namespace BriefAssistant.Controllers
         }
 
         /// <summary>
-        /// Updates an existing brief database object
-        /// </summary>
-        /// <param name="id">
-        /// The id of the brief being updated
-        /// </param>
-        /// <param name="briefInfo">
-        /// The new information that the brief is updated with
-        /// </param>
-        /// <returns>
-        /// 200 if the brief is updated successfully
-        /// 400 if the request is not in the correct format
-        /// 403 if the user id of the brief does not match the user id of the currently logged in user
-        /// 404 if there is no existing brief with the given id
-        /// </returns>
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] BriefInfo briefInfo)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var existingBrief = await _applicationContext.Briefs
-                .Include(briefDto => briefDto.ContactInfoDto)
-                .Include(briefDto => briefDto.CircuitCourtCaseDto)
-                .SingleAsync(briefDto => briefDto.Id == id);
-
-            if (existingBrief == null)
-            {
-                return NotFound();
-            }
-
-            var authResult = await _authorizationService.AuthorizeAsync(User, existingBrief, Operations.Update);
-            if (!authResult.Succeeded)
-            {
-                return Forbid();
-            }
-
-            UpdateExistingBrief(existingBrief, briefInfo);
-
-            await _applicationContext.SaveChangesAsync();
-
-            return Json(briefInfo);
-        }
-
-        /// <summary>
         /// Updates an existing brief database object with new brief information
         /// </summary>
         /// <param name="existingBrief">
@@ -248,7 +158,7 @@ namespace BriefAssistant.Controllers
         /// <param name="briefInfo">
         /// The new information that the brief is updated with
         /// </param>
-        private void UpdateExistingBrief(BriefDto existingBrief, BriefInfo briefInfo)
+        private static void UpdateExistingBrief(BriefDto existingBrief, BriefInfo briefInfo)
         {
             existingBrief.Title = briefInfo.Title;
             existingBrief.AppellateCourtCaseNumber = briefInfo.AppellateCourtCaseNumber;
@@ -289,13 +199,9 @@ namespace BriefAssistant.Controllers
         /// 404 if there is no existing brief with the given id
         /// </returns>
         [HttpPut("initialupdate/{id}")]
+        [ValidateModel]
         public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] InitialBriefInfo briefInfo)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var existingBrief = await FindInitialBriefAsync(id);
 
             if (existingBrief == null)
@@ -338,13 +244,9 @@ namespace BriefAssistant.Controllers
         /// 404 if there is no existing brief with the given id
         /// </returns>
         [HttpPut("replyupdate/{id}")]
+        [ValidateModel]
         public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] ReplyBriefInfo briefInfo)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var existingBrief = await FindReplyBriefAsync(id);
 
             if (existingBrief == null)
@@ -381,13 +283,9 @@ namespace BriefAssistant.Controllers
         /// 404 if there is no existing brief with the given id
         /// </returns>
         [HttpPut("responseupdate/{id}")]
+        [ValidateModel]
         public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] ResponseBriefInfo briefInfo)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var existingBrief = await FindResponseBriefAsync(id);
 
             if (existingBrief == null)
@@ -822,28 +720,24 @@ namespace BriefAssistant.Controllers
         /// 404 if the EmailRequest format was not correct
         /// </returns>
         [HttpPost("{id}/email")]
+        [ValidateModel]
         public async Task<IActionResult> EmailBrief(Guid id, [FromBody] EmailRequest request)
         {
-            if (ModelState.IsValid)
+            var dto = await FindBriefAsync(id);
+            var authResult = await _authorizationService.AuthorizeAsync(User, dto, Operations.Read);
+
+            if (!authResult.Succeeded)
             {
-                var dto = await FindBriefAsync(id);
-                var authResult = await _authorizationService.AuthorizeAsync(User, dto, Operations.Read);
-
-                if (!authResult.Succeeded)
-                {
-                    return Forbid();
-                }
-
-                var brief = Mapper.Map<BriefInfo>(dto);
-                using (var stream = new MemoryStream())
-                {
-                    await WriteDocumentToStream(brief, stream);
-                    await _emailSender.SendBriefAsync(request.Email, stream, (brief.Title ?? "brief") + ".docx");
-                }
-                return NoContent();
+                return Forbid();
             }
 
-            return NotFound();
+            var brief = Mapper.Map<BriefInfo>(dto);
+            using (var stream = new MemoryStream())
+            {
+                await WriteDocumentToStream(brief, stream);
+                await _emailSender.SendBriefAsync(request.Email, stream, (brief.Title ?? "brief") + ".docx");
+            }
+            return NoContent();
         }
     }
 }
