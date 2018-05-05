@@ -19,7 +19,7 @@
     }, 
 
     onPrepare: function () {
-        browser.get(browser.baseUrl + '/loginRegister');
+        browser.get(browser.baseUrl + '/account/login-register');
         element(by.name('loginEmail')).sendKeys(process.env.MY_SECRET_ENV_USER);
         element(by.name('loginPassword')).sendKeys(process.env.MY_SECRET_ENV_PASSWORD);
         browser.sleep(1000);
