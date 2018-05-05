@@ -10,8 +10,7 @@ import { HomeComponent } from './home/home.component';
 
 import { OAuthModule } from 'angular-oauth2-oidc';
 
-@
-NgModule({
+@NgModule({
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     CoreModule,
@@ -19,7 +18,7 @@ NgModule({
     HttpClientModule,
     OAuthModule.forRoot({
       resourceServer: {
-        allowedUrls: ["/api/"],
+        allowedUrls: ['/api/'],
         sendAccessToken: true
       }
     }),
@@ -29,6 +28,7 @@ NgModule({
     AppComponent,
     HomeComponent
   ],
+  exports: [HttpClientModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
