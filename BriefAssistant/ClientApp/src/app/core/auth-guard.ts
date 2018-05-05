@@ -2,21 +2,21 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
 
-import { AccountService } from './account.service';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {
 
   constructor(private readonly oauthService: OAuthService,
     private readonly router: Router,
-    private readonly accountService: AccountService) { }
+    private readonly authService: AuthService) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     if (this.oauthService.hasValidAccessToken()) {
       return true;
     }
 
-    this.accountService.redirectUrl = state.url;
+    this.authService.redirectUrl = state.url;
     this.router.navigateByUrl('/account/login-register');
     return false;
   }

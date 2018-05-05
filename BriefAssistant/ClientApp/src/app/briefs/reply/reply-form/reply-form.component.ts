@@ -5,7 +5,7 @@ import { County } from "../../shared/County";
 import { Role } from "../../shared/Role";
 import { Observable } from 'rxjs/Observable';
 import { BriefService } from "../../shared/brief.service";
-import { AccountService } from '../../../core/account.service';
+import { AuthService } from '../../../core/auth.service';
 import { ReplyBriefInfo } from "../../shared/ReplyBriefInfo";
 
 @Component({
@@ -28,9 +28,9 @@ export class ReplyFormComponent implements OnInit {
     readonly router: Router,
     readonly briefService: BriefService,
     private route: ActivatedRoute,
-    public accountService: AccountService
+    private readonly authService: AuthService
   ) {
-    this.userType = accountService.userType.toString();
+    this.userType = authService.userType.toString();
   }
 
   ngOnInit() {

@@ -8,7 +8,7 @@ import { State } from "../../shared/State";
 import { County } from "../../shared/County";
 import { Role } from "../../shared/Role";
 import { BriefService } from "../../shared/brief.service";
-import { AccountService } from '../../../core/account.service';
+import { AuthService } from '../../../core/auth.service';
 
 @Component({
 	selector: "response-form",
@@ -30,8 +30,8 @@ export class ResponseFormComponent implements OnInit {
 		readonly router: Router,
 		readonly briefService: BriefService,
     private route: ActivatedRoute,
-    public accountService: AccountService
-  ) { this.userType = accountService.userType.toString();}
+    private readonly authService: AuthService
+  ) { this.userType = authService.userType.toString();}
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');

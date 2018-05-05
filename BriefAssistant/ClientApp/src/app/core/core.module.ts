@@ -5,7 +5,7 @@ import { SharedModule } from '../shared/shared.module';
 import { HeaderComponent } from './header/header.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
-import { AccountService } from './account.service';
+import { AuthService } from './auth.service';
 import { AuthGuard } from './auth-guard';
 import { throwIfAlreadyLoaded } from './module-import-guard';
 
@@ -20,7 +20,7 @@ import { throwIfAlreadyLoaded } from './module-import-guard';
     PrivacyPolicyComponent
   ],
   providers: [
-    AccountService,
+    AuthService,
     AuthGuard
   ],
   exports: [

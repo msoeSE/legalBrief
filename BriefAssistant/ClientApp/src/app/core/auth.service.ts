@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { OAuthService, OAuthInfoEvent } from 'angular-oauth2-oidc';
 
 @Injectable()
-export class AccountService {
+export class AuthService {
   private autoRefreshSubscription: Subscription;
 
   constructor(private readonly oAuthService: OAuthService, private readonly router: Router) {}

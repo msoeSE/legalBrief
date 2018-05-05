@@ -93,7 +93,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\core\module-import-guard.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\legal-resources\legal-resources-routing.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\legal-resources\legal-resources.component.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\core\account.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\core\auth.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\legal-resources\legal-resources.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\shared.module.ts" />
   </ItemGroup>

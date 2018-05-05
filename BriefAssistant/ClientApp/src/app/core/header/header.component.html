@@ -1,4 +1,4 @@
 <li>
-  <button *ngIf="!accountService.isLoggedIn" class="btn blendin" id="navbarLoginButton" name="navbarLoginButton" routerLink="/account/login-register"><span class="glyphicon glyphicon-log-in"></span> Login</button>
-  <button *ngIf="accountService.isLoggedIn" class="btn blendin" id="navbarLogoutButton" name="navbarLogoutButton" (click)="accountService.logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</button>
+  <button *ngIf="!authService.isLoggedIn" class="btn blendin" id="navbarLoginButton" name="navbarLoginButton" routerLink="/account/login-register"><span class="glyphicon glyphicon-log-in"></span> Login</button>
+  <button *ngIf="authService.isLoggedIn" class="btn blendin" id="navbarLogoutButton" name="navbarLogoutButton" (click)="authService.logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</button>
 </li>

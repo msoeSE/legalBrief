@@ -6,7 +6,7 @@ import { finalize } from 'rxjs/operators/finalize';
 
 import { LoginRequest } from "./LoginRequest";
 import { RegistrationRequest } from "./RegistrationRequest";
-import { AccountService } from '../../core/account.service';
+import { AuthService } from '../../core/auth.service';
 import { UserType } from '../../shared/UserType';
 
 @Component({
@@ -23,23 +23,23 @@ export class LoginRegisterComponent {
 
     constructor(
       private readonly http: HttpClient,
-      private readonly router: Router,
-      private readonly accountService: AccountService
-    ) {
-      this.registerModel.userType = UserType.User;
-    }
+    private readonly router: Router,
+    private readonly authService: AuthService,
+  ) {
+    this.registerModel.userType = UserType.User;
+  }
 
-    login(form: NgForm) {
-        this.showLoginUnauthorizedDiv = false;
-      this.accountService.login(this.loginModel.email, this.loginModel.password).then(() => {
-        var url = this.accountService.redirectUrl ? this.accountService.redirectUrl : '/home';
-        this.accountService.redirectUrl = null;
+  login(form: NgForm) {
+    this.showLoginUnauthorizedDiv = false;
+    this.authService.login(this.loginModel.email, this.loginModel.password).then(() => {
+      var url = this.authService.redirectUrl ? this.authService.redirectUrl : '/home';
+      this.authService.redirectUrl = null;
 
-        this.router.navigateByUrl(url);
-      }).catch(() => {
-        this.showLoginUnauthorizedDiv = true;
-      });
-    }
+      this.router.navigateByUrl(url);
+    }).catch(() => {
+      this.showLoginUnauthorizedDiv = true;
+    });
+  }
 
     onRegisterSubmit(form: NgForm) {
       this.showRegisterSuccessDiv = false;

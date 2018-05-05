@@ -15,7 +15,7 @@
           <li><a routerLink="/briefs/initial/example">Initial Brief</a></li>
           <li><a routerLink="/briefs/response/example">Response Brief</a></li>
           <li><a routerLink="/briefs/reply/example">Reply Brief</a></li>
-          <li><a routerLink="/briefs" *ngIf="accountService.isLoggedIn">My Briefs</a></li>
+          <li><a routerLink="/briefs" *ngIf="authService.isLoggedIn">My Briefs</a></li>
           <li><a routerLink="/legal-resources">Legal Resources</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right" style="height: inherit">
