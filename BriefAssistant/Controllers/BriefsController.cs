@@ -9,7 +9,6 @@ using System.Xml.Linq;
 using AutoMapper;
 using BriefAssistant.Authorization;
 using BriefAssistant.Data;
-using BriefAssistant.Extensions;
 using BriefAssistant.Filters;
 using BriefAssistant.Models;
 using BriefAssistant.Services;
@@ -735,7 +734,11 @@ namespace BriefAssistant.Controllers
             using (var stream = new MemoryStream())
             {
                 await WriteDocumentToStream(brief, stream);
-                await _emailSender.SendBriefAsync(request.Email, stream, (brief.Title ?? "brief") + ".docx");
+                const string subject = "Your Completed Brief";
+                var templateFilename =
+                    _env.ContentRootFileProvider.GetFileInfo("EmailTemplates/completedBriefTemplate.cshtml").PhysicalPath;
+                var attachmentFilename = (brief.Title ?? "brief") + ".docx";
+                await _emailSender.SendEmailWithAttachmentAsync(request.Email, subject, templateFilename, stream, attachmentFilename);
             }
             return NoContent();
         }

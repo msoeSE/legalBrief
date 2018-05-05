@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Net;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using BriefAssistant.Data;
-using BriefAssistant.Extensions;
 using BriefAssistant.Filters;
 using BriefAssistant.Models;
 using BriefAssistant.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -21,13 +20,15 @@ namespace BriefAssistant.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly IHostingEnvironment _env;
         private readonly ILogger _logger;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailSender emailSender, ILogger<AccountController> logger)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailSender emailSender, IHostingEnvironment env, ILogger<AccountController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _env = env;
             _logger = logger;
         }
 
@@ -44,7 +45,10 @@ namespace BriefAssistant.Controllers
 
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 var callbackUrl = CreateConfirmEmailUri(user.Id.ToString(), code);
-                await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl.ToString());
+                var templateFIlename =
+                    _env.ContentRootFileProvider.GetFileInfo("EmailTemplates/registrationTemplate.cshtml").PhysicalPath;
+                const string subject = "Please Confirm Your Email";
+                await _emailSender.SendEmailAsync(user.Email, subject, templateFIlename, new {Url = callbackUrl});
 
                 if (model.UserType == UserType.Lawyer)
                 {
@@ -118,8 +122,10 @@ namespace BriefAssistant.Controllers
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
 
             var url = CreateForgotPasswordUri(user.Email, code);
-            await _emailSender.SendEmailAsync(request.Email, "Reset Password",
-                $"Please reset your password by clicking here: <a href='{url}'>link</a>");
+            var templateFIlename =
+                _env.ContentRootFileProvider.GetFileInfo("EmailTemplates/forgotPasswordTemplate.cshtml").PhysicalPath;
+            const string subject = "Reset Your Password";
+            await _emailSender.SendEmailAsync(user.Email, subject, templateFIlename, new { Url = url });
             return NoContent();
 
         }
