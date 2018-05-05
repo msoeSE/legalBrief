@@ -13,8 +13,8 @@ const intialRoutes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'example' },
       { path: 'example', component: InitialExampleComponent },
-      { path: ':id', component: InitialFormComponent },
       { path: 'new', component: InitialFormComponent },
+      { path: ':id', component: InitialFormComponent },
       { path: ':id/final', component: InitialFinalComponent }
     ]
   }
