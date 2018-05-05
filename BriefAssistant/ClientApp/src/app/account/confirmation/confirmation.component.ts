@@ -8,7 +8,8 @@ import { AccountService } from '../shared/account.service';
   templateUrl: "./confirmation.component.html",
 })
 export class ConfirmationComponent implements OnInit {
-  confirmationSuccessful = true;
+  confirmationSuccessful = false;
+  confirmationFailed = false;
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -17,10 +18,10 @@ export class ConfirmationComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      this.accountService.confirmEmail(params['userId'], params['code'])
-        .subscribe(
-          res => this.confirmationSuccessful = true,
-          err => this.confirmationSuccessful = false
+        this.accountService.confirmEmail(params['userId'], params['code'])
+          .subscribe(
+            res => this.confirmationSuccessful = true,
+            err => this.confirmationFailed = true
         );
     });
   }

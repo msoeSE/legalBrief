@@ -1,4 +1,4 @@
 <div class="text-center">
   <p *ngIf="confirmationSuccessful">Your email has been confirmed, you may now <a routerLink="/account/login-register">login</a>. Happy brief generation!</p>
-  <p *ngIf="!confirmationSucessful">An error occured while confirming your email</p>
+  <p *ngIf="confirmationFailed">An error occured while confirming your email</p>
 </div>
