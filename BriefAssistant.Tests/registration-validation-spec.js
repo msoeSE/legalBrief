@@ -3,7 +3,7 @@
     beforeEach(function () {
         browser.waitForAngularEnabled(false);
         browser.ignoreSynchronization = true;
-        browser.get(browser.baseUrl + '/loginRegister');
+        browser.get(browser.baseUrl + '/account/login-register');
     });
 
     it('should display error with no registration email', function () {
