@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from "@angular/forms";
+import { saveAs } from 'file-saver';
 
 import { BriefService } from '../../shared/brief.service';
 import { EmailRequest } from "../../../shared/EmailRequest";
+
 
 @Component({
     selector: 'initialFinal',
@@ -21,9 +23,8 @@ export class InitialFinalComponent {
     model = new EmailRequest();
   
   download() {
-    this.briefService.downloadBrief(this.id).subscribe(blob => {
-      let url = window.URL.createObjectURL(blob);
-      window.open(url);
+    this.briefService.downloadBrief(this.id).subscribe(file => {
+      saveAs(file);
     });
   }
 

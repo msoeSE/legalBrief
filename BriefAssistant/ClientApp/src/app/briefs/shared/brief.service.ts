@@ -37,7 +37,7 @@ export class BriefService {
   }
 
   createInitial(brief: InitialBriefInfo): Observable<InitialBriefInfo> {
-    return this.http.post<InitialBriefInfo>(`/api/briefs/initialcreate`, JSON.stringify(brief), { headers: this.headers });
+    return this.http.post<InitialBriefInfo>('/api/briefs/initialcreate', JSON.stringify(brief), { headers: this.headers });
   }
 
   createReply(brief: ReplyBriefInfo): Observable<ReplyBriefInfo> {
@@ -63,9 +63,15 @@ export class BriefService {
     return this.http.put<ResponseBriefInfo>(url, JSON.stringify(brief), { headers: this.headers });
   }
 
-  downloadBrief(id: string): Observable<Blob> {
-    return this.http.get(`/api/briefs/${id}/download`, { responseType: 'blob' })
-      .map(res => new Blob([res]));
+  downloadBrief(id: string): Observable<File> {
+    return this.http.get(`/api/briefs/${id}/download`, { responseType: 'blob', observe: 'response'})
+      .map(res => {
+        var mimeType = res.headers.get('Content-Type');
+        var blob = new Blob([res.body], { type: mimeType });
+        var filenameKvp = res.headers.get('Content-Disposition').split(';')[1].trim();
+        var filename = filenameKvp.substr(filenameKvp.indexOf('=') + 1);
+        return new File([blob], filename);
+      });
   }
 
   emailBrief(id: string, request: EmailRequest): Observable<object> {
