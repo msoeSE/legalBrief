@@ -16,8 +16,8 @@ export class AccountService {
     return this.http.post("/api/account/register", JSON.stringify(model), { headers: this.headers });
   }
 
-  confirmEmail(userId: string, code: string) : Observable<object> {
-    return this.http.get(`/api/account/confirmEmail?userId=${userId}&code=${code}`);
+  confirmEmail(userId: string, code: string): Observable<object> {
+    return this.http.get(`/api/account/confirmEmail?userId=${encodeURIComponent(userId)}&code=${encodeURIComponent(code)}`);
   }
 
   forgotPassword(model: EmailRequest): Observable<object> {
