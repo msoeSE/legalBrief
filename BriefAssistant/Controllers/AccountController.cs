@@ -43,8 +43,8 @@ namespace BriefAssistant.Controllers
                 _logger.LogInformation("User created a new account with password.");
 
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                var callbackUrl = Url.EmailConfirmationLink(user.Id.ToString(), code, Request.Scheme);
-                await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+                var callbackUrl = CreateConfirmEmailUri(user.Id.ToString(), code);
+                await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl.ToString());
 
                 if (model.UserType == UserType.Lawyer)
                 {
@@ -62,9 +62,26 @@ namespace BriefAssistant.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpGet]
+        private Uri CreateConfirmEmailUri(string userId, string code)
+        {
+            var builder = new UriBuilder()
+            {
+                Scheme = Request.Scheme,
+                Host = Request.Host.Host,
+                Path = "account/confirmation",
+                Query = $"userId={WebUtility.UrlEncode(userId)}&code={WebUtility.UrlEncode(code)}"
+            };
+            if (Request.Host.Port.HasValue)
+            {
+                builder.Port = Request.Host.Port.Value;
+            }
+
+            return builder.Uri;
+        }
+
+        [HttpGet("confirmEmail")]
         [AllowAnonymous]
-        public async Task<IActionResult> ConfirmEmail(string userId, string code)
+        public async Task<IActionResult> ConfirmEmail([FromQuery] string userId, [FromQuery] string code)
         {
             if (userId == null || code == null)
             {
@@ -74,13 +91,13 @@ namespace BriefAssistant.Controllers
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
-                return BadRequest(ModelState);
+                return BadRequest();
             }
 
             var result = await _userManager.ConfirmEmailAsync(user, code);
             if (result.Succeeded)
             {
-                return LocalRedirect("/confirmation");
+                return NoContent();
             }
 
             return BadRequest(ModelState);
@@ -99,23 +116,29 @@ namespace BriefAssistant.Controllers
             }
 
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var uriBuilder = new UriBuilder()
+
+            var url = CreateForgotPasswordUri(user.Email, code);
+            await _emailSender.SendEmailAsync(request.Email, "Reset Password",
+                $"Please reset your password by clicking here: <a href='{url}'>link</a>");
+            return NoContent();
+
+        }
+
+        private Uri CreateForgotPasswordUri(string email, string code)
+        {
+            var builder = new UriBuilder()
             {
                 Scheme = Request.Scheme,
                 Host = Request.Host.Host,
                 Path = "account/reset-password",
-                Query = $"email={user.Email}&code={WebUtility.UrlEncode(code)}"
+                Query = $"email={WebUtility.UrlEncode(email)}&code={WebUtility.UrlEncode(code)}"
             };
             if (Request.Host.Port.HasValue)
             {
-                uriBuilder.Port = Request.Host.Port.Value;
+                builder.Port = Request.Host.Port.Value;
             }
 
-            var callbackUrl = uriBuilder.Uri;
-            await _emailSender.SendEmailAsync(request.Email, "Reset Password",
-                $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
-            return NoContent();
-
+            return builder.Uri;
         }
 
         [HttpPost("resetPassword")]
