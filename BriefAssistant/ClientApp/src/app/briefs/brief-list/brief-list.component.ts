@@ -55,28 +55,19 @@ export class BriefListComponent implements OnInit {
       this.pagedItems = this.list.slice(this.pager.startIndex, this.pager.endIndex + 1);
     }
 
-    edit(id: string) {
-      if (id !== null) {
-        this.briefService.getBrief(id)
-          .subscribe(brief => {
-            switch (brief.type) {
-              case BriefType.Initial:
-                this.router.navigate(["/briefs/initial",id]);
-                break;
-              case BriefType.Reply:
-                this.router.navigate(["/briefs/reply", id]);
-                break;
-              case BriefType.Response:
-                this.router.navigate(["/briefs/response", id]);
-                break;
-              case BriefType.Petition:
-              default:
-                this.router.navigate(["/**"]);
-            }
-          }, error => {
-            this.router.navigate(["/**"]);
-          });
-      } else {
+    edit(item: IBriefListItem) {
+      switch (item.type) {
+      case BriefType.Initial:
+        this.router.navigate(["/briefs/initial", item.id]);
+        break;
+      case BriefType.Reply:
+        this.router.navigate(["/briefs/reply", item.id]);
+        break;
+      case BriefType.Response:
+        this.router.navigate(["/briefs/response", item.id]);
+        break;
+      case BriefType.Petition:
+      default:
         this.router.navigate(["/**"]);
       }
     }

@@ -1,4 +1,7 @@
-﻿export interface IBriefListItem {
+import { BriefType } from './BriefType';
+
+export interface IBriefListItem {
 	id: string;
-	title: string;
+  title: string;
+  type: BriefType;
 }
