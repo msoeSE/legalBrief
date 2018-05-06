@@ -13,6 +13,8 @@
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
     <UserSecretsId>5ebedfaf-3716-43c6-b64c-fd09ccbb326d</UserSecretsId>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
   </PropertyGroup>
 
   <ItemGroup>
