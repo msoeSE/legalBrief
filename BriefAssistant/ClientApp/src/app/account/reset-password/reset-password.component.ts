@@ -21,6 +21,9 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
+    this.resetFailed = false;
+    this.resetSuccessful = false;
+
     this.accountService.resetPassword(this.model)
       .subscribe(
         result => {
