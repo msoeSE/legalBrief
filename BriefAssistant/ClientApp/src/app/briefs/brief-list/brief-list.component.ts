@@ -82,6 +82,7 @@ export class BriefListComponent implements OnInit {
     }
     delete(id: string, index: number) {
         this.briefList.briefs.splice(index, 1);
+        this.pagedItems.splice(index, 1);
         //controller's delete method
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
