@@ -141,18 +141,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="EmailTemplates\completedBriefTemplate.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="EmailTemplates\forgotPasswordTemplate.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="EmailTemplates\registrationTemplate.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="initialBriefTemplate.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
