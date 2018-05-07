@@ -70,6 +70,9 @@ export class BriefService {
         var blob = new Blob([res.body], { type: mimeType });
         var filenameKvp = res.headers.get('Content-Disposition').split(';')[1].trim();
         var filename = filenameKvp.substr(filenameKvp.indexOf('=') + 1);
+        if (filename.charAt(0) === '"') {
+          filename = filename.substr(1, filename.length - 2);
+        }
         return new File([blob], filename);
       });
   }
