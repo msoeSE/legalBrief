@@ -3,7 +3,11 @@ using System.IO;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Threading;
 using System.Threading.Tasks;
+using FluentEmail.Core;
+using FluentEmail.Razor;
+using FluentEmail.Smtp;
 using Microsoft.Extensions.Options;
 
 namespace BriefAssistant.Services
@@ -15,46 +19,45 @@ namespace BriefAssistant.Services
         public EmailSender(IOptions<AuthMessageSenderOptions> options)
         {
             Options = options.Value;
+            Email.DefaultSender = new SmtpSender(CreateSmtpClient);
+            Email.DefaultRenderer = new RazorRenderer();
         }
 
-        public async Task SendEmailAsync(string toAddress, string subject, string message, Stream attachmentStream = null, string attachmentName = null)
+        private SmtpClient CreateSmtpClient()
         {
-            using (var client = new SmtpClient("email-smtp.us-east-1.amazonaws.com", 587))
+            return new SmtpClient
             {
-                client.EnableSsl = true;
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.UseDefaultCredentials = false;
-                client.Credentials = new NetworkCredential(Options.SmtpUsername, Options.SmtpPassword);
+                Host = "email-smtp.us-east-1.amazonaws.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(Options.SmtpUsername, Options.SmtpPassword)
+            };
+        }
 
-                using (var mailMessage = new MailMessage("no-reply@briefassistant.com", toAddress))
+        public async Task SendEmailAsync<T>(string toAddress, string subject, string templateFilename, T model, CancellationToken token = default(CancellationToken))
+        {
+            await Email.From("no-reply@briefassistant.com", "Brief Assistant")
+                .To(toAddress)
+                .Subject(subject)
+                .UsingTemplateFromFile(templateFilename, model)
+                .SendAsync(token);
+        }
+
+        public async Task SendEmailWithAttachmentAsync(string toAddress, string subject, string templateFilename, Stream atttachmentStream, string attachmentName, CancellationToken token = default(CancellationToken))
+        {
+            await Email.From("no-reply@briefassistant.com", "Brief Assistant")
+                .To(toAddress)
+                .Subject(subject)
+                .UsingTemplateFromFile(templateFilename, new {})
+                .Attach(new FluentEmail.Core.Models.Attachment()
                 {
-                    mailMessage.Subject = subject;
-                    mailMessage.Body = message;
-                    mailMessage.IsBodyHtml = true;
-
-                    if (attachmentStream != null)
-                    {
-                        using (var attachment = new Attachment(attachmentStream, attachmentName, "application/octect"))
-                        {
-                            ContentDisposition disposition = attachment.ContentDisposition;
-                            disposition.CreationDate = DateTime.UtcNow;
-                            disposition.ModificationDate = DateTime.UtcNow;
-                            disposition.ReadDate = DateTime.UtcNow;
-                            disposition.FileName = attachmentName;
-                            disposition.Size = attachmentStream.Length;
-                            disposition.DispositionType = DispositionTypeNames.Attachment;
-
-                            mailMessage.Attachments.Add(attachment);
-
-                            await client.SendMailAsync(mailMessage);
-                        }
-                    }
-                    else
-                    {
-                        await client.SendMailAsync(mailMessage);
-                    }
-                }
-            }
+                    ContentType = "application/octect",
+                    Data = atttachmentStream,
+                    Filename = attachmentName
+                })
+                .SendAsync(token);
         }
     }
 }

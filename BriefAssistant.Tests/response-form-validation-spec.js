@@ -3,7 +3,7 @@
     beforeEach(function () {
         //browser.waitForAngularEnabled(false);
         browser.ignoreSynchronization = true;
-        browser.get(browser.baseUrl + '/response-form');
+        browser.get(browser.baseUrl + '/briefs/response/new');
     });
 
     it('should display error with no title', function () {
