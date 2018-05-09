@@ -143,13 +143,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="initialBriefTemplate.docx">
+    <None Update="initialBriefTemplateUser.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="initialBriefTemplateLawyer.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="rds-combined-ca-bundle.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="replyBriefTemplate.docx">
+    <None Update="replyBriefTemplateUser.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="replyBriefTemplateLawyer.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -93,7 +93,7 @@ namespace BriefAssistant
                 options.User.RequireUniqueEmail = true;
 
                 // Sign In settings
-                options.SignIn.RequireConfirmedEmail = true;
+                //options.SignIn.RequireConfirmedEmail = true;
 
                 // Configure Identity to use the same JWT claims as OpenIddict instead
                 // of the legacy WS-Federation claims it uses by default (ClaimTypes),

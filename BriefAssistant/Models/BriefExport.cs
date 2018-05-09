@@ -118,7 +118,14 @@ namespace BriefAssistant.Models
             switch (role)
             {
                 case Role.Plaintiff:
-                    TopName = ContactInfo.Name;
+                    if (CircuitCourtCase.ClientName == null || CircuitCourtCase.ClientName.Equals(""))
+                    {
+                        TopName = ContactInfo.Name;
+                    }
+                    else
+                    {
+                        TopName = CircuitCourtCase.ClientName;
+                    }
                     BottomName = CircuitCourtCase.OpponentName;
                     switch (type)
                     {
@@ -134,7 +141,14 @@ namespace BriefAssistant.Models
                     
                     break;
                 case Role.Petitioner:
-                    TopName = ContactInfo.Name;
+                    if (CircuitCourtCase.ClientName == null || CircuitCourtCase.ClientName.Equals(""))
+                    {
+                        TopName = ContactInfo.Name;
+                    }
+                    else
+                    {
+                        TopName = CircuitCourtCase.ClientName;
+                    }
                     BottomName = CircuitCourtCase.OpponentName;
                     switch (type)
                     {
@@ -151,7 +165,14 @@ namespace BriefAssistant.Models
                     break;
                 case Role.Defendant:
                     TopName = CircuitCourtCase.OpponentName;
-                    BottomName = ContactInfo.Name;
+                    if (CircuitCourtCase.ClientName == null || CircuitCourtCase.ClientName.Equals(""))
+                    {
+                        BottomName = ContactInfo.Name;
+                    }
+                    else
+                    {
+                        BottomName = CircuitCourtCase.ClientName;
+                    }
                     switch (type)
                     {
                         case BriefType.Response:
@@ -167,7 +188,14 @@ namespace BriefAssistant.Models
                     break;
                 case Role.Respondent:
                     TopName = CircuitCourtCase.OpponentName;
-                    BottomName = ContactInfo.Name;
+                    if (CircuitCourtCase.ClientName == null || CircuitCourtCase.ClientName.Equals(""))
+                    {
+                        BottomName = ContactInfo.Name;
+                    }
+                    else
+                    {
+                        BottomName = CircuitCourtCase.ClientName;
+                    }
                     switch (type)
                     {
                         case BriefType.Response:

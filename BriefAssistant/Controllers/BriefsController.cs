@@ -180,6 +180,7 @@ namespace BriefAssistant.Controllers
             existingBrief.CircuitCourtCaseDto.JudgeFirstName = briefInfo.CircuitCourtCase.JudgeFirstName;
             existingBrief.CircuitCourtCaseDto.JudgeLastName = briefInfo.CircuitCourtCase.JudgeLastName;
             existingBrief.CircuitCourtCaseDto.OpponentName = briefInfo.CircuitCourtCase.OpponentName;
+            existingBrief.CircuitCourtCaseDto.ClientName = briefInfo.CircuitCourtCase.ClientName;
         }
 
         /// <summary>
@@ -651,7 +652,7 @@ namespace BriefAssistant.Controllers
             switch (briefInfo.Type)
             {
                 case BriefType.Initial:
-                    templateName = "initialBriefTemplate.docx";
+                    templateName = User.IsInRole("Lawyer") ? "initialBriefTemplateLawyer.docx" : "initialBriefTemplateUser.docx";
                     InitialBriefDto init = await FindInitialBriefAsync(briefInfo.Id);
                     if (init != null)
                     {
@@ -661,11 +662,11 @@ namespace BriefAssistant.Controllers
 
                     break;
                 case BriefType.Reply:
-                    templateName = "replyBriefTemplate.docx";
+                    templateName = User.IsInRole("Lawyer") ? "replyBriefTemplateLawyer.docx" : "replyBriefTemplateUser.docx";
 
                     break;
                 case BriefType.Response:
-                    templateName = "responseBriefTemplate.docx";
+                    templateName = User.IsInRole("Lawyer") ? "responseBriefTemplateLawyer.docx" : "responseBriefTemplateUser.docx";
                     ResponseBriefDto resp = await FindResponseBriefAsync(briefInfo.Id);
                     if (resp != null)
                     {

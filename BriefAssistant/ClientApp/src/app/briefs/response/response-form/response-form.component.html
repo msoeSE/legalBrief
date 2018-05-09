@@ -119,7 +119,7 @@
       <input type="text" id="judgeFname" class="form-control" [(ngModel)]="responseInfo.briefInfo.circuitCourtCase.judgeFirstName" #judgeFirstName="ngModel" name="judgeFirstname" placeholder="First Name" required>
       <div *ngIf="judgeFirstName.invalid && (judgeFirstName.dirty || judgeFirstName.touched)" class="alert alert-danger" id="judgeFname-errors">
         <div *ngIf="judgeFirstName.errors.required">
-          Name is required.
+          Judge first name is required.
         </div>
       </div>
       <small id="judgeHelp" class="form-text text-muted">
@@ -131,8 +131,17 @@
       <input type="text" id="judgeLname" class="form-control" [(ngModel)]="responseInfo.briefInfo.circuitCourtCase.judgeLastName" #judgeLastName="ngModel" name="judgeLastname" placeholder="Last Name" required>
       <div *ngIf="judgeLastName.invalid && (judgeLastName.dirty || judgeLastName.touched)" class="alert alert-danger" id="judgeLname-errors">
         <div *ngIf="judgeLastName.errors.required">
-          Name is required.
+          Judge last name is required.
         </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group" *ngIf="userType == 'Lawyer'">
+    <label for="clientName" class="col-form-label">Client Name</label>
+    <input id="clientName" class="form-control" [(ngModel)]="responseInfo.briefInfo.circuitCourtCase.clientName" ngModel #clientName="ngModel" name="clientName" placeholder="Client Name" required>
+    <div *ngIf="clientName.invalid && (clientName.dirty || clientName.touched)" class="alert alert-danger" id="clientName-errors">
+      <div *ngIf="clientName.errors">
+        Client name is required.
       </div>
     </div>
   </div>
@@ -141,7 +150,7 @@
     <input type="text" id="opponentName" class="form-control" [(ngModel)]="responseInfo.briefInfo.circuitCourtCase.opponentName" #opponentName="ngModel" name="opponentName" placeholder="Opponent Name" required>
     <div *ngIf="opponentName.invalid && (opponentName.dirty || opponentName.touched)" class="alert alert-danger" id="opponentName-errors">
       <div *ngIf="opponentName.errors.required">
-        Name is required.
+        Opponent name is required.
       </div>
     </div>
   </div>
