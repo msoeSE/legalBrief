@@ -7,7 +7,7 @@ export class CircuitCourtCase {
 	judgeFirstName: string;
 	role: Role;
 	caseNumber: string;
-	county: County;
+	county: string;
 
 	constructor() {
 		this.opponentName = "";
