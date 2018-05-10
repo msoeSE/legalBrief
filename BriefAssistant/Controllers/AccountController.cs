@@ -48,7 +48,7 @@ namespace BriefAssistant.Controllers
                 var templateFIlename =
                     _env.ContentRootFileProvider.GetFileInfo("EmailTemplates/registrationTemplate.cshtml").PhysicalPath;
                 const string subject = "Please Confirm Your Email";
-                //await _emailSender.SendEmailAsync(user.Email, subject, templateFIlename, new {Url = callbackUrl});
+                await _emailSender.SendEmailAsync(user.Email, subject, templateFIlename, new {Url = callbackUrl});
 
                 if (model.UserType == UserType.Lawyer)
                 {
