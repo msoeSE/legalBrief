@@ -48,7 +48,7 @@ namespace BriefAssistant.Models
         EauClaire,
         [EnumMember]
         Florence,
-        [EnumMember(Value = "Fond Du Lac")]
+        [EnumMember(Value = "Fond du Lac")]
         FondDuLac,
         [EnumMember]
         Forest,
