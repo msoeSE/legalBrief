@@ -71,7 +71,7 @@ export class InitialFormComponent implements OnInit, ComponentCanDeactivate {
       .subscribe(brief => {
         this.initialInfo.briefInfo.id = brief.briefInfo.id;
         this.initialInfo.id = brief.briefInfo.id;
-        alert("Brief Saved!");
+        alert("Brief Saved! If you want to edit this brief at a later time, you can find it by clicking the My Briefs tab in the navigation bar.");
       });
   }
 

@@ -64,7 +64,7 @@ export class ReplyFormComponent implements OnInit, ComponentCanDeactivate {
       .subscribe(brief => {
         this.replyInfo.briefInfo.id = brief.briefInfo.id;
         this.replyInfo.id = brief.briefInfo.id;
-        alert("Brief Saved!");
+        alert("Brief Saved! If you want to edit this brief at a later time, you can find it by clicking the My Briefs tab in the navigation bar.");
       });
   }
 
