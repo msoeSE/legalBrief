@@ -5,6 +5,7 @@ import { ReplyComponent } from './reply.component';
 import { ReplyExampleComponent } from './reply-example/reply-example.component';
 import { ReplyFormComponent } from './reply-form/reply-form.component';
 import { ReplyFinalComponent } from './reply-final/reply-final.component';
+import { PendingChangesGuard } from '../../core/warning/warning-guard';
 
 const intialRoutes: Routes = [
   {
@@ -13,8 +14,8 @@ const intialRoutes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'example' },
       { path: 'example', component: ReplyExampleComponent },
-      { path: 'new', component: ReplyFormComponent },
-      { path: ':id', component: ReplyFormComponent },
+      { path: 'new', component: ReplyFormComponent, canDeactivate: [PendingChangesGuard] },
+      { path: ':id', component: ReplyFormComponent, canDeactivate: [PendingChangesGuard] },
       { path: ':id/final', component: ReplyFinalComponent }
     ]
   }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -9,13 +9,14 @@ import { County } from "../../shared/County";
 import { Role } from "../../shared/Role";
 import { BriefService } from "../../shared/brief.service";
 import { AuthService } from '../../../core/auth.service';
+import { ComponentCanDeactivate } from '../../../core/warning/warning-guard';
 
 @Component({
 	selector: "response-form",
 	templateUrl: "./response-form.component.html"
 })
 
-export class ResponseFormComponent implements OnInit {
+export class ResponseFormComponent implements OnInit, ComponentCanDeactivate {
   id: string | null;
 	states = State;
 	stateKeys = Object.keys(State);
@@ -31,7 +32,12 @@ export class ResponseFormComponent implements OnInit {
 		readonly briefService: BriefService,
     private route: ActivatedRoute,
     private readonly authService: AuthService
-  ) { this.userType = authService.userType.toString();}
+  ) { this.userType = authService.userType.toString(); }
+
+  @HostListener('window:beforeunload')
+  canDeactivate(): Observable<boolean> | boolean {
+    return false;
+  }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');

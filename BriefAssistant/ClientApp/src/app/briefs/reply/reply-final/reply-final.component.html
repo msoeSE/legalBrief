@@ -2,11 +2,14 @@
   <p>
     Congratulations! You have completed the Brief Assistant App!
     <br />
-    You can download your brief by clicking the button.
+    You can download your brief by clicking the Download button, or email your brief by providing an email in the box and clicking the Email button.
   </p>
   <p>
     <button class="btn btn-success" id="replyFinalDownloadButton" name="replyFinalDownloadButton" (click)="download()">Download</button>
   </p>
+  <div class="alert alert-success" *ngIf="showDownloadSuccessDiv">
+    Download Successful. Check your Downloads folder for the brief.
+  </div>
   <form class="form-inline" #emailForm="ngForm" (ngSubmit)="onSubmit(emailForm)">
     <div class="form-group">
       <input type="email" id="email-send" class="form-control" [(ngModel)]="model.email" name="email" placeholder="johndoe@example.com">

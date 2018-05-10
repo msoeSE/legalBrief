@@ -11,7 +11,8 @@ import { EmailRequest } from '../../../shared/EmailRequest';
     templateUrl: './reply-final.component.html'
 })
 export class ReplyFinalComponent {
-    private id: string | null;
+  private id: string | null;
+  public showDownloadSuccessDiv: boolean = false;
 
     constructor(
       readonly router: Router,
@@ -22,7 +23,9 @@ export class ReplyFinalComponent {
     model = new EmailRequest();
 
   download() {
+    this.showDownloadSuccessDiv = false;
     this.briefService.downloadBrief(this.id).subscribe(file => {
+      this.showDownloadSuccessDiv = true;
       saveAs(file);
     });
   }
