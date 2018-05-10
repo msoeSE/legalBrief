@@ -182,12 +182,7 @@
     <label for="issuesPresented" class="col-form-label" aria-describedby="issuesPresentedHelp">
       What are the Issues Presented?
     </label>
-    <textarea id="issuesPresented" class="form-control" [(ngModel)]="responseInfo.issuesPresented" #issuesPresented="ngModel" name="issuesPresented" rows="8" required></textarea>
-    <div *ngIf="issuesPresented.invalid && (issuesPresented.dirty || issuesPresented.touched)" class="alert alert-danger" id="issuesPresented-errors">
-      <div *ngIf="issuesPresented.errors.required">
-        Issues presented is required.
-      </div>
-    </div>
+    <textarea id="issuesPresented" class="form-control" [(ngModel)]="responseInfo.issuesPresented" #issuesPresented="ngModel" name="issuesPresented" rows="8"></textarea>
     <small class="form-text text-muted" id="issuesPresentedHelp">
       The Appellant’s Initial Brief lists the Issues Presented in this appeal. These are the circuit court
       mistakes that the Appellant wants the Court of Appeals to review. If you, the Respondent, think that
@@ -240,12 +235,7 @@
     <label for="caseAndFacts" class="col-form-label" aria-describedby="caseAndFactsHelp">
       What is your Statement of Case and Facts?
     </label>
-    <textarea id="caseAndFacts" class="form-control" [(ngModel)]="responseInfo.caseFactsStatement" #caseFactsStatement="ngModel" name="caseFactsStatement" rows="8" required></textarea>
-    <div *ngIf="caseFactsStatement.invalid && (caseFactsStatement.dirty || caseFactsStatement.touched)" class="alert alert-danger" id="caseFactsStatement-errors">
-      <div *ngIf="caseFactsStatement.errors.required">
-        Case and facts statement is required.
-      </div>
-    </div>
+    <textarea id="caseAndFacts" class="form-control" [(ngModel)]="responseInfo.caseFactsStatement" #caseFactsStatement="ngModel" name="caseFactsStatement" rows="8"></textarea>
     <small class="form-text text-muted" id="caseAndFactsHelp">
       A Statement of Case and Facts describes the nature of the case and provides a short overview of
       what happened at the circuit court level—i.e. only those facts needed to understand and decide
