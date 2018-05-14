@@ -73,6 +73,33 @@
     <None Remove="ClientApp\src\app\legal-resources\legal-resources-routing.module.ts" />
     <None Remove="ClientApp\src\app\legal-resources\legal-resources.module.ts" />
     <None Remove="ClientApp\src\app\shared\shared.module.ts" />
+    <None Remove="initialBriefTemplateLawyer.docx" />
+    <None Remove="initialBriefTemplateUser.docx" />
+    <None Remove="replyBriefTemplateLawyer.docx" />
+    <None Remove="replyBriefTemplateUser.docx" />
+    <None Remove="responseBriefTemplateLawyer.docx" />
+    <None Remove="responseBriefTemplateUser.docx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="initialBriefTemplateLawyer.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="initialBriefTemplateUser.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="replyBriefTemplateLawyer.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="replyBriefTemplateUser.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="responseBriefTemplateLawyer.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="responseBriefTemplateUser.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -145,19 +172,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="initialBriefTemplateUser.docx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="initialBriefTemplateLawyer.docx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="rds-combined-ca-bundle.pfx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="replyBriefTemplateUser.docx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="replyBriefTemplateLawyer.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
