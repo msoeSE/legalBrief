@@ -1,15 +1,15 @@
-﻿import { State } from './State';
+import { State } from './State';
 
 export class Address {
 	zip: string;
-	state: State;
+	state: string;
 	city: string;
 	street2: string;
 	street: string;
 
 	constructor() {
 		this.zip = "";
-		this.state = State.Wisconsin;
+		this.state = State.Wisconsin.toString();
 		this.city = "";
 		this.street2 = "";
 		this.street = "";
