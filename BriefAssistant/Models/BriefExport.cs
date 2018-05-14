@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -88,6 +89,10 @@ namespace BriefAssistant.Models
         /// <returns>A list of paragraphs</returns>
         private static IList<Paragraph> ToParagraphs(string text)
         {
+            if (text.Length == 0)
+            {
+                return new List<Paragraph>();
+            }
             return text.Trim()
                 .Split('\n')
                 .Select(paragraph => new Paragraph(paragraph))

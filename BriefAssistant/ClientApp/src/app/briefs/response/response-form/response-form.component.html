@@ -15,18 +15,40 @@
       </div>
     </div>
   </div>
-  <div class="form-group">
-    <label for="street" class="col-form-label">Address</label>
-    <input type="text" id="street" class="form-control" [(ngModel)]="responseInfo.briefInfo.contactInfo.address.street" #street="ngModel" name="street" placeholder="1234 Main St." required autocomplete="address-line1">
-    <div *ngIf="street.invalid && (street.dirty || street.touched)" class="alert alert-danger" id="street-errors">
-      <div *ngIf="street.errors">
-        Address is required.
+  <div *ngIf="userType != 'Lawyer'">
+    <div class="form-group">
+      <label for="street" class="col-form-label">Address</label>
+      <input type="text" id="street" class="form-control" [(ngModel)]="responseInfo.briefInfo.contactInfo.address.street" #street="ngModel" name="street" placeholder="1234 Main St." required autocomplete="address-line1">
+      <div *ngIf="street.invalid && (street.dirty || street.touched)" class="alert alert-danger" id="street-errors">
+        <div *ngIf="street.errors">
+          Address is required.
+        </div>
       </div>
     </div>
+    <div class="form-group">
+      <label for="street2" class="col-form-label">Address Line 2</label>
+      <input type="text" id="street2" class="form-control" [(ngModel)]="responseInfo.briefInfo.contactInfo.address.street2" #street2="ngModel" name="street2" placeholder="Apartment, studio, or floor" autocomplete="address-line2">
+    </div>
   </div>
-  <div class="form-group">
-    <label for="street2" class="col-form-label">Address Line 2</label>
-    <input type="text" id="street2" class="form-control" [(ngModel)]="responseInfo.briefInfo.contactInfo.address.street2" name="street2" placeholder="Apartment, studio, or floor" autocomplete="address-line2">
+  <div *ngIf="userType == 'Lawyer'">
+    <div class="form-group">
+      <label for="firm" class="col-form-label">Firm</label>
+      <input type="text" id="firm" class="form-control" [(ngModel)]="responseInfo.briefInfo.contactInfo.address.street" #firm="ngModel" name="firm" placeholder="Firm Name" required>
+      <div *ngIf="firm.invalid && (firm.dirty || firm.touched)" class="alert alert-danger" id="firm-errors">
+        <div *ngIf="firm.errors">
+          Firm name is required.
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="street2" class="col-form-label">Address of Firm</label>
+      <input type="text" id="street2" class="form-control" [(ngModel)]="responseInfo.briefInfo.contactInfo.address.street2" #street2="ngModel" name="street" placeholder="1234 Main St." required autocomplete="address-line1">
+      <div *ngIf="street2.invalid && (street2.dirty || street2.touched)" class="alert alert-danger" id="street2-errors">
+        <div *ngIf="street2.errors">
+          Address is required.
+        </div>
+      </div>
+    </div>
   </div>
   <div class="row">
     <div class="form-group col-md-6">
@@ -246,7 +268,8 @@
       his Response Brief. Each statement of fact must be followed by a citation to the Record on Appeal. For example,
       “R.35:26” is a citation to Item No. 35 in the Record on Appeal. The Statement of Case and Facts section is required
       by <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/1/d" target="_blank">
-        Wis. Stat.&sect;809.19(1)(d)</a>.
+        Wis. Stat.&sect;809.19(1)(d)
+      </a>.
       Please note that for certain appeals, the law requires appellate briefs to refer to the parties and other
       individuals by initials, an appropriate pseudonym, or other designation. See
       <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/VIII/81/8" target="_blank">
@@ -277,14 +300,16 @@
       to case law, statutes, constitutional provisions and/or other regulations that support your point.
       The Brief Assistant will direct you to websites where you can find these legal resources. The Argument
       section is required by <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/1/e" target="_blank">
-        Wis. Stat.&sect;809.19(1)(e)</a>.
+        Wis. Stat.&sect;809.19(1)(e)
+      </a>.
       Again note that for certain appeals, the law requires appellate briefs to refer to the parties and other
       individuals by initials, an appropriate pseudonym, or other designation. See
       <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/VIII/81/8" target="_blank">
         Wis. Stat. &sect;809.81(8)
       </a> and
       <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/VIII/86" target="_blank">
-        &sect;809.86</a>.
+        &sect;809.86
+      </a>.
     </small>
   </div>
   <div class="form-group">
