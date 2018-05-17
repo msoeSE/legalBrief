@@ -5,7 +5,7 @@ import { ResponseComponent } from './response.component';
 import { ResponseExampleComponent } from './response-example/response-example.component';
 import { ResponseFormComponent } from './response-form/response-form.component';
 import { ResponseFinalComponent } from './response-final/response-final.component';
-import { PendingChangesGuard } from '../../core/warning/warning-guard';
+import { PendingChangesGuard } from '../../core/warning-guard';
 
 const intialRoutes: Routes = [
   {

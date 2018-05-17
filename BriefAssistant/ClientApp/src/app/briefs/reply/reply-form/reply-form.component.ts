@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { BriefService } from "../../shared/brief.service";
 import { AuthService } from '../../../core/auth.service';
 import { ReplyBriefInfo } from "../../shared/ReplyBriefInfo";
-import { ComponentCanDeactivate } from "../../../core/warning/warning-guard";
+import { ComponentCanDeactivate } from "../../../core/warning-guard";
 
 @Component({
   selector: "replyForm",

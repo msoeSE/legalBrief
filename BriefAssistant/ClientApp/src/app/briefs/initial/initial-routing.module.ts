@@ -5,7 +5,7 @@ import { InitialComponent } from './initial.component';
 import { InitialExampleComponent } from './initial-example/initial-example.component';
 import { InitialFormComponent } from './initial-form/initial-form.component';
 import { InitialFinalComponent } from './initial-final/initial-final.component';
-import { PendingChangesGuard } from '../../core/warning/warning-guard';
+import { PendingChangesGuard } from '../../core/warning-guard';
 
 const intialRoutes: Routes = [
   {

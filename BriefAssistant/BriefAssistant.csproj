@@ -69,7 +69,6 @@
     <None Remove="ClientApp\src\app\core\core.module.ts" />
     <None Remove="ClientApp\src\app\core\header\header.component.ts" />
     <None Remove="ClientApp\src\app\core\module-import-guard.ts" />
-    <None Remove="ClientApp\src\app\core\warning\warning-guard.ts" />
     <None Remove="ClientApp\src\app\legal-resources\legal-resources-routing.module.ts" />
     <None Remove="ClientApp\src\app\legal-resources\legal-resources.module.ts" />
     <None Remove="ClientApp\src\app\shared\shared.module.ts" />
@@ -127,7 +126,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\core\core.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\core\header\header.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\core\module-import-guard.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\core\warning\warning-guard.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\core\warning-guard.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\legal-resources\legal-resources-routing.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\legal-resources\legal-resources.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\core\auth.service.ts" />

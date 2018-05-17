@@ -5,7 +5,7 @@ import { ReplyComponent } from './reply.component';
 import { ReplyExampleComponent } from './reply-example/reply-example.component';
 import { ReplyFormComponent } from './reply-form/reply-form.component';
 import { ReplyFinalComponent } from './reply-final/reply-final.component';
-import { PendingChangesGuard } from '../../core/warning/warning-guard';
+import { PendingChangesGuard } from '../../core/warning-guard';
 
 const intialRoutes: Routes = [
   {

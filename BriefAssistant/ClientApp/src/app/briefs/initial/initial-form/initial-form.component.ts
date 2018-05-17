@@ -9,7 +9,7 @@ import { County } from "../../shared/County";
 import { Role } from "../../shared/Role";
 import { BriefService } from "../../shared/brief.service"
 import { AuthService } from '../../../core/auth.service';
-import { ComponentCanDeactivate } from '../../../core/warning/warning-guard';
+import { ComponentCanDeactivate } from '../../../core/warning-guard';
 
 @Component({
   selector: "initialForm",
