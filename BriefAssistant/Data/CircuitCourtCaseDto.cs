@@ -17,6 +17,7 @@ namespace BriefAssistant.Data
         public string JudgeFirstName { get; set; }
         public string JudgeLastName { get; set; }
         public string OpponentName { get; set; }
+        public string ClientName { get; set; }
 
         public IList<BriefDto> BriefDto { get; set; }
     }

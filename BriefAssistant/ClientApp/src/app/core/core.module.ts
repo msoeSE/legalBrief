@@ -8,6 +8,7 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth-guard';
 import { throwIfAlreadyLoaded } from './module-import-guard';
+import { PendingChangesGuard } from './warning-guard';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { throwIfAlreadyLoaded } from './module-import-guard';
   ],
   providers: [
     AuthService,
-    AuthGuard
+    AuthGuard,
+    PendingChangesGuard
   ],
   exports: [
     HeaderComponent

@@ -15,18 +15,40 @@
       </div>
     </div>
   </div>
-  <div class="form-group">
-    <label for="street" class="col-form-label">Address</label>
-    <input type="text" id="street" class="form-control" [(ngModel)]="initialInfo.briefInfo.contactInfo.address.street" #street="ngModel" name="street" placeholder="1234 Main St." required autocomplete="address-line1">
-    <div *ngIf="street.invalid && (street.dirty || street.touched)" class="alert alert-danger" id="street-errors">
-      <div *ngIf="street.errors">
-        Address is required.
+  <div *ngIf="userType != 'Lawyer'">
+    <div class="form-group">
+      <label for="street" class="col-form-label">Address</label>
+      <input type="text" id="street" class="form-control" [(ngModel)]="initialInfo.briefInfo.contactInfo.address.street" #street="ngModel" name="street" placeholder="1234 Main St." required autocomplete="address-line1">
+      <div *ngIf="street.invalid && (street.dirty || street.touched)" class="alert alert-danger" id="street-errors">
+        <div *ngIf="street.errors">
+          Address is required.
+        </div>
       </div>
     </div>
+    <div class="form-group">
+      <label for="street2" class="col-form-label">Address Line 2</label>
+      <input type="text" id="street2" class="form-control" [(ngModel)]="initialInfo.briefInfo.contactInfo.address.street2" name="street2" placeholder="Apartment, studio, or floor" autocomplete="address-line2">
+    </div>
   </div>
-  <div class="form-group">
-    <label for="street2" class="col-form-label">Address Line 2</label>
-    <input type="text" id="street2" class="form-control" [(ngModel)]="initialInfo.briefInfo.contactInfo.address.street2" name="street2" placeholder="Apartment, studio, or floor" autocomplete="address-line2">
+  <div *ngIf="userType == 'Lawyer'">
+    <div class="form-group">
+      <label for="firm" class="col-form-label">Firm</label>
+      <input type="text" id="firm" class="form-control" [(ngModel)]="initialInfo.briefInfo.contactInfo.address.street" name="firm" placeholder="Firm Name" required>
+      <div *ngIf="firm.invalid && (firm.dirty || firm.touched)" class="alert alert-danger" id="firm-errors">
+        <div *ngIf="firm.errors">
+          Firm name is required.
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="street2" class="col-form-label">Address of Firm</label>
+      <input type="text" id="street2" class="form-control" [(ngModel)]="initialInfo.briefInfo.contactInfo.address.street2" #street2="ngModel" name="street" placeholder="1234 Main St." required autocomplete="address-line1">
+      <div *ngIf="street2.invalid && (street2.dirty || street2.touched)" class="alert alert-danger" id="street2-errors">
+        <div *ngIf="street2.errors">
+          Address is required.
+        </div>
+      </div>
+    </div>
   </div>
   <div class="row">
     <div class="form-group col-md-6">
@@ -119,7 +141,7 @@
       <input type="text" id="judgeFname" class="form-control" [(ngModel)]="initialInfo.briefInfo.circuitCourtCase.judgeFirstName" #judgeFirstName="ngModel" name="judgeFirstname" placeholder="First Name" required>
       <div *ngIf="judgeFirstName.invalid && (judgeFirstName.dirty || judgeFirstName.touched)" class="alert alert-danger" id="judgeFname-errors">
         <div *ngIf="judgeFirstName.errors.required">
-          Name is required.
+          Judge first name is required.
         </div>
       </div>
       <small id="judgeHelp" class="form-text text-muted">
@@ -131,8 +153,17 @@
       <input type="text" id="judgeLname" class="form-control" [(ngModel)]="initialInfo.briefInfo.circuitCourtCase.judgeLastName" #judgeLastName="ngModel" name="judgeLastname" placeholder="Last Name" required>
       <div *ngIf="judgeLastName.invalid && (judgeLastName.dirty || judgeLastName.touched)" class="alert alert-danger" id="judgeLname-errors">
         <div *ngIf="judgeLastName.errors.required">
-          Name is required.
+          Judge last name is required.
         </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group" *ngIf="userType == 'Lawyer'">
+    <label for="clientName" class="col-form-label">Client Name</label>
+    <input id="clientName" class="form-control" [(ngModel)]="initialInfo.briefInfo.circuitCourtCase.clientName" ngModel #clientName="ngModel" name="clientName" placeholder="Client Name" required>
+    <div *ngIf="clientName.invalid && (clientName.dirty || clientName.touched)" class="alert alert-danger" id="clientName-errors">
+      <div *ngIf="clientName.errors">
+        Client name is required.
       </div>
     </div>
   </div>
@@ -141,7 +172,7 @@
     <input type="text" id="opponentName" class="form-control" [(ngModel)]="initialInfo.briefInfo.circuitCourtCase.opponentName" #opponentName="ngModel" name="opponentName" placeholder="Opponent Name" required>
     <div *ngIf="opponentName.invalid && (opponentName.dirty || opponentName.touched)" class="alert alert-danger" id="opponentName-errors">
       <div *ngIf="opponentName.errors.required">
-        Name is required.
+        Opponent name is required.
       </div>
     </div>
   </div>
@@ -329,7 +360,9 @@
       but those documents must be part of the Record on Appeal--that is, documents that were first presented
       to the circuit court. The Appendix is required by <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/2" target="_blank">
         Wis. Stat. &sect;809.19(2)
-      </a>.
+      </a>. If your appeal is required by law to be confidential, then you must read and comply with <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/1/g" target="_blank">
+        Wis. Stat. &sect;809.19(1)(g)</a> and <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/2/a" target="_blank">
+        Wis. Stat. &sect;809.19(2)(a)</a>.
     </small>
   </div>
   <h1>Document Filename</h1>

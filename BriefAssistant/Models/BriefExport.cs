@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -88,6 +89,10 @@ namespace BriefAssistant.Models
         /// <returns>A list of paragraphs</returns>
         private static IList<Paragraph> ToParagraphs(string text)
         {
+            if (text.Length == 0)
+            {
+                return new List<Paragraph>();
+            }
             return text.Trim()
                 .Split('\n')
                 .Select(paragraph => new Paragraph(paragraph))
@@ -118,7 +123,14 @@ namespace BriefAssistant.Models
             switch (role)
             {
                 case Role.Plaintiff:
-                    TopName = ContactInfo.Name;
+                    if (CircuitCourtCase.ClientName == null || CircuitCourtCase.ClientName.Equals(""))
+                    {
+                        TopName = ContactInfo.Name;
+                    }
+                    else
+                    {
+                        TopName = CircuitCourtCase.ClientName;
+                    }
                     BottomName = CircuitCourtCase.OpponentName;
                     switch (type)
                     {
@@ -134,7 +146,14 @@ namespace BriefAssistant.Models
                     
                     break;
                 case Role.Petitioner:
-                    TopName = ContactInfo.Name;
+                    if (CircuitCourtCase.ClientName == null || CircuitCourtCase.ClientName.Equals(""))
+                    {
+                        TopName = ContactInfo.Name;
+                    }
+                    else
+                    {
+                        TopName = CircuitCourtCase.ClientName;
+                    }
                     BottomName = CircuitCourtCase.OpponentName;
                     switch (type)
                     {
@@ -151,7 +170,14 @@ namespace BriefAssistant.Models
                     break;
                 case Role.Defendant:
                     TopName = CircuitCourtCase.OpponentName;
-                    BottomName = ContactInfo.Name;
+                    if (CircuitCourtCase.ClientName == null || CircuitCourtCase.ClientName.Equals(""))
+                    {
+                        BottomName = ContactInfo.Name;
+                    }
+                    else
+                    {
+                        BottomName = CircuitCourtCase.ClientName;
+                    }
                     switch (type)
                     {
                         case BriefType.Response:
@@ -167,7 +193,14 @@ namespace BriefAssistant.Models
                     break;
                 case Role.Respondent:
                     TopName = CircuitCourtCase.OpponentName;
-                    BottomName = ContactInfo.Name;
+                    if (CircuitCourtCase.ClientName == null || CircuitCourtCase.ClientName.Equals(""))
+                    {
+                        BottomName = ContactInfo.Name;
+                    }
+                    else
+                    {
+                        BottomName = CircuitCourtCase.ClientName;
+                    }
                     switch (type)
                     {
                         case BriefType.Response:

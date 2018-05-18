@@ -184,5 +184,7 @@ namespace BriefAssistant.Models
         public string JudgeLastName { get; set; }
         [DataMember]
         public string OpponentName { get; set; }
+        [DataMember(EmitDefaultValue = false)]
+        public string ClientName { get; set; }
     }
 }

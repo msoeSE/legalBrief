@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -9,13 +9,14 @@ import { County } from "../../shared/County";
 import { Role } from "../../shared/Role";
 import { BriefService } from "../../shared/brief.service"
 import { AuthService } from '../../../core/auth.service';
+import { ComponentCanDeactivate } from '../../../core/warning-guard';
 
 @Component({
   selector: "initialForm",
   templateUrl: "./initial-form.component.html"
 })
 
-export class InitialFormComponent implements OnInit {
+export class InitialFormComponent implements OnInit, ComponentCanDeactivate {
   id: string | null;
   states = State;
   stateKeys = Object.keys(State);
@@ -33,6 +34,11 @@ export class InitialFormComponent implements OnInit {
     private readonly  authService: AuthService
   ) {
     this.userType = authService.userType.toString();
+  }
+
+  @HostListener('window:beforeunload')
+  canDeactivate(): Observable<boolean> | boolean {
+    return false;
   }
 
   ngOnInit() {
@@ -65,7 +71,7 @@ export class InitialFormComponent implements OnInit {
       .subscribe(brief => {
         this.initialInfo.briefInfo.id = brief.briefInfo.id;
         this.initialInfo.id = brief.briefInfo.id;
-        alert("Brief Saved!");
+        alert("Brief Saved! If you want to edit this brief at a later time, you can find it by clicking the My Briefs tab in the navigation bar.");
       });
   }
 

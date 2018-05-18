@@ -12,6 +12,7 @@ import { EmailRequest } from "../../../shared/EmailRequest";
 })
 export class ResponseFinalComponent {
   id: string | null;
+  public showDownloadSuccessDiv: boolean = false;
 
   constructor(
     readonly router: Router,
@@ -23,7 +24,9 @@ export class ResponseFinalComponent {
   model = new EmailRequest();
 
   download() {
+    this.showDownloadSuccessDiv = false;
     this.briefService.downloadBrief(this.id).subscribe(file => {
+      this.showDownloadSuccessDiv = true;
       saveAs(file);
     });
   }
