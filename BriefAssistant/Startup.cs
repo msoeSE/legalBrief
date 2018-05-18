@@ -22,6 +22,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
+using OpenIddict.Abstractions;
 using OpenIddict.Core;
 using OpenIddict.Models;
 
@@ -103,24 +104,29 @@ namespace BriefAssistant
                 options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
             });
 
-            services.AddOpenIddict<Guid>(options =>
-            {
-                options.AddEntityFrameworkCoreStores<ApplicationDbContext>();
-                options.AddMvcBinders();
-                // Enable the token endpoint.
-                // Form password flow (used in username/password login requests)
-                options.EnableTokenEndpoint("/connect/token");
-                options.EnableUserinfoEndpoint("/userinfo");
-
-                // Enable the password and the refresh token flows.
-                options.AllowPasswordFlow()
-                    .AllowRefreshTokenFlow();
-
-                if (Environment.IsDevelopment())
+            services.AddOpenIddict()
+                .AddCore(options =>
+                    {
+                        options.UseDefaultModels<Guid>();
+                        options.AddEntityFrameworkCoreStores<ApplicationDbContext>();
+                    }
+                ).AddServer(options =>
                 {
-                    options.DisableHttpsRequirement();
-                }
-            });
+                    options.AddMvcBinders();
+                    // Enable the token endpoint.
+                    // Form password flow (used in username/password login requests)
+                    options.EnableTokenEndpoint("/connect/token");
+                    options.EnableUserinfoEndpoint("/userinfo");
+
+                    // Enable the password and the refresh token flows.
+                    options.AllowPasswordFlow()
+                        .AllowRefreshTokenFlow();
+
+                    if (Environment.IsDevelopment())
+                    {
+                        options.DisableHttpsRequirement();
+                    }
+                });
 
             services.AddAuthentication(options =>
                 {
@@ -233,31 +239,27 @@ namespace BriefAssistant
             const string clientId = "angular-client";
 
             var clientApp = await manager.FindByClientIdAsync(clientId, cts);
+            var descriptor = new OpenIddictApplicationDescriptor
+            {
+                ClientId = clientId,
+                DisplayName = "Angular Client",
+                PostLogoutRedirectUris = { new Uri($"{hostUrl}signout-odic") },
+                RedirectUris = { new Uri(hostUrl) },
+                Permissions =
+                {
+                    OpenIddictConstants.Permissions.Endpoints.Token,
+                    OpenIddictConstants.Permissions.Endpoints.Introspection,
+                    OpenIddictConstants.Permissions.GrantTypes.Password,
+                    OpenIddictConstants.Permissions.GrantTypes.RefreshToken
+                }
+            };
+
             if (clientApp == null)
             {
-                var descriptor = new OpenIddictApplicationDescriptor
-                {
-                    ClientId = clientId,
-                    DisplayName = "Angular Client",
-                    PostLogoutRedirectUris = { new Uri($"{hostUrl}signout-odic") },
-                    RedirectUris = { new Uri(hostUrl) },
-                    Permissions =
-                    {
-                        OpenIddictConstants.Permissions.Endpoints.Token,
-                        OpenIddictConstants.Permissions.Endpoints.Introspection,
-                        OpenIddictConstants.Permissions.GrantTypes.Password,
-                        OpenIddictConstants.Permissions.GrantTypes.RefreshToken
-                    }
-                };
-
                 await manager.CreateAsync(descriptor, cts);
             } else
             {
-                const string newPermission = OpenIddictConstants.Permissions.Endpoints.Introspection;
-                if (!await manager.HasPermissionAsync(clientApp, newPermission, cts))
-                {
-                    await manager.UpdateAsync(clientApp, desc => Task.FromResult(desc.Permissions.Add(newPermission)), cts);
-                }
+                await manager.UpdateAsync(clientApp, descriptor, cts);
             }
         }
 
