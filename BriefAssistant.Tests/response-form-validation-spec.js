@@ -1,7 +1,7 @@
 ﻿describe('response form input fields', function () {
 
     beforeEach(function () {
-        //browser.waitForAngularEnabled(false);
+        browser.waitForAngularEnabled(false);
         browser.ignoreSynchronization = true;
         browser.get(browser.baseUrl + '/briefs/response/new');
     });
