@@ -126,15 +126,14 @@ namespace BriefAssistant
                     {
                         options.DisableHttpsRequirement();
                     }
-                });
+                }).AddValidation();
 
             services.AddAuthentication(options =>
-                {
-                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddOAuthValidation();
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            });
 
             services.AddAuthorization();
             services.AddSingleton<IAuthorizationHandler, BriefAuthorizationCrudHandler>();
