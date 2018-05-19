@@ -4,6 +4,7 @@
         browser.waitForAngularEnabled(false);
         browser.ignoreSynchronization = true;
         browser.get(browser.baseUrl + '/briefs/response/new');
+        browser.switchTo().alert().accept();
     });
 
     it('should display error with no title', function () {
