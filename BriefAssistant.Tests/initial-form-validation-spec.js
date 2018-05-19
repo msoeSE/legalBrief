@@ -4,6 +4,10 @@
         browser.waitForAngularEnabled(false);
         browser.ignoreSynchronization = true;
         browser.get(browser.baseUrl + '/briefs/initial/new');
+        browser.switchTo().alert().then(
+            function (alert) { alert.accept(); },
+            function (err) { }
+        );
     });
 
     it('should display error with no name', function () {

@@ -22,6 +22,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
+using OpenIddict.Abstractions;
 using OpenIddict.Core;
 using OpenIddict.Models;
 
@@ -103,32 +104,36 @@ namespace BriefAssistant
                 options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
             });
 
-            services.AddOpenIddict<Guid>(options =>
-            {
-                options.AddEntityFrameworkCoreStores<ApplicationDbContext>();
-                options.AddMvcBinders();
-                // Enable the token endpoint.
-                // Form password flow (used in username/password login requests)
-                options.EnableTokenEndpoint("/connect/token");
-                options.EnableUserinfoEndpoint("/userinfo");
-
-                // Enable the password and the refresh token flows.
-                options.AllowPasswordFlow()
-                    .AllowRefreshTokenFlow();
-
-                if (Environment.IsDevelopment())
+            services.AddOpenIddict()
+                .AddCore(options =>
+                    {
+                        options.UseDefaultModels<Guid>();
+                        options.AddEntityFrameworkCoreStores<ApplicationDbContext>();
+                    }
+                ).AddServer(options =>
                 {
-                    options.DisableHttpsRequirement();
-                }
-            });
+                    options.AddMvcBinders();
+                    // Enable the token endpoint.
+                    // Form password flow (used in username/password login requests)
+                    options.EnableTokenEndpoint("/connect/token");
+                    options.EnableUserinfoEndpoint("/userinfo");
+
+                    // Enable the password and the refresh token flows.
+                    options.AllowPasswordFlow()
+                        .AllowRefreshTokenFlow();
+
+                    if (Environment.IsDevelopment())
+                    {
+                        options.DisableHttpsRequirement();
+                    }
+                }).AddValidation();
 
             services.AddAuthentication(options =>
-                {
-                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddOAuthValidation();
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            });
 
             services.AddAuthorization();
             services.AddSingleton<IAuthorizationHandler, BriefAuthorizationCrudHandler>();
@@ -251,13 +256,6 @@ namespace BriefAssistant
                 };
 
                 await manager.CreateAsync(descriptor, cts);
-            } else
-            {
-                const string newPermission = OpenIddictConstants.Permissions.Endpoints.Introspection;
-                if (!await manager.HasPermissionAsync(clientApp, newPermission, cts))
-                {
-                    await manager.UpdateAsync(clientApp, desc => Task.FromResult(desc.Permissions.Add(newPermission)), cts);
-                }
             }
         }
 

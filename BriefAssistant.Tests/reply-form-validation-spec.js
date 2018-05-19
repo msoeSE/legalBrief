@@ -1,9 +1,13 @@
 ﻿describe('reply form input fields', function () {
 
     beforeEach(function () {
-        //browser.waitForAngularEnabled(false);
+        browser.waitForAngularEnabled(false);
         browser.ignoreSynchronization = true;
         browser.get(browser.baseUrl + '/briefs/reply/new');
+        browser.switchTo().alert().then(
+            function (alert) { alert.accept(); },
+            function (err) { }
+        );
     });
 
     it('should display error with no title', function () {
