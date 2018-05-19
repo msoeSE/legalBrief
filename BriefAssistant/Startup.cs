@@ -238,27 +238,24 @@ namespace BriefAssistant
             const string clientId = "angular-client";
 
             var clientApp = await manager.FindByClientIdAsync(clientId, cts);
-            var descriptor = new OpenIddictApplicationDescriptor
-            {
-                ClientId = clientId,
-                DisplayName = "Angular Client",
-                PostLogoutRedirectUris = { new Uri($"{hostUrl}signout-odic") },
-                RedirectUris = { new Uri(hostUrl) },
-                Permissions =
-                {
-                    OpenIddictConstants.Permissions.Endpoints.Token,
-                    OpenIddictConstants.Permissions.Endpoints.Introspection,
-                    OpenIddictConstants.Permissions.GrantTypes.Password,
-                    OpenIddictConstants.Permissions.GrantTypes.RefreshToken
-                }
-            };
-
             if (clientApp == null)
             {
+                var descriptor = new OpenIddictApplicationDescriptor
+                {
+                    ClientId = clientId,
+                    DisplayName = "Angular Client",
+                    PostLogoutRedirectUris = { new Uri($"{hostUrl}signout-odic") },
+                    RedirectUris = { new Uri(hostUrl) },
+                    Permissions =
+                    {
+                        OpenIddictConstants.Permissions.Endpoints.Token,
+                        OpenIddictConstants.Permissions.Endpoints.Introspection,
+                        OpenIddictConstants.Permissions.GrantTypes.Password,
+                        OpenIddictConstants.Permissions.GrantTypes.RefreshToken
+                    }
+                };
+
                 await manager.CreateAsync(descriptor, cts);
-            } else
-            {
-                await manager.UpdateAsync(clientApp, descriptor, cts);
             }
         }
 
