@@ -1,19 +1,1 @@
 /* You can add global styles to this file, and also import other style files */
-html, body {
-  height: 100%;
-}
-
-.container {
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  vertical-align: bottom;
-  padding-bottom: 50px;
-}
-
-footer {
-  padding-top: 20px;
-  padding-bottom: 20px;
-  background-color: #eee;
-  text-align: center;
-}

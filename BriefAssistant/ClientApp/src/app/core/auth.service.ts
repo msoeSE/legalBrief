@@ -42,7 +42,7 @@ export class AuthService {
     }
 
     this.autoRefreshSubscription = this.oAuthService.events.filter(e => e instanceof OAuthInfoEvent)
-      .filter((e: OAuthInfoEvent) => e.type === 'token_expires' && e.info === 'access_token')
+      .filter((e: OAuthInfoEvent) => e.type === 'token_expires')
       .subscribe(e => {
         this.oAuthService.refreshToken();
       });

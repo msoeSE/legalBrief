@@ -12,14 +12,6 @@ export class AppComponent {
   title = 'app';
   isExpanded = false;
 
-  collapse() {
-    this.isExpanded = false;
-  }
-
-  toggle() {
-    this.isExpanded = !this.isExpanded;
-  }
-
   onActivate(event) {
     window.scroll(0, 0);
   }

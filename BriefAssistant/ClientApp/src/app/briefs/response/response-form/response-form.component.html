@@ -1,7 +1,7 @@
 <form #f="ngForm">
   <h1>Your Information</h1>
   <div class="form-group">
-    <label for="name" class="col-form-label">Name</label>
+    <label for="name" >Name</label>
     <input type="text" id="name" class="form-control" [(ngModel)]="responseInfo.briefInfo.contactInfo.name" #name="ngModel" minlength="4" maxlength="100" name="name" placeholder="John Doe" required autocomplete="name">
     <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger" id="name-errors">
       <div *ngIf="name.errors.required">
@@ -17,7 +17,7 @@
   </div>
   <div *ngIf="userType != 'Lawyer'">
     <div class="form-group">
-      <label for="street" class="col-form-label">Address</label>
+      <label for="street" >Address</label>
       <input type="text" id="street" class="form-control" [(ngModel)]="responseInfo.briefInfo.contactInfo.address.street" #street="ngModel" name="street" placeholder="1234 Main St." required autocomplete="address-line1">
       <div *ngIf="street.invalid && (street.dirty || street.touched)" class="alert alert-danger" id="street-errors">
         <div *ngIf="street.errors">
@@ -26,13 +26,13 @@
       </div>
     </div>
     <div class="form-group">
-      <label for="street2" class="col-form-label">Address Line 2</label>
+      <label for="street2" >Address Line 2</label>
       <input type="text" id="street2" class="form-control" [(ngModel)]="responseInfo.briefInfo.contactInfo.address.street2" #street2="ngModel" name="street2" placeholder="Apartment, studio, or floor" autocomplete="address-line2">
     </div>
   </div>
   <div *ngIf="userType == 'Lawyer'">
     <div class="form-group">
-      <label for="firm" class="col-form-label">Firm</label>
+      <label for="firm" >Firm</label>
       <input type="text" id="firm" class="form-control" [(ngModel)]="responseInfo.briefInfo.contactInfo.address.street" #firm="ngModel" name="firm" placeholder="Firm Name" required>
       <div *ngIf="firm.invalid && (firm.dirty || firm.touched)" class="alert alert-danger" id="firm-errors">
         <div *ngIf="firm.errors">
@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="form-group">
-      <label for="street2" class="col-form-label">Address of Firm</label>
+      <label for="street2" >Address of Firm</label>
       <input type="text" id="street2" class="form-control" [(ngModel)]="responseInfo.briefInfo.contactInfo.address.street2" #street2="ngModel" name="street" placeholder="1234 Main St." required autocomplete="address-line1">
       <div *ngIf="street2.invalid && (street2.dirty || street2.touched)" class="alert alert-danger" id="street2-errors">
         <div *ngIf="street2.errors">
@@ -50,9 +50,9 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="city" class="col-form-label">City</label>
+      <label for="city" >City</label>
       <input type="text" id="city" class="form-control" [(ngModel)]="responseInfo.briefInfo.contactInfo.address.city" #city="ngModel" name="city" placeholder="City" required autocomplete="address-level2">
       <div *ngIf="city.invalid && (city.dirty || city.touched)" class="alert alert-danger" id="city-errors">
         <div *ngIf="city.errors">
@@ -61,7 +61,7 @@
       </div>
     </div>
     <div class="form-group col-md-4">
-      <label for="state" class="col-form-label">State</label>
+      <label for="state" >State</label>
       <select id="state" [(ngModel)]="responseInfo.briefInfo.contactInfo.address.state" #state="ngModel" name="state" class="form-control" required>
         <option *ngFor="let k of stateKeys" [value]="k">{{states[k]}}</option>
       </select>
@@ -72,7 +72,7 @@
       </div>
     </div>
     <div class="form-group col-md-2">
-      <label for="zip" class="col-form-label">Zip</label>
+      <label for="zip" >Zip</label>
       <input type="text" id="zip" class="form-control" [(ngModel)]="responseInfo.briefInfo.contactInfo.address.zip" #zip="ngModel" pattern="^\d{5}(?:[ \-]\d{4})?" name="zip" placeholder="12345" required autocomplete="postal-code">
       <div *ngIf="zip.invalid && (zip.dirty || zip.touched)" class="alert alert-danger" id="zip-errors">
         <div *ngIf="zip.errors.required">
@@ -85,7 +85,7 @@
     </div>
   </div>
   <div class="form-group">
-    <label for="phone" class="col-form-label">Phone</label>
+    <label for="phone" >Phone</label>
     <input type="tel" id="phone" class="form-control" [(ngModel)]="responseInfo.briefInfo.contactInfo.phone" #phone="ngModel" pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$" name="phone" placeholder="(123) 456-7890" required autocomplete="tel-national">
     <div *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="alert alert-danger" id="phone-errors">
       <div *ngIf="phone.errors">
@@ -94,7 +94,7 @@
     </div>
   </div>
   <div class="form-group">
-    <label for="email" class="col-form-label">Email</label>
+    <label for="email" >Email</label>
     <input type="email" id="email" class="form-control" [(ngModel)]="responseInfo.briefInfo.contactInfo.email" ngModel [email]="true" #email="ngModel" name="email" placeholder="johndoe@example.com" required autocomplete="email">
     <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger" id="email-errors">
       <div *ngIf="email.errors">
@@ -103,7 +103,7 @@
     </div>
   </div>
   <div class="form-group" *ngIf="userType == 'Lawyer'">
-    <label for="barId" class="col-form-label">State Bar ID #</label>
+    <label for="barId" >State Bar ID #</label>
     <input id="barId" class="form-control" [(ngModel)]="responseInfo.briefInfo.contactInfo.barId" ngModel #barId="ngModel" name="barId" placeholder="Bar ID Here" required>
     <div *ngIf="barId.invalid && (barId.dirty || barId.touched)" class="alert alert-danger" id="barId-errors">
       <div *ngIf="barId.errors">
@@ -113,7 +113,7 @@
   </div>
   <h1>Case Information</h1>
   <div class="form-group">
-    <label for="county" class="col-form-label">County</label>
+    <label for="county" >County</label>
     <select class="form-control" id="county" [(ngModel)]="responseInfo.briefInfo.circuitCourtCase.county" #county="ngModel" name="county" required>
       <option *ngFor="let k of countyKeys" [value]="k">{{counties[k]}}</option>
     </select>
@@ -124,7 +124,7 @@
     </div>
   </div>
   <div class="form-group">
-    <label for="circuitCourtCaseNumber" class="col-form-label" aria-describedby="circuitCourtCaseNumberHelp">Circuit Court Case Number</label>
+    <label for="circuitCourtCaseNumber"  aria-describedby="circuitCourtCaseNumberHelp">Circuit Court Case Number</label>
     <input type="text" id="circuitCourtCaseNumber" class="form-control" [(ngModel)]="responseInfo.briefInfo.circuitCourtCase.caseNumber" #circuitCourtCaseNumber="ngModel" name="circuitCourtCaseNumber" pattern="^\d{4}\w{2}\d{1,}$" placeholder="0000XX0000" required>
     <div *ngIf="circuitCourtCaseNumber.invalid && (circuitCourtCaseNumber.dirty || circuitCourtCaseNumber.touched)" class="alert alert-danger" id="circuitCourtCaseNumber-errors">
       <div *ngIf="circuitCourtCaseNumber.errors">
@@ -137,7 +137,7 @@
   </div>
   <div class="row">
     <div class="form-group col-md-6">
-      <label for="judgeFname" class="col-form-label" aria-describedby="judgeHelp">Judge First Name</label>
+      <label for="judgeFname"  aria-describedby="judgeHelp">Judge First Name</label>
       <input type="text" id="judgeFname" class="form-control" [(ngModel)]="responseInfo.briefInfo.circuitCourtCase.judgeFirstName" #judgeFirstName="ngModel" name="judgeFirstname" placeholder="First Name" required>
       <div *ngIf="judgeFirstName.invalid && (judgeFirstName.dirty || judgeFirstName.touched)" class="alert alert-danger" id="judgeFname-errors">
         <div *ngIf="judgeFirstName.errors.required">
@@ -149,7 +149,7 @@
       </small>
     </div>
     <div class="form-group col-md-6">
-      <label for="judgeLname" class="col-form-label">Judge Last Name</label>
+      <label for="judgeLname" >Judge Last Name</label>
       <input type="text" id="judgeLname" class="form-control" [(ngModel)]="responseInfo.briefInfo.circuitCourtCase.judgeLastName" #judgeLastName="ngModel" name="judgeLastname" placeholder="Last Name" required>
       <div *ngIf="judgeLastName.invalid && (judgeLastName.dirty || judgeLastName.touched)" class="alert alert-danger" id="judgeLname-errors">
         <div *ngIf="judgeLastName.errors.required">
@@ -159,7 +159,7 @@
     </div>
   </div>
   <div class="form-group" *ngIf="userType == 'Lawyer'">
-    <label for="clientName" class="col-form-label">Client Name</label>
+    <label for="clientName" >Client Name</label>
     <input id="clientName" class="form-control" [(ngModel)]="responseInfo.briefInfo.circuitCourtCase.clientName" ngModel #clientName="ngModel" name="clientName" placeholder="Client Name" required>
     <div *ngIf="clientName.invalid && (clientName.dirty || clientName.touched)" class="alert alert-danger" id="clientName-errors">
       <div *ngIf="clientName.errors">
@@ -168,7 +168,7 @@
     </div>
   </div>
   <div class="form-group">
-    <label for="opponentName" class="col-form-label">Opponent Name</label>
+    <label for="opponentName" >Opponent Name</label>
     <input type="text" id="opponentName" class="form-control" [(ngModel)]="responseInfo.briefInfo.circuitCourtCase.opponentName" #opponentName="ngModel" name="opponentName" placeholder="Opponent Name" required>
     <div *ngIf="opponentName.invalid && (opponentName.dirty || opponentName.touched)" class="alert alert-danger" id="opponentName-errors">
       <div *ngIf="opponentName.errors.required">
@@ -176,19 +176,18 @@
       </div>
     </div>
   </div>
-  <div class="form-row">
+  <div class="form-group">
     <fieldset>
-      <legend>In the circuit court case, I was the:</legend>
+      <label *ngIf="userType == 'Lawyer'">In the circuit court case, my client was the:</label>
+      <label *ngIf="userType == 'User'">In the circuit court case, I was the:</label>
       <div class="form-check" *ngFor="let k of roleKeys">
-        <label class="form-check-label">
-          <input class="form-check-input" type="radio" [(ngModel)]="responseInfo.briefInfo.circuitCourtCase.role" name="role" [value]="k">
-          {{roles[k]}}
-        </label>
+        <input class="form-check-input" id="role{{k}}" type="radio" [(ngModel)]="responseInfo.briefInfo.circuitCourtCase.role" name="role" [value]="k">
+        <label class="form-check-label" for="role{{k}}">{{roles[k]}}</label>
       </div>
     </fieldset>
   </div>
-  <div class="form-group" style="padding-top: 10px;">
-    <label for="appellateCourtCaseNumber" class="col-form-label" aria-describedby="appellateCourtCaseNumberHelp">Appellate Court Case Number</label>
+  <div class="form-group">
+    <label for="appellateCourtCaseNumber"  aria-describedby="appellateCourtCaseNumberHelp">Appellate Court Case Number</label>
     <input type="text" id="appellateCourtCaseNumber" class="form-control" [(ngModel)]="responseInfo.briefInfo.appellateCourtCaseNumber" #appellateCourtCaseNumber="ngModel" name="appellateCourtCaseNumber" pattern="^\d{4}\w{2}\d{1,}$" placeholder="0000XX0000" required>
     <div *ngIf="appellateCourtCaseNumber.invalid && (appellateCourtCaseNumber.dirty || appellateCourtCaseNumber.touched)" class="alert alert-danger" id="appellateCourtCaseNumber-errors">
       <div *ngIf="appellateCourtCaseNumber.errors">
@@ -201,7 +200,7 @@
   </div>
   <h1>Brief Information</h1>
   <div class="form-group">
-    <label for="issuesPresented" class="col-form-label" aria-describedby="issuesPresentedHelp">
+    <label for="issuesPresented"  aria-describedby="issuesPresentedHelp">
       What are the Issues Presented?
     </label>
     <textarea id="issuesPresented" class="form-control" [(ngModel)]="responseInfo.issuesPresented" #issuesPresented="ngModel" name="issuesPresented" rows="8"></textarea>
@@ -215,7 +214,7 @@
     </small>
   </div>
   <div class="form-group">
-    <label for="oralArgument" class="col-form-label" aria-describedby="oralArgumentHelp">
+    <label for="oralArgument"  aria-describedby="oralArgumentHelp">
       What is your Statement on Oral Argument?
     </label>
     <textarea id="oralArgument" class="form-control" [(ngModel)]="responseInfo.oralArgumentStatement" #oralArgumentStatement="ngModel" name="oralArgumentStatement" rows="8" required></textarea>
@@ -235,7 +234,7 @@
     </small>
   </div>
   <div class="form-group">
-    <label for="publication" class="col-form-label" aria-describedby="publicationHelp">
+    <label for="publication"  aria-describedby="publicationHelp">
       What is your Statement on Publication?
     </label>
     <textarea id="publication" class="form-control" [(ngModel)]="responseInfo.publicationStatement" #publicationStatement="ngModel" name="publicationStatement" rows="8" required></textarea>
@@ -254,7 +253,7 @@
     </small>
   </div>
   <div class="form-group">
-    <label for="caseAndFacts" class="col-form-label" aria-describedby="caseAndFactsHelp">
+    <label for="caseAndFacts"  aria-describedby="caseAndFactsHelp">
       What is your Statement of Case and Facts?
     </label>
     <textarea id="caseAndFacts" class="form-control" [(ngModel)]="responseInfo.caseFactsStatement" #caseFactsStatement="ngModel" name="caseFactsStatement" rows="8"></textarea>
@@ -281,7 +280,7 @@
     </small>
   </div>
   <div class="form-group">
-    <label for="argument" class="col-form-label" aria-describedby="argumentHelp">
+    <label for="argument"  aria-describedby="argumentHelp">
       What is your Argument?
     </label>
     <textarea id="argument" class="form-control" [(ngModel)]="responseInfo.briefInfo.argument" #argument="ngModel" name="argument" rows="8" required></textarea>
@@ -313,7 +312,7 @@
     </small>
   </div>
   <div class="form-group">
-    <label for="conclusion" class="col-form-label" aria-describedby="conclusionHelp">
+    <label for="conclusion"  aria-describedby="conclusionHelp">
       What is your Conclusion?
     </label>
     <textarea id="conclusion" class="form-control" [(ngModel)]="responseInfo.briefInfo.conclusion" #conclusion="ngModel" name="conclusion" rows="8" required></textarea>
@@ -332,19 +331,20 @@
   </div>
   <h1>Document Filename</h1>
   <div class="form-group">
-    <div class="form-inline">
-      <input type="text" id="title" style="width: 50%;" class="form-control" [(ngModel)]="responseInfo.briefInfo.title" #title="ngModel" maxlength="100" name="title" placeholder="Example Brief" required>
-      <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger" id="title-errors">
-        <div *ngIf="title.errors.required">
-          Document must have a filename.
-        </div>
-        <div *ngIf="title.errors.maxlength">
-          Document filename cannot be that long.
-        </div>
+    <label for="title">Document Filename</label>
+    <input type="text" id="title" class="form-control" [(ngModel)]="responseInfo.briefInfo.title" #title="ngModel" maxlength="100" name="title" placeholder="Example Brief" required>
+    <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger" id="title-errors">
+      <div *ngIf="title.errors.required">
+        Document must have a filename.
+      </div>
+      <div *ngIf="title.errors.maxlength">
+        Document filename cannot be that long.
       </div>
     </div>
   </div>
-  <button class="btn btn-primary" routerLink="/briefs/response/example">Back to Example</button>
-  <button class="btn btn-primary" (click)="updateBrief()">Save And Finish Later</button>
+<button class="btn btn-primary" routerLink="/briefs/response/example">Back to Example</button>
+<div class="btn-toolbar float-sm-right">
+  <button class="btn btn-primary mr-sm-2" (click)="updateBrief()">Save And Finish Later</button>
   <button class="btn btn-primary" (click)="finishBrief()" [disabled]="!f.valid">Generate Brief</button>
+</div>
 </form>
