@@ -22,9 +22,9 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.2.0" />
     <PackageReference Include="FluentEmail.Razor" Version="2.4.0" />
     <PackageReference Include="FluentEmail.Smtp" Version="2.4.1" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.0.0-rc1-final" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.0.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.0.2" />
     <PackageReference Include="OpenXmlPowerTools" Version="1.0.0" />
     <PackageReference Include="AspNet.Security.OAuth.Validation" Version="2.0.0-rc3-0300" />
     <PackageReference Include="OpenIddict" Version="2.0.0-rc3-0964" />
@@ -54,6 +54,7 @@
     <None Remove="ClientApp\src\app\app-routing.module.ts" />
     <None Remove="ClientApp\src\app\auth.config.ts" />
     <None Remove="ClientApp\src\app\auth.guard.ts" />
+    <None Remove="ClientApp\src\app\briefs\brief-list\delete-brief-modal.component.ts" />
     <None Remove="ClientApp\src\app\briefs\briefs-routing.module.ts" />
     <None Remove="ClientApp\src\app\briefs\briefs.component.ts" />
     <None Remove="ClientApp\src\app\briefs\briefs.module.ts" />
@@ -109,6 +110,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\account\shared\account.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\app-routing.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\auth.config.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\briefs\brief-list\delete-brief-modal.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\briefs\briefs-routing.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\briefs\briefs.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\briefs\briefs.module.ts" />

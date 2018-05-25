@@ -1,78 +1,89 @@
-<div>
+<div class="mb-4">
+  <h4>Congratulations! You have completed the Brief Assistant App!</h4>
   <p>
-    Congratulations! You have completed the Brief Assistant App!
-    <br />
     You can download your brief by clicking the Download button, or email your brief by providing an email in the box and clicking the Email button.
-  </p>
-  <p>
     If you want to edit the brief you just created, you can find it by clicking the My Briefs tab in the navigation bar.
   </p>
-  <p>
-    <button class="btn btn-success" id="initialFinalDownloadButton" name="initialFinalDownloadButton" (click)="download()">Download</button>
-  </p>
-  <div class="alert alert-success" *ngIf="showDownloadSuccessDiv">
-    Download Successful. Check your Downloads folder for the brief.
-  </div>
-  <form class="form-inline" #emailForm="ngForm" (ngSubmit)="onSubmit(emailForm)">
-    <div class="form-group">
-      <input type="email" id="email-send" class="form-control" [(ngModel)]="model.email" name="email" placeholder="johndoe@example.com">
-      <button class="btn btn-success" id="initialFinalEmailButton" name="initialFinalEmailButton" type="submit">Email</button>
+  <div class="row">
+    <div class="col-md-5">
+      <button class="btn btn-block btn-success" id="initialFinalDownloadButton" name="initialFinalDownloadButton" (click)="download()">Download Brief</button>
+      <div class="alert alert-success" *ngIf="showDownloadSuccessDiv">
+        Download Successful. Check your Downloads folder for the brief.
+      </div>
     </div>
-  </form>
+    <span class="col-md-2 text-center h4 align-middle">or</span>
+    <div class="col-md-5">
+      <form #emailForm="ngForm" (ngSubmit)="onSubmit(emailForm)">
+        <div class="form-row">
+          <div class="col-9">
+            <input class="form-control" type="email" id="email-send" [(ngModel)]="model.email" name="email" placeholder="johndoe@example.com" autocomplete="email">
+          </div>
+          <div class="col-3">
+            <button class="btn btn-success" id="initialFinalEmailButton" name="initialFinalEmailButton" type="submit">Email Brief</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 <div>
-    <p style="padding-top: 10px;">
-        <b>PLEASE FOLLOW THE STEPS BELOW BEFORE FILING YOUR BRIEF WITH THE COURT OF APPEALS.</b>
-    </p>
-    <p>
-        1. The Brief Assistant does NOT produce a completed brief. Do NOT file the brief you downloaded. There is additional information you need to fill in yourself before filing it. See below.
-    </p>
-    <p>
-        2. When you write the Statement of Case and Facts section of your brief, be sure to insert a "record citation" for each fact you assert. A "record citation" refers to the Index of the Record on Appeal--a document that the circuit court sent to you.
-    </p>
-    <p>
-        3. When you write the Argument section of your brief, be sure to cite to legal authorities to support your arguments. Legal authorities include cases, statutes, constitutions, and regulations. To find legal authorities, go to the <a routerLink="/legal-resources"><u>Legal Resources</u></a> page.
-    </p>
-    <p>
-        4. After you finish writing your brief, you must list all of the legal authorities that it cites in your Table of Authorities and indicate the page number of your brief where the legal authority appears.
-    </p>
-    <p>
-        5. After you finish writing your brief, you must list all of the sections of the brief in your Table of Contents and indicate the page number of your brief where the section appears.
-    </p>
-    <p>
-        6. Include the date you will be filing your brief after the Conclusion, and after the Certificate of Compliance with Rule. This will be indicated by the text "INSERT FILING DATE HERE".
-    </p>
-    <p>
-        7. Include the word count in the CERTIFICATION AS TO FORM/LENGTH section of the brief. This will be indicated by the text "INSERT WORD COUNT HERE". An Initial Brief may not exceed 11,000 words. This word limit applies only to the Statement of Case and Facts, the Argument, and the Conclusion portions of a brief.
-    </p>
-    <p>
-        8. Sign and date the last page of your brief.
-    </p>
-    <p>
-        9. Complete and sign the Form and Length Certification.
-    </p>
-    <p>
-        10. If your brief includes an Appendix, then complete and sign the Certification of Appendix.
-    </p>
-    <p>
-        11. If your brief includes an Appendix, then attach copies of the documents you want to include in your Appendix, with the corresponding page numbers, at the end of your brief--behind the page called Index to Appendix and before the page called Certification of Appendix.
-    </p>
-    <p>
-        12. A brief must have a front and back cover. The front cover is the first page of the brief you have generated with the Brief Assistant. The covers of an Appellant's Initial Brief should be light blue. See <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/9" target="_blank">
-        Wis. Stat. &sect;809.19(9)</a>.
-    </p>
-    <p>
-        13. You will need to file 10 copies of your brief with the Court of Appeals. If a court has found you indigent, then you may file 5 copies (in a 3-judge appeal) or only 3 copies (in a 1-judge appeal). You will also need to send 3 copies of your brief to your opponent or his lawyer, if he has one.
-    </p>
-    <p>
-        14. Make sure all copies of your brief are stapled down the left side.
-    </p>
-    <p>
-        15. To learn more about how to prepare and file a brief in the Court of Appeals, click Guide to Appellate Procedure for the Self-Represented (<a href="https://www.wicourts.gov/publications/guides/docs/proseappealsguide.pdf" target="_blank"><u>Guide to Appellate Procedure</u></a>).
-        Also, to consult a lawyer about the form of your brief and how to file a brief, <a href="https://www.wisbar.org/forPublic/INeedaLawyer/AppellateHelpDesk/Pages/Appellate-Help-Desk.aspx" target="_blank"><u>Appellate Help Desk</u></a>. It is open on Tuesdays and Thursdays.
-    </p>
-    <p>
-        <b>Thank you for using the Brief Assistant!</b>
-    </p>
+  <h4>Please follow the steps below before filing your brief with the Court of Appeals</h4>
+  <ol>
+    <li>
+      The Brief Assistant does NOT produce a completed brief. Do NOT file the brief you downloaded. There is additional information you need to fill in yourself before filing it. See below.
+    </li>
+    <li>
+      When you write the Statement of Case and Facts section of your brief, be sure to insert a "record citation" for each fact you assert. A "record citation" refers to the Index of the Record on Appeal--a document that the circuit court sent to you.
+    </li>
+    <li>
+      When you write the Argument section of your brief, be sure to cite to legal authorities to support your arguments. Legal authorities include cases, statutes, constitutions, and regulations. To find legal authorities, go to the
+      <a routerLink="/legal-resources">Legal Resources</a> page.
+    </li>
+    <li>
+      After you finish writing your brief, you must list all of the legal authorities that it cites in your Table of Authorities and indicate the page number of your brief where the legal authority appears.
+    </li>
+    <li>
+      After you finish writing your brief, you must list all of the sections of the brief in your Table of Contents and indicate the page number of your brief where the section appears.
+    </li>
+    <li>
+      Include the date you will be filing your brief after the Conclusion, and after the Certificate of Compliance with Rule. This will be indicated by the text "INSERT FILING DATE HERE".
+    </li>
+    <li>
+      Include the word count in the CERTIFICATION AS TO FORM/LENGTH section of the brief. This will be indicated by the text "INSERT WORD COUNT HERE". An Initial Brief may not exceed 11,000 words. This word limit applies only to the Statement of Case and Facts, the Argument, and the Conclusion portions of a brief.
+    </li>
+    <li>
+      Sign and date the last page of your brief.
+    </li>
+    <li>
+      Complete and sign the Form and Length Certification.
+    </li>
+    <li>
+      If your brief includes an Appendix, then complete and sign the Certification of Appendix.
+    </li>
+    <li>
+      If your brief includes an Appendix, then attach copies of the documents you want to include in your Appendix, with the corresponding page numbers, at the end of your brief--behind the page called Index to Appendix and before the page called Certification of Appendix.
+    </li>
+    <li>
+      A brief must have a front and back cover. The front cover is the first page of the brief you have generated with the Brief Assistant. The covers of an Appellant's Initial Brief should be light blue. See
+      <a href="https://docs.legis.wisconsin.gov/statutes/statutes/809/II/19/9" target="_blank">
+        Wis. Stat. &sect;809.19(9)
+      </a>.
+    </li>
+    <li>
+      You will need to file 10 copies of your brief with the Court of Appeals. If a court has found you indigent, then you may file 5 copies (in a 3-judge appeal) or only 3 copies (in a 1-judge appeal). You will also need to send 3 copies of your brief to your opponent or his lawyer, if he has one.
+    </li>
+    <li>
+      Make sure all copies of your brief are stapled down the left side.
+    </li>
+    <li>
+      To learn more about how to prepare and file a brief in the Court of Appeals, see the <a class="font-italic" href="https://www.wicourts.gov/publications/guides/docs/proseappealsguide.pdf" target="_blank">Guide to Appellate Procedure</a>.
+      Also, to consult a lawyer about the form of your brief and how to file a brief, contact the
+      <a href="https://www.wisbar.org/forPublic/INeedaLawyer/AppellateHelpDesk/Pages/Appellate-Help-Desk.aspx" target="_blank">Appellate Help Desk</a>. It is open on Tuesdays and Thursdays.
+    </li>
+  </ol>
+  <p>
+    <b>Thank you for using the Brief Assistant!</b>
+  </p>
 </div>
-<button class="btn btn-primary" type="submit"  (click)="backToForm()">Back to Form</button>
+<button class="btn btn-dark" type="button" (click)="backToForm()">Back to Form</button>
+<button class="btn btn-primary float-right" type="button" routerLink="/briefs">Go to My Briefs</button>

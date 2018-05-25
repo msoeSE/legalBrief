@@ -1,6 +1,9 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { SharedModule } from '../shared/shared.module';
 import { HeaderComponent } from './header/header.component';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -13,7 +16,9 @@ import { PendingChangesGuard } from './warning-guard';
 @NgModule({
   imports: [
     SharedModule,
-    RouterModule
+    RouterModule,
+    NgbCollapseModule,
+    FontAwesomeModule
   ],
   declarations: [
     HeaderComponent,

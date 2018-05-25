@@ -1,27 +1,32 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IBriefList } from "../shared/IBriefList";
 import { BriefService } from "../shared/brief.service";
 import { IBriefListItem } from "../shared/IBriefListItem";
 import { BriefType } from "../shared/BriefType";
-import { PagerService } from './pager.service'
+import { PagerService } from './pager.service';
+import { DeleteBriefModalComponent } from './delete-brief-modal.component';
 
 @Component({
-    selector: "briefList",
     templateUrl: "./brief-list.component.html"
 })
 export class BriefListComponent implements OnInit {
-    briefList : IBriefList;
-    list: IBriefListItem[];
+  briefType = BriefType;
+  briefList: IBriefList;
+  list: IBriefListItem[];
 
-    constructor(
-        private readonly router: Router,
-        private readonly briefService: BriefService,
-        private readonly http: HttpClient,
-        private readonly pagerService: PagerService
-    ) { }
+  constructor(
+    private readonly modalService: NgbModal,
+    private readonly router: Router,
+    private readonly briefService: BriefService,
+    private readonly http: HttpClient,
+    private readonly pagerService: PagerService
+  ) {
+  }
 
   // pager object
   pager: any = {};
@@ -70,16 +75,21 @@ export class BriefListComponent implements OnInit {
       default:
         this.router.navigate(["/**"]);
       }
-    }
-    delete(id: string, index: number) {
-        this.briefList.briefs.splice(index, 1);
-        this.pagedItems.splice(index, 1);
-        //controller's delete method
-        let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  }
 
-        this.http.post(`/api/briefs/${id}/delete`, { headers: headers })
-          .subscribe(res => {
-            alert("Delete successful");
-          });
-    }
+  delete(item: IBriefListItem, index: number) {
+    const modalRef = this.modalService.open(DeleteBriefModalComponent);
+    modalRef.componentInstance.briefName = item.title;
+    modalRef.result.then(() => {
+      this.briefList.briefs.splice(index, 1);
+      this.pagedItems.splice(index, 1);
+      //controller's delete method
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+      this.http.post(`/api/briefs/${item.id}/delete`, { headers: headers })
+        .subscribe(res => {
+          alert("Delete successful");
+        });
+    }, () => {}); // do nothing on dismissial
+  }
 }

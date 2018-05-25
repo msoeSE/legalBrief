@@ -1,44 +1,8 @@
-<div class="demo-layout-transparent mdl-layout mdl-js-layout">
-  <nav class="navbar navbar-inverse" style="margin-bottom: 0px;">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target='.navbar-collapse' [attr.aria-expanded]='isExpanded' (click)='toggle()'>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" routerLink="/home">Brief Assistant</a>
-      </div>
-      <div class="collapse navbar-collapse" [ngClass]='{ "in": isExpanded }'>
-        <ul class="nav navbar-nav">
-          <li class="nav-item" [routerLinkActive]="['active']"><a class="nav-link" routerLink="/home">Home</a></li>
-          <li><a routerLink="/briefs/initial/example">Initial Brief</a></li>
-          <li><a routerLink="/briefs/response/example">Response Brief</a></li>
-          <li><a routerLink="/briefs/reply/example">Reply Brief</a></li>
-          <li><a routerLink="/briefs" *ngIf="authService.isLoggedIn">My Briefs</a></li>
-          <li><a routerLink="/legal-resources">Legal Resources</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right" style="height: inherit">
-          <appHeader></appHeader>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <header class="mdl-layout__header mdl-layout__header--transparent">
-
-    <div class="jumbotron" style="padding-top: 30px; padding-bottom: 30px;">
-      <div class="container">
-        <img style="margin-left: auto" src="/assets/AppellatePracticeLogo.png" class="img-fluid" alt="Responsive image">
-      </div>
-    </div>
-  </header>
-</div>
+<appHeader></appHeader>
 <!-- Router Outlet -->
-<div class="container">
+<div class="container" style="min-height: 100vh">
   <router-outlet (activate)="onActivate($event)"></router-outlet>
 </div>
-<div class="demo-layout-transparent mdl-layout mdl-js-layout">
-  <footer class="mdl-layout__header mdl-layout__header--transparent">
-      <a routerLink="/privacy-policy">Privacy Policy</a>
-  </footer>
-</div>
+<footer class="d-flex bg-dark justify-content-center mb-0 mt-4 py-3 w-100">
+  <a class="text-light" routerLink="/privacy-policy">Privacy Policy</a>
+</footer>

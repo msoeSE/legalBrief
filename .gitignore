@@ -268,3 +268,4 @@ __pycache__/
 
 !dependencies/openxmlpowertools/1.0.0/*.nupkg
 /BriefAssistant/password.txt
+*.zip

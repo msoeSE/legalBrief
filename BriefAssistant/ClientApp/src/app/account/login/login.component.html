@@ -1,0 +1,40 @@
+<div class="row justify-content-center">
+  <div class="col-lg-6 card">
+    <div class="card-body">
+      <h4 class="card-title text-center">Sign In</h4>
+      <p class="card-text text-center">In order to create and save a brief you must first sign-in</p>
+      <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+        <div class="form-group">
+          <label class="sr-only" for="loginEmail">Email Address</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <fa-icon [icon]="faUser"></fa-icon>
+              </span>
+            </div>
+            <input class="form-control" id="loginEmail" type="email" [(ngModel)]="loginModel.email" name="loginEmail" autocomplete="username" placeholder="Email Address" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="sr-only" for="loginPassword">Password</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <fa-icon [icon]="faLock"></fa-icon>
+              </span>
+            </div>
+            <input class="form-control" id="loginPassword" type="password" [(ngModel)]="loginModel.password" name="loginPassword" autocomplete="current-password" placeholder="Password" required />
+          </div>
+        </div>
+        <div class="alert alert-danger" *ngIf="showLoginUnauthorizedDiv">
+          Login Unsuccessful. Email/Password was incorrect.
+        </div>
+        <button class="btn btn-lg btn-block btn-primary" id="loginButton" name="loginButton" type="submit" [disabled]="!loginForm.valid">Sign In</button>
+        <a class="btn btn-block" id="forgotPassword" routerLink="/account/forgot-password">Forgot Password?</a>
+      </form>
+      <hr/>
+      <p class="card-text text-center">Don't have an account?</p>
+      <button type="button" class="btn btn-dark btn-block" id="registerButton" routerLink="/account/register">Sign Up</button>
+    </div>
+  </div>
+</div>

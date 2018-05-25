@@ -1,4 +1,41 @@
-<li>
-  <button *ngIf="!authService.isLoggedIn" class="btn blendin" id="navbarLoginButton" name="navbarLoginButton" routerLink="/account/login-register"><span class="glyphicon glyphicon-log-in"></span> Login</button>
-  <button *ngIf="authService.isLoggedIn" class="btn blendin" id="navbarLogoutButton" name="navbarLogoutButton" (click)="authService.logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</button>
-</li>
+<div class="jumbotron jumbotron-fluid bg-dark pt-3 pb-2 mb-0">
+  <div class="container ml-1">
+    <img src="/assets/AppellatePracticeLogo.png" alt="Wisconsin State Bar Appellate Pratice Section">
+  </div>
+</div>
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark mb-5">
+  <a class="navbar-brand" routerLink="/home">
+    Brief Assistant
+  </a>
+  <button type="button" class="navbar-toggler" aria-controls="navbarContent" [attr.aria-expanded]="!isCollapsed" aria-label="Toggle navigation" (click)="toggle()">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div [ngbCollapse]="isCollapsed" class="collapse navbar-collapse" id="navbarContent">
+    <ul class="navbar-nav mr-auto">
+      <li routerLinkActive="active" class="nav-item">
+        <a class="nav-link" routerLink="/home">Home</a>
+      </li>
+      <li routerLinkActive="active" class="nav-item">
+        <a class="nav-link" routerLink="/briefs/initial/example">Initial Brief</a>
+      </li>
+      <li routerLinkActive="active" class="nav-item">
+        <a class="nav-link" routerLink="/briefs/response/example">Response Brief</a>
+      </li>
+      <li routerLinkActive="active" class="nav-item">
+        <a class="nav-link" routerLink="/briefs/reply/example">Reply Brief</a>
+      </li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-item">
+        <a class="nav-link" routerLink="/briefs" *ngIf="authService.isLoggedIn">My Briefs</a>
+      </li>
+      <li routerLinkActive="active" class="nav-item">
+        <a class="nav-link" routerLink="/legal-resources">Legal Resources</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto" style="height: inherit">
+      <li>
+        <a *ngIf="!authService.isLoggedIn" class="nav-link" id="navbarLoginButton" name="navbarLoginButton" routerLink="/account/login"><fa-icon [icon]="faSignIn"></fa-icon> Login</a>
+        <a *ngIf="authService.isLoggedIn" class="nav-link" id="navbarLogoutButton" name="navbarLogoutButton" (click)="authService.logout()"><fa-icon [icon]="faSignOut"></fa-icon> Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
